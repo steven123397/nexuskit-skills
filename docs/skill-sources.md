@@ -59,6 +59,16 @@
 * Matt 的 `hitl-loop.template.sh` 与 `agents/openai.yaml` 删除：体系纯 Markdown 约定驱动、客户端中立；人工在环复现转写为 references/reproduction.md 第十种回路。
 * defense-in-depth.md 保留为独立 reference：35 行的通用分层防御模式，触发条件清晰，便于按需加载。
 
+## nk-grill
+
+主要参考：Matt `grilling`（2026-08 备份，28 行全文骨架：设计树、前沿轮次、每问带推荐答案、事实查证归 Agent、前沿清空且用户确认为完成标志）。
+与上游的主要差异及原因：
+* 正文改写为中文并套用 NexusKit 体例：问题/推荐格式去 emoji 改纯文本。
+* `disable-model-invocation: true`，仅手动触发：D6 当年否决的是强制盘问，本技能是用户主动召唤的盘问入口（2026-09-27 深化拍板，见 `plans/2026-09-26-2246-feat-issue-lifecycle-branch-close-plan.md` KTD3/KTD3a）。
+* 豁免 `../conventions/decision-autonomy.md` 的"单轮最多 3 个问题"上限：该上限针对 Agent 主动打断的场景，用户主动召唤盘问时带宽已预留，"一轮问完整个前沿"正是目标体验；全局规则不动，留待 grill 实战检验后回看。超过客户端提问工具上限时退回对话内编号列表。
+* 事实查证的子代理措辞中性化（客户端中立），不绑定具体工具名。
+* 不强制文档产物（用户拍板）；收尾只给一句转向 `nk-brainstorm` / `nk-plan` 的轻指针。
+
 ## nk-handoff
 
 主要参考：CE `ce-handoff` (2026-09)、Matt `handoff`、NexusKit 共享约定 [`../conventions/current-md.md`](../skills/conventions/current-md.md)
@@ -118,7 +128,7 @@
 与 Matt `triage` 的主要差异及原因：
 * **不是状态机形态**：Matt 围绕 maintainer 的 labels/buckets/state roles（needs-triage、ready-for-agent 等）组织批量分诊；NexusKit 是个人项目、用户自己就是 maintainer，没有"分诊队列"，本技能只处理单条"开发中冒出的发现"，状态流转交给 Issue 平台自身。
 * 删除 external PR surface、AI disclaimer 与 setup 配置探测：个人项目无外部贡献者分诊需求，产物位置由 artifact-lifecycle 约定固定。
-* 删除 grilling 循环：体系已移除 grill；需求澄清按 decision-autonomy 的批量提问规则进行。
+* 删除 grilling 循环：需求澄清按 decision-autonomy 的批量提问规则进行；用户主动想被盘问时可另行调用 `nk-grill`（2026-09 新增）。
 * 保留第 1 步的查重与冗余检查、第 3 步"按步骤复现后再落档"，以及 triage notes 的"已确认事实/还缺什么"二分——后者转写为 issue-writing 约定中 Evidence 小节的核实结论与缺口写法。
 * `.out-of-scope/` 知识库未引入：其"曾被否决的请求"在本体系中的对应物是 `docs/ideation/` 未选中方向、已关闭 Issue 与 `docs/solutions/`（见第 3 步）。
 
@@ -132,7 +142,7 @@
 与 Matt 版的主要差异及原因：
 * Tracker 固定为 GitHub Issues（`gh` CLI），label 缺失时用 `gh label create` 创建；删除 tracker 配置探测与安装引导步骤：体系不需要多 tracker 抽象。
 * 无远端时明确不可用并建议改用 `nk-plan`/`nk-brainstorm`：wayfinder 的价值在 tracker 的查询与可视化，不发明本地降级格式。
-* `/grilling` → 按 `decision-autonomy.md` 提问规则进行 HITL 对话：体系有意移除了 grill 技能。
+* `/grilling` → 按 `decision-autonomy.md` 提问规则进行 HITL 对话：体系有意移除了强制盘问；用户主动发起的盘问由 `nk-grill`（2026-09 新增，仅手动触发）承载。
 * `/domain-modeling` → 术语即时写入 `CONCEPTS.md`，规则在 `concepts-vocabulary.md`。
 * `/research` subagent → 中性写法：支持子代理则派发，否则主会话内联完成；去掉一次性 research branch 约定（客户端无关性，findings 直接从 ticket 链接）。
 * `/prototype` → 一句话内联：构建廉价粗糙的具体产物辅助讨论，不依赖技能。

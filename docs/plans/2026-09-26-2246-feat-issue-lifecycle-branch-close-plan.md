@@ -78,6 +78,8 @@ R8. 新增 `nk-grill`：手动触发的盘问微技能——设计树 + 前沿�
 KTD1. `issue-writing.md` 是 Issue 生命周期规则的唯一持有者：R1–R4 的全文只写在那里；`nk-work`、`nk-plan`、`nk-close` 各加一行指针引用，不重述——防止 K 编码悬空事故重演（规则住会过期的产物曾导致引用悬空）。
 KTD2. PR 描述规范新建为 `skills/nk-close/references/pr-description.md`（约 40 行），蒸馏自 CE 同名 reference：保留"写 diff 看不出来的东西"、长度随规模伸缩、`Fixes #N`；裁掉 stack 模式、概念教学归档、branding。挂 `nk-close` 第 6 步。 (session-settled: user-approved — 中间档，见 Key Decisions)
 KTD3. `nk-grill` 以 Matt `grilling`（28 行）为骨架移植：设计树、前沿轮次（一轮问完整个前沿）、每问带推荐答案、事实查证归 Agent 而非用户；改为中文体例、`disable-model-invocation: true`、完成标志=前沿清空且用户确认达成共识；与 decision-autonomy 的边界写一句话（谁主动：用户 vs Agent）。 (session-settled: user-directed — 手动无产物)
+
+KTD3a（2026-09-27 深化拍板）：nk-grill **豁免** `decision-autonomy.md` 的"单轮最多 3 个问题"上限——该上限针对 Agent 主动打断的场景（用户带宽被打断成本高），nk-grill 是用户主动召唤盘问，带宽已预留，"一轮问完整个前沿"正是目标体验。豁免理由写进技能正文；全局规则本次不改（nk-brainstorm 等场景缺乏放宽的真实使用证据，留待 grill 实战检验后回看）。超过客户端提问工具上限（如 Kimi 4 问/次）时退回对话内编号列表。格式去 emoji（对齐 NexusKit 体例）；子代理查证措辞中性化（不绑定具体客户端工具名）；收尾加一句"结论如需固化转 nk-brainstorm/nk-plan"的轻指针。
 KTD4. `nk-close` 保持六步骨架，改触发语义与范围：触发从"版本合并前"改为"工作分支合并前"，第 0/1 步的核对范围扩到分支上全部产物（含顺带小修的决策点）；新增"发布日扫尾"小节（漏网检查 + release notes + 打 tag），发布日不再做提炼删除。
 
 ### 高层设计
