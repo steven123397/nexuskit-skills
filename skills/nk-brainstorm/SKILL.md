@@ -44,6 +44,7 @@ description: Explore a vague or ambitious idea into a right-sized requirements-o
 * **写入文件时产物契约不变**：路径、frontmatter、章节以 `plan-format.md` 为准；本技能只写 Goal Capsule 与 Product Contract，不写空的实施章节。
 * **Ready for Planning Check 有任何一项不通过，不宣告写入完成，也不进入第 4 阶段。**
 * **术语在对话中敲定即写入 `CONCEPTS.md`**，不攒到最后；用户用词与术语表冲突时当场指出。
+* **以 Issue 为需求来源时认领它**：assignee 与溯源评论按 [`../conventions/issue-writing.md`](../conventions/issue-writing.md) 第三节执行；方向被否决时按同节退回 Issue。
 * **不提交。** 同一会话继续规划或实施时，产出留在工作区随下一个提交入库；会话在此结束时，由 `../nk-handoff/SKILL.md` 把 plan、`CONCEPTS.md`、`current.md` 合为一次提交（见 `../conventions/commit-cadence.md` R4）。
 
 子代理（grounding 侦察、声明核实）按任务形态分档，不写死模型名；支持子代理时派发，否则在主会话内联完成，读取预算与产出上限不变。

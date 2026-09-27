@@ -29,6 +29,7 @@ topic: issue-lifecycle-branch-close
 
 R1. 标签最小化：用 GitHub 默认标签表达类型（bug/enhancement），不设状态标签（状态由 open/closed 与 `docs/current.md` 承载）；`nk-wayfinder` 的 `wayfinder:*` 前缀标签是唯一例外。
 R2. Issue 接取机制：主机制为 `gh` assignee（对仓库持有者是可见的协作信号）；`nk-work` 直接认领时同步在 `docs/current.md` 登记；`nk-plan` 将既有 Issue 纳入 plan 范围的那一刻即认领（assignee + 在 Issue 下评论指向 plan 文件），对应单元交付后关闭。
+（2026-09-27 深化修订：认领改为**容器中立**——`nk-brainstorm` 把 Issue 作为需求来源、`nk-plan` 纳入范围、`nk-work` 直接认领，三条路径同一机制（assignee + 溯源评论）；新增**退回**条款——认领后决定不做时取消 assignee 并评论，Issue 保持 open；新增路由判断——需求类 Issue 未澄清范围与成功标准时先经 `nk-brainstorm`，写清行为与完成定义的可直接进 plan/work。理由：对未澄清的需求 Issue 直接 plan 过于草率，而认领机制不应绑死在某个技能上。）
 R3. Issue 关闭三个时机：`nk-work` 提交覆盖该 Issue 的单元时关闭并注明单元编号；PR 合并时经 `Fixes #N` 自动关闭；`nk-close` 收尾时兜底扫描本分支引用过而未关闭的 Issue。
 R4. Issue 模板的 Acceptance criteria 改为可选的"完成定义"：纯文本 bullet、不用 checkbox；构想/需求描述类 Issue 整体豁免该小节。
 R5. 收尾锚点为分支生命周期：plan 与审查记录活在当前工作分支，合并前收尾；分支不对应发布版本；发布是 main 上打 tag + release notes 的纯事件，无大扫除。
@@ -109,7 +110,7 @@ flowchart LR
 - **Goal**：Issue 的标签、认领、关闭、完成定义四组规则在 `issue-writing.md` 成文，三个技能各加指针。
 - **Requirements**：R1、R2、R3、R4（KTD1）。
 - **Dependencies**：无。
-- **Files**：`skills/conventions/issue-writing.md`、`skills/nk-work/SKILL.md`（Intake 段加一行）、`skills/nk-plan/SKILL.md`（收尾段加一行）。
+- **Files**：`skills/conventions/issue-writing.md`、`skills/nk-work/SKILL.md`（Intake 段加一行）、`skills/nk-plan/SKILL.md`（收尾段加一行）、`skills/nk-brainstorm/SKILL.md`（加一行指针，2026-09-27 深化新增）。
 - **Approach**：改写 `issue-writing.md`——新增"标签约定"小节（R1）、"认领"小节（R2 两条路径）、"关闭时机"小节（R3 三条，其中 PR 合并条提及 `Fixes #N` 并指向 `nk-close` 的 PR 描述规范）；Acceptance criteria 小节改为可选"完成定义"（R4）。`nk-work` Intake 的 Issue 来源处加一行"认领按 `../conventions/issue-writing.md` 执行"；`nk-plan` 收尾段加一行"plan 吸收既有 Issue 时按 `../conventions/issue-writing.md` 执行认领"。
 - **Test scenarios**：`run_checks.py` 五项全绿（正常路径）；`grep -n "Acceptance criteria" skills/conventions/issue-writing.md` 无勾选框模板残留（边界）；三处指针引用目标文件存在（集成，由链接检查覆盖）。
 - **Verification**：`python tests/run_checks.py` 全绿；人工通读 issue-writing.md 确认四组规则各自一句话可执行。
