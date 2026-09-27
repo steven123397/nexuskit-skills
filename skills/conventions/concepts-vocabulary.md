@@ -45,7 +45,7 @@ JIT 即时写入主要覆盖新涌现的术语。对于尚未建立 `CONCEPTS.md
 
 区别于全局初建：`CONCEPTS.md` 不存在时，规划期即时写入可以由第一个合格条目创建该文件，只写本次敲定的术语，不顺带初建整个项目的术语表。
 
-### 5. 版本收尾提炼 (Harvest during Close)
+### 5. 分支收尾提炼 (Harvest during Close)
 在 `/nk-close` 清理阶段性 Plan 之前，核对 Plan 中是否有值得长期保留的领域新概念，提炼至 `CONCEPTS.md` 后再行删除 Plan。
 
 ---

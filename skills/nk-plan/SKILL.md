@@ -50,5 +50,6 @@ argument-hint: "[需求描述、需求阶段 plan 路径、要深化的 plan 路
 * **先写文件，再给选项**：Durable 路线在展示收尾菜单前 plan 已写入 `docs/plans/`。
 * **一个需求一个文件**：已有 `nk-brainstorm` 产出的需求阶段 plan 时，就地补全同一文件，保留 Product Contract 的含义、稳定 ID、`topic:` 字段和 `<!-- nk-section: ... -->` 标记。
 * **plan 不记执行进度**：没有 `status` 字段，不加复选框；进度以带 U-ID 的提交为准。
+* **plan 吸收既有 Issue 即认领**：assignee 与溯源评论按 [`../conventions/issue-writing.md`](../conventions/issue-writing.md) 第三节执行，规则不重述。
 * **不重问已定决策**；已定标注也不压制缺陷证据。
 * **提交**：`nk-plan` 本身不提交。会话在规划后结束时，由 `nk-handoff` 把规划产出和 `docs/current.md` 合成一次交接提交；同一会话接着用 `nk-work` 实施时，规划产出随第一个单元的提交一起入库（[`../conventions/commit-cadence.md`](../conventions/commit-cadence.md) R4）。

@@ -46,6 +46,7 @@
 | 在新仓库首次启用本体系 | `/nk-init` |
 | 想找改进方向 | `/nk-ideate` |
 | 有想法，要明确做什么、做到哪 | `/nk-brainstorm` |
+| 想被盘问，压力测试一个计划、决策或想法 | `/nk-grill` |
 | 需求明确，要设计怎么做 | `/nk-plan` |
 | 实现一个实施单元或 Issue | `/nk-work` |
 | 提交代码 | `/nk-commit` |
@@ -74,7 +75,7 @@
 /plugins install https://github.com/steven123397/nexuskit-skills
 ```
 
-清单为根目录 `kimi.plugin.json`（`skills: "./skills/"`，整树随插件分发）。安装后 `/reload` 或开新会话生效。
+清单为 `.kimi-plugin/plugin.json`（`skills: "./skills/"`，整树随插件分发；与根目录 `kimi.plugin.json` 二选一，本仓库用目录形态）。安装后 `/reload` 或开新会话生效。
 
 ### Codex 插件
 

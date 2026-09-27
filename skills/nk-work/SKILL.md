@@ -30,7 +30,7 @@ description: "Execute one implementation unit from a plan, an Issue, or a clear 
 ### 1. 确定输入与范围 (Intake)
 * **来源识别**（详见 [`references/intake.md`](references/intake.md)）：
   * **Plan 单元**：输入携带 U-ID 或 Plan 路径加单元编号。按需阅读 Plan（先看章节结构，仅精读当前单元与依赖项，并核实 Plan 充分性）。
-  * **Issue**：输入携带编号，读取 Issue 内容。
+  * **Issue**：输入携带编号，读取 Issue 内容；认领与关闭时机按 [`../conventions/issue-writing.md`](../conventions/issue-writing.md) 第三、四节执行。
   * **空输入**：默认取 `docs/current.md` 中“下一步”的第一项；若无下一步则询问用户。
   * **直接需求**：按规模分流（琐碎直接做、中小列清单、大型建议先执行 `/nk-plan` 由用户决定）。
 

@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 本目录是 `nk-*` 技能的共享约定库：技能正文只放流程框架，跨技能统一的规则集中在这里，由各技能按需引用。直接使用本体系时无需阅读本目录；编写或维护技能时，按各技能正文的指引查阅对应文件。
 
-- [artifact-lifecycle.md](artifact-lifecycle.md)：产物与生命周期——每类产物的位置、终点与版本收尾规则
+- [artifact-lifecycle.md](artifact-lifecycle.md)：产物与生命周期——每类产物的位置、终点与分支收尾规则
 - [commit-cadence.md](commit-cadence.md)：提交节奏 R1–R6 与通用执行纪律
 - [concepts-vocabulary.md](concepts-vocabulary.md)：CONCEPTS.md 术语表的格式与写入时机
 - [current-md.md](current-md.md)：docs/current.md 的字段与更新时机
