@@ -33,7 +33,7 @@
 三个合法时机，先到先得：
 
 1. **`nk-work` 单元交付**：提交覆盖该 Issue 时关闭，评论注明单元编号与提交哈希。
-2. **PR 合并**：PR 描述中写 `Fixes #N`，合并时自动关闭。
+2. **PR 合并**：PR 描述中写 `Fixes #N`，合并时自动关闭（PR 描述写法见 [`../nk-close/references/pr-description.md`](../nk-close/references/pr-description.md)）。
 3. **`nk-close` 兜底扫描**：分支收尾时扫描本分支引用过而未关闭的 Issue，逐条处理（评论关闭或说明遗留原因）。
 
 ## 五、写作四原则（吸收自 Matt `AGENT-BRIEF`）

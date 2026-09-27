@@ -29,6 +29,7 @@
 * 提交信息风格遵循项目惯例而不写死格式：与 nk-commit、nk-handoff 的口径一致。
 
 * 2026-09-27 起收尾锚点从"版本合并"改为分支生命周期（plan U3，用户拍板）：两种触发（分支合并前全量扫 / 单分支项目按 plan 小范围扫）+ 发布日扫尾小节（漏网检查 + release notes + 打 tag，不做提炼删除）；发布与收尾解耦为纯事件。第 1 步纳入 Issue 兜底扫描，指针引用 `issue-writing.md` 第四节不重述。
+* 新增 `references/pr-description.md`（plan U4）：蒸馏自 CE `ce-commit-push-pr/references/pr-description-writing.md`（208 行 → 约 50 行），保留 value-first 原则、按决策成本伸缩的分级、`Fixes #N` / `Related: #N` 语义与"项目约定优先"；裁掉 base 解析机制、stack/多 PR 叙事、概念教学归档（概念与决策的沉淀由 `CONCEPTS.md` / `docs/solutions/` 在更早阶段接住）、branding、session-settled provenance；标题不写死 conventional commits，与 commit-cadence "风格遵循项目惯例" 口径一致。
 
 ## nk-commit
 

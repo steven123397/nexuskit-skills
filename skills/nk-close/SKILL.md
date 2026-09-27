@@ -57,7 +57,7 @@ disable-model-invocation: true
 * 提交信息风格遵循项目既有惯例，不写死格式。
 
 ### 6. PR 摘要（可选）
-项目走 PR 流程且用户要求时，生成精炼的 PR 摘要；用户没要求则跳过。release notes 不属于本步，归发布日扫尾。
+项目走 PR 流程且用户要求时，按 [`references/pr-description.md`](references/pr-description.md) 生成 PR 描述（写 diff 看不出来的东西、长度随决策成本伸缩；对应 Issue 用 `Fixes #N` 闭环）；用户没要求则跳过。release notes 不属于本步，归发布日扫尾。
 
 ---
 
