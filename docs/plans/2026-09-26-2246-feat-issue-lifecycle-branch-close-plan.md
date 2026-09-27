@@ -28,8 +28,7 @@ topic: issue-lifecycle-branch-close
 ### Requirements
 
 R1. 标签最小化：用 GitHub 默认标签表达类型（bug/enhancement），不设状态标签（状态由 open/closed 与 `docs/current.md` 承载）；`nk-wayfinder` 的 `wayfinder:*` 前缀标签是唯一例外。
-R2. Issue 接取机制：主机制为 `gh` assignee（对仓库持有者是可见的协作信号）；`nk-work` 直接认领时同步在 `docs/current.md` 登记；`nk-plan` 将既有 Issue 纳入 plan 范围的那一刻即认领（assignee + 在 Issue 下评论指向 plan 文件），对应单元交付后关闭。
-（2026-09-27 深化修订：认领改为**容器中立**——`nk-brainstorm` 把 Issue 作为需求来源、`nk-plan` 纳入范围、`nk-work` 直接认领，三条路径同一机制（assignee + 溯源评论）；新增**退回**条款——认领后决定不做时取消 assignee 并评论，Issue 保持 open；新增路由判断——需求类 Issue 未澄清范围与成功标准时先经 `nk-brainstorm`，写清行为与完成定义的可直接进 plan/work。理由：对未澄清的需求 Issue 直接 plan 过于草率，而认领机制不应绑死在某个技能上。）
+R2. Issue 接取机制（容器中立）：认领发生在 Issue 被纳入任何工作容器的时刻——`nk-brainstorm` 把它作为需求来源、`nk-plan` 纳入范围、`nk-work` 直接认领，三条路径同一机制（`gh` assignee + 在 Issue 下评论指向承载它的产物）；`nk-work` 直接认领时同步在 `docs/current.md` 登记（写文件不单独提交）。新增退回条款：认领后决定不做时取消 assignee 并评论，Issue 保持 open。路由判断：需求类 Issue 未澄清范围与成功标准时先经 `nk-brainstorm`，写清行为与完成定义的可直接进 plan/work。对应单元交付后关闭。
 R3. Issue 关闭三个时机：`nk-work` 提交覆盖该 Issue 的单元时关闭并注明单元编号；PR 合并时经 `Fixes #N` 自动关闭；`nk-close` 收尾时兜底扫描本分支引用过而未关闭的 Issue。
 R4. Issue 模板的 Acceptance criteria 改为可选的"完成定义"：纯文本 bullet、不用 checkbox；构想/需求描述类 Issue 整体豁免该小节。
 R5. 收尾锚点为分支生命周期：plan 与审查记录活在当前工作分支，合并前收尾；分支不对应发布版本；发布是 main 上打 tag + release notes 的纯事件，无大扫除。
@@ -100,7 +99,7 @@ flowchart LR
 
 ### 假设
 
-- 本仓库自身实施本 plan 时走直推 main 的降级路径（R6），不为体系改动开分支。
+- 本仓库自身在 `feat/issue-lifecycle-branch-close` 分支上实施本 plan，作为分支收尾规则的首次实战；R6 降级路径作为单分支项目的兜底规则保留。
 - 本仓库按发布模型消费：客户端加载的是插件/npx 安装快照，仓库内改动经重装插件进入客户端视野；不再依赖 `~/.agents/skills` junction。
 
 ## Implementation Units
@@ -154,5 +153,12 @@ flowchart LR
 ## Definition of Done
 
 - U1–U4 全部交付，各带验证证据提交。
-- Issue #4、#5、#6 关闭（评论注明对应提交哈希；本仓库直推 main 不开 PR，`Fixes` 不适用）。
+- Issue #4、#5、#6 关闭（评论注明对应提交哈希；若本仓库走 PR 合并，用 `Fixes #N` 闭环）。
 - 会话结束时按 `nk-handoff` 更新 `docs/current.md`（能力清单加 nk-grill、验证结果、下一步指向 paper-30min 迁移验收）。
+
+## Change Log
+
+- 2026-09-27 深化：新增 KTD3a——nk-grill 豁免 decision-autonomy "单轮最多 3 个问题"上限（用户主动召唤，带宽已预留），全局规则不动；超客户端提问工具上限退回编号列表。
+- 2026-09-27 深化：R2 改为容器中立认领（用户质疑"对需求 Issue 直接 plan 草率"），新增退回条款与 brainstorm 路由判断；U1 Files 增加 `nk-brainstorm/SKILL.md`。
+- 2026-09-27 深化：U3 确认"两种模式、三种触发"结构；R6 降级路径保留（用户一度考虑砍掉 main 上按 plan 收尾，讨论后确认其为单分支项目兜底而非鼓励 main 上开发）；发布日扫尾承担无归属产物的漏网检查。
+- 2026-09-27 修订：实施载体从"直推 main"改为 `feat/issue-lifecycle-branch-close` 分支（假设与 DoD 同步改写）。

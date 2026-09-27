@@ -28,6 +28,8 @@
 * 收尾提交显式限定本技能涉及的文件路径：收尾时工作区可能仍有后续版本的半成品，防止混入提交。
 * 提交信息风格遵循项目惯例而不写死格式：与 nk-commit、nk-handoff 的口径一致。
 
+* 2026-09-27 起收尾锚点从"版本合并"改为分支生命周期（plan U3，用户拍板）：两种触发（分支合并前全量扫 / 单分支项目按 plan 小范围扫）+ 发布日扫尾小节（漏网检查 + release notes + 打 tag，不做提炼删除）；发布与收尾解耦为纯事件。第 1 步纳入 Issue 兜底扫描，指针引用 `issue-writing.md` 第四节不重述。
+
 ## nk-commit
 
 主要参考：CE `ce-commit` (2026-09)、NexusKit 共享约定 [`../conventions/commit-cadence.md`](../skills/conventions/commit-cadence.md)
