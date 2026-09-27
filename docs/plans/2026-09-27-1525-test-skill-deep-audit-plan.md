@@ -176,7 +176,13 @@ KTD5. **审计结论的落点**：每个技能的结论直接以追加段落的�
 - **绊脚点/空缺点**：`session-settled` 只记录来源，不记录挑战发生的日期、阶段或证据，后续 Agent 难以判断“一次挑战”是否已经完成。
 - **处置**：Issue 候选，暂不改动；需要用户确认该审计结论后再决定是否扩展 settled-decision schema。
 
-### 5. `nk-wait-what`
+### 5. Issue #9：提交节奏命令的 PowerShell 兼容性
+
+- **复现**：在 Windows PowerShell 执行未加引号的 `git rev-parse --abbrev-ref @{u}`，解析阶段报 `Missing '=' operator after key in hash literal`；执行 `git rev-parse --abbrev-ref '@{u}'` 正常返回 `origin/feat/skill-deep-audit`。
+- **根因**：`@{u}` 同时是 Git revision 语法和 PowerShell 哈希表字面量前缀，技能与共享约定的示例没有保护该 token；`nk-review` 范围探针还使用 `&&` 链式命令，与“每条命令独立执行”的纪律冲突。
+- **处置**：统一为 `git rev-parse --abbrev-ref '@{u}'`、`git log '@{u}..HEAD'`，并拆开审查范围探针中的链式命令；不改变提交节奏判定逻辑。修复后运行 PowerShell 复现命令、`python -X utf8 tests/run_checks.py`，并关闭 Issue #9。
+
+### 6. `nk-wait-what`
 
 - **边界与重叠观察**：技能只负责重新对齐，不替代 `nk-brainstorm` 或 `nk-plan` 的需求/规划流程。
 - **Token 观测**：正文 575 UTF-8 字节；模拟时同时读取项目术语表与当前对话输入，未做客户端上下文计量。

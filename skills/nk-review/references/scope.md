@@ -12,7 +12,13 @@
 
 ```bash
 BASE=$(git merge-base HEAD <base-ref>)
-echo "BASE:$BASE" && echo "FILES:" && git diff --name-only $BASE && echo "DIFF:" && git diff -U10 $BASE && echo "UNTRACKED:" && git ls-files --others --exclude-standard
+echo "BASE:$BASE"
+echo "FILES:"
+git diff --name-only "$BASE"
+echo "DIFF:"
+git diff -U10 "$BASE"
+echo "UNTRACKED:"
+git ls-files --others --exclude-standard
 ```
 
 - `<base-ref>` 的确定顺序：目标项目工作流文档规定的基线分支 > 当前分支的 upstream > 远端默认分支（`origin/main` / `origin/master`）> 本地 `main` / `master`。

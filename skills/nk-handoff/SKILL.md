@@ -46,7 +46,7 @@ disable-model-invocation: true
 读取 [`../nk-commit/SKILL.md`](../nk-commit/SKILL.md)，按以下优先级执行提交（**注意：工作区可能存在半成品代码，必须显式限定提交文件路径，防止误将半成品带入提交**）：
 
 1. **优先级 1（R3 amend 优先）**：
-   * 若上一个提交属于本会话产生，且尚未推送到远端（通过 `git log @{u}..HEAD` 或无 upstream 判定）；
+   * 若上一个提交属于本会话产生，且尚未推送到远端（通过 `git log '@{u}..HEAD'` 或无 upstream 判定）；
    * 仅显式暂存交接文件并限定路径执行 amend：
      ```bash
      git add docs/current.md
