@@ -144,4 +144,42 @@ KTD5. **审计结论的落点**：每个技能的结论直接以追加段落的�
 
 ### B. 审计结论（每技能一节，滚动追加）
 
-（待填。格式：技能名 → 边界与重叠观察 → token 观测（读入文件与字节）→ 触发可靠性 → 绊脚点/空缺点 → 处置（已修 commit / Issue #N / 不修及理由）。）
+### 1. `nk-init`
+
+- **边界与重叠观察**：职责清晰，负责首次启用与最小初始化；`nk-work` 的 Orient 只读取既有状态，不应重复初始化。
+- **Token 观测**：本次实际读取 `skills/nk-init/SKILL.md`（4,916 B）、`skills/conventions/current-md.md`（5,245 B）和 `skills/nk-commit/SKILL.md`（6,618 B），合计 16,779 UTF-8 字节；未读取不存在的 `references/` 目录。
+- **触发可靠性**：技能标注 `disable-model-invocation: true`，手动调用路径明确。沙盒无远端、`gh` 可用，按规则无需询问远端选择，实际创建 `AGENTS.md`、`docs/current.md` 与 `docs/backlog.md` 并提交。
+- **绊脚点/空缺点**：初始化提交后 `docs/current.md` 的 HEAD 只能记录提交前哈希，否则再次改写会造成自指循环；这是状态文档约定的正常边界。沙盒已有 `.audit-probes/` 未跟踪材料，技能只暂存初始化产物，未误纳入提交。
+- **处置**：不修。U1 沙盒提交 `4474f70`；本次初始化提交 `f5e0688`（工作区保留审计探针未跟踪文件）。
+
+### 2. `nk-ask-ljq`
+
+- **边界与重叠观察**：它只做场景路由与体系入口说明，不承接需求澄清或实现；“工具箱而非流水线”的总规则与各场景入口集中在此，和 README 路由表存在维护同步风险。
+- **Token 观测**：本次读取 `skills/nk-ask-ljq/SKILL.md`（4,937 B）；未拉入 references。
+- **触发可靠性**：技能标注 `disable-model-invocation: true`，对“给这个小工具加功能，该怎么走”可稳定路由到 `/nk-brainstorm`（若没有具体想法则先 `/nk-ideate`）。实际用沙盒 notes CLI 场景完成了该路由判断。
+- **绊脚点/空缺点**：路由图把 `/nk-commit` 列为独立步骤，但 `nk-work` 已要求按提交节奏执行，初次使用者可能重复调用；正文虽说明可跳过，但没有在该节点给出“随 nk-work 观察即可”的明确提示。
+- **处置**：不修。后续审计 README 与该正文时一并核对；若发现文案漂移再落 Issue。
+
+### 3. `nk-brainstorm`
+
+- **边界与重叠观察**：与 `nk-plan` 的分界由 Product Contract / Planning Contract 明确；但轻量、需求已清晰时，规则允许只在对话中对齐，若仓库已有 Product Contract 又会被 `nk-plan` 的阶段判断拉入 Durable 路径，存在“已有产物改变路线”的隐性耦合。
+- **Token 观测**：规划探针记录了 27 个实际读取文件，去重合计 172,937 UTF-8 字节；其中本技能正文与 references 按文件记录在沙盒 `.audit-probes/planning/execution-log.md`。该轮为模型模拟，未由客户端自动触发。
+- **触发可靠性**：未做客户端触发；模拟对“给 notes CLI 加可选标签”能判为 Lightweight，并能生成需求方向。
+- **绊脚点/空缺点**：轻量请求遇到预存 Product Contract 时，阶段路由没有把“继续已有产物”与“重新判断规模”的优先级写成单一规则。
+- **处置**：Issue 候选，暂不改动；需要在后续真实会话确认是否稳定复现。
+
+### 4. `nk-plan`
+
+- **边界与重叠观察**：Planning Contract、Implementation Units 和 Verification Contract 的分层完整；与 `nk-work` 的交接点依赖 plan 是否已经“可实施”，但该判定分散在 phase-0、structure、final-review 多份 reference 中。
+- **Token 观测**：规划探针完整读取本技能相关文件，修正后的去重总量为 172,937 UTF-8 字节（见 `.audit-probes/planning/execution-log.md`）；本轮未进行客户端真实触发。
+- **触发可靠性**：模拟可沿预存 Product Contract 继续生成 plan；`session-settled` 标记能被继承，但没有证据表明客户端会自动完成所要求的一次挑战。
+- **绊脚点/空缺点**：`session-settled` 只记录来源，不记录挑战发生的日期、阶段或证据，后续 Agent 难以判断“一次挑战”是否已经完成。
+- **处置**：Issue 候选，暂不改动；需要用户确认该审计结论后再决定是否扩展 settled-decision schema。
+
+### 5. `nk-wait-what`
+
+- **边界与重叠观察**：技能只负责重新对齐，不替代 `nk-brainstorm` 或 `nk-plan` 的需求/规划流程。
+- **Token 观测**：正文 575 UTF-8 字节；模拟时同时读取项目术语表与当前对话输入，未做客户端上下文计量。
+- **触发可靠性**：未做客户端自动触发；模拟输入“这不对，我没说要标签功能；重新来”能够得到重新表述提示。
+- **绊脚点/空缺点**：没有明确清理已生成 Product Contract 的分支，也没有把“用户纠正”与“回答当前确认问题”分流；重新对齐后可能继续消费过期产物。
+- **处置**：Issue 候选，暂不改动；需在真实 brainstorm → wait-what 连续会话中复现后定级。
