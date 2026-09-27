@@ -2,7 +2,7 @@
 
 ## 0.1 续作已有工作
 
-只在有 git 仓库时检查；没有仓库则跳过，继续 0.2。
+只在有 git 仓库时检查；没有仓库则跳过续作检查，继续 0.1b 分类。
 
 用户提到已有的头脑风暴主题或文档，或 `docs/plans/` 中有明显匹配的近期 plan（frontmatter 为 `product_contract_source: nk-brainstorm`，且内容仍只有 Product Contract、没有实施章节）时：
 * 读取该文档；

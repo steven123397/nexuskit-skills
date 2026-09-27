@@ -8,7 +8,7 @@ argument-hint: "[主题、关注点或约束，可选；可带 'go deep'、'quic
 
 > **路径解析说明：** 本文件中引用的参考文件（`references/`、`../conventions/`、`../nk-brainstorm/`、`../nk-handoff/`）均相对于本技能所在目录解析，不在目标代码仓库中查找。产出文件（`docs/ideation/`、`docs/solutions/`、`CONCEPTS.md`）才位于目标仓库。
 
-**当前年份是 2026 年**，用于给文档标日期和判断近期工作。
+文档日期与近期判断使用当前环境的日期。
 
 `nk-ideate` 在 `nk-brainstorm` 之前使用：它回答"哪些想法值得探索"；`nk-brainstorm` 回答"选中的那个想法具体做成什么样"；`nk-plan` 回答"怎么做"。
 
@@ -38,11 +38,9 @@ argument-hint: "[主题、关注点或约束，可选；可带 'go deep'、'quic
 
 ## Phase 0：续作检查与范围
 
-以下两份文件都必须读，即使主题、模式看起来已经很清楚：
+先读 `references/scope-gates.md`：它负责续作检查、主题与模式识别、材料检查、规模解读和成本提示；主题已明确时也检查续作与规模。
 
-* `references/scope-gates.md`：30 天内同主题记录的续作检查、主题识别、模式分类、仓库外主题的材料检查、关注点与数量的解读（含 tactical 与 `go deep`）、成本提示。
-
-主题不是软件相关时（命名、叙事、个人决策、非数字化商业策略等），Phase 1 走仓库外扎根，然后改读 `references/universal-ideation.md`，由它替代 Phase 2 的视角派发和 Phase 5 菜单；发想记录仍自动写入。
+主题不是软件相关时（命名、叙事、个人决策、非数字化商业策略等），Phase 1 走仓库外扎根，然后改读 `references/universal-ideation.md`，由它定义非软件生成、筛选及交接的差异；发想记录仍自动写入。
 
 ## Phase 1：按模式扎根
 
@@ -58,9 +56,4 @@ argument-hint: "[主题、关注点或约束，可选；可带 'go deep'、'quic
 
 ## Phase 3~5：批判、写入、下一步
 
-`references/post-ideation-workflow.md` 定义独立依据核查与最终裁定、写入发想记录（格式见 `references/ideation-sections.md`）、会话中的简要汇报，以及下一步菜单：
-
-* **用 `nk-brainstorm` 深入一个想法**：读取 [`../nk-brainstorm/SKILL.md`](../nk-brainstorm/SKILL.md)，用该想法的实质内容作为种子。同一会话继续时发想记录留在工作区，随后续提交入库（R2）。
-* **先讨论或调整这些想法**：留在本技能内。
-* **结束会话**：读取 [`../nk-handoff/SKILL.md`](../nk-handoff/SKILL.md)，发想记录随交接提交一起入库（见 [`../conventions/commit-cadence.md`](../conventions/commit-cadence.md) R4）。
-* **完成**：保留文件并停止。
+按 `references/post-ideation-workflow.md` 执行依据核查、筛选、写入与下一步交接；非软件路线的差异以 `references/universal-ideation.md` 为准。写入时再读 `references/ideation-sections.md`。发想记录不单独提交，随后续交付或会话交接入库（见 [`../conventions/commit-cadence.md`](../conventions/commit-cadence.md) R2/R4）。
