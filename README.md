@@ -75,7 +75,7 @@
 /plugins install https://github.com/steven123397/nexuskit-skills
 ```
 
-清单为根目录 `kimi.plugin.json`（`skills: "./skills/"`，整树随插件分发）。安装后 `/reload` 或开新会话生效。
+清单为 `.kimi-plugin/plugin.json`（`skills: "./skills/"`，整树随插件分发；与根目录 `kimi.plugin.json` 二选一，本仓库用目录形态）。安装后 `/reload` 或开新会话生效。
 
 ### Codex 插件
 
