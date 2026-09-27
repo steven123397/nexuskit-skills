@@ -2,7 +2,7 @@
 
 - **所在分支**：`main`
 - **HEAD**：`c5392f6`（Issue 生命周期迭代已合并入库，PR [#7](https://github.com/steven123397/nexuskit-skills/pull/7)，双平台 CI 通过）
-- **版本/里程碑**：v0.1.0 已发布（2026-09-26）。版本规则：v1.0.0 前均为试用版；大迭代走 minor，小迭代走 patch。发布与收尾已解耦——收尾锚定分支生命周期，发布是 main 上打 tag + release notes 的纯事件。
+- **版本/里程碑**：v0.1.1 已发布（2026-09-27，Issue 生命周期迭代，release notes 见 [`releases/v0.1.1.md`](releases/v0.1.1.md)）。版本规则：v1.0.0 前均为试用版；大迭代走 minor，小迭代走 patch。发布与收尾已解耦——收尾锚定分支生命周期，发布是 main 上打 tag + release notes 的纯事件。
 - **已具备能力**：18 个 `nk-*` 技能 + 共享约定 `skills/conventions/`（选用见 [`../README.md`](../README.md) 路由表）；三形态分发——Kimi 插件、Codex 插件、npx skills CLI；五项机械检查 + 双平台 CI。本次迭代新增/变更：
   - `nk-grill`：手动触发的盘问微技能（豁免单轮 3 问上限，理由见其正文与 `docs/skill-sources.md`）；
   - Issue 全生命周期规则成文于 `skills/conventions/issue-writing.md`（标签最小化、容器中立认领、三个关闭时机、可选完成定义）；
