@@ -30,6 +30,7 @@
 
 * 2026-09-27 起收尾锚点从"版本合并"改为分支生命周期（plan U3，用户拍板）：两种触发（分支合并前全量扫 / 单分支项目按 plan 小范围扫）+ 发布日扫尾小节（漏网检查 + release notes + 打 tag，不做提炼删除）；发布与收尾解耦为纯事件。第 1 步纳入 Issue 兜底扫描，指针引用 `issue-writing.md` 第四节不重述。
 * 新增 `references/pr-description.md`（plan U4）：蒸馏自 CE `ce-commit-push-pr/references/pr-description-writing.md`（208 行 → 约 50 行），保留 value-first 原则、按决策成本伸缩的分级、`Fixes #N` / `Related: #N` 语义与"项目约定优先"；裁掉 base 解析机制、stack/多 PR 叙事、概念教学归档（概念与决策的沉淀由 `CONCEPTS.md` / `docs/solutions/` 在更早阶段接住）、branding、session-settled provenance；标题不写死 conventional commits，与 commit-cadence "风格遵循项目惯例" 口径一致。
+* 首次实战后修订（2026-09-27，本仓库自身分支收尾）：Issue 兜底扫描补机械方法（grep 收集引用 + `gh issue view` 核对，原条文只说不做）；"用户决策点"章节前置到执行步骤之前（第 1/3 步引用它，原先放在文末阅读顺序颠倒）；发布日扫尾去重——原则归约定第五章，技能只留操作展开；补 `git rm` 已暂存删除的提示；发现"首次创建 CONCEPTS.md 时挂 AGENTS.md 入口"无触发点，已补进生命周期约定第二章与第 2 步。
 
 ## nk-commit
 

@@ -26,7 +26,7 @@
 
 为了确保任何新会话或新接入的 Agent 都能快速感知并复用沉淀的知识，必须保持全局指引可见：
 * 项目根目录的 **`AGENTS.md`（或等价的全局指令文件）必须包含指向 `docs/current.md`、`docs/solutions/` 和 `CONCEPTS.md` 的显式指引行**。
-* **维护责任归属**：在项目首次初始化（bootstrap）或初次运行 `/nk-compound` 时，Agent 应检查 `AGENTS.md`；若缺少对应入口指引，应补充指引声明，确保知识库可被后续会话检索。
+* **维护责任归属**：在项目首次初始化（bootstrap）或初次运行 `/nk-compound` 时，Agent 应检查 `AGENTS.md`；若缺少对应入口指引，应补充指引声明，确保知识库可被后续会话检索。`/nk-close` 提炼阶段若首次创建 `CONCEPTS.md` 或 `docs/solutions/`，同样触发本检查。
 
 ---
 
