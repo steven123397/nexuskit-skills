@@ -52,7 +52,7 @@ disable-model-invocation: true
 
 * 架构选型与踩坑因果：先过 [`../conventions/solution-schema.md`](../conventions/solution-schema.md) 的双轨准入门槛，合格才写入 `docs/solutions/`，平庸内容不建档；
 * 新稳定领域术语：按 [`../conventions/concepts-vocabulary.md`](../conventions/concepts-vocabulary.md) 写入根目录 `CONCEPTS.md`；
-* 若本次提炼**首次创建** `CONCEPTS.md` 或 `docs/solutions/`：按生命周期约定第二章检查 `AGENTS.md` 的知识入口指引，缺则补。
+* 按生命周期约定第二章检查知识入口及本范围项目指导的遗漏、失效，补齐有依据的更新。
 
 ### 3. 清理已交付工件
 确认第 1 步无遗留、第 2 步提炼完成后，用 `git rm` 删除本次**已交付完成**的 plan 与审查记录（`git rm` 已暂存删除，后续提交无需再 add）。只删已交付的：推迟的已转走，未消费发想记录按用户决策点处置，均不在此删除。完整设计演进由 Git 历史保留。
@@ -64,7 +64,7 @@ disable-model-invocation: true
 读取 [`../nk-commit/SKILL.md`](../nk-commit/SKILL.md) 并遵循其规则：
 
 * 本次属于 R4 规定的"分支收尾点"，允许且只发起**一次**纯文档收尾提交；
-* **显式暂存并限定路径**：只含本技能涉及的文件——`docs/solutions/` 新增、`CONCEPTS.md`、`docs/current.md`、被 `git rm` 的 plan/审查记录（已暂存）、可能新增的 `docs/backlog.md`、`AGENTS.md` 入口指引补行。不使用 `git add -A`；
+* **显式暂存并限定路径**：只含本技能涉及的文件——`docs/solutions/` 新增、`CONCEPTS.md`、`docs/current.md`、被 `git rm` 的 plan/审查记录（已暂存）、可能新增的 `docs/backlog.md`、本范围内项目指导及其索引更新。不使用 `git add -A`；
 * 提交信息风格遵循项目既有惯例，不写死格式。
 
 ### 6. PR 摘要（可选）

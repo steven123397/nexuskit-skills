@@ -48,6 +48,7 @@ description: "Execute one implementation unit from a plan, an Issue, or a clear 
 * **伴生小缺陷**：随当前单元一并修复并补齐测试。
 
 ### 4. 单元完成与提交 (Unit Commit)
+* 提交前按 [`../conventions/artifact-lifecycle.md`](../conventions/artifact-lifecycle.md) 第二章“项目指导的持续维护”核对本单元涉及的项目指导，并同步必要更新。
 * 单元验证通过后，读取 [`../nk-commit/SKILL.md`](../nk-commit/SKILL.md) 并按其规则发起提交：
   * 主题行包含成果说明，末尾追加实施单元编号，例如：`feat(auth): add token expiry check (U2)`；
   * 正文写入 1~3 行实际运行的验证命令、结果与未验证项；

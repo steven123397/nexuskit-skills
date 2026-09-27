@@ -19,6 +19,8 @@
 
 ## nk-close
 
+2026-09-27 人工审计采纳：收尾按产物生命周期约定第二章补查本分支变化涉及的项目指导，修复有依据的遗漏与失效；不是全仓规范生成。指导文件及索引更新纳入同一次收尾提交。
+
 主要参考：NexusKit 共享约定 [`../conventions/artifact-lifecycle.md`](../skills/conventions/artifact-lifecycle.md)（本技能为其第五章的可执行展开）
 关键设计决定：
 * 未消费发想记录与推迟 plan 逐项询问用户、每轮最多 3 个——用户 2026-09-25 拍板；无人值守时采用推荐默认并在 `docs/current.md` 登记 `[待确认]`。
@@ -186,6 +188,8 @@
 * 新增 R1–R6 提交节奏一句话版（细节路由给 `nk-commit`）；删去 phase boundaries 决策树、prototype/triage/vocabulary layer 等 NexusKit 无对应物的内容。
 
 ## nk-work
+
+2026-09-27 人工审计采纳：项目指导随相关变化维护，单元提交前引用产物生命周期约定第二章检查；与 `nk-close` 的收尾补漏衔接。规则由共享约定唯一持有，保留 `nk-init` 的最小初始化定位，不把每条经验自动升级为项目规则。
 
 主要参考：CE `ce-work` (2026-09)、Matt `tdd` / `implement`、NexusKit 共享约定
 
