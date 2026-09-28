@@ -17,3 +17,4 @@ jobs:
         with:
           python-version: "3.x"
       - run: python tests/run_checks.py
+      - run: python -m unittest discover -s tests -p "test_*.py"

@@ -49,7 +49,7 @@ git ls-files --others --exclude-standard
 
 以下规则转写自原辅助脚本的确定性逻辑，由 Agent 按路径模式直接判定，供第 3 步编队使用：
 
-**测试文件识别**（这些路径的改动不计入"可执行改动行数"）：`tests?/`、`spec/`、`__tests__/` 目录；`*._-test / *._-spec / *.test.* / *.spec.*` 后缀；`test_*.py`、`conftest.py`；Java/C#/Scala/Swift/Kotlin 的 `*Test.*` / `*Tests.*` / `*Spec.*` 类文件（大小写敏感，`Contest.java` 这类不算）。
+**测试文件识别**（供测试风险判定，不用于扣减行数）：`tests?/`、`spec/`、`__tests__/` 目录；`*._-test / *._-spec / *.test.* / *.spec.*` 后缀；`test_*.py`、`conftest.py`；Java/C#/Scala/Swift/Kotlin 的 `*Test.*` / `*Tests.*` / `*Spec.*` 类文件（大小写敏感，`Contest.java` 这类不算）。
 
 **路径信号 → 编队提示**（信号是提示，不是自动派发决定）：
 
@@ -63,7 +63,7 @@ git ls-files --others --exclude-standard
 
 **静默放行守卫（无论改动多小都触发 adversarial）**：CI/CD 与门禁类路径——`.github/workflows/`、`.gitlab-ci.yml`、`.circleci/`、`Jenkinsfile`、`.buildkite/` 等。这类改动本身是"验证机制"，风险不在爆炸半径而在保真度：它可能在真实产物已坏时照样放行。
 
-**规模阈值**：可执行非测试改动行数 ≥ 200 时 maintainability 必选，且不缩减编队；低于此值时由后果判断，行数本身不构成缩减理由。
+**编队依据**：将结构变化、行为变化与验证机制的具体 diff 证据交给 `select-and-route.md` 判定，不计算可执行行数，也不因改动少而豁免风险角色。
 
 ## 四、规范文件映射（供 project-standards）
 

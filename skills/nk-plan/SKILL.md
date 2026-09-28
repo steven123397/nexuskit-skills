@@ -28,13 +28,16 @@ argument-hint: "[需求描述、需求阶段 plan 路径、要深化的 plan 路
 
 ## 流程
 
-各阶段依次执行，某个 reference 选定了其他路线就照那条走。**进入某阶段时完整读取它要求的 reference**；提前读过的不算，要求"在某步再读一次"的就再读。读不到必需的 reference 时，在它管辖的动作之前停下，报告缺哪个文件，不凭记忆补规则。
+各阶段依次执行，选定其他路线时按该路线继续。阶段规则的读取与复用遵循 [`../conventions/resource-loading.md`](../conventions/resource-loading.md)：只加载命中路线；完整且未变的原文直接复用，缺失或变化时补读。
 
 | 阶段 | 先读 | 内容 |
 | :-- | :-- | :-- |
 | 0 续写、分流、定界 | `references/phase-0.md` | 核心原则与质量底线；续写与深化快速通道；做法层规划与非软件分流；查找上游 Product Contract（含 `topic:` 识别）并就地补全；规划引导；阻塞处理；输出档位（Direct / Chat brief / Durable）与规划深度；独立规划的范围确认 |
-| 0 的分支 | `references/output-contracts.md`、`references/approach-altitude.md`、`references/universal-planning.md`、[`../conventions/settled-decisions.md`](../conventions/settled-decisions.md) | 两个聊天档位；先规划做法；非软件规划；本会话已定决策的判定与标注 |
-| 范围确认（0.7 / 5.1.5） | `references/synthesis-summary.md` | 内部三分草稿、分歧点保留测试、确认模板、写入 plan 的去向 |
+| 0.1a 做法层规划 | `references/approach-altitude.md` | 明确要求先规划做法，或用户接受该提议时读取；转入此路线 |
+| 0.1b 非软件路线 | `references/universal-planning.md` | 非软件任务，或深化不带 frontmatter 的非软件 plan 时读取；跳过软件阶段 |
+| 0.2 已定决策 | [`../conventions/settled-decisions.md`](../conventions/settled-decisions.md) | 软件路线需要判定和承接本会话决策时读取；此规则可与后续输出档位叠加 |
+| 0.6 聊天输出 | `references/output-contracts.md` | 选定 Direct / Chat brief 后读取；Durable 不读此文件 |
+| 范围确认（0.7 / 5.1.5） | `references/synthesis-summary.md` | 内部三分草稿、待确认点保留测试、确认模板、写入 plan 的去向 |
 | 1 调研 | `references/research.md` | 本地研究员、Agent 原生能力评估、执行方向、外部调研决策与派出、整合、升档、行为追踪、流程分析、设计对比入口 |
 | 1.6 设计对比（按需） | `references/design-alternatives.md` | 后果重大的"怎么做"未定时，并行展开截然不同的设计并比较 |
 | 2–4 问题、结构、成文 | `references/structure.md` | 规划问题归类与提问；单元划分与字段；高层设计触发条件；行文与 Markdown 写法；规划规则 |
@@ -43,7 +46,7 @@ argument-hint: "[需求描述、需求阶段 plan 路径、要深化的 plan 路
 | 5.3.8 写后自检 | `references/self-review.md` | 连贯性与可行性（总是）、范围守护、安全、设计、产品、对抗性（按信号） |
 | 5.4 收尾 | `references/handoff.md` | 能否交给实施；自检结果；NexusKit 收尾菜单与执行 |
 
-调研与深化用到的研究员和审阅视角提示词在 `references/agents/`，是提示词资产而不是可按名字调用的 Agent：读取文件内容，用它初始化一个通用子代理。支持子代理的客户端并行派出；不支持时在主会话中依次完成。
+调研与深化的共享角色及任务说明见 [`references/research-roles.md`](references/research-roles.md)，本技能专用角色在 `references/agents/`，是提示词资产而不是可按名字调用的 Agent：读取文件内容，用它初始化一个通用子代理。支持子代理的客户端并行派出；不支持时在主会话中依次完成。
 
 ## 始终成立的规则
 

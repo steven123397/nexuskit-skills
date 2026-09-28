@@ -10,7 +10,7 @@
 2. **Map the frontier.** 再对话一轮，**breadth-first** 覆盖整个空间而不深入单条线索，浮现 open decisions 与现在可开始的 first steps。**如果没有 fog**，说明路径已经清晰，不需要 map；停止并建议直接走 `nk-plan`。
 3. **Create the map**（`wayfinder:map`）：填好 Destination 与 Notes，Decisions so far 留空，fog 勾勒进 **Not yet specified**。
 4. **Create the tickets you can specify now** 作为 child issues，然后第二遍再 wire blocking edges（issues 需要编号后才能互相引用）。现在还说不清的留在 **Not yet specified**。
-5. **启动 research。** 对刚创建的每个 `research` ticket，如果支持子代理则并行派发，否则在主会话内联完成；findings 从 ticket 链接出去。
+5. **启动 research。** 对刚创建的每个 `research` ticket，如果支持子代理则并行派发，否则在主会话内联完成；findings 从 ticket 链接出去。主会话回传按 [`../../conventions/subagent-results.md`](../../conventions/subagent-results.md)，保留结论、证据与 ticket 链接；临时路径不替代 ticket 所需的持久研究成果。
 6. 停止。Charting 是一个会话的工作；不在本会话手动 resolve tickets。
 
 ## Work through the map（用户带 map URL 或编号调用）

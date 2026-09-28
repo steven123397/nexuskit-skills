@@ -23,7 +23,7 @@ description: Explore a vague or ambitious idea into a right-sized requirements-o
 
 ## 执行流程
 
-进入某个阶段时读取该阶段的 reference，不凭记忆代替。
+阶段规则的读取与复用遵循 [`../conventions/resource-loading.md`](../conventions/resource-loading.md)：只加载命中路线；完整且未变的原文直接复用，缺失或变化时补读。
 
 | 阶段 | 先读 | 该文件负责的内容 |
 | :-- | :-- | :-- |
@@ -32,7 +32,7 @@ description: Explore a vague or ambitious idea into a right-sized requirements-o
 | 0 续作、分类、规模 | `references/phase-0.md` | 续作检查；软件/非软件/无需头脑风暴的分类；规模分级；单一工作单元检查；可视化与陌生领域两个触发条件 |
 | 1 理解想法 | `references/dialogue.md` | 现状扫描与 grounding 侦察；产品压力测试；对话推进；退出条件 |
 | 1 全程：术语 | `references/terminology.md` | 术语即时质疑与即时写入 `CONCEPTS.md` 的操作流程 |
-| 2–2.6 方案、综述、核实 | `references/approaches.md`，写综述前再读 `references/synthesis-summary.md` | 方案生成；范围综述与确认；声明核实 |
+| 2–2.6 方案、综述、核实 | `references/approaches.md`，写综述时使用 `references/synthesis-summary.md` | 方案生成；范围综述与确认；声明核实 |
 | 3 写入 plan | `references/sections.md` | 是否需要文件；Product Contract 各节要求；Markdown 写法；Ready for Planning Check |
 | 4 交接 | `references/handoff.md` | 交接选项、会话结束与提交方式、结束摘要 |
 

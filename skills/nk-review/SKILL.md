@@ -17,7 +17,7 @@ argument-hint: "[空=当前分支相对基线，或 base ref / 文件路径 / PR
 
 ## 执行步骤
 
-各阶段依次执行。**进入某阶段时完整读取它要求的 reference**；提前读过的不算。读不到必需的 reference 时，在它管辖的动作之前停下，报告缺哪个文件。
+各阶段依次执行。阶段规则的读取与复用遵循 [`../conventions/resource-loading.md`](../conventions/resource-loading.md)：只加载命中路线；完整且未变的原文直接复用，缺失或变化时补读。
 
 ```mermaid
 flowchart LR
@@ -34,7 +34,7 @@ flowchart LR
 读取 [`references/select-and-route.md`](references/select-and-route.md)，按 diff 的实际风险选定 persona 编队：correctness 常驻，其余按条件触发。派发前向用户宣布编队与每个条件 reviewer 的一句入选原因。
 
 ### 4. 派发审查 (Dispatch)
-按 [`references/reviewer-prompt.md`](references/reviewer-prompt.md) 的模板，用 `references/personas/` 下的 persona 文件内容初始化通用子代理，一批并行派发；客户端不支持子代理时，由主会话按同一模板依次内联扮演，评审纪律（置信度锚点、引用原文门、误报抑制目录）不变。
+按 [`references/reviewer-prompt.md`](references/reviewer-prompt.md) 的模板，从模板指定的共享方法或本地 persona 读取角色，带上审查目的和完整结果契约初始化通用子代理，一批并行派发；客户端不支持子代理时，由主会话按同一模板依次内联扮演，评审纪律（置信度锚点、引用原文门、误报抑制目录）不变。
 
 ### 5. 合并与复核 (Merge & validate)
 读取 [`references/validate.md`](references/validate.md)：校验与去重各 reviewer 的返回，套用置信度闸门，再对存留发现做一轮独立复核（confirmed / rejected / unresolved），定稿后一次性分配条目编号。

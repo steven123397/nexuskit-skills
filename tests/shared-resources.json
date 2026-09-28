@@ -1,0 +1,138 @@
+{
+  "shared": {
+    "best-practices-researcher.md": {
+      "source": "skills/conventions/agents/best-practices-researcher.md",
+      "callers": [
+        "skills/nk-compound/references/capture.md",
+        "skills/nk-plan/references/research-roles.md"
+      ]
+    },
+    "data-integrity-guardian.md": {
+      "source": "skills/conventions/agents/data-integrity-guardian.md",
+      "callers": [
+        "skills/nk-compound/references/capture.md",
+        "skills/nk-plan/references/research-roles.md"
+      ]
+    },
+    "data-migration-reviewer.md": {
+      "source": "skills/conventions/agents/data-migration-reviewer.md",
+      "callers": [
+        "skills/nk-plan/references/research-roles.md",
+        "skills/nk-review/references/reviewer-prompt.md"
+      ]
+    },
+    "deployment-verification-agent.md": {
+      "source": "skills/conventions/agents/deployment-verification-agent.md",
+      "callers": [
+        "skills/nk-plan/references/research-roles.md",
+        "skills/nk-review/references/reviewer-prompt.md"
+      ]
+    },
+    "framework-docs-researcher.md": {
+      "source": "skills/conventions/agents/framework-docs-researcher.md",
+      "callers": [
+        "skills/nk-compound/references/capture.md",
+        "skills/nk-plan/references/research-roles.md"
+      ]
+    },
+    "learnings-researcher.md": {
+      "source": "skills/conventions/agents/learnings-researcher.md",
+      "callers": [
+        "skills/nk-ideate/references/grounding.md",
+        "skills/nk-plan/references/research-roles.md",
+        "skills/nk-review/references/reviewer-prompt.md"
+      ]
+    },
+    "pattern-recognition-specialist.md": {
+      "source": "skills/conventions/agents/pattern-recognition-specialist.md",
+      "callers": [
+        "skills/nk-compound/references/capture.md",
+        "skills/nk-plan/references/research-roles.md"
+      ]
+    },
+    "performance-oracle.md": {
+      "source": "skills/conventions/agents/performance-oracle.md",
+      "callers": [
+        "skills/nk-compound/references/capture.md",
+        "skills/nk-plan/references/research-roles.md"
+      ]
+    },
+    "security-sentinel.md": {
+      "source": "skills/conventions/agents/security-sentinel.md",
+      "callers": [
+        "skills/nk-compound/references/capture.md",
+        "skills/nk-plan/references/research-roles.md"
+      ]
+    },
+    "web-researcher.md": {
+      "source": "skills/conventions/agents/web-researcher.md",
+      "callers": [
+        "skills/nk-ideate/references/grounding.md",
+        "skills/nk-plan/references/research-roles.md"
+      ]
+    },
+    "scope-synthesis.md": {
+      "source": "skills/conventions/scope-synthesis.md",
+      "callers": [
+        "skills/nk-brainstorm/references/synthesis-summary.md",
+        "skills/nk-plan/references/synthesis-summary.md"
+      ]
+    },
+    "research-digest.md": {
+      "source": "skills/conventions/research-digest.md",
+      "callers": [
+        "skills/nk-ideate/references/grounding.md",
+        "skills/nk-plan/references/research-roles.md"
+      ]
+    },
+    "resource-loading.md": {
+      "source": "skills/conventions/resource-loading.md",
+      "callers": [
+        "skills/nk-ideate/SKILL.md",
+        "skills/nk-brainstorm/SKILL.md",
+        "skills/nk-plan/SKILL.md",
+        "skills/nk-review/SKILL.md",
+        "skills/nk-compound/SKILL.md"
+      ]
+    },
+    "subagent-results.md": {
+      "source": "skills/conventions/subagent-results.md",
+      "callers": [
+        "skills/nk-work/references/subagents.md",
+        "skills/nk-ideate/references/grounding.md",
+        "skills/nk-plan/references/research.md",
+        "skills/nk-plan/references/deepening-workflow.md",
+        "skills/nk-review/references/reviewer-prompt.md",
+        "skills/nk-compound/references/capture.md",
+        "skills/nk-brainstorm/references/dialogue.md",
+        "skills/nk-simplify/SKILL.md",
+        "skills/nk-grill/SKILL.md",
+        "skills/nk-debug/SKILL.md",
+        "skills/nk-wayfinder/references/modes.md"
+      ]
+    }
+  },
+  "local_groups": {
+    "phase-0.md": {
+      "reason": "独立入口：brainstorm 负责需求分类和续作；plan 负责已有产物分流及规划定界。",
+      "paths": [
+        "skills/nk-brainstorm/references/phase-0.md",
+        "skills/nk-plan/references/phase-0.md"
+      ]
+    },
+    "handoff.md": {
+      "reason": "独立交接：brainstorm 交出产品范围；plan 交出可实施方案。提交与产物规则仍引用现有共享约定。",
+      "paths": [
+        "skills/nk-brainstorm/references/handoff.md",
+        "skills/nk-plan/references/handoff.md"
+      ]
+    },
+    "synthesis-summary.md": {
+      "reason": "阶段适配：共同方法及预算只在 scope-synthesis.md；本地仅持有调用时机、确认策略和写入位置。",
+      "paths": [
+        "skills/nk-brainstorm/references/synthesis-summary.md",
+        "skills/nk-plan/references/synthesis-summary.md"
+      ]
+    }
+  }
+}

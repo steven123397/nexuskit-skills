@@ -5,8 +5,8 @@ Five checks, each maps to a class of failure that actually happened:
 1. link-integrity   - relative markdown links must resolve
 2. references       - nk-* mentions resolve to real skills; no dangling K/R code refs
 3. byte-budget      - SKILL.md <= 8000 bytes (Codex injection limit), ratchet list
-4. prompt-copies    - duplicated subagent prompts match tests/prompt-copies.txt and
-                      carry the nk-copy declaration header
+4. shared-resources - canonical methods, caller references, local workflow ownership
+                      and complete distribution layouts
 5. frontmatter      - SKILL.md frontmatter parses under strict YAML, has name and
                       description, and name matches its directory (installers such
                       as the skills CLI derive the install dir from frontmatter name)
@@ -108,37 +108,10 @@ def check_byte_budget():
     check("byte-budget", problems)
 
 
-# --- 4. duplicated prompt copies ---
-def check_prompt_copies():
-    problems = []
-    manifest_path = "tests/prompt-copies.txt"
-    manifest = {}
-    for line in open(manifest_path, encoding="utf-8"):
-        line = line.strip()
-        if not line or line.startswith("#"):
-            continue
-        name, paths = line.split(":", 1)
-        manifest[name.strip()] = [p.strip() for p in paths.split(",")]
-
-    on_disk = {}
-    for f in glob.glob("skills/nk-*/references/agents/*.md") + glob.glob("skills/nk-*/references/personas/*.md"):
-        on_disk.setdefault(os.path.basename(f), []).append(f.replace(os.sep, "/"))
-    on_disk = {k: sorted(v) for k, v in on_disk.items() if len(v) > 1}
-
-    for name, paths in manifest.items():
-        for p in paths:
-            if not os.path.exists(p):
-                problems.append(f"manifest lists missing file {p}")
-                continue
-            head = open(p, encoding="utf-8").read(200)
-            if not head.startswith("<!-- nk-copy:"):
-                problems.append(f"{p}: missing nk-copy declaration header")
-    for name, paths in on_disk.items():
-        if name not in manifest:
-            problems.append(f"unregistered duplicated prompt: {name} ({', '.join(paths)})")
-        elif sorted(manifest[name]) != paths:
-            problems.append(f"{name}: manifest {sorted(manifest[name])} != on-disk {paths}")
-    check("prompt-copies", problems)
+# --- 4. shared method ownership ---
+def check_shared_resources():
+    from check_shared_resources import validate
+    check("shared-resources", validate(ROOT))
 
 
 # --- 5. frontmatter ---
@@ -180,7 +153,7 @@ if __name__ == "__main__":
     check_links()
     check_references()
     check_byte_budget()
-    check_prompt_copies()
+    check_shared_resources()
     check_frontmatter()
     if failures:
         print(f"\n{sum(len(p) for _, p in failures)} problem(s) in {len(failures)} check(s)")

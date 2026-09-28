@@ -1,3 +1,5 @@
+<!-- nk-local-workflow: nk-brainstorm; 产品范围入口与续作 -->
+
 # 第 0 阶段：续作、分类、规模
 
 ## 0.1 续作已有工作

@@ -37,6 +37,8 @@ description: Simplify settled, recently changed code for clarity, reuse, quality
 
 **执行方式：** 若客户端支持子代理，则并行派发审查子代理，每份子代理提示词 = persona 文件**逐字原文** + 完整范围（diff 或文件集）；否则在主会话内联逐视角过一遍。不得凭记忆转述 rubric，否则丢失保持行为不变的规则。
 
+返回按 [`../conventions/subagent-results.md`](../conventions/subagent-results.md)：直接给出可操作的发现、位置、行为保持依据与未决风险，不返回完整研究报告。
+
 ### 3. 应用或跳过 (Fix or Skip)
 * 三个视角的结果齐全后，直接应用有价值的发现；误报与低价值发现记为“跳过”，不打扰用户。
 * 评估发现时可以读范围外的代码，但只改范围内文件及其必需的 import/export 行。

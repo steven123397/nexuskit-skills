@@ -1,8 +1,8 @@
 # 阶段 1：调研
 
-派出任何调研子代理前读本文件。
+派出任何调研子代理前读本文件。返回体量按 [`../../conventions/subagent-results.md`](../../conventions/subagent-results.md)，本阶段指定各报告路径；只加载选中的角色。
 
-`references/agents/` 下的文件是提示词资产，不是可按名字调用的独立 Agent。派出时读取对应文件，用其内容加上下文所述的任务信息去初始化一个通用子代理。支持子代理的客户端上并行派出；不支持时在主会话中依次完成同样的工作。
+角色路径与规划任务说明见 [research-roles.md](research-roles.md)，只加载选中的方法；这些文件是提示词资产，不是可按名字调用的独立 Agent。派出时读取对应文件，用其内容加 research-roles 中该角色的目的、返回方式及上下文所述的任务信息去初始化一个通用子代理。支持子代理的客户端上并行派出；不支持时在主会话中依次完成同样的工作。
 
 **模型选择**：外部或资料型调研（`web-researcher`、`framework-docs-researcher`、`best-practices-researcher`）在客户端提供中档模型时可以用中档；架构、迁移和深化类判断用会话默认模型。
 
@@ -19,12 +19,12 @@ Standard 与 Deep：先写一段简短的**规划上下文摘要**（一两段�
 * 仓库根目录有 `CONCEPTS.md` 时读取，用其中的规范术语，不用同义词。
 * 按 [`../../conventions/settled-decisions.md`](../../conventions/settled-decisions.md) 附上已定决策、被否的备选，以及那句固定说明。
 
-**临时目录**：派出第一个研究员前，在系统临时目录下建一个本次运行专用的目录（如 `nk-plan-<随机串>`），记下它的绝对路径，本次所有研究员共用。每个研究员把报告写进自己的文件，只返回要点和文件路径。要点可能改变决策时才去读完整报告，不把所有报告都读进上下文。
+**临时目录**：派出第一个研究员前，在系统临时目录下建一个本次运行专用的目录（如 `nk-plan-<随机串>`），记下它的绝对路径，本次所有研究员共用。需要保留的长报告写进各研究员的独占文件，只返回要点和路径；短结果直接返回，不强制造报告。要点不足以完成具体判断时，只读取相关报告片段；只有跨段核对确有必要才读全文。
 
 并行派出：
 
 * `agents/repo-research-analyst.md`，范围：**patterns**。传入规划上下文摘要、项目当前指令和报告路径 `<临时目录>/repo-research.md`，让它直接去看当前功能的写法和实现代码。上下文不足以确定范围时，允许一次针对根目录或工作区的探查。
-* `agents/learnings-researcher.md`。传入规划上下文摘要、`../../conventions/solution-schema.md` 的绝对路径和 `<临时目录>/learnings.md`。
+* `../../conventions/agents/learnings-researcher.md`。传入规划上下文摘要、`../../conventions/solution-schema.md` 的绝对路径和 `<临时目录>/learnings.md`。
 
 **Agent 原生能力评估**（按需）：请求、上游文档或调研显示以下任一情况时，同时派出 `agents/agent-native-planning-strategist.md`（报告 `<临时目录>/agent-native.md`）：
 
@@ -81,15 +81,15 @@ Standard 与 Deep：先写一段简短的**规划上下文摘要**（一两段�
 
 按意图派出（`web-researcher` 传关注点和规划上下文摘要，**不传**代码库内容）：
 
-* **实现指导**：并行 `agents/best-practices-researcher.md`（`<临时目录>/best-practices.md`）与 `agents/framework-docs-researcher.md`（`<临时目录>/framework-docs.md`，附 1.1 得到的框架与版本）。
-* **格局 / 选项发现**：`agents/web-researcher.md`（`<临时目录>/web.md`）。目标是代码托管平台上的项目时（"GitHub 上的竞品"），在关注点中列出维度：项目名与链接、发布频率与活跃度、CLI/UX 形态、安装方式、文档与示例、插件或扩展面、常见 Issue 主题、许可证；star 数只作弱信号。
+* **实现指导**：并行 `../../conventions/agents/best-practices-researcher.md`（`<临时目录>/best-practices.md`）与 `../../conventions/agents/framework-docs-researcher.md`（`<临时目录>/framework-docs.md`，附 1.1 得到的框架与版本）。
+* **格局 / 选项发现**：`../../conventions/agents/web-researcher.md`（`<临时目录>/web.md`）。目标是代码托管平台上的项目时（"GitHub 上的竞品"），在关注点中列出维度：项目名与链接、发布频率与活跃度、CLI/UX 形态、安装方式、文档与示例、插件或扩展面、常见 Issue 主题、许可证；star 数只作弱信号。
 * **混合**：**依次**而非并行——先 `web-researcher` 摸清格局并给出入围名单，再只在入围技术的细节会实质影响 plan 时派出另外两个。
 
 **工具不可用**：`web-researcher` 会自检网络工具，缺失时停止。不要因此卡住：任何研究员报告无法调研或失败时，警告后继续，并把这个缺口带到 1.4 如实记录。
 
 ## 1.4 整合调研
 
-要点可能改变决策时才读完整报告。归纳：相关代码写法与文件路径、相关经验、外部参考与先例与最佳实践（如有）、相关 Issue 或 PR、会实质塑造计划的约束。
+摘要不能支撑具体判断时，按需读取对应报告片段。归纳：相关代码写法与文件路径、相关经验、外部参考与先例与最佳实践（如有）、相关 Issue 或 PR、会实质塑造计划的约束。
 
 * **外部发现要落到决策里**：出现在它改变了选择的地方——关键技术决策的理由、备选、风险或 Sources——而不是一个与计划无关的附录。没改变任何东西的发现就不写。
 * **记录外部调研是否塑造了计划**：内部记一个标志——外部发现是否实质影响了某个关键技术决策、备选、范围边界或风险。5.3.2 用它决定是否进入置信度评分。

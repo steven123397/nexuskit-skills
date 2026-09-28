@@ -57,4 +57,4 @@ flowchart LR
 - 落入确认区的问题按 [`../conventions/decision-autonomy.md`](../conventions/decision-autonomy.md) 批量结构化提出；无人值守时采用带 `(Recommended)` 的最佳推断方案推进，并在目标仓库 `docs/current.md` 登记 `[待确认]`。
 
 ## 子代理支持 (Subagents，可选)
-若客户端支持子代理：假设分属互不依赖的子系统时，可并行派发只读调查子代理（各自携带明确假设与结构化证据返回格式）；子代理不改代码、不执行 `git commit`，证据回传主会话核对。不支持子代理则主会话按假设排序串行执行同样的探针。
+若客户端支持子代理：假设分属互不依赖的子系统时，可并行派发只读调查子代理（各自携带明确假设与结构化证据返回格式）；子代理不改代码、不执行 `git commit`，证据按 [`../conventions/subagent-results.md`](../conventions/subagent-results.md) 回传主会话核对，保留假设、实际观测、反证与未验证项；日志仍遵守上述脱敏要求。不支持子代理则主会话按假设排序串行执行同样的探针。

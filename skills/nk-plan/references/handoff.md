@@ -1,3 +1,5 @@
+<!-- nk-local-workflow: nk-plan; 可实施计划的交接与收尾 -->
+
 # 收尾与交接（5.4）
 
 写后自检完成后读本文件。Direct、Chat brief、非软件规划和做法 plan 各有自己的结束方式，不走这里。

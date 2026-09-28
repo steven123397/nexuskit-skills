@@ -46,16 +46,18 @@
 
 ## 4. 可选增强评审（按 problem_type 映射）
 
-支持子代理的客户端读取 `agents/` 下对应提示词，用它初始化一个通用子代理；不支持时在主会话内联评审。评审只针对文档与示例，不修改产品代码；无收益则跳过本阶段。
+支持子代理的客户端仅读取下表选中的共享方法，连同该行目的及本节返回要求初始化通用子代理；不支持时在主会话内联评审。派发时同时传入选中方法的绝对路径，供子代理解析相对引用。评审只针对文档与示例，不修改产品代码；无收益则跳过本阶段。
 
-| problem_type / 情形 | 提示词 |
-| :-- | :-- |
-| `performance_issue` | `agents/performance-oracle.md` |
-| `security_issue` | `agents/security-sentinel.md` |
-| `database_issue` | `agents/data-integrity-guardian.md` |
-| 反复出现 / 疑似反模式 | `agents/pattern-recognition-specialist.md` |
-| 需要业界实践佐证 | `agents/best-practices-researcher.md` |
-| 需要框架/库官方文档佐证 | `agents/framework-docs-researcher.md` |
+| problem_type / 情形 | 共享方法 | 文档评审目的 |
+| :-- | :-- | :-- |
+| `performance_issue` | [performance-oracle](../../conventions/agents/performance-oracle.md) | 核实瓶颈类型、修复原理、测量证据和扩展假设，补充复发监控建议；不提出无关优化。 |
+| `security_issue` | [security-sentinel](../../conventions/agents/security-sentinel.md) | 核实漏洞类别、利用路径、修复效果、残余限制和预防办法；不扩展为全仓安全审计。 |
+| `database_issue` | [data-integrity-guardian](../../conventions/agents/data-integrity-guardian.md) | 核实受影响的不变量、修复如何保护它、验证证据、回滚或迁移限制及复用前提。 |
+| 反复出现 / 疑似反模式 | [pattern-recognition-specialist](../../conventions/agents/pattern-recognition-specialist.md) | 说明导致或避免问题的模式、其他出现位置、识别方法及经验可推广的边界。 |
+| 需要业界实践佐证 | [best-practices-researcher](../../conventions/agents/best-practices-researcher.md) | 补充预防指引、权威引用、准确术语与取舍，纠正过度泛化，使经验可复用。 |
+| 需要框架/库官方文档佐证 | [framework-docs-researcher](../../conventions/agents/framework-docs-researcher.md) | 用官方依据核实经验原理、版本限制和术语；补充能验证、限定或改善结论的引用。 |
+
+按 [`../../conventions/subagent-results.md`](../../conventions/subagent-results.md) 直接返回紧凑的文档修订建议、证据、适用限制和预防要点；只评估当前经验，不额外生成全仓审计报告。
 
 评审发现由主会话裁决并落到文档；子代理不直接改知识库文件。
 

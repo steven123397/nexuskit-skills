@@ -29,7 +29,7 @@
 
 ## 核心约定
 
-1. **工具箱，不是流水线**：每个技能可单独使用，按场景选取。
+1. **工具箱，不是流水线**：整套安装后，任意技能都可作为工作入口，按场景选取；这不表示支持单技能安装。
 2. **`docs/current.md` 是跨会话入口**：记录当前能力、验证结果、阻断项、下一步与所在分支。
 3. **产物有生命周期**：plan 与审查记录在版本分支上随代码演进，版本收尾时提炼长期价值后删除；Issue 只承载跨 plan 的待办、缺陷与探针。
 4. **知识双轨**：踩坑因果与决策理由进 `docs/solutions/`，领域术语进 `CONCEPTS.md`。
@@ -67,7 +67,7 @@
 
 ## 安装
 
-仓库布局：技能与共享约定都在 [`skills/`](skills/) 下（`skills/nk-*` + `skills/conventions/`；`conventions` 是共享约定参考库，不是可执行技能，但必须以同名目录与 `nk-*` 平级安装，技能正文里的 `../conventions/` 引用才能解析）。
+正式支持整套安装，任意技能都可以作为工作入口。仓库布局：技能与共享约定都在 [`skills/`](skills/) 下（`skills/nk-*` + `skills/conventions/`；`conventions` 是共享约定与角色方法参考库，不是可执行技能，但必须以同名目录与 `nk-*` 平级安装，技能正文里的 `../conventions/` 引用才能解析）。
 
 ### Kimi Code 插件
 
@@ -98,7 +98,7 @@ codex plugin add nexuskit@nexuskit-skills
 npx skills add steven123397/nexuskit-skills
 ```
 
-逐技能安装到 `.agents/skills/` 并平铺。注意：**务必连同 `conventions` 一起安装**（交互多选时全选，或 `--all`）——它是各技能 `../conventions/` 引用的共享约定库。也支持 `-s nk-plan` 单选技能。
+安装时选择整套技能（交互多选时全选，或 `--all`），并保留 `.agents/skills/conventions/` 与 `nk-*` 平级。`conventions/agents/` 中的共享角色方法随该目录安装，各技能只按需读取选中的文件。单选某个技能不属于本项目支持的安装形态；安装后仍可从任意技能开始工作。
 
 ---
 

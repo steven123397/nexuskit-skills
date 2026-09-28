@@ -29,14 +29,14 @@ argument-hint: "[可选：简短上下文 | refresh [范围提示]]"
 
 ## 沉淀模式流程
 
-进入各阶段时完整读取对应 reference：
+阶段规则的读取与复用遵循 [`../conventions/resource-loading.md`](../conventions/resource-loading.md)：只加载命中路线；完整且未变的原文直接复用，缺失或变化时补读。本阶段使用下列 reference：
 
 | 阶段 | 先读 | 内容 |
 | :-- | :-- | :-- |
 | 1 定位与采样 | `references/capture.md` | 从当前会话上下文与 `git log`/diff 定位刚解决的问题；语料优先采样；重叠判定（高重叠→更新既有条目） |
 | 2 编写与自检 | `references/capture.md`、`references/frontmatter-checklist.md`、`references/claims-checklist.md` | 按 solution-schema 模板成文；frontmatter 与正文引用逐项自检 |
 | 3 术语补全 | `references/capture.md`、[`../conventions/concepts-vocabulary.md`](../conventions/concepts-vocabulary.md) | 只做 Add/Refine，不整库初建 |
-| 4 可选增强评审 | `references/capture.md` | 按 problem_type 映射 `references/agents/` 提示词；只评审文档，不改产品代码 |
+| 4 可选增强评审 | `references/capture.md` | 按 problem_type 选择共享角色并附文档评审目的；只评审文档，不改产品代码 |
 | 5 可见性与提交 | `references/capture.md` | 首运行检查 `AGENTS.md` 入口指引；按 R4 第 4 条决定提交去向 |
 
 ## 审计模式流程
@@ -52,6 +52,6 @@ argument-hint: "[可选：简短上下文 | refresh [范围提示]]"
 
 - **写入边界**：沉淀模式只写本次条目（或更新既有条目）、`CONCEPTS.md` 补全、缺指引时 `AGENTS.md` 的一行指引；审计模式只改知识库文件。两种模式都不改产品代码；条目与其点名的指导文件（SKILL.md、runbook、指令文件）冲突时只报告，不编辑指导文件。
 - **删除需要正面证据**：代码被删不构成删除条目的理由；不确定时保留（细则见 `references/audit.md`）。
-- **子代理**：`references/agents/` 是提示词资产而非具名 Agent——读取文件内容初始化通用子代理；客户端不支持子代理时由主会话内联完成。子代理不写产品文件、不执行 `git commit`。
+- **子代理**：`references/capture.md` 链接的共享角色是提示词资产而非具名 Agent——读取文件内容初始化通用子代理；客户端不支持子代理时由主会话内联完成。子代理不写产品文件、不执行 `git commit`。
 - **提交**：沉淀严格按 [`../conventions/commit-cadence.md`](../conventions/commit-cadence.md) R4 第 4 条；amend 必须显式限定路径（`git add <具体文件>` + `git commit --amend --no-edit -- <路径>`）。本技能自己发起提交时先读 [`../nk-commit/SKILL.md`](../nk-commit/SKILL.md)。
 - **提问**：按 [`../conventions/decision-autonomy.md`](../conventions/decision-autonomy.md) 批量选项提问；无人值守时的待确认项在 `docs/current.md` 登记 `[待确认]`。

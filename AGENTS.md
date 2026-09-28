@@ -13,10 +13,11 @@
 - **[`conventions/`](skills/conventions/)**：全部共享约定（提交节奏、产物生命周期、术语、plan 格式等）。技能正文引用这里的规则，不重述。
 - **[`docs/ideation/nexuskit-framework-ideation.md`](docs/ideation/nexuskit-framework-ideation.md)**：体系设计 RFC（D1–D10 设计决定、阶段路线图）。
 - **[`README.md`](README.md)**：按场景选用技能的路由表。
+- **[设计对话转录](docs/case-studies/2026-09-25-design-dialogue-transcript.md)**：追溯立项取舍时按需查阅的历史材料，不是当前执行规则，不要求技能或新会话全文加载；当前规则以技能、共享约定与已采纳设计决定为准。
 
 ## 改动规则
 
-- 修改任何 `skills/nk-*/` 或 `skills/conventions/` 后，运行 `python tests/run_checks.py`，五项检查（链接、引用、字节上限、提示词副本清单、frontmatter 严格 YAML 与 name/目录同名）必须全绿；CI 会在推送时复跑。
+- 修改任何 `skills/nk-*/` 或 `skills/conventions/` 后，运行 `python tests/run_checks.py`，五项检查（链接、引用、字节上限、共享方法及调用关系、frontmatter 严格 YAML 与 name/目录同名）必须全绿；CI 会在推送时复跑。
 - **新增技能目录不建加载链接**：发布模型下各客户端消费的是安装快照（见头部加载模型），仓库内改动不直接影响线上；需要即时试用时按头部说明重装本地插件或建临时 junction。
 - 提交节奏遵循 [`conventions/commit-cadence.md`](skills/conventions/commit-cadence.md)：一个经过验证的变化一次提交，纯状态改动不单独提交。
 - `docs/skill-sources.md` 随技能的新建/修改同步更新；技能的 `SKILL.md` 正文不写来源备注。

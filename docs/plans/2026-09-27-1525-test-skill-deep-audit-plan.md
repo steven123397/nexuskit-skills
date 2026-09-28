@@ -7,288 +7,79 @@ product_contract_source: nk-plan
 topic: skill-deep-audit
 ---
 
-# 技能逐个深读审计与微项目实跑 - Plan
+# 技能逐个深读审计与微项目实跑
+
+**当前位置：第 3–4 步，`nk-ideate` / `nk-brainstorm`。** 两轮静态审核已有修改，第二轮尚未提交；用户已指定跨全部技能完成 #1 方案 C 与 #3 的整体处置，再回到阅读顺序及其余 Issue；不把这些跨技能改动分散到后续节点。本轮审核及关联 Issue 与用户看完前不再提交。
+
+**推进方式：按阅读顺序，读到哪个技能，就处理关联 Issue。** GitHub Issues 是唯一问题清单；已修改项评论说明，沙盒验证满足该项验收后直接关闭；本计划只保留阅读顺序和关联编号，不再另设问题编号、待办分类或重复验收清单。问题详情、讨论和完成状态以对应 Issue 为准。
+
+## 阅读顺序与关联 Issue（原附录 A.1）
+
+同一 Issue 出现在多个节点时，只处理当前技能涉及的部分，后续读到相关技能再核对；全部验收满足后才关闭。[#1](https://github.com/steven123397/nexuskit-skills/issues/1) 的共享提示词和 [#2](https://github.com/steven123397/nexuskit-skills/issues/2) 的触发证据贯穿相关技能，不另排一轮阅读。已拆分的 [#8](https://github.com/steven123397/nexuskit-skills/issues/8)、[#10](https://github.com/steven123397/nexuskit-skills/issues/10) 不再作为待办；[#9](https://github.com/steven123397/nexuskit-skills/issues/9) 已修复，仅在相关节点回归。
+
+| 顺序 | 阅读技能 | 关联 Issue / 当前安排 |
+| :-- | :-- | :-- |
+| 1 | `nk-init` | 已读，显式首次接入已有外部证据；关联 [#13](https://github.com/steven123397/nexuskit-skills/issues/13)、[#20](https://github.com/steven123397/nexuskit-skills/issues/20)、[#27](https://github.com/steven123397/nexuskit-skills/issues/27) 尚待处理，不视为完成 |
+| 2 | `nk-ask-ljq` | 已读；按用户决定，全部技能读完后再统一修订，关联 [#11](https://github.com/steven123397/nexuskit-skills/issues/11)、[#26](https://github.com/steven123397/nexuskit-skills/issues/26)、[#28](https://github.com/steven123397/nexuskit-skills/issues/28) 与入口文案；[#32](https://github.com/steven123397/nexuskit-skills/issues/32)：入口中的提交步骤 |
+| **3** | **`nk-ideate`（当前）** | **[#3](https://github.com/steven123397/nexuskit-skills/issues/3)：非软件路径重复、数量口径、证据交接与输出体量**；[#36](https://github.com/steven123397/nexuskit-skills/issues/36)：明确授权后的续作 |
+| **4** | **`nk-brainstorm`（当前）** | **[#1](https://github.com/steven123397/nexuskit-skills/issues/1)、[#12](https://github.com/steven123397/nexuskit-skills/issues/12)、[#23](https://github.com/steven123397/nexuskit-skills/issues/23)、[#25](https://github.com/steven123397/nexuskit-skills/issues/25)：副本边界、读取复用与综述摘要；[#3](https://github.com/steven123397/nexuskit-skills/issues/3) 的证据交接消费端**；[#33](https://github.com/steven123397/nexuskit-skills/issues/33)、[#34](https://github.com/steven123397/nexuskit-skills/issues/34)、[#36](https://github.com/steven123397/nexuskit-skills/issues/36)：产物复用、已定决策与授权；[#37](https://github.com/steven123397/nexuskit-skills/issues/37)、[#38](https://github.com/steven123397/nexuskit-skills/issues/38)、[#39](https://github.com/steven123397/nexuskit-skills/issues/39)：视觉提问、规模分级与扫描 |
+| 5 | `nk-grill` | [#29](https://github.com/steven123397/nexuskit-skills/issues/29)、[#30](https://github.com/steven123397/nexuskit-skills/issues/30)；[#34](https://github.com/steven123397/nexuskit-skills/issues/34)：一次质疑的衔接 |
+| 6 | `nk-plan` | [#1](https://github.com/steven123397/nexuskit-skills/issues/1)、[#3](https://github.com/steven123397/nexuskit-skills/issues/3)、[#12](https://github.com/steven123397/nexuskit-skills/issues/12)、[#17](https://github.com/steven123397/nexuskit-skills/issues/17)、[#21](https://github.com/steven123397/nexuskit-skills/issues/21)、[#23](https://github.com/steven123397/nexuskit-skills/issues/23)、[#24](https://github.com/steven123397/nexuskit-skills/issues/24)、[#25](https://github.com/steven123397/nexuskit-skills/issues/25)；核对 [#30](https://github.com/steven123397/nexuskit-skills/issues/30) 的使用端；[#33](https://github.com/steven123397/nexuskit-skills/issues/33)、[#34](https://github.com/steven123397/nexuskit-skills/issues/34)、[#35](https://github.com/steven123397/nexuskit-skills/issues/35)、[#36](https://github.com/steven123397/nexuskit-skills/issues/36)：产物复用、已定决策、重对齐与授权 |
+| 7 | `nk-work` | [#3](https://github.com/steven123397/nexuskit-skills/issues/3)：Fresh Worker、输出体量、返回行；核对项目指导持续维护 |
+| 8 | `nk-commit` | 随 work 阅读；[#11](https://github.com/steven123397/nexuskit-skills/issues/11)，回归已修复的 [#9](https://github.com/steven123397/nexuskit-skills/issues/9) |
+| 9 | `nk-to-issue` | [#20](https://github.com/steven123397/nexuskit-skills/issues/20)；验证 Issue 闭环及无远端降级 |
+| 10 | `nk-debug` | 修复微项目预留 bug；核对已定共享规则在调试场景的适用性 |
+| 11 | `nk-simplify` | [#3](https://github.com/steven123397/nexuskit-skills/issues/3)、[#30](https://github.com/steven123397/nexuskit-skills/issues/30) 的使用端；实施后精简；[#34](https://github.com/steven123397/nexuskit-skills/issues/34)：已定决策的消费端 |
+| 12 | `nk-wait-what` | 真实重对齐场景；历史模拟观察仅作核实线索；[#35](https://github.com/steven123397/nexuskit-skills/issues/35)：重对齐后的产物有效性 |
+| 13 | `nk-review` | [#1](https://github.com/steven123397/nexuskit-skills/issues/1)、[#11](https://github.com/steven123397/nexuskit-skills/issues/11)、[#14](https://github.com/steven123397/nexuskit-skills/issues/14)、[#22](https://github.com/steven123397/nexuskit-skills/issues/22)、[#23](https://github.com/steven123397/nexuskit-skills/issues/23)、[#31](https://github.com/steven123397/nexuskit-skills/issues/31)，回归 [#9](https://github.com/steven123397/nexuskit-skills/issues/9) |
+| 14 | `nk-compound` | [#11](https://github.com/steven123397/nexuskit-skills/issues/11)、[#15](https://github.com/steven123397/nexuskit-skills/issues/15) |
+| 15 | `nk-close` | [#11](https://github.com/steven123397/nexuskit-skills/issues/11)、[#16](https://github.com/steven123397/nexuskit-skills/issues/16)、[#18](https://github.com/steven123397/nexuskit-skills/issues/18)；先在沙盒验证收尾，主仓库分支最后收尾 |
+| 16 | `nk-handoff` | [#11](https://github.com/steven123397/nexuskit-skills/issues/11)、[#19](https://github.com/steven123397/nexuskit-skills/issues/19)，回归 [#9](https://github.com/steven123397/nexuskit-skills/issues/9) |
+| 17 | `nk-wayfinder` | [#20](https://github.com/steven123397/nexuskit-skills/issues/20)；有远端的决策地图与 Issue 链路 |
+| 18 | `nk-wizard` | 手动操作流程；补齐本技能的阅读与实际验证 |
+
+全部读完后，回到第 2 步修订 `nk-ask-ljq`、README 与插件入口介绍，核对全部 Issue 的验收及外部证据，再做分支收尾。前面节点留下的未完成项保留在原行和对应 Issue，不另建收尾待办。
 
 ## Goal Capsule
 
-- **Objective**：用户对 18 个 `nk-*` 技能完成逐字深读，每个技能在受控微项目中真实触发至少一次；绊脚点、空缺点、token 浪费与重复输入全部浮出水面并被归置；截至 2026-09-27 的全部遗留 Issue 按阅读节点在本分支处理完（范围见 R6）。
-- **Means**：附录 A 的"阅读顺序=实跑顺序"叙事表 + 仓库外沙盒微项目（KTD2）；审计对话常开，发现按 R3 分级处置。
-- **权威顺序与停止条件**：用户现场判断为最高权威；发现需要推翻已定决策（settled decisions）或大规模重写冲动时，停下报告，不在审计会话中直接动手。
+完成 18 个技能的深读和外部实跑，在 `feat/skill-deep-audit` 分支处理完本轮遗留 Issue；重点减少逻辑赘余、规则复述、重复读取和无必要的交互。
 
 ## Product Contract
 
-### Summary
-
-v0.1.1 之后的质量回看轮。动机有二：用户尚未逐字深读过各技能全文，凭印象迭代已有"逻辑堆砌而非优化"的征兆（nk-close 字节顶格、规则一度双处重复）；全部技能从未在受控小项目中完整实跑过。本轮以"删和合并"为默认姿势，产出作为 v0.2.0 方向的输入。
-
-### Problem Frame
-
-技能体系由多轮增量迭代堆成，单轮看每步都合理，整体看可能有冗余、重复与空转。paper-30min 迁移开发周期长、技能覆盖不全，不适合做技能测试床；需要一个极小的、可快速重启的沙盒项目把 18 个技能全部真实跑一遍。
-
 ### Requirements
 
-R1. 逐技能四问审计：边界是否与相邻技能/约定重叠、token 成本（SKILL.md 注入字节 + references 按需加载是否真按需）、触发可靠性、实战绊脚点。阅读顺序与实跑顺序一致，按附录 A 表执行。
-R2. 微项目沙盒承载实跑：仓库外独立目录、自身 git 仓库；覆盖无远端降级路径与有远端的 gh 链路、Issue 闭环、nk-wayfinder。沙盒已挂远端，后续无远端场景使用独立临时夹具，不移除现有远端。
-R3. 发现分级处置：小问题在审计会话中直接修（修 `skills/` 后必跑 `python tests/run_checks.py`）；够分量的新发现先落 Issue；R6 已纳入的遗留项在本分支完成，不再仅以落档作为完成；疑似推翻已定决策的先讨论。
-R4. 每个技能留一段审计结论（写在哪见 KTD5）；最终汇总为下一轮迭代的输入。
-R5. 逐技能记录 Issue #2 的真实触发案例，区分手动调用与自动触发；证据不足时补有界对照实验，在本分支拍板语言策略。Issue #1 的最新证据已表明跨副本契约冲突，按附录 A.1 完成全量评审与方案落地。
-R6. 本分支处理完截至 2026-09-27 未关闭的 Issue #1、#2、#3、#8、#10，包括其现有评论中的子项；#9 已修复，只做关联回归。每项在对应阅读节点集中处理，跨技能项由主处理节点定方案、后续节点验证消费端，全部验收满足后再关闭。#3 的可选增强须逐项拍板，采纳项落实，否决项记录依据，不能以继续泊车代替完成。(session-settled: user-directed)
-R7. 沙盒真实触发与实际验证由用户另行派出的外部 Agent 执行，不在本对话执行，也不使用 Codex 子代理。本对话负责阅读、问题处置、验证提示词的事先交流、用户反馈与沙盒现场证据核对。静态阅读、主仓库修改后的机械检查不替代外部实跑。(session-settled: user-directed)
-R8. 本轮整体减重：减少逻辑赘余、规则复述、重复读取/调研和无必要的交互。以实际路径的读取与动作负担为指标，不把移入 references 或压缩字数等同于减重；保留必要的行为边界与验证。核心方法变化先与用户讨论。(session-settled: user-directed)
+- R1：按上述顺序审核技能正文、按需引用和共享约定，检查职责边界、读取成本、触发与实际行为。
+- R2：用仓库外的 notes CLI 沙盒承载真实开发过程；保留现有远端，无远端路径另用独立夹具验证。
+- R3：小调整直接修；重要新问题记录到 Issue，核心方法变化先讨论，不用计划制造另一套问题追踪。
+- R4：验证记录只保留沙盒实际执行效果及证据边界；已提交成果看 Git，问题及修复状态看 GitHub Issues，不另记审核流水账。
+- R5：[#2](https://github.com/steven123397/nexuskit-skills/issues/2) 区分显式调用与自动触发，凭真实客户端证据决定语言策略；模拟不能替代证据。
+- R6：本轮遗留问题按拆分后的 GitHub Issues 逐项处理；可选增强明确采纳或否决，跨技能项验收完整后关闭。
+- R7：实际技能执行由用户另行安排独立会话。本对话负责修改质量、机械检查、提示词交流和只读核对反馈，不执行受测技能、不派发子代理。
+- R8：减重以减少实际读取与动作负担为目标，不能只移进 references 或缩短文字；保留必要的行为边界与验证。
 
-**Product Contract 变更说明**：按用户本次要求扩展 R3、R5 并新增 R6，替代“遗留问题只记录、留待后续版本”的安排；阅读顺序与人工阅读节奏保持不变。
+### 已定边界
 
-### Success Criteria
-
-- 18 个技能全部完成"深读 + 沙盒真实触发 + 一段结论"三件套。
-- 每个技能的 token 观测有记录：触发后实际读入了哪些文件、各多少字节。
-- R6 中的遗留 Issue 全部满足验收并完成关闭；审计新发现有修复提交或 Issue 去向。
-- `python tests/run_checks.py` 全绿贯穿全程。
-
-### Scope Boundaries
-
-- 不扩展与 R6 无关的大规模重写；R6 所需的跨技能调整在读到相应节点时讨论并实施。
-- paper-30min 迁移验收不在本轮范围。
-- `tests/run_checks.py` 可按 #1、#10 的验收范围调整，配套正反例与依赖说明。
-- description 语言策略按 #2 的真实证据在本分支拍板后落实；不改技能正文语言，不建设自动化 skill-eval 管线。
-
-### Sources
-
-- 用户 2026-09-27 会话拍板的本轮安排。
-- Issue [#1](https://github.com/steven123397/nexuskit-skills/issues/1)、[#2](https://github.com/steven123397/nexuskit-skills/issues/2)、[#3](https://github.com/steven123397/nexuskit-skills/issues/3)、[#8](https://github.com/steven123397/nexuskit-skills/issues/8)、[#10](https://github.com/steven123397/nexuskit-skills/issues/10) 的正文与截至 2026-09-27 的全部评论；已关闭的 [#9](https://github.com/steven123397/nexuskit-skills/issues/9) 以最终修复提交 `cbb2372` 为回归基线。
+正式支持整套安装，保留任意技能作为工作入口。`nk-init` 保持最小初始化，后续维护由共享约定及 work/close 承接。`nk-ask-ljq` 最后修订，必要时重写。用户负责语义和行为判断，本对话负责改动一致性、引用、来源说明和检查质量。
 
 ## Planning Contract
 
-### 关键技术决策
-
-KTD1. **阅读顺序 = 实跑顺序**，按"一次完整功能开发"的叙事排布（附录 A）：沙盒从 `nk-init` 起步，经历发想→澄清→盘问→规划→实施→调试→精简→审查→沉淀→收尾→交接的完整循环，`nk-wayfinder` 与 `nk-wizard` 两个独立场景放在末位。理由：叙事连贯，沙盒的 git 历史与 docs 产物自然长成，nk-close/nk-handoff 到点时才有真实材料可消费。 (session-settled: user-approved)
-
-KTD2. **沙盒位置在仓库外**：`D:\codex_project\nexuskit-audit-sandbox\`，独立 git 仓库，不挂本仓库。理由：`tests/run_checks.py` 全仓 glob `**/*.md`，沙盒内置会污染链接与引用检查；沙盒是一次性产物；插件按用户安装，任意目录都能消费技能。
-
-KTD3. **远端两段式**：沙盒先以无远端状态运行前半程（覆盖 `docs/backlog.md` 降级路径），挂上私有 GitHub 沙盒仓后跑 nk-wayfinder、Issue 闭环、PR 流程。一次审计同时覆盖两条链路。现有沙盒已挂远端；尚未覆盖的无远端场景改用独立临时夹具，保留沙盒现有配置。
-
-KTD4. **验证分工与 token 观测**：按 R7 由外部 Agent 报告实际载入文件清单、字节数、触发方式及执行证据；本对话的审计阅读单独记录，不计为该轮实跑开销。先与用户交流每轮提示词的目标、输入、允许改动与完成证据，用户再自行派发。用户反馈或准备下一轮时，只读核对沙盒的分支、HEAD、工作区及相关产物，区分用户转述、现场核实与未验证结论；不后台轮询、不操作外部 Agent。
-
-KTD5. **审计结论的落点**：每个技能的结论直接以追加段落的形式写在本 plan 的附录 B（一段技能一节）。审计是短期产物，本 plan 在分支收尾时按生命周期删除——需要长期保留的改进方向届时转入 Issue 或 v0.2.0 规划，不靠本 plan 留存。
-
-### 假设
-
-- 人工审计从 `nk-init`、`nk-ask-ljq` 开始；既有探针和模拟结论作为待复核证据，不替代人工阅读与真实触发。
-- 微项目主题为极简软件小工具（如一个几十行的 CLI），够用即可，不追求功能完整。
-- 沙盒目录 `D:\codex_project\nexuskit-audit-sandbox` 可用；私有 GitHub 沙盒仓在跑到第 17 步前创建即可。
+- 阅读顺序沿一次功能开发展开，外部验证随阅读推进；一般不提前展开后续节点；用户指定的 #1 全体系迁移与 #3 整体处置先完成。
+- 沙盒为 `D:/codex_project/nexuskit-audit-sandbox`，独立 Git 仓库；其 `.agents` 按用户脚本同步本项目本分支的最新提交，未提交改动尚未同步。
+- 验证提示词先与用户交流，保持自然开发请求，不塞入预期答案或冗长测试脚本。收到反馈或准备下一轮时，只读核对沙盒版本、改动和产物。
+- [沙盒执行效果](../reviews/feat-skill-deep-audit.md) 只记录实际运行；历史疑点去重后转 Issue。当前会话持续执行本计划，不高频更新 current.md。
 
 ## Implementation Units
 
-### U1. 沙盒脚手架与微项目骨架
-
-- **Goal**：沙盒目录可用，微项目有一个能被后续 16 个技能反复折腾的最小载体。
-- **Requirements**：R2（KTD2、KTD3 前半段）。
-- **Files**：仓库外 `D:\codex_project\nexuskit-audit-sandbox\`（不入本仓库）；微项目骨架（用户选定的极简 CLI）。
-- **Approach**：`git init`；放一个故意带一个小 bug、一个可精简点的最小代码文件；无远端起步。
-- **Test scenarios**：沙盒在 Kimi Code / Codex 中打开后技能列表可见（正常路径）；`nk-init` 能跑通（集成，U2 第 1 步正式消费）。
-- **Verification**：沙盒目录存在、git 仓库可提交、客户端能看到 nk-* 技能。
-
-### U2. 逐技能审计与实跑（滚动单元）
-
-- **Goal**：按附录 A 顺序完成 18 个技能的三件套（深读、实跑、结论）。
-- **Requirements**：R1、R2、R3、R5、R6、R7（KTD1、KTD3、KTD4、KTD5）。
-- **Dependencies**：U1。
-- **Files**：`skills/`、`tests/run_checks.py` 与相应测试/清单、`README.md`、`AGENTS.md`、插件清单、`docs/skill-sources.md`；本 plan 附录 B 记录审计证据。具体改动范围随附录 A.1 节点核实。
-- **Approach**：每个技能一轮——先逐字读正文与被引用的约定/references（记录读入字节），与用户对齐提示词后由外部 Agent 在沙盒真实触发，收到反馈并核对现场后四问过一遍，结论写附录 B；按附录 A.1 集中处理对应遗留子项，小修当场改并跑检查；新大问题先落 Issue。一个会话跑 2~4 个技能为宜，会话间用 `nk-handoff` 交接。
-- **Test scenarios**：每技能的实跑即测试；改动 `skills/` 后 `python tests/run_checks.py` 全绿（正常路径）；Issue #2 触发案例持续收集（边界）。
-- **Verification**：18 个技能均有独立审计结论与 token 观测，额外 Issue 专节不计入 18 个技能；R6 各子项有决策、验证证据与提交引用。
-
-### U3. 汇总与下一轮输入
-
-- **Goal**：审计结论收敛为明确的改进方向清单。
-- **Requirements**：R4、R6。
-- **Dependencies**：U2。
-- **Files**：本 plan 附录 B 定稿；必要的 Issue 落档。
-- **Approach**：通读附录 B，把同类问题合并成主题；核对 R6 的逐项验收和关闭证据，新发现再给出处置；为用户口述 v0.2.0 安排做准备。
-- **Test scenarios**：无（知识工作）。
-- **Verification**：用户确认汇总结论。
+- **U1：沙盒准备。** 已完成骨架与远端配置；外部 nk-init 首次接入已核对。
+- **U2：按阅读顺序推进。** 当前第 3–4 步。每次只讨论当前技能和关联 Issue，修改、检查后交流外部验证；只在验证记录中记录实际运行效果、可取得的读取成本及证据边界。
+- **U3：完成收口。** 全部技能读完后修订引导入口，核对 Issue 验收与沙盒执行证据；必要长期结论进既有经验库，不再建立成果流水账。
 
 ## Verification Contract
 
-- `python tests/run_checks.py`：任何 `skills/` 或 `skills/conventions/` 改动后必跑，全绿。
-- 沙盒侧无机械检查；以"每个技能真实触发过"的用户确认为准。
+- 修改技能或共享约定后运行 `python -X utf8 tests/run_checks.py`，五项全绿；改动通过 `git diff --check`。
+- 机械检查不等于行为验证。真实触发、调用路径、实际读取量以外部会话和沙盒证据为准；没有证据不记为通过。
+- 外部 init 证据目前仅覆盖已有项目、有远端的显式首次接入；其他路径和本轮技能修改的行为仍需验证。
 
 ## Definition of Done
 
-- 附录 B 覆盖全部 18 个技能，token 观测齐全，不以 Issue 专节凑数。
-- 发现全部归置：小修已提交（带 run_checks 证据），大修已落 Issue。
-- #1 全量副本终局及输出契约检查落地；#2 语言策略有真实证据并关闭 RFC 对应问题；#3 正文与评论的每个子项有处置；#8 全部一致性缺口修复；#10 YAML 与体积口径具备正反例；#9 关联回归通过。
-- U3 汇总经用户确认；分支收尾（nk-close）时本 plan 提炼后删除。
-
-## Appendix
-
-### A. 阅读与实跑顺序表（叙事序）
-
-| # | 技能 | 沙盒场景 | 环境门槛 |
-| :-- | :-- | :-- | :-- |
-| 1 | `nk-init` | 沙盒首次启用体系：建 AGENTS.md 指引、current.md | 无 |
-| 2 | `nk-ask-ljq` | 问路由："我想给这个小工具加功能，该怎么走" | 无 |
-| 3 | `nk-ideate` | 对微项目发想改进方向，产出 `docs/ideation/` | 无 |
-| 4 | `nk-brainstorm` | 挑一个方向澄清需求（观察术语即时写入） | 无 |
-| 5 | `nk-grill` | 对刚产出的需求/plan 手动盘问，体验豁免上限后的前沿轮次 | 用户坐对面 |
-| 6 | `nk-plan` | 补全实施部分（观察研究员/深化派发与 token 消耗） | 无 |
-| 7 | `nk-work` | 执行实施单元（测试先行、提交携带 U-ID） | 无 |
-| 8 | `nk-commit` | 随 nk-work 观察提交节奏执行 | 无（伴随观察） |
-| 9 | `nk-to-issue` | 实施中制造一个发现，在独立无远端夹具中验证 `docs/backlog.md` 降级；沙盒保留现有远端 | 独立无远端夹具 |
-| 10 | `nk-debug` | 修骨架里故意埋的 bug（复现优先硬关卡） | 无 |
-| 11 | `nk-simplify` | 实施后精简 | 无 |
-| 12 | `nk-wait-what` | 故意让 Agent 发散（或长对话后）重对齐 | 无 |
-| 13 | `nk-review` | 对沙盒分支 diff 审查，产出 `docs/reviews/` | 无 |
-| 14 | `nk-compound` | 沉淀一条踩坑/决策；可顺带跑一次审计模式 | 无 |
-| 15 | `nk-close` | 分支收尾六步（此时沙盒已有 plan/review/backlog 全套材料） | 无 |
-| 16 | `nk-handoff` | 会话交接（审计跨会话时自然多次使用） | 无（伴随使用） |
-| 17 | `nk-wayfinder` | 挂私有 GitHub 远端后，给一个偏大的目标跑决策地图 | 需 GitHub 远端 + gh |
-| 18 | `nk-wizard` | 定义一个手动操作流程（如改环境变量 + 重启验证）走一遍 | 无 |
-
-注：17 之后再补一轮 nk-to-issue / nk-close 的 Issue 闭环（有远端后 `gh` 路径），验证 R3 的关闭时机与 `Fixes #N`。
-
-### A.1 遗留 Issue 与阅读节点对应（2026-09-27 范围基线）
-
-本节是 R6 的处理分配，不是进度账本。读到哪个技能，就集中处理该行子项；无需为处理遗留项打乱人工阅读顺序。跨节点 Issue 不在完成某一行后提前关闭，交付证据记入附录 B 与验证提交。#9 已关闭，保留回归位置。
-
-| 阅读序 | 技能 | 集中处理的 Issue 子项 | 后续验证或收口 |
-| :-- | :-- | :-- | :-- |
-| 1 | `nk-init` | #10：真实 YAML 解析、重复键与类型校验、合法/非法样例及检查依赖；#3：设计对话转录的文档可见性 | 同步 AGENTS/README 检查说明；#10 体积部分留第 6 步 |
-| 2 | `nk-ask-ljq` | 先阅读并记录观察；按用户决定，路由正文及规则摘要暂不修改，待全部技能审计后统一修订，必要时重写 | 第 18 步之后、U3 汇总前处理 #8 路由与介绍一致性；#3 安装定位按整套安装处理 |
-| 3 | `nk-ideate` | #8：“两份文件必读”与列表不符；#3：非软件/仓库外路径重复、每视角 5–8/6–8 数字漂移、不可验证的质量表述、证据档案交接的生产端、子代理输出体量 | 第 4 步验证档案消费；开始 #2 自动触发证据采集，继续贯穿全程 |
-| 4 | `nk-brainstorm` | #1：纳入 references 根层副本，核实评论所述 13 组口径并评审分叉；#3：综述摘要重复与档案消费端、强制重复读取 reference | 第 6 步统一规划族方案；第 13 步验输出契约；复现附录 B 的预存 Product Contract 路由候选问题 |
-| 5 | `nk-grill` | #8：已定决策约定的适用范围与实际引用者一致；#2：明确手动调用的证据边界 | 第 6 步复核 settled-decision 使用端，不将手动调用记作自动触发成功 |
-| 6 | `nk-plan` | #1：全量副本评审、终局方案和检查口径落地；#3：阶段分流先读、重复读取、综述摘要与体量约定、极简状态返回行拍板；#8：方向性示意要求冲突；#10：references/共享约定单文件与总预算、拆分或有理由的豁免 | 第 7 步验证交接；第 13 步验证 reviewer 契约；后续节点回归体积预算。复核挑战证据候选问题 |
-| 7 | `nk-work` | #3：Fresh Worker 纪律拍板、实现子代理输出体量、状态返回行消费端 | 本对话不派发子代理；需要实跑时交由用户另行派出的外部 Agent，文本契约与运行证据分开，第 13 步核对审查端 |
-| 8 | `nk-commit` | #8：description/R4/R5 旧术语、R4 合法时机数量与 README/路由一致；#9：已修复的上游判断命令回归 | 第 16 步验证交接提交使用端 |
-| 9 | `nk-to-issue` | 验证 #1/#2/#3/#8/#10 的认领、证据与关闭时机；无远端降级覆盖 | 不新增独立遗留项；有远端 Issue 闭环在第 17 步后复跑 |
-| 10 | `nk-debug` | 按既定沙盒 bug 实跑；复核 #1 提示词方案与 #10 预算在本技能的适用性 | 不新增独立遗留项；新发现按 R3 处置 |
-| 11 | `nk-simplify` | 复核 #1 副本方案、#3 输出体量、#10 预算在精简场景中的适用性 | 不新增独立遗留项 |
-| 12 | `nk-wait-what` | #2：真实重对齐触发案例；复现附录 B 中纠正后仍消费过期产物的候选问题 | 候选问题先核实，不将模拟当作已确认缺陷 |
-| 13 | `nk-review` | #1：learnings-researcher 散文/JSON 契约冲突及全部消费端校验；#3：可执行改动行数的 50/200 阈值计数方法；#8：收尾衔接旧术语；#9：拆分命令回归 | #1 在全部组与调用方契约验证后收口；本对话做静态核对，夹具执行交由外部 Agent，不派子代理 |
-| 14 | `nk-compound` | #8：完成标志包含两项自检；R4 中 compound 例外与规则持有处一致 | 沉淀确有长期价值的决策，避免重复保存审计过程 |
-| 15 | `nk-close` | #8：description 的发布日产物与正文一致、已进入 plan 的发想记录有清理点、全仓术语扫尾；#3：所有可选项与新增评论子项处置完整 | 在沙盒演练收尾；主仓库本分支待第 18 步/U3 完成后才收尾 |
-| 16 | `nk-handoff` | #8：去掉 current.md 字段复述，修复无实施单元时的入口分支；#9：带引号的上游判断回归 | 验证共享约定指针与交接入口，沿用提交节奏 |
-| 17 | `nk-wayfinder` | #3：整套安装依赖完整性的最终验证；#1：末端副本调用方回归；有远端认领/关闭链路 | 所有遗留项核对实际提交与验收，不凭计划认领即关闭 |
-| 18 | `nk-wizard` | #2：补齐真实触发样本，必要时做有界对照实验，拍板语言策略并关闭 RFC 开放问题；#10：全量文件体积及准入检查收口 | 随后统一修订 `nk-ask-ljq` 及入口文案，再由 U3 汇总五个遗留 Issue 的完整交付证据 |
-
-#### 跨节点验收与边界
-
-- **阅读后的安排修订（用户指定）**：`nk-init` 已完成人工阅读，用户未发现明显语义或行为问题；这不等于外部实跑通过。`nk-ask-ljq` 作为引导性技能，正文与 R1–R6 摘要在全部技能审计结束后统一修订，必要时整体重写；不在第 2 步提前定稿。
-- **已同意的修改方向**：#10 使用真实 YAML 解析并分开语法与字段校验；#3 在维护者入口为设计转录增加按需索引，不让目标项目默认加载历史转录；#8 修正术语、grill 定位与插件介绍，涉及引导入口的内容随最终修订对齐。
-- **安装定位（用户澄清原始意图）**：正式支持整套安装，保留任意技能作为工作入口。#3 的安装问题以明确整套依赖边界及修正误导性单选说明处理，不新增单技能依赖解析机制。
-- **质量分工**：用户阅读负责发现语义和行为逻辑问题；本对话负责修改的结构一致性、引用、术语、来源说明、边界与回归覆盖，主仓库改动运行规定的机械检查。外部 Agent 负责 R7 的实际技能验证；未得到运行证据不记为通过。
-
-- **#1**：以磁盘全部同名副本为范围核实 13 组线索；同名本身不证明应该合并，逐组判断职责与分叉价值。提示词资产归并和 #3 的流程去重复协调实施，清单/内容检查及调用方输出契约都要验证。
-- **#2**：本次用户指令将原 Issue 中“v1.1.0 再决定”的排期提前至本分支；不预设改成英文。每条证据记录客户端、输入、期望与实际行为；不足 5 条时按 Issue 的 6–8 场景、2–3 客户端、每组合 3 次新会话方案补实验。客户端不可用时登记真实阻断，不用模拟凑完成。
-- **#3**：正文 3 项（体量、Fresh Worker、返回行）和最新评论 8 项均已分配；可选项允许有依据地否决，已确认的缺陷须修复。规则讨论不授权本对话派发子代理；实际验证按 R7 交给外部 Agent。
-- **#8**：正文 11 类缺口均已分配；每个消费端修正后做最终全仓检查，历史快照和术语 Avoid 标注按 Issue 约定豁免。
-- **#10**：样例先区分 YAML 语法错误与项目 schema 错误；合法注释或合法序列不能仅因出现 `#`/`[` 就被宣称为非法 YAML。重复键政策需显式校验，超限与豁免都应可复现。#1 的副本检查改动不混作本 Issue 验收。
-- **#9**：最终修复提交为 `cbb2372`，取代评论中旧哈希 `5260258`；第 8/13/16 步只补相关回归，不重复实现。
-
-### B. 审计结论（每技能一节，滚动追加）
-
-### 1. `nk-init`
-
-- **边界与重叠观察**：职责清晰，负责首次启用与最小初始化；`nk-work` 的 Orient 只读取既有状态，不应重复初始化。
-- **Token 观测**：本次实际读取 `skills/nk-init/SKILL.md`（4,916 B）、`skills/conventions/current-md.md`（5,245 B）和 `skills/nk-commit/SKILL.md`（6,618 B），合计 16,779 UTF-8 字节；未读取不存在的 `references/` 目录。
-- **触发可靠性**：技能标注 `disable-model-invocation: true`，手动调用路径明确。沙盒无远端、`gh` 可用，按规则无需询问远端选择，实际创建 `AGENTS.md`、`docs/current.md` 与 `docs/backlog.md` 并提交。
-- **绊脚点/空缺点**：初始化提交后 `docs/current.md` 的 HEAD 只能记录提交前哈希，否则再次改写会造成自指循环；这是状态文档约定的正常边界。沙盒已有 `.audit-probes/` 未跟踪材料，技能只暂存初始化产物，未误纳入提交。
-- **处置**：不修。U1 沙盒提交 `4474f70`；本次初始化提交 `f5e0688`（工作区保留审计探针未跟踪文件）。
-
-#### nk-init 外部实跑补证（2026-09-27）
-
-已读取外部会话 `01a0e2c8-9127-73d2-8080-abfc3ad3d1a2` 并只读核对沙盒：用户显式调用 nk-init，在已有 notes CLI、GitHub 远端和 gh 可用的条件下选择 GitHub Issues；提交 `aeae480` 仅新增 AGENTS.md 与 docs/current.md，既有配置与未跟踪 .audit-probes 保留。此前初始化经 `50662f2` revert 后再运行。本例支持“已有项目 + 有远端”的首次接入路径，不证明自动触发、幂等或无远端分支；CLI 行为测试未运行。外部执行中使用 commit -m 的观察留第 8 节点核对，不扩大本轮改动。
-
-### 2. `nk-ask-ljq`
-
-- **边界与重叠观察**：它只做场景路由与体系入口说明，不承接需求澄清或实现；“工具箱而非流水线”的总规则与各场景入口集中在此，和 README 路由表存在维护同步风险。
-- **Token 观测**：本次读取 `skills/nk-ask-ljq/SKILL.md`（4,937 B）；未拉入 references。
-- **触发可靠性**：技能标注 `disable-model-invocation: true`，对“给这个小工具加功能，该怎么走”可稳定路由到 `/nk-brainstorm`（若没有具体想法则先 `/nk-ideate`）。实际用沙盒 notes CLI 场景完成了该路由判断。
-- **绊脚点/空缺点**：路由图把 `/nk-commit` 列为独立步骤，但 `nk-work` 已要求按提交节奏执行，初次使用者可能重复调用；正文虽说明可跳过，但没有在该节点给出“随 nk-work 观察即可”的明确提示。
-- **处置**：不修。后续审计 README 与该正文时一并核对；若发现文案漂移再落 Issue。
-
-### 3. `nk-brainstorm`
-
-- **边界与重叠观察**：与 `nk-plan` 的分界由 Product Contract / Planning Contract 明确；但轻量、需求已清晰时，规则允许只在对话中对齐，若仓库已有 Product Contract 又会被 `nk-plan` 的阶段判断拉入 Durable 路径，存在“已有产物改变路线”的隐性耦合。
-- **Token 观测**：规划探针记录了 27 个实际读取文件，去重合计 172,937 UTF-8 字节；其中本技能正文与 references 按文件记录在沙盒 `.audit-probes/planning/execution-log.md`。该轮为模型模拟，未由客户端自动触发。
-- **触发可靠性**：未做客户端触发；模拟对“给 notes CLI 加可选标签”能判为 Lightweight，并能生成需求方向。
-- **绊脚点/空缺点**：轻量请求遇到预存 Product Contract 时，阶段路由没有把“继续已有产物”与“重新判断规模”的优先级写成单一规则。
-- **处置**：Issue 候选，暂不改动；需要在后续真实会话确认是否稳定复现。
-
-#### brainstorm 本轮静态审计与修订（2026-09-27）
-
-已核对正文及 13 份 reference，连同 ideate 的生产端与 plan-format、decision-autonomy 消费契约。本轮修正：文件中的 Requirements 一律有 R-ID，Problem Frame 必有；Ready for Planning Check 指向第六节；无仓库时仍先走任务分类；通用与软件路线的决策提问统一为 2–3 项，探索备选与提问区分。删去重复的 Goal Capsule 与章节分工解释，保留第 6/7 条提问规则编号以免调用方失效。
-
-证据交接已接通：接收 ideate 的相关档案索引，核对可访问性、来源与现状，已有有效依据不重扫，仅补缺口；复用与补充档案继续交给 nk-plan。缺失、过时、主题不匹配或只有外部材料时不冒充本地事实，仍按原核实流程处理。Path A/B 双信号、独立声明核实、范围确认与术语即时维护未删。以上是静态契约修订，尚无本次改动的外部实跑证据，不覆盖本节原有模拟结论。
-
-### 4. `nk-plan`
-
-- **边界与重叠观察**：Planning Contract、Implementation Units 和 Verification Contract 的分层完整；与 `nk-work` 的交接点依赖 plan 是否已经“可实施”，但该判定分散在 phase-0、structure、final-review 多份 reference 中。
-- **Token 观测**：规划探针完整读取本技能相关文件，修正后的去重总量为 172,937 UTF-8 字节（见 `.audit-probes/planning/execution-log.md`）；本轮未进行客户端真实触发。
-- **触发可靠性**：模拟可沿预存 Product Contract 继续生成 plan；`session-settled` 标记能被继承，但没有证据表明客户端会自动完成所要求的一次挑战。
-- **绊脚点/空缺点**：`session-settled` 只记录来源，不记录挑战发生的日期、阶段或证据，后续 Agent 难以判断“一次挑战”是否已经完成。
-- **处置**：Issue 候选，暂不改动；需要用户确认该审计结论后再决定是否扩展 settled-decision schema。
-
-### 5. Issue #9：提交节奏命令的 PowerShell 兼容性
-
-- **复现**：在 Windows PowerShell 执行未加引号的 `git rev-parse --abbrev-ref @{u}`，解析阶段报 `Missing '=' operator after key in hash literal`；执行 `git rev-parse --abbrev-ref '@{u}'` 正常返回 `origin/feat/skill-deep-audit`。
-- **根因**：`@{u}` 同时是 Git revision 语法和 PowerShell 哈希表字面量前缀，技能与共享约定的示例没有保护该 token；`nk-review` 范围探针还使用 `&&` 链式命令，与“每条命令独立执行”的纪律冲突。
-- **处置**：统一为 `git rev-parse --abbrev-ref '@{u}'`、`git log '@{u}..HEAD'`，并拆开审查范围探针中的链式命令；不改变提交节奏判定逻辑。修复后运行 PowerShell 复现命令、`python -X utf8 tests/run_checks.py`，并关闭 Issue #9。
-
-### 6. `nk-wait-what`
-
-- **边界与重叠观察**：技能只负责重新对齐，不替代 `nk-brainstorm` 或 `nk-plan` 的需求/规划流程。
-- **Token 观测**：正文 575 UTF-8 字节；模拟时同时读取项目术语表与当前对话输入，未做客户端上下文计量。
-- **触发可靠性**：未做客户端自动触发；模拟输入“这不对，我没说要标签功能；重新来”能够得到重新表述提示。
-- **绊脚点/空缺点**：没有明确清理已生成 Product Contract 的分支，也没有把“用户纠正”与“回答当前确认问题”分流；重新对齐后可能继续消费过期产物。
-- **处置**：Issue 候选，暂不改动；需在真实 brainstorm → wait-what 连续会话中复现后定级。
-
-### 7. `nk-ideate`（2026-09-27 静态审计）
-
-- **覆盖**：正文、10 份根层 reference、3 份代理提示词；来源对照会话 `01a0e2d0-5a48-7ad3-be03-6cbed750cd95` 已读取，仅作为来源说明，不替代本轮内容核对。
-- **已修**：必读文件数量错误、入口固定年份、三处下一步菜单与非软件拆轴复述、收尾路径与 Phase 4.1 不一致、不可验证的“明显优于天真清单”标准。交给 brainstorm 时增加相关证据索引，不复制完整档案或其他候选；说明 brainstorm 是本技能的交接约定，不误称 nk-plan 没有独立入口。
-- **保持**：六视角、先生成后批判、独立依据核查、tactical 编队、非软件各深度与生成/留存配额；此次没有借去重更改方法预算。
-- **体积口径**：以下为同一 LF 换行口径、相对本轮前 HEAD 的整个技能目录 Markdown 字节数，不是一次调用的读取量或 token。此前 brainstorm 的 89,287 B 是工作区原始字节，混合换行口径不用于减重比较。
-- `nk-ideate`：153,742 → 149,722 B，减少 4,020 B（2.61%）。
-- `nk-brainstorm`：89,237 → 88,952 B，减少 285 B（0.32%）。
-- **验证**：`python -X utf8 tests/run_checks.py` 五项通过；`git diff --check` 通过。未在本对话执行技能或派发子代理，真实读取量、触发与行为收益待外部会话验证。
-
-#### 本轮未实施的减重决策（并入 #1 / #3 / #8 / #10）
-
-| 项目 | 证据与影响 | 建议与处理节点 |
-| :-- | :-- | :-- |
-| 通用分支重复与产量漂移（#3） | universal-ideation 仍重述六视角、筛选与预算；非软件每视角 5–8，软件 6–8，没有写明差异理由 | 先决定是否统一生成配额，再抽出共用机制、仅留领域差异；快速 3–5 留存等明确差异保留。本轮未擅改预算 |
-| 重复确认（#3） | phase-0 的续作确认、visual-probes 的草图询问、blindspot-pass 的讲解许可及 synthesis-summary 的修改后确认可能串联 | 建议已授权动作不重问，确认聚焦真正的范围变化；Path A/B 双信号暂保留，交互核心变更先与用户讨论 |
-| 规模判断（#3） | phase-0 将“开场内容充分”推向 Standard/Deep，0.2 跳过扫描与 0.3 要求扫描并存 | 建议按实际范围和歧义判断，不能因用户说得完整增加仪式；与规划族路由一并处理 |
-| 重复读取与空派发（#3/#10） | 多处要求重新读取已在上下文的 reference；经验库不存在时也先加载长提示词 | 建议只在上下文缺失或文件变化时重读；无经验库先短路，但须保留 CONCEPTS 语义输入，统一核对调用方 |
-| 提示词副本范围（#1） | 按 references 下同名文件共找到 13 组，现清单只登记 10 组；另 3 组是 phase-0、handoff、synthesis-summary | 同名不等于可整体合并。已纳入 inventory；第 6 节点连同计划消费端评审差异，第 13 节点验 learnings 散文/JSON 契约，不提前关闭 |
-| 缓存会话边界（#3） | web-research-cache 声称只复用本会话，却遍历全局临时目录所有 run；键没有会话字段，ts 未参与复用判断 | 建议只使用本会话已知路径，或明确会话/时效边界；不引入更多全局缓存管理。作为独立行为修复讨论 |
-| 代理运行时遗留（#8） | web/issue 提示词仍固定年份；Issue analyst 禁脚本、禁 rg 的理由绑定旧客户端权限行为 | 与 #1 副本及运行时中立化集中修订，勿把当前主会话禁子代理变成技能全局规则 |
-
-术语初建的疑点已排除：nk-compound 的入口及 references/audit.md 明确支持整库初建，因此不记录为缺陷。以上开放项已有 Issue 归属，仍须在本分支逐项决策和验收；本次审计不代表 #1/#3/#8/#10 已完成。
-
-### C. 外部 Agent 验证协作
-
-本节定义本轮分工，正式提示词每轮先与用户交流，再由用户自行交给外部 Agent。这里不发起外部任务，也不把准备提示词视为已验证。
-
-#### 每轮提示词与真实开发
-
-提示词以自然开发请求为主，先与用户交流目标即可；不把内部验收清单、期望读取顺序和结论写进受测输入。用户已配置沙盒 .agents 同步本分支最新提交，验证前只需核对实际来源版本。需要评估自动触发时不点名技能；显式调用的结果只证明手动路径。由用户回传外部会话引用，本对话从执行记录与产物核对行为、读取成本、修改边界和未验证项，不要求外部 Agent 再写一份冗长报告。
-
-nk-init 首次接入已按上文补证，幂等与无远端路径仍未覆盖。ideate/brainstorm 建议沿 notes CLI 的真实开发继续：先探索值得做的方向，再由用户选一个澄清；提示词在用户准备实跑时交流，不在本对话执行。
-
-#### 沙盒观察边界
-
-每次用户回传结果或准备下一轮时，本对话先只读检查现场，再读取该轮相关产物；不为了验证而运行 CLI、初始化、切换分支或修改沙盒。没有新的反馈时不声称持续后台监测。文件存在只能证明产物存在，不能单独证明客户端确实触发了某技能。
-
-## Change Log
-
-- 2026-09-27：按用户要求将全部 5 个未关闭 Issue 及其现有评论纳入本分支，逐子项映射至 18 个阅读节点；保留 #9 修复作为回归基线，修正无远端测试方式及人工审计入口。
-- 2026-09-27：按用户要求新增 R7，将实际验证交给用户另行派出的外部 Agent；本对话负责提示词交流、反馈审阅与沙盒只读核对，停止在本对话安排实跑。
-- 2026-09-27：用户确认整套安装定位，`nk-ask-ljq` 延至全部技能审计后统一修订；记录 `nk-init` 人工阅读结果、已同意修法及质量责任，实际验证仍按 R7 执行。
-
-- 2026-09-27：按用户确认补齐项目指导持续维护：共享约定持有准入、触发、落点与验证规则，nk-work 提交前维护，nk-close 按本范围补漏；保持 nk-init 最小骨架，外部行为验证待回传。
-- 2026-09-27：新增 R8，明确体系减重目标；开始 ideate/brainstorm 全文一致性与行为重复审核，目录原始 Markdown 体积分别为 153,742 B / 89,287 B（不等同于单次载入 token）。
-
-- 2026-09-27：完成 ideate/brainstorm 首轮静态修订，删除重复规则并接通证据交接；记录未实施的核心减重决策和统一 LF 体积口径，补记 nk-init 外部实跑，调整验证提示词为自然开发请求。
+18 个技能均完成阅读、真实执行与效果记录，本轮遗留 Issue 全部取得最终处置并满足验收；必要检查通过，汇总结论经用户确认。分支收尾时提炼并清理短期审计产物。
