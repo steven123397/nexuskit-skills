@@ -57,7 +57,7 @@ description: Simplify settled, recently changed code for clarity, reuse, quality
 * 项目未配置测试、lint 或 typecheck 时，在汇报中明确说明，不默默跳过验证。
 
 ### 5. 提交与收尾 (Commit & Report)
-* 按 [`../conventions/commit-cadence.md`](../conventions/commit-cadence.md) 提交：精简改动可随当前实施单元一同提交，也可独立成一次 R1 提交；提交说明正文写入实际运行的验证命令与结果（含“行为保持不变”的依据）。
+* 按 [`../nk-commit/SKILL.md`](../nk-commit/SKILL.md) 提交：精简改动可随当前实施单元一同提交，也可独立成一次 R1 提交；提交说明正文写入实际运行的验证命令与结果（含“行为保持不变”的依据）。
 * 汇报：哪些原本就良好、哪些得到改善，按复用/质量/效率分类报告应用数与跳过数；说明减少了哪些自维护实现、状态、分支或依赖及行为保持依据。没有任何改动就如实说明；净删行数至多作为辅助信息，不设删减配额。
 * 若精简过程中发现值得沉淀的经验（非显而易见的取舍、易踩的坑），一句话建议运行 `/nk-compound`。
 * 精简完成即达到版本审查前置状态，一句话建议接着运行 `nk-review`。

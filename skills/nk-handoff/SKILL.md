@@ -43,20 +43,9 @@ disable-model-invocation: true
 * 检查目标项目根目录的 `AGENTS.md`（或等价指令文件）：若缺少指向 `docs/current.md`、`docs/solutions/` 与 `CONCEPTS.md` 的指引，进行补充（履行 [`../conventions/artifact-lifecycle.md`](../conventions/artifact-lifecycle.md) 规定的维护责任）。
 
 ### 4. 提交入库 (Commit per Cadence)
-读取 [`../nk-commit/SKILL.md`](../nk-commit/SKILL.md)，按以下优先级执行提交（**注意：工作区可能存在半成品代码，必须显式限定提交文件路径，防止误将半成品带入提交**）：
+将交接场景、文件范围、验证证据，以及本会话最近交付的归属和发布情况交给 [nk-commit](../nk-commit/SKILL.md)，由其按 R3/R4 判断 amend 或新建交接提交。
 
-1. **优先级 1（R3 amend 优先）**：
-   * 若上一个提交属于本会话产生，且尚未推送到远端（通过 `git log '@{u}..HEAD'` 或无 upstream 判定）；
-   * 仅显式暂存交接文件并限定路径执行 amend：
-     ```bash
-     git add docs/current.md
-     git commit --amend --no-edit -- docs/current.md
-     ```
-     *(若步骤 3 同时更新了 `AGENTS.md`，则在 `git add` 与 `git commit --amend --no-edit --` 末尾一并附上 `AGENTS.md`。)*
-   * 例外：本会话是规划会话、尚无本会话的提交时，不存在可 amend 的提交，走优先级 2。
-2. **优先级 2（R4 纯文档提交）**：
-   * 若上一个提交已推送到远端，或本会话尚未发起过代码提交；
-   * 仅显式暂存交接文件：`docs/current.md`、可能修改的 `AGENTS.md`，以及**本会话产生的规划产出**（`docs/ideation/`、`docs/plans/` 中本会话新建或修改的文件、`CONCEPTS.md`）。通过 `-F <temp-file> -- <上述路径>` 发起一次纯文档交接提交，提交信息风格遵循项目惯例。规划产出与交接合并为这一次提交（见 [`../conventions/commit-cadence.md`](../conventions/commit-cadence.md) R4）。
+提交范围仅含 `docs/current.md`、本次必要的 `AGENTS.md` 更新，以及本会话的规划产出（`docs/ideation/`、`docs/plans/` 和相关 `CONCEPTS.md` 改动）。规划产出与交接一起处理，不夹带半成品或外来改动；不能因无 upstream 就认定可以 amend。没有本会话可补记的交付，或无法确认其未共享时，由 nk-commit 按 R4 新建交接提交。
 
 ### 5. 汇报交接摘要 (Handoff Report)
 向用户输出结构化汇报：

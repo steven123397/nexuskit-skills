@@ -99,5 +99,5 @@ execution: code                # 可选：code（默认）或 knowledge-work（�
 ---
 ```
 
-* 不设 `status` 字段，不记录执行进度。进度以带 U-ID 的提交为准（见 [`commit-cadence.md`](commit-cadence.md) R1）。
+* 不设 `status` 字段，不记录执行进度。进度以带 U-ID 的提交为准（见 [nk-commit](../nk-commit/SKILL.md) R1）。
 * 字段名固定，不得改名；可以新增字段。

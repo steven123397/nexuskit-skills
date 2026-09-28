@@ -43,7 +43,8 @@ flowchart LR
 读取 [`references/fix.md`](references/fix.md) 并遵循：回归测试放在既有覆盖的归属处、确认它因根因变红、最小修复、复现回路对原始场景转绿、跑更广测试防回归、自审 diff 并清除全部调试埋点。测试质量与 Mock 边界遵循 [`../nk-work/references/tdd-loop.md`](../nk-work/references/tdd-loop.md)。满足触发条件时按 [`references/defense-in-depth.md`](references/defense-in-depth.md) 做分层防御。一次排查含多个相互独立的缺陷时按 R6 分开提交。
 
 ### 4. 收尾 (Wrap Up)
-- **提交**：读取 [`../nk-commit/SKILL.md`](../nk-commit/SKILL.md)，按 [`../conventions/commit-cadence.md`](../conventions/commit-cadence.md) 提交（修复代码 + 回归测试 + 说明同一提交，R1）；提交说明正文写入实际运行的验证命令、结果与未验证项，并记录正确假设（完整因果链），让下一个排查者能学习。
+- **提交前审查**：提交前必须完成审查；测试通过不代表已经审查，未完成审查不得进入提交。具体方式及与 nk-review 的衔接待其重构时确定，此处不预设。
+- **提交**：将本次文件范围、审查结论和已有验证证据交给 [`nk-commit`](../nk-commit/SKILL.md)，由其统一提交（修复代码 + 回归测试 + 说明同一提交，R1）；提交说明正文写入实际运行的验证命令、结果与未验证项，并记录正确假设（完整因果链），让下一个排查者能学习。
 - **无法本轮定位的疑难缺陷**：转 GitHub Issue（无远端记 `docs/backlog.md`），写入已排除的假设与已收集的证据，并向用户说明（分流规则见 [`../conventions/artifact-lifecycle.md`](../conventions/artifact-lifecycle.md) 第四章）。
 - **清理**：确认调试埋点（统一前缀标记）与一次性探针脚本已删除；原始场景的复现回路不再变红。
 - **复盘**：生产事故或同一根因模式散布多处时，分析它如何被引入、为何存活至今；值得沉淀的踩坑建议走 `/nk-compound`（一句话即可）。

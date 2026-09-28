@@ -60,4 +60,4 @@ argument-hint: "[主题、关注点或约束，可选；可带 'go deep'、'quic
 
 ## Phase 3~5：批判、写入、下一步
 
-按 `references/post-ideation-workflow.md` 执行依据核查、筛选、写入与下一步交接；非软件路线的差异以 `references/universal-ideation.md` 为准。写入时再读 `references/ideation-sections.md`。发想记录不单独提交，随后续交付或会话交接入库（见 [`../conventions/commit-cadence.md`](../conventions/commit-cadence.md) R2/R4）。
+按 `references/post-ideation-workflow.md` 执行依据核查、筛选、写入与下一步交接；非软件路线的差异以 `references/universal-ideation.md` 为准。写入时再读 `references/ideation-sections.md`。发想记录不单独提交，随后续交付或会话交接入库（见 [`../nk-commit/SKILL.md`](../nk-commit/SKILL.md) R2/R4）。

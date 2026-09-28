@@ -34,24 +34,28 @@
 主要参考：NexusKit 共享约定 [`../conventions/artifact-lifecycle.md`](../skills/conventions/artifact-lifecycle.md)（本技能为其第五章的可执行展开）
 关键设计决定：
 * 未消费发想记录与推迟 plan 逐项询问用户、每轮最多 3 个——用户 2026-09-25 拍板；无人值守时采用推荐默认并在 `docs/current.md` 登记 `[待确认]`。
-* 在六步法前增加第 0 步前置检查（单元提交核对、工作区清点、验证证据核对）：证据缺失时警告用户而非放行，依据 commit-cadence 第三节的通用纪律补入。
+* 在六步法前增加第 0 步前置检查（单元提交核对、工作区清点、验证证据核对）：证据缺失时警告用户而非放行，依据原提交约定的通用纪律补入（现归 nk-commit 第 3 步）。
 * 提炼的判断细则下沉到 `references/harvest.md`，SKILL.md 保持聚焦"怎么做"。
 * `docs/reviews/` 目录不存在时跳过并说明（项目可能尚未运行过 `nk-review`）。
 * 收尾提交显式限定本技能涉及的文件路径：收尾时工作区可能仍有后续版本的半成品，防止混入提交。
 * 提交信息风格遵循项目惯例而不写死格式：与 nk-commit、nk-handoff 的口径一致。
 
 * 2026-09-27 起收尾锚点从"版本合并"改为分支生命周期（plan U3，用户拍板）：两种触发（分支合并前全量扫 / 单分支项目按 plan 小范围扫）+ 发布日扫尾小节（漏网检查 + release notes + 打 tag，不做提炼删除）；发布与收尾解耦为纯事件。第 1 步纳入 Issue 兜底扫描，指针引用 `issue-writing.md` 第四节不重述。
-* 新增 `references/pr-description.md`（plan U4）：蒸馏自 CE `ce-commit-push-pr/references/pr-description-writing.md`（208 行 → 约 50 行），保留 value-first 原则、按决策成本伸缩的分级、`Fixes #N` / `Related: #N` 语义与"项目约定优先"；裁掉 base 解析机制、stack/多 PR 叙事、概念教学归档（概念与决策的沉淀由 `CONCEPTS.md` / `docs/solutions/` 在更早阶段接住）、branding、session-settled provenance；标题不写死 conventional commits，与 commit-cadence "风格遵循项目惯例" 口径一致。
+* 新增 `references/pr-description.md`（plan U4）：蒸馏自 CE `ce-commit-push-pr/references/pr-description-writing.md`（208 行 → 约 50 行），保留 value-first 原则、按决策成本伸缩的分级、`Fixes #N` / `Related: #N` 语义与"项目约定优先"；裁掉 base 解析机制、stack/多 PR 叙事、概念教学归档（概念与决策的沉淀由 `CONCEPTS.md` / `docs/solutions/` 在更早阶段接住）、branding、session-settled provenance；标题不写死 conventional commits，与 nk-commit "风格遵循项目惯例" 口径一致。
 * 首次实战后修订（2026-09-27，本仓库自身分支收尾）：Issue 兜底扫描补机械方法（grep 收集引用 + `gh issue view` 核对，原条文只说不做）；"用户决策点"章节前置到执行步骤之前（第 1/3 步引用它，原先放在文末阅读顺序颠倒）；发布日扫尾去重——原则归约定第五章，技能只留操作展开；补 `git rm` 已暂存删除的提示；发现"首次创建 CONCEPTS.md 时挂 AGENTS.md 入口"无触发点，已补进生命周期约定第二章与第 2 步。
 
 ## nk-commit
 
-主要参考：CE `ce-commit` (2026-09)、NexusKit 共享约定 [`../conventions/commit-cadence.md`](../skills/conventions/commit-cadence.md)
+主要参考：CE `ce-commit` (2026-09)、原 NexusKit 提交节奏约定、本地 `chinese-commit-conventions` 技能（2026-09-28 读取）。
 与 CE 的主要差异及原因：
 * 按"交付变化 / 状态记录"而非文件类型判定提交类型：文档本身也可能是交付物（例如本仓库的技能文件）。
 * 不在默认分支上自动建分支：个人项目常直接在 main 上工作，分支策略交给项目工作流文档。
 * 验证证据写进提交正文：证据随提交永久保存，不需要额外文档。
 * 2026-09-27 审计修订：上游分支判定示例给 `@{u}` 加引号，确保 PowerShell 与 bash 均可解析。
+
+* 2026-09-28 重构：提交时机 R1–R6 内化到 nk-commit，入口按范围、节奏、证据、说明、执行、返回顺序组织；不再运行时读取 commit-cadence 或 artifact-lifecycle。旧引用已迁往公开入口，commit-cadence.md 已删除。所有本地提交统一经过公开入口；调用方引用已迁移；最终核对同步修正 handoff、compound、ask-ljq 和 current-md 的旧 amend 条件及纯文档限制，保留各自场景与文件范围，将提交判断交回 nk-commit。
+* 提交文案从本地 `C:/Users/29617/.codex/skills/chinese-commit-conventions/SKILL.md` 提炼类型、动宾主题、正文动机、破坏性变更与 Issue 关联；保留项目风格优先，不引入工具安装、changelog 配置或固定中文 scope。仅实际不兼容才标记 BREAKING CHANGE，不照搬所有 Schema 改动都标记的规则。
+* 有效验证证据直接复用；仅相关内容变化、证据缺失或项目要求时补查。amend 不以无 upstream 推断未推送；首次提交、混合文件改动及 hooks 修改需按实际状态处理。独立技能实跑留待全部重写后统一验证。
 
 ## nk-compound
 
@@ -65,7 +69,7 @@
 * scripts/ 整体删除：两份校验脚本转写为 `references/frontmatter-checklist.md` 与 `references/claims-checklist.md` 的人工核对清单；session-history 脚本组删除，改用当前会话上下文 + `git log` 定位刚解决的问题，依赖脚本的 session-historian 提示词随之删除。
 * CE 基础设施删除：`docs_root` / `.compound-engineering` 配置层、Compound Packs、Proof 发布、Slack、auto-memory 与浏览器相关步骤。
 * 模式裁剪：去掉 mode/depth token 体系（interactive/non-interactive、full/lightweight），沉淀走单一流程；无人值守场景由 `../conventions/decision-autonomy.md` 统一覆盖。
-* 提交纪律改为 commit-cadence R4 第 4 条（优先随代码提交、未推送则限定路径 amend、已推送则留工作区），而非 CE 的独立文档提交与建分支。
+* 提交纪律改为 nk-commit R4 第 4 条（优先随代码提交、未推送则限定路径 amend、已推送则留工作区），而非 CE 的独立文档提交与建分支。
 * 可见性检查并入首运行职责：按 artifact-lifecycle 第二章补 `AGENTS.md` 指引，而非每次运行单独征询。
 * 术语表规则归 `../conventions/concepts-vocabulary.md`：本技能沉淀模式只做 Add/Refine，Fold/Retire/Scrub 与整库初建归审计模式。
 
@@ -76,11 +80,13 @@
 主要参考：CE `ce-debug` (2026-09)、Matt `diagnosing-bugs`、NexusKit 共享约定
 与上游的主要差异及原因：
 * 复现优先（Matt 的 feedback loop）前置为流程灵魂：CE 把复现放在调查阶段的一个小节，本技能将"没有红得起来的复现就不得进入假设阶段"立为硬关卡。
-* 删除 CE 的编排与平台层：pipeline / return-to-caller 模式（mode 令牌、JSON 返回契约）、PR 路由、分支自动创建、branding、Artifact Root / `docs_root` 配置解析——NexusKit 没有流水线编排层，产物位置由约定固定，分支与 PR 策略归项目，提交统一走 nk-commit + commit-cadence。
+* 删除 CE 的编排与平台层：pipeline / return-to-caller 模式（mode 令牌、JSON 返回契约）、PR 路由、分支自动创建、branding、Artifact Root / `docs_root` 配置解析——NexusKit 没有流水线编排层，产物位置由约定固定，分支与 PR 策略归项目，提交统一走 nk-commit。
 * 删除 post-fix-handoff 的修复后精简/审查编排：审查发生在版本层面（nk-review）；其通用残值（尾部改动后复跑回归、遗留发现落地记录）并入 references/fix.md 与收尾步骤。
 * issue-of-record 规则简化：无法本轮定位的疑难缺陷本来就要按 artifact-lifecycle 转 Issue，无需禁令。
 * Matt 的 `hitl-loop.template.sh` 与 `agents/openai.yaml` 删除：体系纯 Markdown 约定驱动、客户端中立；人工在环复现转写为 references/reproduction.md 第十种回路。
 * defense-in-depth.md 保留为独立 reference：35 行的通用分层防御模式，触发条件清晰，便于按需加载。
+
+* 2026-09-28：收尾增加提交前必须审查的关口，具体方式留待 nk-review 重构；向 nk-commit 传递审查结论及已有验证证据，删除废弃提交约定的引用。
 
 ## nk-grill
 
@@ -167,7 +173,7 @@
 
 #3 收口：子代理直接返回有位置和行为保持依据的发现，使用共享结果体量规则，不增加完整报告。
 
-主要参考：CE `ce-simplify-code` (2026-09)、NexusKit 共享约定 [`../conventions/commit-cadence.md`](../skills/conventions/commit-cadence.md)
+主要参考：CE `ce-simplify-code` (2026-09)、NexusKit 共享约定 [nk-commit](../skills/nk-commit/SKILL.md)
 与 CE 的主要差异及原因：
 * 删除 CE 的平台编排细节（受限派发、代理生命周期、模型档位、权限模式参数、任务跟踪提示、阻塞提问工具的探测规则）：NexusKit 客户端中立，只保留“支持子代理则派发、否则内联”的一条规则。
 * 三视角从“固定并行三个”改为“按信号选用、默认全跑”：NexusKit 以单会话串行为主，小范围改动不必机械跑满三个视角。
@@ -211,7 +217,7 @@
 * 正文改写为中文并套用 NexusKit 体例（执行步骤编号、"Done when" 判据原义保留）；上游描述段精简为适用场景说明。
 * `template.sh` 逐字节保留为 `assets/template.sh`，不翻译不精简：上游明确 library 部分永不手改，一致性正是重点；该文件是技能交付物的模板资产，不是技能自身的自动化设施，不违反体系"纯 Markdown 无脚本"原则。
 * 删除 `agents/openai.yaml`：客户端专用配置，NexusKit 客户端中立。
-* 新增两处衔接：Windows 下用 Git Bash 运行的说明；入库例外明确指向 commit-cadence R1，并提示用 `nk-compound` 沉淀过程中发现的非显性知识。
+* 新增两处衔接：Windows 下用 Git Bash 运行的说明；入库例外明确指向 nk-commit R1，并提示用 `nk-compound` 沉淀过程中发现的非显性知识。
 
 ## nk-init
 
@@ -221,7 +227,7 @@
 * 保留"探测 → 展示确认 → 幂等写入"的三段 explore-first 骨架与"探测已确定答案的不提问"；不移植 Matt 专有的 issue tracker 选择、triage label 词汇表、CONTEXT.md/ADR 布局等配置面——那些是 Matt 体系的配置，与 NexusKit 产物矩阵无关。
 * 写入对象是 NexusKit 自有产物：全局指令文件的知识入口指引（artifact-lifecycle 第二章）、`docs/current.md`、无远端时的 `docs/backlog.md` 降级。
 * 负向清单写进流程：不建 `CONCEPTS.md`（由第一个合格词条创建）、不建空目录（git 不跟踪空目录）。
-* 带 `disable-model-invocation: true`（手动技能）；提交遵循 commit-cadence。
+* 带 `disable-model-invocation: true`（手动技能）；提交通过 nk-commit。
 
 ## nk-ask-ljq
 
@@ -278,6 +284,8 @@
 本试点不禁止资料性链接，不改变整套安装模型，也不把跨技能协作改成隐含的自动编排；`nk-commit` 和 `nk-handoff` 仍通过公开入口委托。真实客户端执行效果尚未验证，需在沙盒中比较正常代码、非代码、UI、外部状态和委派路径的实际读取与完成证据。
 
 提交接口与 `nk-commit` 保持一致：仅在有 U-ID 时传入并附加到提交主题，Issue 或直接需求没有 U-ID 时不要求补造编号。
+
+2026-09-28 后续调整：nk-work 提交前必须完成审查，具体方式及与 nk-review 的衔接留待该技能重构；向 nk-commit 传递审查结论与可复用的验证证据，不将测试通过等同于审查通过。
 
 用户已认可这一组织方式作为后续逐技能整理的范式。设计理由、取舍和适用边界集中记录于 [技能组织决定](solutions/architecture-decisions/2026-09-28-skill-execution-locality.md)；review 的触发安排留待该技能审查时决定。
 

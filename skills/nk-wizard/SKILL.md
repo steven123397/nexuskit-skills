@@ -14,7 +14,7 @@ Wizard 会打开每个 URL、准确说明该点什么该复制什么、捕获这
 
 出色的 UX 已由 [assets/template.sh](assets/template.sh) 解决：逐阶段进度、confirmation gates、跨平台 URL 打开（含 WSL）、隐藏的 secret 输入、幂等的 `.env` upsert、`gh secret`/`gh variable` 写入、收尾 summary。**你的工作只是确定流程范围并编写各个 stage。** `STAGES` 标记之上的 library 在每个 wizard 中都完全相同——这种一致性正是重点，永远不要手动编辑它。
 
-Wizard 默认是一次性产物：为单次运行而构建，保存到 scratch 或 `scripts/` 路径，任务完成后删除，不进入版本生命周期。只有当用户想要一条应留在仓库中的可重复 setup 路径时才入库——入库按 [`../conventions/commit-cadence.md`](../conventions/commit-cadence.md) R1 随验证证据正常提交，并从 README 链接过去。
+Wizard 默认是一次性产物：为单次运行而构建，保存到 scratch 或 `scripts/` 路径，任务完成后删除，不进入版本生命周期。只有当用户想要一条应留在仓库中的可重复 setup 路径时才入库——入库按 [`../nk-commit/SKILL.md`](../nk-commit/SKILL.md) R1 随验证证据正常提交，并从 README 链接过去。
 
 ## 执行步骤
 

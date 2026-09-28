@@ -20,7 +20,7 @@ argument-hint: "[可选：简短上下文 | refresh [范围提示]]"
 
 ## 准入门槛（沉淀模式）
 
-只沉淀**已解决且已验证**的问题（未运行的验证不记为通过，见 [`../conventions/commit-cadence.md`](../conventions/commit-cadence.md) 通用纪律）。按 solution-schema 第一章的双轨准入判断：
+只沉淀**已解决且已验证**的问题（未运行的验证不记为通过，见 [`../nk-commit/SKILL.md`](../nk-commit/SKILL.md) 第 3 步）。按 solution-schema 第一章的双轨准入判断：
 
 - **Bug 轨**（排查/缺陷/性能/构建）：反事实检验——若无此文，未来仅凭代码与单测是否仍极可能重蹈覆辙或耗时重探？
 - **Knowledge 轨**（架构决策/规范/最佳实践）：决策三门槛——难以撤回、无背景会困惑、确有取舍。`workflow_issue` 让工作流与协作过程本身的复盘也可入库。
@@ -53,5 +53,5 @@ argument-hint: "[可选：简短上下文 | refresh [范围提示]]"
 - **写入边界**：沉淀模式只写本次条目（或更新既有条目）、`CONCEPTS.md` 补全、缺指引时 `AGENTS.md` 的一行指引；审计模式只改知识库文件。两种模式都不改产品代码；条目与其点名的指导文件（SKILL.md、runbook、指令文件）冲突时只报告，不编辑指导文件。
 - **删除需要正面证据**：代码被删不构成删除条目的理由；不确定时保留（细则见 `references/audit.md`）。
 - **子代理**：`references/capture.md` 链接的共享角色是提示词资产而非具名 Agent——读取文件内容初始化通用子代理；客户端不支持子代理时由主会话内联完成。子代理不写产品文件、不执行 `git commit`。
-- **提交**：沉淀严格按 [`../conventions/commit-cadence.md`](../conventions/commit-cadence.md) R4 第 4 条；amend 必须显式限定路径（`git add <具体文件>` + `git commit --amend --no-edit -- <路径>`）。本技能自己发起提交时先读 [`../nk-commit/SKILL.md`](../nk-commit/SKILL.md)。
+- **提交**：将沉淀或审计场景、文件范围、验证证据及关联交付交给 [nk-commit](../nk-commit/SKILL.md)，由其按 R3/R4 决定提交或暂留，不自行执行提交算法。
 - **提问**：按 [`../conventions/decision-autonomy.md`](../conventions/decision-autonomy.md) 批量选项提问；无人值守时的待确认项在 `docs/current.md` 登记 `[待确认]`。
