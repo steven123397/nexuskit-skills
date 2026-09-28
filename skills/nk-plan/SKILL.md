@@ -6,7 +6,7 @@ argument-hint: "[需求描述、需求阶段 plan 路径、要深化的 plan 路
 
 # /nk-plan
 
-> **路径解析说明：** 本文件及其 references 中引用的文件（`references/`、`../conventions/`、`../nk-work/`、`../nk-handoff/`）均相对于本技能所在目录解析，不在目标代码仓库中查找。`docs/plans/`、`docs/solutions/`、`docs/current.md`、`CONCEPTS.md` 指目标仓库中的文件。
+> **路径解析说明：** 本文件及其 references 中引用的文件（`references/`、`../conventions/`、`../nk-work/`、`../nk-commit/`）均相对于本技能所在目录解析，不在目标代码仓库中查找。`docs/plans/`、`docs/solutions/`、`docs/current.md`、`CONCEPTS.md` 指目标仓库中的文件。
 
 `nk-brainstorm` 定义**做什么**，`nk-plan` 规划**怎么做**，`nk-work` 执行。上游 brainstorm 不是必需的。
 
@@ -55,4 +55,4 @@ argument-hint: "[需求描述、需求阶段 plan 路径、要深化的 plan 路
 * **plan 不记执行进度**：没有 `status` 字段，不加复选框；进度以带 U-ID 的提交为准。
 * **plan 吸收既有 Issue 即认领**：assignee 与溯源评论按 [`../conventions/issue-writing.md`](../conventions/issue-writing.md) 第三节执行，规则不重述。
 * **不重问已定决策**；已定标注也不压制缺陷证据。
-* **提交**：`nk-plan` 本身不提交。会话在规划后结束时，由 `nk-handoff` 把规划产出和 `docs/current.md` 合成一次交接提交；同一会话接着用 `nk-work` 实施时，规划产出随第一个单元的提交一起入库（[`../nk-commit/SKILL.md`](../nk-commit/SKILL.md) R4）。
+* **提交**：达到本阶段交付标准的仓库内 Plan 及术语交给 [nk-commit](../nk-commit/SKILL.md)，同时提供验证证据、阻断和下一步，由其维护 current 并入库；草稿暂留，无文件则不制造提交。不自动调用 handoff。

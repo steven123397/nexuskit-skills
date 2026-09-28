@@ -108,7 +108,7 @@ git bisect run <test-command>
 
 **日志陷阱。** 在疑似失败点加定向日志，反复跑场景，捕获通过与失败两次运行之间不同的状态。
 
-**统计复现。** 循环跑失败场景，建立复现率：
+**统计复现。** 循环跑失败场景，建立复现率。下例须在 Bash / Git Bash 中运行，不直接复制到 PowerShell：
 
 ```bash
 for i in $(seq 1 20); do echo "Run $i:"; <test-command> && echo "PASS" || echo "FAIL"; done

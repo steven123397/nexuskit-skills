@@ -65,7 +65,7 @@
 
 **可见性（首次在某项目运行时必查）**：按 [`../../conventions/artifact-lifecycle.md`](../../conventions/artifact-lifecycle.md) 第二章，检查目标项目根的 `AGENTS.md`（或等价全局指令文件）是否有指向 `docs/current.md`、`docs/solutions/`、`CONCEPTS.md` 的指引；缺则补一行最小指引，描述性语气（如"在已记录领域实施或排障时相关"），不写"必须先检索"式命令句。`CONCEPTS.md` 不存在时不补它的指引，不催促项目采纳。
 
-**提交去向**：优先随对应修复或特性交付一起入库。对应交付已经提交时，将本次沉淀文件、关联交付及已知发布情况交给 [nk-commit](../../nk-commit/SKILL.md)，由其按 R3 和 R4 第 4 条判断补记或暂留。不能只因提交尚未推送就直接 amend；本技能不自行执行 Git 提交命令。
+**提交去向**：优先随对应修复或特性交付一起入库。对应交付已经提交时，将本次沉淀文件、关联交付及已知发布情况交给 [nk-commit](../../nk-commit/SKILL.md)，由其按 R3 和 R4 第 4 条判断补记、独立交付或暂留，并同步 current。不能只因提交尚未推送就直接 amend；本技能不自行执行 Git 提交命令。
 
 明确本次涉及的 solution、`CONCEPTS.md` 与 `AGENTS.md` 文件范围，不带入无关改动；将 nk-commit 返回的提交或暂留结果写入汇报。
 

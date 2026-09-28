@@ -9,7 +9,7 @@ topic: skill-deep-audit
 
 # 技能逐个重构、深读审计与微项目实跑
 
-**当前位置：U2，`nk-work` 试点重构基本完成，下一项为 `nk-commit`。** 2026-09-28 用户确认按依赖关系调整重写顺序；`nk-work` 及配套范式已提交为 `1dc57bd`，机械检查通过，真实客户端执行效果仍待验证。此前的深读与跨技能修改继续保留，不把它们视为其他技能已经完成重构。
+**当前位置：U2，`nk-work` 试点与 `nk-commit` 首轮重构已提交；`nk-commit` 的 current 归属调整和 `nk-handoff` 简化已获用户确认，本次一并交付。下一项为 `nk-debug`。** 2026-09-28 用户确认按依赖关系调整重写顺序；`nk-work` 及配套范式已提交为 `1dc57bd`，机械检查通过，真实客户端执行效果仍待验证。此前的深读与跨技能修改继续保留，不把它们视为其他技能已经完成重构。
 
 **推进方式：逐技能深读、重构，并处理关联 Issue。** GitHub Issues 是唯一问题清单；本计划记录重构顺序与任务范围，不另设问题编号或复制 Issue 验收要求。问题详情、讨论和完成状态以对应 Issue 为准；只有取得所需证据并满足验收后才关闭。
 
@@ -22,8 +22,8 @@ topic: skill-deep-audit
 | 顺序 | 技能 | 重构重点 | 关联 Issue / 既有安排 |
 | :-- | :-- | :-- | :-- |
 | 1 | `nk-work` | 试点重构基本完成（1dc57bd）；保留单单元边界，真实执行效果待验证 | [#3](https://github.com/steven123397/nexuskit-skills/issues/3)：Fresh Worker、输出体量、返回行；核对项目指导持续维护 |
-| 2 | `nk-commit` | 下一项：收拢常规提交路径，厘清提交节奏维护源与 amend、纯状态记录等条件分支 | [#11](https://github.com/steven123397/nexuskit-skills/issues/11)，回归已修复的 [#9](https://github.com/steven123397/nexuskit-skills/issues/9) |
-| 3 | `nk-handoff` | 整理现场收集、交接产物与提交边界，避免重复加载完整提交规则 | [#11](https://github.com/steven123397/nexuskit-skills/issues/11)、[#19](https://github.com/steven123397/nexuskit-skills/issues/19)，回归 [#9](https://github.com/steven123397/nexuskit-skills/issues/9) |
+| 2 | `nk-commit` | 首轮已提交；current 随提交维护及 R1–R6 调整已确认 | [#11](https://github.com/steven123397/nexuskit-skills/issues/11)，回归已修复的 [#9](https://github.com/steven123397/nexuskit-skills/issues/9) |
+| 3 | `nk-handoff` | 四步流程及显式调用已确认；字段由 current 契约持有 | [#11](https://github.com/steven123397/nexuskit-skills/issues/11)、[#19](https://github.com/steven123397/nexuskit-skills/issues/19)，回归 [#9](https://github.com/steven123397/nexuskit-skills/issues/9) |
 | 4 | `nk-debug` | 保持因果调查与修复关卡，处理对 nk-work 私有 reference 的依赖 | 修复微项目预留 bug；核对已定共享规则在调试场景的适用性 |
 | 5 | `nk-simplify` | 集中行为保持与精简方法，明确角色材料的加载条件和结果回收 | [#3](https://github.com/steven123397/nexuskit-skills/issues/3)、[#30](https://github.com/steven123397/nexuskit-skills/issues/30) 的使用端；实施后精简；[#34](https://github.com/steven123397/nexuskit-skills/issues/34)：已定决策的消费端 |
 | 6 | `nk-review` | 整理审查范围、角色选择、输出及修复接口；到此讨论审查触发安排 | [#1](https://github.com/steven123397/nexuskit-skills/issues/1)、[#11](https://github.com/steven123397/nexuskit-skills/issues/11)、[#14](https://github.com/steven123397/nexuskit-skills/issues/14)、[#22](https://github.com/steven123397/nexuskit-skills/issues/22)、[#23](https://github.com/steven123397/nexuskit-skills/issues/23)、[#31](https://github.com/steven123397/nexuskit-skills/issues/31)，回归 [#9](https://github.com/steven123397/nexuskit-skills/issues/9) |
@@ -80,12 +80,12 @@ topic: skill-deep-audit
 - 重构顺序按上表的技能依赖关系推进；每次聚焦一个技能，跨技能规则变动同步直接消费端。全部重写完成后才统一安排外部验证，按真实开发场景组织，不把重构顺序强加到实跑流程。
 - 沙盒为 `D:/codex_project/nexuskit-audit-sandbox`，独立 Git 仓库；其 `.agents` 按用户脚本同步本项目本分支的最新提交，未提交改动尚未同步。
 - 验证提示词先与用户交流，保持自然开发请求，不塞入预期答案或冗长测试脚本。收到反馈或准备下一轮时，只读核对沙盒版本、改动和产物。
-- [沙盒执行效果](../reviews/feat-skill-deep-audit.md) 只记录实际运行；历史疑点去重后转 Issue。当前会话持续执行本计划，不高频更新 current.md。
+- [沙盒执行效果](../reviews/feat-skill-deep-audit.md) 只记录实际运行；历史疑点去重后转 Issue。current 随 nk-commit 的交付提交按需更新，不作实时流水账。
 
 ## Implementation Units
 
 - **U1：沙盒准备。** 已完成骨架与远端配置；外部 nk-init 首次接入已核对。
-- **U2：逐技能重构与机械检查。** 按上表及“逐技能重构任务”推进，下一项为 nk-commit。每次核对当前技能和关联 Issue，修改后完成内容核对、来源同步与机械检查；不安排逐技能沙盒实跑。全部技能重写及入口统一完成后进入 U3。
+- **U2：逐技能重构与机械检查。** 按上表及“逐技能重构任务”推进，下一项为 nk-debug。每次核对当前技能和关联 Issue，修改后完成内容核对、来源同步与机械检查；不安排逐技能沙盒实跑。全部技能重写及入口统一完成后进入 U3。
 - **U3：统一沙盒实测与收口。** 确认沙盒加载全部重写后的已提交版本，由用户安排独立会话按真实开发场景测试；核对触发、读取路径、产物、验证证据和关联 Issue 验收。实测发现的问题修复后重跑受影响场景，满足验收再关闭 Issue。全部通过后汇总用户确认并收尾；必要长期结论进既有经验库，不再建立成果流水账。
 
 ## Verification Contract
@@ -99,3 +99,5 @@ topic: skill-deep-audit
 ## Definition of Done
 
 18 个技能均完成深读、按新范式重构、真实执行与效果记录，本轮遗留 Issue 全部取得最终处置并满足验收；必要检查通过，汇总结论经用户确认。分支收尾时提炼并清理短期审计产物。
+
+2026-09-28 决策调整：current 的维护归 nk-commit，每次提交前核对并按需与交付同次入库；nk-handoff 仅限用户显式调用，不根据自然语言或技能结束自动触发。Plan 达到交付标准后提交，移除依赖交接入库的旧限制；ideate 只写入记录，用户需要时自行调用 nk-commit。

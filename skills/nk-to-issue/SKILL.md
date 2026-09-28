@@ -38,12 +38,12 @@ argument-hint: "[一句话 bug 报告 / 新需求描述 / Issue 编号]"
 ### 4. 落档 (File It)
 按 [`../conventions/issue-writing.md`](../conventions/issue-writing.md) 的条目格式写作（遵循四原则：持久性优于精确、行为而非步骤、验收标准可独立验证、范围边界明确；bug 必填 Evidence 小节，写明核实结论与复现步骤）：
 - **有 GitHub 远端**：`gh issue create` 创建；核实既有 Issue 的用 `gh issue comment` 补充证据。
-- **无远端**：追加到 `docs/backlog.md`。该改动按提交节奏 R2 不单独提交，随下一个代码提交或会话交接入库。
+- **无远端**：追加到 `docs/backlog.md`。该改动按提交节奏 R2 不单独提交，随下一次相关交付或用户显式调用 nk-handoff 时入库。
 
 把 Issue 链接或 backlog 位置给用户看。
 
 ### 5. 结束 (Wrap Up)
-一句话提示用户回原会话继续。本技能不发起交接提交：没有仓库改动时不涉及 `nk-handoff`；若写了 `docs/backlog.md`，提示一句该改动留在工作区、将随下次提交或交接入库即可。
+一句话提示用户回原会话继续。本技能不发起交接提交：没有仓库改动时不涉及 `nk-handoff`；若写了 `docs/backlog.md`，提示一句该改动留在工作区、将随下次相关交付或用户显式调用 nk-handoff 时入库即可。
 
 ---
 

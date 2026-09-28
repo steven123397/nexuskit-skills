@@ -8,7 +8,7 @@
 ## 一、去向
 
 1. **有 GitHub 远端**：用 `gh issue create` 落档，标题与正文按本规范。
-2. **无远端**：写入 `docs/backlog.md`，每条一个条目，格式与 Issue 正文同构；文件改动不单独提交，随下一个代码提交或会话交接入库（[nk-commit](../nk-commit/SKILL.md) R2/R4）。无远端时第三、四节的 assignee 与评论机制不适用，认领与关闭只在 `docs/current.md` 登记。
+2. **无远端**：写入 `docs/backlog.md`，每条一个条目，格式与 Issue 正文同构；文件改动不单独提交，随下一次相关交付或用户显式调用 nk-handoff 时的现场保存入库（[nk-commit](../nk-commit/SKILL.md) R2/R4）。无远端时第三、四节的 assignee 与评论机制不适用，认领与关闭只在 `docs/current.md` 登记。
 
 ## 二、标签约定
 
@@ -22,7 +22,7 @@
 
 - **`nk-brainstorm`**：把 Issue 作为需求来源时认领。
 - **`nk-plan`**：把既有 Issue 纳入 plan 范围的那一刻认领；对应单元交付后按第四节关闭。
-- **`nk-work`**：直接认领时除上述两件事外，还在 `docs/current.md` 登记——这是写文件，不是单独提交，随该单元的提交或会话交接入库（[nk-commit](../nk-commit/SKILL.md) R5 不因此破例）。
+- **`nk-work`**：直接认领时除上述两件事外，还在 `docs/current.md` 登记——这是写文件，不是单独提交，由 [nk-commit](../nk-commit/SKILL.md) 在提交前核对并与交付入库；没有交付时暂留，用户显式保存现场时按 R4 处理。
 
 **路由判断**：需求类 Issue 未澄清范围与成功标准时先经 `nk-brainstorm`；已写清行为与完成定义的可直接进 `nk-plan` 或 `nk-work`。
 

@@ -11,7 +11,7 @@
 | **Ideation (发想记录)** | `docs/ideation/*.md` | 短期 / 阶段性 | `/nk-ideate` 创建；30 天内同主题再次发想时更新原文件而非新建 | 被选中的方向进入 Plan 后，随消费它的分支收尾删除；未被消费的发想记录不随分支删除，收尾时询问是保留、转为 Issue 还是删除 |
 | **Plan (方案与计划)** | `docs/plans/*.md`（工作分支；单分支项目在 main 上，格式见 [`plan-format.md`](plan-format.md)） | 短期 / 阶段性 | `/nk-brainstorm` 创建需求部分，`/nk-plan` 补全实施部分，实施过程中根据新发现直接就地修改 | 收尾时提炼架构决策/术语后删除；不留未维护的历史死 Plan，完整过程由 Git 留存 |
 | **Review (审查记录)** | `docs/reviews/*.md`（工作分支；单分支项目在 main 上） | 短期 / 阶段性 | `/nk-review` 创建并追加审查条目 | 修复随代码提交更新；收尾时遗留项转 Issue，文件删除 |
-| **Current (会话入口)** | `docs/current.md` | 常驻（单例覆盖） | `/nk-handoff`、`/nk-close` 更新 | 持续覆盖更新，始终反映当前真实状态 |
+| **Current (会话入口)** | `docs/current.md` | 常驻（单例覆盖） | nk-commit 提交前按需更新；显式 nk-handoff 保存现场 | 持续覆盖更新，始终反映当前真实状态 |
 | **Issue / 待办 / 探针** | GitHub Issues（无远端时降级为 `docs/backlog.md`） | 中期（任务生命周期） | `/nk-to-issue`（核实落档）、`/nk-wayfinder`（探针）、跨 plan 疑难 bug、推迟项 | 完成后关闭（Closed），依靠 Issue 平台状态流转与归档；认领与关闭时机见 [`issue-writing.md`](issue-writing.md) 第三、四节 |
 | **Solutions (经验与决策)** | `docs/solutions/<category>/*.md` | 长期 / 永久资产 | `/nk-compound` 沉淀，或收尾时从 plan 提炼 | 永久沉淀；由 refresh 定期审计是否过时或漂移 |
 | **Concepts (领域术语)** | 根目录 `CONCEPTS.md` | 长期 / 永久资产 | `/nk-brainstorm` / `/nk-plan` 即时录入，`nk-compound` 补全 | 永久沉淀；由 refresh 定期审计 |
@@ -96,10 +96,10 @@ flowchart TD
    * 按第二章核对知识入口，并检查本次收尾范围涉及的项目指导是否遗漏或失效。
 3. **清理已交付工件**：
    * 确认无遗留项后，删除本次开发已交付完成的临时 Plan 与 Review 文档（`git rm`）。
-4. **更新 `docs/current.md`**：
-   * 重写为收尾后的系统状态、已具备能力与后续规划。
+4. **准备收尾状态**：
+   * 整理成果、证据、阻断和下一步供 nk-commit 更新 current。
 5. **单个收尾提交（遵循 R4）**：
-   * 发起纯文档收尾提交，提交信息风格遵循项目既有惯例。
+   * 委托 nk-commit 将收尾产物与 current 同次入库，风格遵循项目惯例。
 6. **PR 摘要（可选）**：
    * 若项目走 PR 流程，按 PR 描述规范生成摘要；release notes 不属于本步，归发布日扫尾。
 

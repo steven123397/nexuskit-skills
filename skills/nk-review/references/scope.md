@@ -4,34 +4,32 @@
 
 ## 一、四种审查对象
 
-按用户输入分流；命令尽量合并执行以减少打断。
+按用户输入分流；逐条运行 Git 命令，检查结果后再决定下一步。
 
 ### 1. 空参数（默认：版本层面审查）
 
 审当前分支相对基线分支的全部改动（已提交 + 已暂存 + 未暂存一起）：
 
-```bash
-BASE=$(git merge-base HEAD <base-ref>)
-echo "BASE:$BASE"
-echo "FILES:"
-git diff --name-only "$BASE"
-echo "DIFF:"
-git diff -U10 "$BASE"
-echo "UNTRACKED:"
+依次运行以下命令；第一条成功后，将其输出的完整提交哈希作为后续 `<base-sha>`，不使用 shell 变量赋值拼接：
+
+```text
+git merge-base HEAD <base-ref>
+git diff --name-only <base-sha>
+git diff -U10 <base-sha>
 git ls-files --others --exclude-standard
 ```
 
 - `<base-ref>` 的确定顺序：目标项目工作流文档规定的基线分支 > 当前分支的 upstream > 远端默认分支（`origin/main` / `origin/master`）> 本地 `main` / `master`。
-- `git diff $BASE`（不带 `..HEAD`）对 merge-base 与工作树求 diff，三种状态的改动都覆盖到。
+- `git diff <base-sha>`（不带 `..HEAD`）对 merge-base 与工作树求 diff，三种状态的改动都覆盖到。
 - 无法解析出基线时停下说明，不要把范围悄悄退化成"只看未提交改动"——那会漏掉分支上已提交的工作。按 [`../../conventions/decision-autonomy.md`](../../conventions/decision-autonomy.md) 询问用户审查对象；无人值守时以"未提交改动"为兜底并在覆盖说明中注明。
 
 ### 2. 指定基线 ref
 
-用户给了 commit、分支、tag（"review since X"）：先 `git rev-parse <ref>` 确认可解析，再 `BASE=$(git merge-base HEAD <ref>) || BASE=<ref>`，产出同上。**diff 为空就在这里失败**，不要进入编队后才发现无事可审。同时用 `git log <ref>..HEAD --oneline` 记录提交清单，供意图摘要使用。
+用户给了 commit、分支、tag（"review since X"）：先 `git rev-parse <ref>` 确认可解析，再单独运行 `git merge-base HEAD <ref>`；成功时使用输出哈希，失败时使用已解析的 ref 作为基线，产出同上。**diff 为空就在这里失败**，不要进入编队后才发现无事可审。同时用 `git log <ref>..HEAD --oneline` 记录提交清单，供意图摘要使用。
 
 ### 3. 指定文件或路径
 
-用户点名文件/目录：diff 限定到这些路径（`git diff -U10 $BASE -- <paths>`）；其中未跟踪的新文件按全文阅读。审查结论只对这些路径负责，在覆盖说明中写明"范围为用户指定路径"。
+用户点名文件/目录：diff 限定到这些路径（`git diff -U10 <base-sha> -- <paths>`）；其中未跟踪的新文件按全文阅读。审查结论只对这些路径负责，在覆盖说明中写明"范围为用户指定路径"。
 
 ### 4. 未提交改动
 

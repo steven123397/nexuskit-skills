@@ -63,7 +63,7 @@ NexusKit 是一套**个人体系**：用户画像是个人项目、同时使用�
 | :-- | :-- | :-- |
 | D1 | **工具箱，不是流水线** | 正式支持整套安装，任意技能都可作为工作入口；不表示单技能可独立安装。README 按场景路由，不规定每个版本必经的技能链。 |
 | D2 | **`docs/current.md` 是跨会话入口** | 新会话从这里进入。只记当前能力、验证结果、阻断项、下一步、所在分支；不记操作流水。 |
-| D3 | **所有产物都有生命周期** | 每类产物诞生时就确定终点（见第四章）。清理挂在"版本收尾"上，不挂在 PR 上；PR 可选。 |
+| D3 | **所有产物都有生命周期** | 每类产物诞生时就确定终点（见第四章）。清理挂在"分支收尾"上，不挂在 PR 上；PR 可选。 |
 | D4 | **plan 与审查记录"活时在本地，死后从 main 消失"** | 执行期留在版本分支、随代码一起修改提交；收尾时提炼长期价值后删除，git 历史保留原文。 |
 | D5 | **Issue 负责跨 plan 的事务** | 待办、疑难缺陷、推迟的工作、wayfinder 探针。plan 内部的实施单元不拆 Issue，靠 plan + `current.md` 接力。不设 plan→Issue 的转换技能（长期挂起由 `nk-close` 覆盖，并行认领按 YAGNI 不建）；Issue 格式由 `conventions/issue-writing.md` 统一约定，开发中冒出的 bug/需求由 `nk-to-issue` 核实分析后落档。 |
 | D6 | **不强制盘问；术语即时写入** | 以 CE 的 ideate/brainstorm 为主体。Agent 对可逆、局部、有惯例的事自行决定；范围变化、不可逆、数据/API 契约等分歧按共享约定确认。`nk-grill` 已作为用户主动选择的压力测试工具补入，不是必经环节。术语在 brainstorm/plan 中敲定即写，格式由 `concepts-vocabulary.md` 持有。 |
@@ -80,9 +80,9 @@ NexusKit 是一套**个人体系**：用户画像是个人项目、同时使用�
 
 | 产物 | 位置 | 生命周期 |
 | :-- | :-- | :-- |
-| Plan（目标、范围、关键决策、实施单元、变更记录） | 版本分支 `docs/plans/` | 执行中直接修改，与代码同一提交；版本收尾时提炼后删除 |
+| Plan（目标、范围、关键决策、实施单元、变更记录） | 工作分支 `docs/plans/` | 执行中直接修改，与代码同一提交；分支收尾时提炼后删除 |
 | 审查记录（待修清单、收敛结论） | 版本分支 `docs/reviews/` | 同上；遗留项转 Issue 或 `current.md` 阻断项 |
-| 进度、阻断项、下一步 | `docs/current.md` | 常驻，在交接点覆盖更新 |
+| 进度、阻断项、下一步 | `docs/current.md` | 常驻，由 nk-commit 提交前按需更新；显式 handoff 可保存未完成现场 |
 | 待办、疑难缺陷、推迟项、探针 | GitHub Issues（无远端时退化为 `docs/backlog.md`） | 关闭即结束 |
 | 踩坑因果、决策理由 | `docs/solutions/` | 长期保留；由 `nk-compound` 审计模式维护过期条目 |
 | 领域术语 | `CONCEPTS.md` | 长期保留；由 `nk-compound` 审计模式维护 |
@@ -94,13 +94,13 @@ NexusKit 是一套**个人体系**：用户画像是个人项目、同时使用�
 * 与当前 plan 无关的需求或疑难缺陷 → 开 Issue。
 * 小缺陷 → 随当前实施单元修复并验证。
 
-**版本收尾**（`nk-close`）依次完成：遗留项转移 → 提炼 solutions/术语 → 删除 plans 与 reviews → 更新 `current.md` 为合并后仍准确的状态 → 单个收尾提交 →（可选）写 PR 摘要。
+**分支收尾**（`nk-close`）依次完成：遗留项转移 → 提炼 solutions/术语 → 删除 plans 与 reviews → 更新 `current.md` 为合并后仍准确的状态 → 单个收尾提交 →（可选）写 PR 摘要。
 
 ---
 
 ## 五、提交节奏规则
 
-提交以“一个经过验证的变化”为单位，实现、测试和配套文档一并交付。进度由提交及其证据体现，不为标记完成而修改 Plan；`current.md` 不作实时进度日志。
+提交以“一个经过验证的变化”为单位，实现、测试和配套文档一并交付。进度由提交及其证据体现，不为标记完成而修改 Plan；`current.md` 不作实时进度日志，由 nk-commit 在提交前按需同步并一起入库。handoff 仅由用户显式调用，不从结束会话的措辞触发。
 
 R1–R6 的完整规则、amend 条件和纯文档提交例外及提交操作统一由 [nk-commit](../../skills/nk-commit/SKILL.md) 持有。此处不再维护另一份节奏规则；旧版“纯文档提交只允许两个时刻”不能覆盖现有规划与知识库维护等具体条件。
 
@@ -118,12 +118,12 @@ R1–R6 的完整规则、amend 条件和纯文档提交例外及提交操作统
 | :-- | :-- | :-- | :-- |
 | `nk-work` | 认领一个实施单元或 Issue，测试先行实现、验证、按 R1 提交 | CE `ce-work` + Matt `tdd`/`implement` | P1 |
 | `nk-commit` | 提交信息 + 提交节奏规则的唯一持有者 | CE `ce-commit` | P1 |
-| `nk-handoff` | 会话结束：更新 `current.md`，按 R4 提交；接手时读取 | CE `ce-handoff` + Matt `handoff` | P1 |
+| `nk-handoff` | 仅用户显式调用时保存未完成现场；正常交付由 nk-commit 同步 current | CE `ce-handoff` + Matt `handoff` | P1 |
 | `nk-brainstorm` | 澄清要做什么、范围与边界；术语即时写入 | CE `ce-brainstorm` + Matt `domain-modeling` | P2 |
 | `nk-grill` | 用户主动选择的计划、决策或想法压力测试 | Matt `grilling`（具体取舍见来源记录） | 后续补入 |
 | `nk-plan` | 技术方案与实施单元；plan 落在版本分支 | CE `ce-plan` | P2 |
 | `nk-ideate` | 基于代码现状发散并筛选改进方向 | CE `ce-ideate` | P2 |
-| `nk-close` | 版本收尾（第四章流程） | 新增 | P3 |
+| `nk-close` | 分支收尾（第四章流程） | 新增 | P3 |
 | `nk-compound` | 沉淀 solution（含决策类型）与术语；通过审计模式维护既有知识 | CE `ce-compound` / `ce-compound-refresh` + Matt ADR 门槛 | P3 |
 | `nk-debug` | 先建立可快速变红的复现，再做因果排错 | CE `ce-debug` + Matt `diagnosing-bugs` | P4 |
 | `nk-review` | 代码审查；结果写版本分支 `docs/reviews/` | CE `ce-code-review` + Matt `code-review` | P4 |

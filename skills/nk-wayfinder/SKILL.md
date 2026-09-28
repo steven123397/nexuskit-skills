@@ -69,4 +69,4 @@ HITL 对话按 [`../conventions/decision-autonomy.md`](../conventions/decision-a
 ## 与体系衔接
 
 - ticket 解决中沉淀出非显而易见的经验或决策理由 → [`../nk-compound/SKILL.md`](../nk-compound/SKILL.md)。
-- 会话结束 → [`../nk-handoff/SKILL.md`](../nk-handoff/SKILL.md) 登记现场；无人值守时的 `[待确认]` 项登记在 `docs/current.md`（见 decision-autonomy 约定第三章）。HITL ticket 在无人值守下不可 resolve，登记后跳过。
+- 结束时汇报现场，不自动调用 nk-handoff；无人值守时的 `[待确认]` 项登记在 `docs/current.md`（见 decision-autonomy 约定第三章）。HITL ticket 在无人值守下不可 resolve，登记后跳过。

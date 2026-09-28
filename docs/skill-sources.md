@@ -6,6 +6,10 @@
 
 ---
 
+2026-09-28 提交与现场归属调整：nk-commit 的 R1–R6 统一覆盖已验证交付、中途记录、遗漏补记、场景、提交前 current 更新和独立变化。常规提交携 current 一次完成，取消固定的提交后 handoff/amend 链；复用适用的审查与验证证据。同步 work、debug、plan、brainstorm、close、compound、init、simplify、wizard 的提交接口，以及 ideate、review、to-issue、wayfinder、ask-ljq 的暂留和结束说明。这些是跨技能接口迁移，不代表所有技能主体已重写完成。
+
+nk-handoff 改为仅用户显式调用：保留 `disable-model-invocation: true`，新增 Codex 的 `agents/openai.yaml` 中 `policy.allow_implicit_invocation: false`；正文不重复元数据和 description 已表达的调用限制。current 的字段仍由共享契约维护，handoff 仅补充未完成现场。客户端实际触发与读取效果留待统一沙盒验证。
+
 ## nk-brainstorm
 
 #3 收口：读取复用和证据回传使用共享约定；复用证据、补查现状的阶段责任保持不变。
@@ -25,9 +29,11 @@
 * 只输出 Markdown；可视化探针改为对话内的 mermaid/文字草图，不启动本地网页服务。
 * 去掉跨模型提权、Compound Packs、Slack 调研、Bake-off、CE 配置层与 `lfg`/pipeline 调用模式：本体系不使用这些基础设施。
 * 指向 `ce-pov`、`ce-prototype`、`ce-doc-review`、`ce-proof` 等技能的分流改为内联原则或交接选项：NexusKit 没有这些技能。
-* 不提交，会话结束的提交交给 `nk-handoff`：与提交节奏规则一致。
+* 完成的仓库内规划产物交给 `nk-commit`，携带已有证据与下一步并同步 current；仍在澄清的草稿暂留。
 
 ## nk-close
+
+2026-09-28（#9 回归）：Issue 引用提取管道显式标注 Bash / Git Bash 前提，与 README 的通用命令及平台脚本边界一致。
 
 2026-09-27 人工审计采纳：收尾按产物生命周期约定第二章补查本分支变化涉及的项目指导，修复有依据的遗漏与失效；不是全仓规范生成。指导文件及索引更新纳入同一次收尾提交。
 
@@ -45,6 +51,8 @@
 * 首次实战后修订（2026-09-27，本仓库自身分支收尾）：Issue 兜底扫描补机械方法（grep 收集引用 + `gh issue view` 核对，原条文只说不做）；"用户决策点"章节前置到执行步骤之前（第 1/3 步引用它，原先放在文末阅读顺序颠倒）；发布日扫尾去重——原则归约定第五章，技能只留操作展开；补 `git rm` 已暂存删除的提示；发现"首次创建 CONCEPTS.md 时挂 AGENTS.md 入口"无触发点，已补进生命周期约定第二章与第 2 步。
 
 ## nk-commit
+
+2026-09-28（#11、#9 回归）：R5 后续已调整为每次提交前核对 current 并按需同次入库；README 集中说明跨平台命令边界，入口保留就近的逐条执行与 revision 引号提醒。
 
 主要参考：CE `ce-commit` (2026-09)、原 NexusKit 提交节奏约定、本地 `chinese-commit-conventions` 技能（2026-09-28 读取）。
 与 CE 的主要差异及原因：
@@ -69,11 +77,13 @@
 * scripts/ 整体删除：两份校验脚本转写为 `references/frontmatter-checklist.md` 与 `references/claims-checklist.md` 的人工核对清单；session-history 脚本组删除，改用当前会话上下文 + `git log` 定位刚解决的问题，依赖脚本的 session-historian 提示词随之删除。
 * CE 基础设施删除：`docs_root` / `.compound-engineering` 配置层、Compound Packs、Proof 发布、Slack、auto-memory 与浏览器相关步骤。
 * 模式裁剪：去掉 mode/depth token 体系（interactive/non-interactive、full/lightweight），沉淀走单一流程；无人值守场景由 `../conventions/decision-autonomy.md` 统一覆盖。
-* 提交纪律改为 nk-commit R4 第 4 条（优先随代码提交、未推送则限定路径 amend、已推送则留工作区），而非 CE 的独立文档提交与建分支。
+* 提交交给 nk-commit R3/R4：相关沉淀随交付，遗漏补记须符合完整 amend 条件，独立且已验证的知识成果可正常提交，未完成部分暂留；不自动建分支。
 * 可见性检查并入首运行职责：按 artifact-lifecycle 第二章补 `AGENTS.md` 指引，而非每次运行单独征询。
 * 术语表规则归 `../conventions/concepts-vocabulary.md`：本技能沉淀模式只做 Add/Refine，Fold/Retire/Scrub 与整库初建归审计模式。
 
 ## nk-debug
+
+2026-09-28（#9 回归）：统计复现循环显式标注 Bash / Git Bash 前提；本次不重写调试流程。
 
 #3 结果体量收口：只读调查子代理引用共享结果体量规则，保留假设、观测、反证与未验证项，原有日志脱敏边界不变。
 
@@ -81,7 +91,7 @@
 与上游的主要差异及原因：
 * 复现优先（Matt 的 feedback loop）前置为流程灵魂：CE 把复现放在调查阶段的一个小节，本技能将"没有红得起来的复现就不得进入假设阶段"立为硬关卡。
 * 删除 CE 的编排与平台层：pipeline / return-to-caller 模式（mode 令牌、JSON 返回契约）、PR 路由、分支自动创建、branding、Artifact Root / `docs_root` 配置解析——NexusKit 没有流水线编排层，产物位置由约定固定，分支与 PR 策略归项目，提交统一走 nk-commit。
-* 删除 post-fix-handoff 的修复后精简/审查编排：审查发生在版本层面（nk-review）；其通用残值（尾部改动后复跑回归、遗留发现落地记录）并入 references/fix.md 与收尾步骤。
+* 删除 post-fix-handoff 的修复后精简/审查编排；现保留提交前必须审查的接口，具体方式待 nk-review 重构；其通用残值（尾部改动后复跑回归、遗留发现落地记录）并入 references/fix.md 与收尾步骤。
 * issue-of-record 规则简化：无法本轮定位的疑难缺陷本来就要按 artifact-lifecycle 转 Issue，无需禁令。
 * Matt 的 `hitl-loop.template.sh` 与 `agents/openai.yaml` 删除：体系纯 Markdown 约定驱动、客户端中立；人工在环复现转写为 references/reproduction.md 第十种回路。
 * defense-in-depth.md 保留为独立 reference：35 行的通用分层防御模式，触发条件清晰，便于按需加载。
@@ -102,11 +112,13 @@
 
 ## nk-handoff
 
+2026-09-28（#19）：主流程收敛为核对、更新检查、委托提交、汇报四步；完整字段只由 current-md 格式契约持有，保留无实施单元时的技能与产物路径分支。补充旧信息保留、非代码残留、核对基点与最终提交的区分；交接可携带归属明确且已满足入库条件的文档工件。删除生命周期规范必读与重复提交判定。
+
 主要参考：CE `ce-handoff` (2026-09)、Matt `handoff`、NexusKit 共享约定 [`../conventions/current-md.md`](../skills/conventions/current-md.md)
 与 CE 的主要差异及原因：
 * 交接载体是仓库内单例 `docs/current.md`，而不是临时目录中的独立文件：不堆积、不丢失，新会话经 `AGENTS.md` 自动找到。
 * 没有 resume 模式：会话开始时的核对由 `nk-work` 第 0 步负责。
-* 交接时优先 amend 进本会话未推送的提交：尽量不产生纯文档提交。
+* 交接提交统一交给 nk-commit 判定；满足其 R3 的本会话交付补记才 amend，不自行判断未推送。
 * 2026-09-27 审计修订：交接中的上游判定示例与提交节奏约定统一使用带引号的 `@{u}`。
 
 ## nk-ideate
@@ -128,10 +140,12 @@
 * 去掉 Slack 调研：用户不使用 Slack 作为信息来源。
 * 临时目录改为不依赖 bash 的中立描述：技能需要在 PowerShell 等多种 shell 与客户端中运行。
 * 提问改为批量规则（每轮最多 3 个）：遵循 NexusKit 的决策自主约定；"累计超过 3 个问题说明选错流程"的原则保留。
-* 下一步改为 `nk-brainstorm` / `nk-handoff`，提交遵循 NexusKit 提交节奏：发想记录不单独提交。
+* 下一步可深入 brainstorm、继续讨论或结束；发想记录写入文件但不自动提交，用户需要时自行调用 nk-commit。丢弃仅适用于本次新建且未提交的草稿，不自动调用 handoff。
 * 保留六视角、独立依据核查和 tactical / `go deep` 的质量取舍；当前减重只统一数量口径与共用流程，不额外缩小编队。
 
 ## nk-plan
+
+2026-09-28 用户实用反馈：Plan 往往在主分支完成后才开实施分支，因此完成的 Plan 必须通过 nk-commit 入库；ideate 没有这一前置要求，不设置自动提交或提交询问步骤。
 
 #3 处置：按 resource-loading.md 复用规则原文，阶段 0 各分支写明触发条件（已定决策可与输出档位叠加）；调研与深化按 subagent-results.md 回传结论、反证与路径，按需读片段。固定状态返回行不采纳：没有实际消费方，且 D11 已否决返回编排契约。
 
@@ -147,9 +161,11 @@
 * Bake-off 改为设计对比（取自 Matt 的 Design It Twice）：不依赖单独的竞赛技能，同样用于后果重大、难以推翻的"怎么做"。
 * 提问从"每轮一个问题"改为批量提问：按 `decision-autonomy.md` 减少一问一答的往返。
 * 规划中即时写入术语，而不是只在术语表已存在时补漏：让规划期诞生的术语不流失。
-* 收尾菜单改为 NexusKit 流程：推荐结束会话交接、新会话用 `nk-work` 接手，规划产出与交接合成一次提交；去掉 `/goal`、原型和浏览器打开选项。
+* 收尾菜单改为 NexusKit 流程：完成的 Plan 通过 nk-commit 携 current 入库，新会话可用 `nk-work` 接手，不额外触发 handoff；去掉 `/goal`、原型和浏览器打开选项。
 
 ## nk-review
+
+2026-09-28（#11、#9 回归）：统一收尾术语；范围探针改为逐条 Git 命令与输出哈希占位符，去掉 Bash 赋值及链式回退，保持现有基线选择逻辑。
 
 2026-09-28 吸收 Ponytail 的复杂度审查理念：复用现有 maintainability 角色，按实际重复实现、依赖或扩展层的证据触发，报告可删除内容、具体替代及行为等价依据；不新增独立审查流水线。移除按文件越过 1000 行直接判 P1 的门槛，改为职责与维护影响；单个实现或调用方不自动构成过度设计。
 
@@ -208,7 +224,7 @@
 * `/research` subagent → 中性写法：支持子代理则派发，否则主会话内联完成；去掉一次性 research branch 约定（客户端无关性，findings 直接从 ticket 链接）。
 * `/prototype` → 一句话内联：构建廉价粗糙的具体产物辅助讨论，不依赖技能。
 * 删除 `agents/openai.yaml`：客户端专有配置。
-* 新增与 `nk-compound`、`nk-handoff`、`nk-plan`/`nk-work` 的衔接说明，以及无人值守下 HITL ticket 的登记规则。
+* 新增与 `nk-compound`、`nk-plan`/`nk-work` 的衔接说明；结束只汇报，不自动 handoff，以及无人值守下 HITL ticket 的登记规则。
 
 ## nk-wizard
 
@@ -221,6 +237,8 @@
 
 ## nk-init
 
+2026-09-28：随 current-md 契约调整，将初始状态中的 HEAD 描述改为核对基点，不要求记录尚未产生的交接提交哈希。
+
 主要参考：Matt `setup-matt-pocock-skills`（2026-08 备份；仅借鉴骨架）
 
 关键设计决定：
@@ -231,6 +249,8 @@
 
 ## nk-ask-ljq
 
+2026-09-28（#11）：收尾用词按 CONCEPTS 统一，R4 摘要与 README、nk-commit 的四类场景对齐；后续提交政策随 nk-commit 的 current 归属调整同步。
+
 #26 安装语义窄修：明确整套安装后的独立入口，不再暗示单技能安装；其余引导内容仍留到全套阅读后重写。
 
 主要参考：Matt `ask-matt`（2026-08 备份）
@@ -238,14 +258,14 @@
 关键设计决定：
 * 名字含作者缩写 ljq（个人元素）；曾定名无前缀的 `ask-ljq`，后统一回 `nk-` 前缀保持命名一致。
 * Matt 的"main flow + on-ramps"单主线结构改为"工具箱宣言 → 参考路径 → 按场景入口"：落实 D1（工具箱不是流水线），路由而不规训，明说每步可单独用、可跳过、可从中间进入。
-* 保留"问我就行"的作者口吻与语境卫生建议（`docs/current.md` 接手、Smart Zone <100k/理想 <30k、单元边界交接）。
+* 保留"问我就行"的作者口吻与语境卫生建议（`docs/current.md` 接手、完成单元后停止、凭 current 接手；不估算上下文阈值触发交接）。
 * 新增 R1–R6 提交节奏一句话版（细节路由给 `nk-commit`）；删去 phase boundaries 决策树、prototype/triage/vocabulary layer 等 NexusKit 无对应物的内容。
 
 ## nk-work
 
 2026-09-28 表述修订：六份执行 reference 的开头改为直接说明适用场景和下一步动作；拆开子代理开头的使用条件与选择依据，保持原有规则含义。
 
-2026-09-28 边界修订：一次调用只执行已确认的一个实施单元，完成或形成不可自行解除的阻断后交接，不再根据估计的上下文余量顺延。子代理返回、主会话验收与 Git 提交分别判断：逐项核对结果，整合后亲自验证，按完整的交付变化提交，不按代理数量或结束时机切分提交。
+2026-09-28 边界修订：一次调用只执行已确认的一个实施单元，完成或形成不可自行解除的阻断后汇报结束，不再根据估计的上下文余量顺延。子代理返回、主会话验收与 Git 提交分别判断：逐项核对结果，整合后亲自验证，按完整的交付变化提交，不按代理数量或结束时机切分提交。
 
 2026-09-28 试点修订：委派恢复由 Agent 自主选择（遵守用户、项目与客户端限制），不要求用户先点名。对照本地 CE `ce-work/references/implementation-loop.md` 与重构前版本，补回真实调用链、既有模式、测试发现、具体因果检查、持续测试、构建/typecheck/lint 和验收核对；仍保持一个完整执行 reference，不恢复递归读取。仓库外状态必须实际观察，不能由 Git 或 Mock 结果推断。
 
@@ -258,10 +278,10 @@
 与 CE 的主要差异及原因：
 * 未移植调度脚本、跨模型执行与默认并行波次：本体系是一个会话串行推进、主对话提交，不需要这层编排。
 * 进度以带 U-ID 的提交为准，不为记进度修改 plan：plan 的每次改动都应是有意义的范围或决策变化。
-* 一次调用一个单元、结束后交接：采用明确的单元边界，不要求模型估计自身上下文余量；下一单元由后续调用接手，交接提交仍遵循既有节奏。
+* 一次调用一个单元、完成后停止：不估计自身上下文余量；提交时由 nk-commit 同步 current，下一单元由后续调用接手，不自动 handoff。
 * 接手时"一致则继续，不一致才停"：`current.md` 是本仓库的单例文件，不像 CE 的交接文档那样来源不可信。
 * 脏文件分两类：`current.md` 登记的半成品由本会话接管，其余一律不暂存。
-* 不设代码审查关卡：审查发生在版本层面，由 `nk-review` 负责。
+* 提交前必须完成审查，保留流程接口；具体方法及与 `nk-review` 的衔接待其重构确定。
 * 测试 seam 由 Agent 自选（改写 Matt `tdd` 的"先与用户确认"）：测试结构属于自主决断区。
 
 
@@ -281,7 +301,7 @@
 
 入口内的四个执行底线以 `skills/conventions/work-guardrails.md` 为维护源，修改时同步源与副本，并由 `tests/run_checks.py` 检查一致性：验证证据、已定决策、升级确认和子代理提交边界。当前没有同步生成脚本；客户端直接消费 `nk-work/SKILL.md` 中已同步的片段。
 
-本试点不禁止资料性链接，不改变整套安装模型，也不把跨技能协作改成隐含的自动编排；`nk-commit` 和 `nk-handoff` 仍通过公开入口委托。真实客户端执行效果尚未验证，需在沙盒中比较正常代码、非代码、UI、外部状态和委派路径的实际读取与完成证据。
+本试点不禁止资料性链接，不改变整套安装模型，也不把跨技能协作改成隐含的自动编排；提交委托 `nk-commit`，`nk-handoff` 仅由用户显式调用。真实客户端执行效果尚未验证，需在沙盒中比较正常代码、非代码、UI、外部状态和委派路径的实际读取与完成证据。
 
 提交接口与 `nk-commit` 保持一致：仅在有 U-ID 时传入并附加到提交主题，Issue 或直接需求没有 U-ID 时不要求补造编号。
 

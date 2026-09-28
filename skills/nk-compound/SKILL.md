@@ -53,5 +53,5 @@ argument-hint: "[可选：简短上下文 | refresh [范围提示]]"
 - **写入边界**：沉淀模式只写本次条目（或更新既有条目）、`CONCEPTS.md` 补全、缺指引时 `AGENTS.md` 的一行指引；审计模式只改知识库文件。两种模式都不改产品代码；条目与其点名的指导文件（SKILL.md、runbook、指令文件）冲突时只报告，不编辑指导文件。
 - **删除需要正面证据**：代码被删不构成删除条目的理由；不确定时保留（细则见 `references/audit.md`）。
 - **子代理**：`references/capture.md` 链接的共享角色是提示词资产而非具名 Agent——读取文件内容初始化通用子代理；客户端不支持子代理时由主会话内联完成。子代理不写产品文件、不执行 `git commit`。
-- **提交**：将沉淀或审计场景、文件范围、验证证据及关联交付交给 [nk-commit](../nk-commit/SKILL.md)，由其按 R3/R4 决定提交或暂留，不自行执行提交算法。
+- **提交**：将沉淀或审计场景、成果、文件范围、已有证据、关联交付、阻断及下一步交给 [nk-commit](../nk-commit/SKILL.md)，由其按 R3/R4 决定提交或暂留，提交时同步 current，不自行执行提交算法。
 - **提问**：按 [`../conventions/decision-autonomy.md`](../conventions/decision-autonomy.md) 批量选项提问；无人值守时的待确认项在 `docs/current.md` 登记 `[待确认]`。

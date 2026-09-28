@@ -76,6 +76,6 @@
 
 报告默认留在对话中，不落地成长期文件（产物去向遵循 [`../../conventions/artifact-lifecycle.md`](../../conventions/artifact-lifecycle.md)）；用户要求留存时按该约定决定位置。
 
-**提交**：读取 [`../../nk-commit/SKILL.md`](../../nk-commit/SKILL.md)。只暂存本次审计修改的文件。工作区有在途代码工作时，审计改动默认留在工作区，随下次代码提交入库（R2）；没有可搭载的在途交付或用户明确要求立即入库时，由 nk-commit 发起一次维护提交，提交信息概括动作（如"更新 3 条过期条目、合并 2 条重叠、删除 1 条失效"），风格遵循项目惯例。
+**提交**：读取 [`../../nk-commit/SKILL.md`](../../nk-commit/SKILL.md)。只暂存本次审计修改的文件。相关审计成果可随当前交付入库；独立且已验证的成果由 nk-commit 正常提交，未完成部分暂留；同时提供成果、证据、阻断和下一步供其维护 current，提交信息概括动作（如"更新 3 条过期条目、合并 2 条重叠、删除 1 条失效"），风格遵循项目惯例。
 
 **可见性检查**：每次审计结束后按 [`../../conventions/artifact-lifecycle.md`](../../conventions/artifact-lifecycle.md) 第二章检查 `AGENTS.md` 入口指引（同沉淀模式第 5 阶段）。

@@ -53,5 +53,5 @@ flowchart LR
 - **修复**：本技能不改代码。条目由 `nk-work` 认领修复；修复时顺手把条目状态改为 `已修复`，随修复提交入库（[`../nk-commit/SKILL.md`](../nk-commit/SKILL.md) R2/R6）。
 - **新发现分流**：审查发现的处理遵循 [`../conventions/artifact-lifecycle.md`](../conventions/artifact-lifecycle.md) 第四章——小问题随修复走 `nk-work`，跨 plan 疑难转 Issue（无远端记 `docs/backlog.md`），不顺手扩大范围。
 - **阻断登记**：结论为"存在阻断项"（未修复的 P0）时，按 [`../conventions/current-md.md`](../conventions/current-md.md) 登记到目标仓库 `docs/current.md` 的"阻断与已知缺口"。
-- **提交**：本技能不发起提交；新建的审查记录留在工作区，随下一个代码提交（R2）或会话交接（`nk-handoff`，R4）入库。
-- **收尾**：版本收尾时由 `nk-close` 依据条目的状态标记甄别遗留项、转 Issue 并删除审查记录文件。
+- **提交**：本技能不发起提交；新建的审查记录留在工作区，随下一次相关交付（R2）或用户显式调用 nk-handoff 保存现场时（R4）入库。
+- **收尾**：分支收尾时由 `nk-close` 依据条目的状态标记甄别遗留项、转 Issue 并删除审查记录文件。

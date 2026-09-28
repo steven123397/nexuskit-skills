@@ -45,7 +45,7 @@ disable-model-invocation: true
 
 * 检查 `docs/reviews/` 遗留条目（由 `nk-review` 产生，状态标记见 [`../nk-review/references/entry-format.md`](../nk-review/references/entry-format.md)；目录不存在则跳过并说明），以及 `docs/plans/` 各 plan 的未完成待办。
 * **未完成或推迟的 plan 不随本技能删除**，逐项转入"用户决策点"流程；审查记录遗留项转为 Issue。
-* **Issue 兜底扫描**：处置规则见 [`../conventions/issue-writing.md`](../conventions/issue-writing.md) 第四节（逐条关闭注明提交哈希，或评论说明遗留原因）。机械方法：`git log <base>..HEAD --format=%B | grep -oE '#[0-9]+' | sort -u`（分支模式 base 为合并目标；降级路径取该 plan 起点），加上范围内 plan/文档中的 `#N` 引用去重，逐个 `gh issue view <N> --json state` 核对仍 open 的。
+* **Issue 兜底扫描**：处置规则见 [`../conventions/issue-writing.md`](../conventions/issue-writing.md) 第四节（逐条关闭注明提交哈希，或评论说明遗留原因）。Bash / Git Bash 下的机械方法（不直接复制到 PowerShell）：`git log <base>..HEAD --format=%B | grep -oE '#[0-9]+' | sort -u`（分支模式 base 为合并目标；降级路径取该 plan 起点），加上范围内 plan/文档中的 `#N` 引用去重，逐个 `gh issue view <N> --json state` 核对仍 open 的。
 
 ### 2. 价值提炼 (Harvest)
 从即将删除的 plan 与审查记录中提炼长期价值内容，细则见 [`references/harvest.md`](references/harvest.md)：
@@ -57,8 +57,8 @@ disable-model-invocation: true
 ### 3. 清理已交付工件
 确认第 1 步无遗留、第 2 步提炼完成后，用 `git rm` 删除本次**已交付完成**的 plan 与审查记录（`git rm` 已暂存删除，后续提交无需再 add）。只删已交付的：推迟的已转走，未消费发想记录按用户决策点处置，均不在此删除。完整设计演进由 Git 历史保留。
 
-### 4. 更新 `docs/current.md`
-分支收尾是 R5 的合法更新时机（阶段跃迁）。先读 [`../conventions/current-md.md`](../conventions/current-md.md)，再按其结构覆写为收尾后的真实状态：已具备能力、验证结果（含未验证项）、阻断与 `[待确认]` 项、下一步指向。
+### 4. 准备收尾状态
+整理收尾后的已具备能力、已有验证、阻断、残留与下一步，交给第 5 步的 nk-commit 统一维护 current；不在此重复覆写。
 
 ### 5. 单个收尾提交（R4）
 读取 [`../nk-commit/SKILL.md`](../nk-commit/SKILL.md) 并遵循其规则：

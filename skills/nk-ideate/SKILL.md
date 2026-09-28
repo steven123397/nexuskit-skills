@@ -6,7 +6,7 @@ argument-hint: "[主题、关注点或约束，可选；可带 'go deep'、'quic
 
 # /nk-ideate
 
-> **路径解析说明：** 本文件中引用的参考文件（`references/`、`../conventions/`、`../nk-brainstorm/`、`../nk-handoff/`）均相对于本技能所在目录解析，不在目标代码仓库中查找。产出文件（`docs/ideation/`、`docs/solutions/`、`CONCEPTS.md`）才位于目标仓库。
+> **路径解析说明：** 本文件中引用的参考文件（`references/`、`../conventions/`、`../nk-brainstorm/`）均相对于本技能所在目录解析，不在目标代码仓库中查找。产出文件（`docs/ideation/`、`docs/solutions/`、`CONCEPTS.md`）才位于目标仓库。
 
 文档日期与近期判断使用当前环境的日期。
 
@@ -60,4 +60,4 @@ argument-hint: "[主题、关注点或约束，可选；可带 'go deep'、'quic
 
 ## Phase 3~5：批判、写入、下一步
 
-按 `references/post-ideation-workflow.md` 执行依据核查、筛选、写入与下一步交接；非软件路线的差异以 `references/universal-ideation.md` 为准。写入时再读 `references/ideation-sections.md`。发想记录不单独提交，随后续交付或会话交接入库（见 [`../nk-commit/SKILL.md`](../nk-commit/SKILL.md) R2/R4）。
+按 `references/post-ideation-workflow.md` 执行依据核查、筛选、写入与下一步交接；非软件路线的差异以 `references/universal-ideation.md` 为准。写入时再读 `references/ideation-sections.md`。本技能只写入发想记录，不自动提交或调用 handoff。

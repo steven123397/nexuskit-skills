@@ -3,7 +3,7 @@
 ## 收尾与发布
 
 ### 分支收尾
-工作分支合并进 main 前的六步闭环（转移遗留、提炼、删除已交付工件、覆写 current.md、单次收尾提交、可选 PR 摘要），由 `nk-close` 承载，规则全文在 `skills/conventions/artifact-lifecycle.md` 第五章。收尾锚定在分支生命周期而非版本发布；分支不对应发布版本。
+工作分支合并进 main 前的六步闭环（转移遗留、提炼、删除已交付工件、准备收尾状态、由 nk-commit 同步 current.md 并单次提交、可选 PR 摘要），由 `nk-close` 承载，规则全文在 `skills/conventions/artifact-lifecycle.md` 第五章。收尾锚定在分支生命周期而非版本发布；分支不对应发布版本。
 *Avoid: 版本收尾*
 
 ### 发布日扫尾
