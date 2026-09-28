@@ -18,6 +18,8 @@ status: accepted
 
 # 三形态分发共用同一 skills/ 布局，conventions 作为第 18 个可安装单元
 
+> **2026-09-28 适用范围补充：** 本记录的平级布局与整套安装决定继续有效；标题中的“第 18 个”是当时的数量，不是固定总数。下文“所有技能继续引用 conventions”不再是内容组织的强制要求：nk-work 的短底线已在维护时同步到入口，执行材料按新范式组织，见 [技能执行局部性决定](2026-09-28-skill-execution-locality.md)。这不表示 conventions 已退出分发，也不表示支持单技能独立安装。
+
 ## Context & Decision
 
 NexusKit 需要三种分发形态（Kimi 插件 / Codex 插件 / npx skills CLI），三者对"共享的 `conventions/` 如何随技能到达用户机器"的处理能力完全不同。决定：仓库布局即分发布局（`skills/nk-*` + `skills/conventions/` 平级），`conventions/` 带一个最小 SKILL.md（`name: conventions` + `disable-model-invocation: true`）成为第 18 个可安装单元，所有技能继续用 `../conventions/` 相对引用。放弃了两个备选：CE 式"构建期把共享内容内联进各技能"（引入生成管线与漂移面）和"改引用深度为 `../../conventions/`"（junction 加载侧与插件侧深度不一致，必有一侧失效）。

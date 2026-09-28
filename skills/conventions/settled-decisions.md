@@ -1,6 +1,6 @@
 # 已定决策 (Session-Settled Decisions)
 
-> **归属与引用：** `nk-brainstorm`、`nk-plan` 共用本约定；`nk-work` 执行时尊重其标注（见 `nk-work/references/implementation-loop.md` 已定决策规则）。
+> **归属与引用：** `nk-brainstorm`、`nk-plan` 共用本约定；`nk-work` 执行时尊重其标注（见 `nk-work/references/tdd-loop.md` 已定决策规则）。
 
 用于承接用户在当前对话中已经做出的决定，让规划在其基础上推进，而不是重新讨论。标注格式以 [`plan-format.md`](plan-format.md) 第四节为准。
 

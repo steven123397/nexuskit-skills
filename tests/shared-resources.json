@@ -98,7 +98,6 @@
     "subagent-results.md": {
       "source": "skills/conventions/subagent-results.md",
       "callers": [
-        "skills/nk-work/references/subagents.md",
         "skills/nk-ideate/references/grounding.md",
         "skills/nk-plan/references/research.md",
         "skills/nk-plan/references/deepening-workflow.md",

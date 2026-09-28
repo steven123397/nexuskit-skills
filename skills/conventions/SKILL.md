@@ -20,6 +20,7 @@ disable-model-invocation: true
 
 - [agents/](agents/)：跨技能研究与审查方法；调用方仅加载选中的文件，并提供本次目的、范围和返回契约，不整库预读
 - [resource-loading.md](resource-loading.md)：按需加载规则原文，缺失或变化时补读
+- [work-guardrails.md](work-guardrails.md)：`nk-work` 执行底线的维护源；运行时片段由同步检查保持一致
 - [subagent-results.md](subagent-results.md)：子代理结果体量、摘要与文件交付边界
 - [research-digest.md](research-digest.md)：网络调研摘要的内容与体量，调用方按需选用
 - [scope-synthesis.md](scope-synthesis.md)：产品与规划范围综述的共同方法，阶段入口和落点由调用方提供

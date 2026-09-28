@@ -109,9 +109,23 @@ def check_byte_budget():
 
 
 # --- 4. shared method ownership ---
+def work_fragment_problems():
+    source = os.path.join(ROOT, "skills", "conventions", "work-guardrails.md")
+    target = os.path.join(ROOT, "skills", "nk-work", "SKILL.md")
+    problems = []
+    source_text = open(source, encoding="utf-8").read()
+    target_text = open(target, encoding="utf-8").read()
+    names = re.findall(r"<!-- fragment: ([^ ]+) -->\n(.*?)\n<!-- /fragment -->", source_text, flags=re.S)
+    for name, body in names:
+        marker = f"<!-- fragment: {name} -->\n{body}\n<!-- /fragment -->"
+        if marker not in target_text:
+            problems.append(f"nk-work: fragment {name} is missing or differs from conventions/work-guardrails.md")
+    return problems
+
+
 def check_shared_resources():
     from check_shared_resources import validate
-    check("shared-resources", validate(ROOT))
+    check("shared-resources", validate(ROOT) + work_fragment_problems())
 
 
 # --- 5. frontmatter ---

@@ -7,7 +7,7 @@ description: Simplify settled, recently changed code for clarity, reuse, quality
 
 > **路径解析说明：** 本文件中引用的参考文件（如 `references/`、`../conventions/`、`../nk-commit/`）均相对于本技能所在目录解析，不在目标代码仓库中查找。
 
-对刚定型、刚改动的代码做清晰度、复用、质量与效率上的精简，行为必须保持完全不变。目标是更可读、更直白的代码，行数减少不是目标。用在实现完成之后、版本审查（`nk-review`）之前；排查 Bug 走 `nk-debug`。
+对刚定型、刚改动的代码做清晰度、复用、质量与效率上的精简，行为必须保持完全不变。优先用更少的自维护代码、状态、分支和依赖完成同样的工作；同时保持可读性，不以一行表达式或净删行数替代质量判断。用在实现完成之后、版本审查（`nk-review`）之前；排查 Bug 走 `nk-debug`。
 
 **完成标志：** 范围内的精简已应用或逐条说明跳过理由，精简前后验证均实际运行通过，按提交节奏入库。  
 **工作原则：** 只动刚改动的范围；行为保持优先于一切精简收益；未运行的测试不记为通过。
@@ -27,7 +27,7 @@ description: Simplify settled, recently changed code for clarity, reuse, quality
 **预检：** 若范围内没有实质的人写代码（只有文档、生成物、vendored 依赖、锁文件或机械性 churn），如实报告“无可精简”并停止。该检查只看改动性质，不看规模。
 
 ### 2. 多视角审查 (Review)
-本技能提供三份英文审查提示词（原文保留，体量很小）：
+本技能提供三份英文审查提示词，各自完整说明适用的判断与证据要求：
 
 - [`references/personas/code-reuse-reviewer.md`](references/personas/code-reuse-reviewer.md) —— 重复造轮子：已有工具函数、标准库原语、平台保证
 - [`references/personas/code-quality-reviewer.md`](references/personas/code-quality-reviewer.md) —— 冗余状态、参数膨胀、复制粘贴、死代码等质量问题
@@ -41,8 +41,10 @@ description: Simplify settled, recently changed code for clarity, reuse, quality
 
 ### 3. 应用或跳过 (Fix or Skip)
 * 三个视角的结果齐全后，直接应用有价值的发现；误报与低价值发现记为“跳过”，不打扰用户。
+* 先检查能否删除已证明无用的实现、复用既有能力，或由行为等价的标准库/平台/现有依赖替代；确实仍需自有逻辑时再整理结构。不要把相同复杂度转移到新文件、通用层或依赖中当作精简成果。
 * 评估发现时可以读范围外的代码，但只改范围内文件及其必需的 import/export 行。
 * 每一处修改必须保持输出、错误、副作用与顺序完全不变；无法确认就跳过。
+* 核实边界输入、目标版本、兼容性与必要性能；不因一个调用方或一个实现就删除有用的隔离/测试边界，不借精简缩减明确需求或已发布能力。
 * **不精简掉安全检查**：信任边界校验、防数据丢失保护、安全与无障碍逻辑一律保留。
 * 仅存在于本次未交付改动内部迭代中的接口或数据形状，确认范围外无调用方后可以移除兼容路径；不确定就保留。
 * 尊重已定决策（见 [`../conventions/settled-decisions.md`](../conventions/settled-decisions.md)）：Plan 中敲定的技术决策（包括刻意的重复或拆分）不借精简之名推翻。
@@ -56,6 +58,6 @@ description: Simplify settled, recently changed code for clarity, reuse, quality
 
 ### 5. 提交与收尾 (Commit & Report)
 * 按 [`../conventions/commit-cadence.md`](../conventions/commit-cadence.md) 提交：精简改动可随当前实施单元一同提交，也可独立成一次 R1 提交；提交说明正文写入实际运行的验证命令与结果（含“行为保持不变”的依据）。
-* 汇报：哪些原本就良好、哪些得到改善，按复用/质量/效率分类报告应用数与跳过数；没有任何改动就如实说明。不以净删行数作为成功指标。
+* 汇报：哪些原本就良好、哪些得到改善，按复用/质量/效率分类报告应用数与跳过数；说明减少了哪些自维护实现、状态、分支或依赖及行为保持依据。没有任何改动就如实说明；净删行数至多作为辅助信息，不设删减配额。
 * 若精简过程中发现值得沉淀的经验（非显而易见的取舍、易踩的坑），一句话建议运行 `/nk-compound`。
 * 精简完成即达到版本审查前置状态，一句话建议接着运行 `nk-review`。

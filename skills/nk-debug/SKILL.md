@@ -40,7 +40,7 @@ flowchart LR
 按 [`references/investigate.md`](references/investigate.md) 的假设纪律推进（假设审计、3~5 个排序假设、支撑观察与预测、智能升级表）；形成假设前先读 [`references/anti-patterns.md`](references/anti-patterns.md)。常规手段不足时按需查阅 [`references/investigation-techniques.md`](references/investigation-techniques.md)（跨组件边界埋点、git bisect、间歇性缺陷、竞态、海森堡缺陷、性能回退、系统边界检查、缺陷类别速查）。**因果链关卡：** 能从触发逐步讲到症状、不含任何"不知怎么就到了"的缺口，才允许进入修复；2~3 个假设被证伪或 3 次修复失败，停下来诊断卡点原因，而不是试下一个变体。
 
 ### 3. 修复 (Fix, Test-First)
-读取 [`references/fix.md`](references/fix.md) 并遵循：回归测试放在既有覆盖的归属处、确认它因根因变红、最小修复、复现回路对原始场景转绿、跑更广测试防回归、自审 diff 并清除全部调试埋点。测试质量与 Mock 边界遵循 [`../nk-work/references/testing.md`](../nk-work/references/testing.md)。满足触发条件时按 [`references/defense-in-depth.md`](references/defense-in-depth.md) 做分层防御。一次排查含多个相互独立的缺陷时按 R6 分开提交。
+读取 [`references/fix.md`](references/fix.md) 并遵循：回归测试放在既有覆盖的归属处、确认它因根因变红、最小修复、复现回路对原始场景转绿、跑更广测试防回归、自审 diff 并清除全部调试埋点。测试质量与 Mock 边界遵循 [`../nk-work/references/tdd-loop.md`](../nk-work/references/tdd-loop.md)。满足触发条件时按 [`references/defense-in-depth.md`](references/defense-in-depth.md) 做分层防御。一次排查含多个相互独立的缺陷时按 R6 分开提交。
 
 ### 4. 收尾 (Wrap Up)
 - **提交**：读取 [`../nk-commit/SKILL.md`](../nk-commit/SKILL.md)，按 [`../conventions/commit-cadence.md`](../conventions/commit-cadence.md) 提交（修复代码 + 回归测试 + 说明同一提交，R1）；提交说明正文写入实际运行的验证命令、结果与未验证项，并记录正确假设（完整因果链），让下一个排查者能学习。

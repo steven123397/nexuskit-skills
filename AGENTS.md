@@ -10,8 +10,9 @@
 - **[`docs/solutions/`](docs/solutions/)**：经验与决策库（长期资产）；沉淀与审计规则见 `skills/conventions/solution-schema.md`。
 - **[`CONCEPTS.md`](CONCEPTS.md)**：领域术语表（分支收尾、容器中立认领、前沿轮次等体系术语的唯一真实来源）；维护规则见 `skills/conventions/concepts-vocabulary.md`。
 - **[`docs/skill-sources.md`](docs/skill-sources.md)**：每个技能的上游来源与取舍理由（维护者向；执行技能的 Agent 不需要读）。
-- **[`conventions/`](skills/conventions/)**：全部共享约定（提交节奏、产物生命周期、术语、plan 格式等）。技能正文引用这里的规则，不重述。
-- **[`docs/ideation/nexuskit-framework-ideation.md`](docs/ideation/nexuskit-framework-ideation.md)**：体系设计 RFC（D1–D10 设计决定、阶段路线图）。
+- **[`conventions/`](skills/conventions/)**：共享约定的维护源（提交节奏、产物生命周期、术语、plan 格式等）。一般按需引用；每次必需的短底线可按 nk-work 范式同步到入口，并校验副本一致性，不维护未经核对的改写副本。
+- **[技能组织范式](docs/solutions/architecture-decisions/2026-09-28-skill-execution-locality.md)**：以 nk-work 为例，说明主流程、完整执行材料、条件分支和共享维护源的边界；后续逐技能整理时参考。
+- **[`docs/ideation/nexuskit-framework-ideation.md`](docs/ideation/nexuskit-framework-ideation.md)**：体系设计 RFC（D1–D12 设计决定、历史阶段路线图）。
 - **[`README.md`](README.md)**：按场景选用技能的路由表。
 - **[设计对话转录](docs/case-studies/2026-09-25-design-dialogue-transcript.md)**：追溯立项取舍时按需查阅的历史材料，不是当前执行规则，不要求技能或新会话全文加载；当前规则以技能、共享约定与已采纳设计决定为准。
 
