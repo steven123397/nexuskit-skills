@@ -3,7 +3,7 @@
 文件结构、章节标题、ID 规则、frontmatter 与行文规则以 [`../../conventions/plan-format.md`](../../conventions/plan-format.md) 为准，本文件不重述，只写头脑风暴特有的判断与要求。
 
 一份好的需求阶段 plan 让三类读者都能行动：
-* **规划者**（`nk-plan` 或人）能写出实施方案，而不必发明用户行为、范围边界或成功标准；
+* **规划者**（[nk-plan](../../nk-plan/SKILL.md) 或人）能写出实施方案，而不必发明用户行为、范围边界或成功标准；
 * **审阅者**能看到框架性选择，区分已定和未定的决定，在规划前发现范围缺口；
 * **未来的读者**能追溯这件事为什么重要、为谁做、成功是什么样子。
 
@@ -13,7 +13,7 @@
 
 ## 一、是否需要文件
 
-头脑风暴默认在对话中结束，文件需要"挣来"：对话产生了下游（规划者、审阅者、未来读者）需要以稳定 ID 引用的结构性决定、范围边界或验收标准，或者用户要求写文件。决定能自然流入下游产物（`nk-plan` 的输入、提交说明、`docs/solutions/`）时，不需要文件。
+头脑风暴默认在对话中结束，文件需要"挣来"：对话产生了下游（规划者、审阅者、未来读者）需要以稳定 ID 引用的结构性决定、范围边界或验收标准，或者用户要求写文件。决定能自然流入下游产物（[nk-plan](../../nk-plan/SKILL.md) 的输入、提交说明、`docs/solutions/`）时，不需要文件。
 
 **检验示例：** 关于一个小缺陷修复的头脑风暴，用户问"用空值检查还是在上游校验？"，Agent 确认"上游校验，原因如下"——不需要文件，这个决定直接流入规划或提交说明。反过来，涉及多个参与者、范围有争议、有若干行为条件的功能，规划者需要对话产生的结构化内容，通常需要文件。
 
@@ -25,10 +25,10 @@
 
 1. **路径**：`docs/plans/YYYY-MM-DD-HHMM-<type>-<topic>-plan.md`（`HHMM` 为写入时的本地时间）。不分配每日序号。目标路径已存在时，在扩展名前加最小可用的数字后缀（`-2`、`-3`……），不覆盖已有文件。续作时更新原文件。
 2. **frontmatter**：按 `plan-format.md` 第五节，`product_contract_source: nk-brainstorm`。另写 `topic:`（kebab-case 主题标识，与文件名中的 `<topic>` 一致），供 0.1 续作时识别。能判断执行领域时写 `execution`（软件功能为 `code`）。标题以 ` - Plan` 结尾，不带 `feat:` 之类前缀。
-3. **正文**：`## Goal Capsule` + `## Product Contract`。不写空的 Planning Contract、Implementation Units、Verification Contract、Definition of Done——空占位会让需求阶段文件看起来像可以实施，也浪费下游的阅读量。这些由 `nk-plan` 在同一文件中补充。
+3. **正文**：`## Goal Capsule` + `## Product Contract`。不写空的 Planning Contract、Implementation Units、Verification Contract、Definition of Done——空占位会让需求阶段文件看起来像可以实施，也浪费下游的阅读量。这些由 [nk-plan](../../nk-plan/SKILL.md) 在同一文件中补充。
 4. **声明核实结果**：按 2.6 的判定修正被驳斥的断言，把无法核实的标为假设。
-5. **已定决策**：进入 Product Contract 的 Key Decisions，带 `session-settled:` 标注（见 [`../../conventions/settled-decisions.md`](../../conventions/settled-decisions.md)），`nk-plan` 据此继承到 KTD。
-6. **术语复核**：按 `terminology.md` 第三节第 3 阶段复核。
+5. **已定决策**：进入 Product Contract 的 Key Decisions，带 `session-settled:` 标注（见 [`../../conventions/settled-decisions.md`](../../conventions/settled-decisions.md)），[nk-plan](../../nk-plan/SKILL.md) 据此继承到 KTD。
+6. **术语复核**：按 [terminology.md](terminology.md) 第三节第 3 阶段复核。
 7. **Ready for Planning Check**（第六节），通过后在对话中给出文件的绝对路径。
 
 ---
@@ -72,7 +72,7 @@ Markdown 中图用 mermaid 代码块（默认 `flowchart TB`）；界面布局�
 
 ### 额外的内容规则
 
-* ID 命名空间只有 R、A（有 Actors 时）、F（有 Key Flows 时）、AE（有 Acceptance Examples 时）；KTD 与 U 由 `nk-plan` 添加。流程与验收示例内部用加粗的引导标签（`**Trigger:**`、`**Covers R4, R8.**`、Given/When/Then），不用更深的标题层级。
+* ID 命名空间只有 R、A（有 Actors 时）、F（有 Key Flows 时）、AE（有 Acceptance Examples 时）；KTD 与 U 由 [nk-plan](../../nk-plan/SKILL.md) 添加。流程与验收示例内部用加粗的引导标签（`**Trigger:**`、`**Covers R4, R8.**`、Given/When/Then），不用更深的标题层级。
 * 默认不写实现细节：库、表结构、接口、文件布局、代码结构不写，除非头脑风暴本身就是关于技术或架构决策、这些细节正是决定的对象。
 * 不写 `## Next Steps` 之类指向下一个技能的内容，不写过程说明。
 
@@ -98,6 +98,6 @@ Markdown 中图用 mermaid 代码块（默认 `flowchart TB`）；界面布局�
 1. **完整**：没有占位符、`TBD` 或写到一半的章节；每个 Outstanding Question 都已归类为 `Resolve Before Planning` 或 `Deferred to Planning`。单一工作单元检查拆分过请求时，How This Work Fits Together 一节存在且带有 `<!-- nk-section: work-relationships -->` 标记。
 2. **一致**：Goal Capsule、Requirements、Key Flows、Acceptance Examples、Scope Boundaries 与 How This Work Fits Together 之间不矛盾。读者一遍读下来能在每节找出矛盾吗？没参与对话的同事只看 Objective 能说出这项工作是什么吗？一句话带不止一个括号说明、一条需求规定了两种结果、同一条规则在多处写全——都不通过：拆开、把分歧推到 Outstanding Questions、或用承载规则的 ID 替代重复内容。
 3. **聚焦**：Product Contract 只覆盖一个完整的工作单元。周边工作只作为背景、推迟项或明确的非目标出现，不渗入当前的需求、流程或验收示例。
-4. **规划可用**：`nk-plan` 能决定如何构建当前工作，而不必发明产品行为、范围、参与者或成功标准。
+4. **规划可用**：[nk-plan](../../nk-plan/SKILL.md) 能决定如何构建当前工作，而不必发明产品行为、范围、参与者或成功标准。
 
 某项不通过时，若修正不改变已定意图，就地修正后重跑该项。修正需要选择或改变产品行为或范围时，问一个针对性问题，得到答案后更新文件并重跑。用户不在时，保持文件为阻塞状态（在 Outstanding Questions 中列为 Resolve Before Planning，并在 `docs/current.md` 登记 `[待确认]`），不让规划去发明答案。检查清单本身不写进 Product Contract，修正后的文件就是产出。

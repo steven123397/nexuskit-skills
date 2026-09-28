@@ -9,7 +9,7 @@ topic: skill-deep-audit
 
 # 技能逐个重构、深读审计与微项目实跑
 
-**当前位置：U2，`nk-work` 试点与 `nk-commit` 首轮重构已提交；`nk-commit` 的 current 归属调整和 `nk-handoff` 简化已获用户确认，本次一并交付。下一项为 `nk-debug`。** 2026-09-28 用户确认按依赖关系调整重写顺序；`nk-work` 及配套范式已提交为 `1dc57bd`，机械检查通过，真实客户端执行效果仍待验证。此前的深读与跨技能修改继续保留，不把它们视为其他技能已经完成重构。
+**当前位置：U2。nk-work、nk-commit、nk-handoff 已完成前轮交付；nk-debug 及 simplify / review 联合重构已落地，随本次交接入库。work / debug 已接入报告后的处理规则。下一项为 nk-plan；所有实际运行效果仍待全部技能重构后统一沙盒验证。**
 
 **推进方式：逐技能深读、重构，并处理关联 Issue。** GitHub Issues 是唯一问题清单；本计划记录重构顺序与任务范围，不另设问题编号或复制 Issue 验收要求。问题详情、讨论和完成状态以对应 Issue 为准；只有取得所需证据并满足验收后才关闭。
 
@@ -17,30 +17,41 @@ topic: skill-deep-audit
 
 先整理 work 直接依赖的提交与交接，再处理调试和质量保障；随后从 Plan 消费契约向需求与发想上游整理，最后处理沉淀、收尾与辅助入口。先按此顺序完成全部技能重写及机械检查，再统一进入沙盒实际测试；沙盒测试按真实开发场景的依赖安排，不要求沿用重构顺序。
 
-同一 Issue 出现在多个节点时，处理当前技能涉及的部分，全部验收满足后才关闭。既有 #1 方案 C 与 #3 整体处置继续按原范围核对，不因重排遗漏跨技能消费端；#2 的触发证据贯穿相关技能。已拆分的 #8、#10 不再作为待办；#9 在相关节点回归。下表保留原有关联，不代表本次重新核实了远端 Issue 状态。
+同一 Issue 出现在多个节点时，处理当前技能涉及的部分，再按完整范围收口。下表只列截至 2026-09-28 仍开放的关联 Issue；已关闭项集中放在下一节，不再作为当前待办。#2 的触发证据贯穿相关技能。
 
 | 顺序 | 技能 | 重构重点 | 关联 Issue / 既有安排 |
 | :-- | :-- | :-- | :-- |
-| 1 | `nk-work` | 试点重构基本完成（1dc57bd）；保留单单元边界，真实执行效果待验证 | [#3](https://github.com/steven123397/nexuskit-skills/issues/3)：Fresh Worker、输出体量、返回行；核对项目指导持续维护 |
-| 2 | `nk-commit` | 首轮已提交；current 随提交维护及 R1–R6 调整已确认 | [#11](https://github.com/steven123397/nexuskit-skills/issues/11)，回归已修复的 [#9](https://github.com/steven123397/nexuskit-skills/issues/9) |
-| 3 | `nk-handoff` | 四步流程及显式调用已确认；字段由 current 契约持有 | [#11](https://github.com/steven123397/nexuskit-skills/issues/11)、[#19](https://github.com/steven123397/nexuskit-skills/issues/19)，回归 [#9](https://github.com/steven123397/nexuskit-skills/issues/9) |
-| 4 | `nk-debug` | 保持因果调查与修复关卡，处理对 nk-work 私有 reference 的依赖 | 修复微项目预留 bug；核对已定共享规则在调试场景的适用性 |
-| 5 | `nk-simplify` | 集中行为保持与精简方法，明确角色材料的加载条件和结果回收 | [#3](https://github.com/steven123397/nexuskit-skills/issues/3)、[#30](https://github.com/steven123397/nexuskit-skills/issues/30) 的使用端；实施后精简；[#34](https://github.com/steven123397/nexuskit-skills/issues/34)：已定决策的消费端 |
-| 6 | `nk-review` | 整理审查范围、角色选择、输出及修复接口；到此讨论审查触发安排 | [#1](https://github.com/steven123397/nexuskit-skills/issues/1)、[#11](https://github.com/steven123397/nexuskit-skills/issues/11)、[#14](https://github.com/steven123397/nexuskit-skills/issues/14)、[#22](https://github.com/steven123397/nexuskit-skills/issues/22)、[#23](https://github.com/steven123397/nexuskit-skills/issues/23)、[#31](https://github.com/steven123397/nexuskit-skills/issues/31)，回归 [#9](https://github.com/steven123397/nexuskit-skills/issues/9) |
-| 7 | `nk-plan` | 按规划阶段组织材料，明确 Plan 生产契约及 work 所需字段 | [#1](https://github.com/steven123397/nexuskit-skills/issues/1)、[#3](https://github.com/steven123397/nexuskit-skills/issues/3)、[#12](https://github.com/steven123397/nexuskit-skills/issues/12)、[#17](https://github.com/steven123397/nexuskit-skills/issues/17)、[#21](https://github.com/steven123397/nexuskit-skills/issues/21)、[#23](https://github.com/steven123397/nexuskit-skills/issues/23)、[#24](https://github.com/steven123397/nexuskit-skills/issues/24)、[#25](https://github.com/steven123397/nexuskit-skills/issues/25)；核对 [#30](https://github.com/steven123397/nexuskit-skills/issues/30) 的使用端；[#33](https://github.com/steven123397/nexuskit-skills/issues/33)、[#34](https://github.com/steven123397/nexuskit-skills/issues/34)、[#35](https://github.com/steven123397/nexuskit-skills/issues/35)、[#36](https://github.com/steven123397/nexuskit-skills/issues/36)：产物复用、已定决策、重对齐与授权 |
-| 8 | `nk-brainstorm` | 整理需求对齐主流程、条件研究与规划交接，保留已有有效修改 | [#1](https://github.com/steven123397/nexuskit-skills/issues/1)、[#12](https://github.com/steven123397/nexuskit-skills/issues/12)、[#23](https://github.com/steven123397/nexuskit-skills/issues/23)、[#25](https://github.com/steven123397/nexuskit-skills/issues/25)：副本边界、读取复用与综述摘要；[#3](https://github.com/steven123397/nexuskit-skills/issues/3) 的证据交接消费端；[#33](https://github.com/steven123397/nexuskit-skills/issues/33)、[#34](https://github.com/steven123397/nexuskit-skills/issues/34)、[#36](https://github.com/steven123397/nexuskit-skills/issues/36)：产物复用、已定决策与授权；[#37](https://github.com/steven123397/nexuskit-skills/issues/37)、[#38](https://github.com/steven123397/nexuskit-skills/issues/38)、[#39](https://github.com/steven123397/nexuskit-skills/issues/39)：视觉提问、规模分级与扫描 |
-| 9 | `nk-grill` | 明确质疑范围、停止条件与返回原流程的接口 | [#29](https://github.com/steven123397/nexuskit-skills/issues/29)、[#30](https://github.com/steven123397/nexuskit-skills/issues/30)；[#34](https://github.com/steven123397/nexuskit-skills/issues/34)：一次质疑的衔接 |
-| 10 | `nk-ideate` | 整理不同发想路径、研究材料及证据交接，保留已有有效修改 | [#3](https://github.com/steven123397/nexuskit-skills/issues/3)：非软件路径重复、数量口径、证据交接与输出体量；[#36](https://github.com/steven123397/nexuskit-skills/issues/36)：明确授权后的续作 |
-| 11 | `nk-compound` | 区分沉淀与审计路径，收拢知识产物规则及提交边界 | [#11](https://github.com/steven123397/nexuskit-skills/issues/11)、[#15](https://github.com/steven123397/nexuskit-skills/issues/15) |
-| 12 | `nk-close` | 按收尾场景组织验收、知识维护与发布分支，复用已整理的公开入口 | [#11](https://github.com/steven123397/nexuskit-skills/issues/11)、[#16](https://github.com/steven123397/nexuskit-skills/issues/16)、[#18](https://github.com/steven123397/nexuskit-skills/issues/18)；先在沙盒验证收尾，主仓库分支最后收尾 |
-| 13 | `nk-init` | 保持最小初始化，核对首次接入与后续维护的职责边界 | 已读，显式首次接入已有外部证据；关联 [#13](https://github.com/steven123397/nexuskit-skills/issues/13)、[#20](https://github.com/steven123397/nexuskit-skills/issues/20)、[#27](https://github.com/steven123397/nexuskit-skills/issues/27) 尚待处理，不视为完成 |
-| 14 | `nk-to-issue` | 整理 Issue 写入、生命周期及无远端降级路径 | [#20](https://github.com/steven123397/nexuskit-skills/issues/20)；验证 Issue 闭环及无远端降级 |
-| 15 | `nk-wait-what` | 整理重对齐步骤、已有产物有效性及后续返回条件 | 真实重对齐场景；历史模拟观察仅作核实线索；[#35](https://github.com/steven123397/nexuskit-skills/issues/35)：重对齐后的产物有效性 |
-| 16 | `nk-wayfinder` | 整理决策地图、Issue 关联与按需材料 | [#20](https://github.com/steven123397/nexuskit-skills/issues/20)；有远端的决策地图与 Issue 链路 |
-| 17 | `nk-wizard` | 整理手动操作步骤、观察证据与人机交接 | 手动操作流程；补齐本技能的阅读与实际验证 |
-| 18 | `nk-ask-ljq` | 最后统一入口引导，并同步 README 与插件介绍 | 已读；按用户决定，其余技能整理完后再统一修订，关联 [#11](https://github.com/steven123397/nexuskit-skills/issues/11)、[#26](https://github.com/steven123397/nexuskit-skills/issues/26)、[#28](https://github.com/steven123397/nexuskit-skills/issues/28) 与入口文案；[#32](https://github.com/steven123397/nexuskit-skills/issues/32)：入口中的提交步骤 |
+| 1 | `nk-work` | 试点重构基本完成（1dc57bd）；保留单单元边界，真实执行效果待验证 | 无未关闭关联 Issue；真实效果纳入 U3 |
+| 2 | `nk-commit` | 首轮已提交；current 随提交维护及 R1–R6 调整已确认 | 无未关闭关联 Issue；真实效果纳入 U3 |
+| 3 | `nk-handoff` | 四步流程及显式调用已确认；字段由 current 契约持有 | 无未关闭关联 Issue；真实效果纳入 U3 |
+| 4 | `nk-debug` | 已按 CE 阶段结构改写并接入审查，本次交付；去除 nk-work 私有 reference 依赖，补齐仅诊断出口 | 无未关闭关联 Issue；真实效果纳入 U3 |
+| 5 | `nk-simplify` | 联合重构已落地：三视角只读分析、手动入口与嵌入范围复用 | 无未关闭关联 Issue；真实效果纳入 U3 |
+| 6 | `nk-review` | 联合重构已落地：风险编队与精简并行、独立复核、统一报告 | 无未关闭关联 Issue；真实效果纳入 U3 |
+| 7 | `nk-plan` | 按规划阶段组织材料，明确 Plan 生产契约及 work 所需字段 | [#12](https://github.com/steven123397/nexuskit-skills/issues/12)、[#17](https://github.com/steven123397/nexuskit-skills/issues/17)、[#21](https://github.com/steven123397/nexuskit-skills/issues/21)、[#24](https://github.com/steven123397/nexuskit-skills/issues/24)、[#25](https://github.com/steven123397/nexuskit-skills/issues/25)、[#33](https://github.com/steven123397/nexuskit-skills/issues/33)、[#35](https://github.com/steven123397/nexuskit-skills/issues/35)、[#36](https://github.com/steven123397/nexuskit-skills/issues/36) |
+| 8 | `nk-brainstorm` | 整理需求对齐主流程、条件研究与规划交接，保留已有有效修改 | [#12](https://github.com/steven123397/nexuskit-skills/issues/12)、[#25](https://github.com/steven123397/nexuskit-skills/issues/25)、[#33](https://github.com/steven123397/nexuskit-skills/issues/33)、[#36](https://github.com/steven123397/nexuskit-skills/issues/36)、[#37](https://github.com/steven123397/nexuskit-skills/issues/37)、[#38](https://github.com/steven123397/nexuskit-skills/issues/38)、[#39](https://github.com/steven123397/nexuskit-skills/issues/39) |
+| 9 | `nk-grill` | 明确质疑范围、停止条件与返回原流程的接口 | [#29](https://github.com/steven123397/nexuskit-skills/issues/29) |
+| 10 | `nk-ideate` | 整理不同发想路径、研究材料及证据交接，保留已有有效修改 | [#36](https://github.com/steven123397/nexuskit-skills/issues/36) |
+| 11 | `nk-compound` | 区分沉淀与审计路径，收拢知识产物规则及提交边界 | [#15](https://github.com/steven123397/nexuskit-skills/issues/15) |
+| 12 | `nk-close` | 按收尾场景组织验收、知识维护与发布分支，复用已整理的公开入口 | [#16](https://github.com/steven123397/nexuskit-skills/issues/16)、[#18](https://github.com/steven123397/nexuskit-skills/issues/18) |
+| 13 | `nk-init` | 保持最小初始化，核对首次接入与后续维护的职责边界 | [#13](https://github.com/steven123397/nexuskit-skills/issues/13)、[#20](https://github.com/steven123397/nexuskit-skills/issues/20)、[#27](https://github.com/steven123397/nexuskit-skills/issues/27) |
+| 14 | `nk-to-issue` | 整理 Issue 写入、生命周期及无远端降级路径 | [#20](https://github.com/steven123397/nexuskit-skills/issues/20) |
+| 15 | `nk-wait-what` | 整理重对齐步骤、已有产物有效性及后续返回条件 | [#35](https://github.com/steven123397/nexuskit-skills/issues/35) |
+| 16 | `nk-wayfinder` | 整理决策地图、Issue 关联与按需材料 | [#20](https://github.com/steven123397/nexuskit-skills/issues/20) |
+| 17 | `nk-wizard` | 整理手动操作步骤、观察证据与人机交接 | 无未关闭关联 Issue；真实效果纳入 U3 |
+| 18 | `nk-ask-ljq` | 最后统一入口引导，并同步 README 与插件介绍 | [#28](https://github.com/steven123397/nexuskit-skills/issues/28)、[#32](https://github.com/steven123397/nexuskit-skills/issues/32) |
 
 第 18 项完成入口统一后，进入 U3 统一开展沙盒实际测试，核对全部 Issue 验收与外部证据，再做主仓库分支收尾。前面节点的未完成项保留在原行和对应 Issue，不另建收尾待办。
+
+## 已关闭的关联 Issue
+
+截至 2026-09-28：[#1](https://github.com/steven123397/nexuskit-skills/issues/1)、[#3](https://github.com/steven123397/nexuskit-skills/issues/3)、[#8](https://github.com/steven123397/nexuskit-skills/issues/8)、[#9](https://github.com/steven123397/nexuskit-skills/issues/9)、[#10](https://github.com/steven123397/nexuskit-skills/issues/10)、[#11](https://github.com/steven123397/nexuskit-skills/issues/11)、[#14](https://github.com/steven123397/nexuskit-skills/issues/14)、[#19](https://github.com/steven123397/nexuskit-skills/issues/19)、[#22](https://github.com/steven123397/nexuskit-skills/issues/22)、[#23](https://github.com/steven123397/nexuskit-skills/issues/23)、[#26](https://github.com/steven123397/nexuskit-skills/issues/26)、[#30](https://github.com/steven123397/nexuskit-skills/issues/30)、[#31](https://github.com/steven123397/nexuskit-skills/issues/31)、[#34](https://github.com/steven123397/nexuskit-skills/issues/34)。关闭原因与讨论以对应 Issue 为准，不在此复制问题正文。
+
+- #8、#10 已拆分，未完成子项仍列在上表。
+- #22 已移除行数阈值；不同 Agent 按风险选用不同编队属于正常差异，不要求结果完全一致。
+- #34 沿用现有决定、备选与理由记录，不为未实证疑点新增字段。
+- #40 属于用户否决的误判，保持关闭，不恢复无提交受阻时自动更新 current 的要求。
+
+关闭表示相应修改或设计决定已收口，不代表实际行为已验证；相关场景统一在 U3 测试。
 
 ## 逐技能重构任务
 
@@ -85,7 +96,7 @@ topic: skill-deep-audit
 ## Implementation Units
 
 - **U1：沙盒准备。** 已完成骨架与远端配置；外部 nk-init 首次接入已核对。
-- **U2：逐技能重构与机械检查。** 按上表及“逐技能重构任务”推进，下一项为 nk-debug。每次核对当前技能和关联 Issue，修改后完成内容核对、来源同步与机械检查；不安排逐技能沙盒实跑。全部技能重写及入口统一完成后进入 U3。
+- **U2：逐技能重构与机械检查。** 按上表及“逐技能重构任务”推进，下一项为 nk-plan。每次核对当前技能和关联 Issue，修改后完成内容核对、来源同步与机械检查；不安排逐技能沙盒实跑。全部技能重写及入口统一完成后进入 U3。
 - **U3：统一沙盒实测与收口。** 确认沙盒加载全部重写后的已提交版本，由用户安排独立会话按真实开发场景测试；核对触发、读取路径、产物、验证证据和关联 Issue 验收。实测发现的问题修复后重跑受影响场景，满足验收再关闭 Issue。全部通过后汇总用户确认并收尾；必要长期结论进既有经验库，不再建立成果流水账。
 
 ## Verification Contract
@@ -101,3 +112,19 @@ topic: skill-deep-audit
 18 个技能均完成深读、按新范式重构、真实执行与效果记录，本轮遗留 Issue 全部取得最终处置并满足验收；必要检查通过，汇总结论经用户确认。分支收尾时提炼并清理短期审计产物。
 
 2026-09-28 决策调整：current 的维护归 nk-commit，每次提交前核对并按需与交付同次入库；nk-handoff 仅限用户显式调用，不根据自然语言或技能结束自动触发。Plan 达到交付标准后提交，移除依赖交接入库的旧限制；ideate 只写入记录，用户需要时自行调用 nk-commit。
+
+2026-09-28 simplify / review 联合设计（已落地，待统一沙盒验证）：
+
+- 两者执行分析都必须派子代理；不再以主会话内联扮演作为等价降级，能力不可用时明确报告未完成。
+- 保留 nk-simplify 为用户手动入口，允许 nk-review 通过公开入口调用其分析能力；不自动触发独立 simplify。
+- simplify 先报告精简建议，单独使用时由用户决定就地修复、转 Issue 或显式调用 handoff；被 review 调用时返回结果，由 review 统一汇报，不重复展示菜单。
+- 两者均不自动提交。修复须有相应授权；问题转 Issue 和 handoff 也按用户决定执行。
+- 合并讨论精简分析与质量审查的职责、去重、修复后验证和 work/debug 的提交前衔接；本轮 debug 改动暂不单独提交。
+
+- 派发采用同一快照下的并行分析：主会话直接派发 simplify 三个子代理与 review 风险子代理，容量不足时分批，不新增管理子代理；分析期间不改代码，结果统一去重与独立复核。
+- review 不采用 Matt 的规范/意图双轴编排或分轴报告；保留 CE 的意图上下文、项目规则与风险编队。来源表述已修正。
+- 范围只确定一次：review 调用 simplify 时传入已确定的范围、快照、意图与约束，simplify 不重复定界；材料问题返回主会话处理。此分析接口已写入两个入口，联合重构已落实。
+
+- work / debug 的提交前接入已写入各自入口：review 无论嵌入还是手动调用都产出报告，不承担修复和后续分流决策。work 直接修复查证成立的单元内问题，超出单元则阻断，由用户决定转 Issue、handoff 等后续；debug 直接修复查证成立的问题。修复后针对性验证与复核，复用仍有效的证据。review 的版本级限制与内联降级已清理，统一报告接口已落实。
+
+2026-09-28 用户确认：#1、#14、#22、#23、#30、#31、#34 按本轮落实及决策收口，不以逐项实跑作为关闭前置。#22 的验收不要求不同 Agent 选择完全相同的编队，依据风险合理选择即可；#34 沿用现有决定、备选和理由的记录，不预设增加字段。全部技能重构完成后仍统一实测，不将 Issue 关闭等同于行为验证通过。

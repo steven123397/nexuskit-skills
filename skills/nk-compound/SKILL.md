@@ -6,8 +6,6 @@ argument-hint: "[可选：简短上下文 | refresh [范围提示]]"
 
 # /nk-compound
 
-> **路径解析说明：** 本文件及其 references 中引用的文件（`references/`、`../conventions/`、`../nk-commit/`）均相对于本技能所在目录解析，不在目标代码仓库中查找。`docs/solutions/`、`docs/current.md`、`CONCEPTS.md`、`AGENTS.md` 指目标仓库中的文件。
-
 两个模式：**沉淀模式**（默认）把刚解决并验证过的问题或决策写入 `docs/solutions/`；**审计模式**（`refresh`）对照当前代码库审计既有条目与 `CONCEPTS.md`。条目的 frontmatter 与正文模板以 [`../conventions/solution-schema.md`](../conventions/solution-schema.md) 为准，本技能不另造格式。
 
 **完成标志：** 沉淀模式——一条合格条目写入（或明确报告为何不建档），术语补全、可见性检查、提交去向处理完毕并汇报；审计模式——范围内每条目得到分类，动作执行完毕，报告直接呈现给用户。
@@ -15,7 +13,7 @@ argument-hint: "[可选：简短上下文 | refresh [范围提示]]"
 ## 模式判定
 
 - 参数以 `refresh` 开头，或明确要求审计/清理知识库 → **审计模式**，其余词作范围提示；无提示则全量。
-- 明确要求初建 `CONCEPTS.md`（建立整个项目的术语表）→ 审计模式的整库初建路径（见 `references/audit.md`）。
+- 明确要求初建 `CONCEPTS.md`（建立整个项目的术语表）→ 审计模式的整库初建路径（见 [references/audit.md](references/audit.md)）。
 - 其余 → **沉淀模式**，其余词作简短上下文。
 
 ## 准入门槛（沉淀模式）
@@ -33,25 +31,25 @@ argument-hint: "[可选：简短上下文 | refresh [范围提示]]"
 
 | 阶段 | 先读 | 内容 |
 | :-- | :-- | :-- |
-| 1 定位与采样 | `references/capture.md` | 从当前会话上下文与 `git log`/diff 定位刚解决的问题；语料优先采样；重叠判定（高重叠→更新既有条目） |
-| 2 编写与自检 | `references/capture.md`、`references/frontmatter-checklist.md`、`references/claims-checklist.md` | 按 solution-schema 模板成文；frontmatter 与正文引用逐项自检 |
-| 3 术语补全 | `references/capture.md`、[`../conventions/concepts-vocabulary.md`](../conventions/concepts-vocabulary.md) | 只做 Add/Refine，不整库初建 |
-| 4 可选增强评审 | `references/capture.md` | 按 problem_type 选择共享角色并附文档评审目的；只评审文档，不改产品代码 |
-| 5 可见性与提交 | `references/capture.md` | 首运行检查 `AGENTS.md` 入口指引；按 R4 第 4 条决定提交去向 |
+| 1 定位与采样 | [references/capture.md](references/capture.md) | 从当前会话上下文与 `git log`/diff 定位刚解决的问题；语料优先采样；重叠判定（高重叠→更新既有条目） |
+| 2 编写与自检 | [references/capture.md](references/capture.md)、[references/frontmatter-checklist.md](references/frontmatter-checklist.md)、[references/claims-checklist.md](references/claims-checklist.md) | 按 solution-schema 模板成文；frontmatter 与正文引用逐项自检 |
+| 3 术语补全 | [references/capture.md](references/capture.md)、[`../conventions/concepts-vocabulary.md`](../conventions/concepts-vocabulary.md) | 只做 Add/Refine，不整库初建 |
+| 4 可选增强评审 | [references/capture.md](references/capture.md) | 按 problem_type 选择共享角色并附文档评审目的；只评审文档，不改产品代码 |
+| 5 可见性与提交 | [references/capture.md](references/capture.md) | 首运行检查 `AGENTS.md` 入口指引；按 R4 第 4 条决定提交去向 |
 
 ## 审计模式流程
 
 | 阶段 | 先读 | 内容 |
 | :-- | :-- | :-- |
-| 1 范围与调查 | `references/audit.md` | 范围提示收窄；逐条对照当前代码库核对；`retire_when` 条件检查；集合层面查重叠/取代/矛盾 |
-| 2 分类与执行 | `references/audit.md` | Keep / Update / Consolidate / Replace / Delete；删除需正面证据 |
-| 3 术语对账 | `references/audit.md` | `CONCEPTS.md` 全操作集（含 Fold/Retire/Scrub）与老项目整库初建 |
-| 4 报告与提交 | `references/audit.md` | 报告直接呈现，分 Applied / Recommended；默认不落地成长期文件 |
+| 1 范围与调查 | [references/audit.md](references/audit.md) | 范围提示收窄；逐条对照当前代码库核对；`retire_when` 条件检查；集合层面查重叠/取代/矛盾 |
+| 2 分类与执行 | [references/audit.md](references/audit.md) | Keep / Update / Consolidate / Replace / Delete；删除需正面证据 |
+| 3 术语对账 | [references/audit.md](references/audit.md) | `CONCEPTS.md` 全操作集（含 Fold/Retire/Scrub）与老项目整库初建 |
+| 4 报告与提交 | [references/audit.md](references/audit.md) | 报告直接呈现，分 Applied / Recommended；默认不落地成长期文件 |
 
 ## 始终成立的规则
 
 - **写入边界**：沉淀模式只写本次条目（或更新既有条目）、`CONCEPTS.md` 补全、缺指引时 `AGENTS.md` 的一行指引；审计模式只改知识库文件。两种模式都不改产品代码；条目与其点名的指导文件（SKILL.md、runbook、指令文件）冲突时只报告，不编辑指导文件。
-- **删除需要正面证据**：代码被删不构成删除条目的理由；不确定时保留（细则见 `references/audit.md`）。
-- **子代理**：`references/capture.md` 链接的共享角色是提示词资产而非具名 Agent——读取文件内容初始化通用子代理；客户端不支持子代理时由主会话内联完成。子代理不写产品文件、不执行 `git commit`。
+- **删除需要正面证据**：代码被删不构成删除条目的理由；不确定时保留（细则见 [references/audit.md](references/audit.md)）。
+- **子代理**：[references/capture.md](references/capture.md) 链接的共享角色是提示词资产而非具名 Agent——读取文件内容初始化通用子代理；客户端不支持子代理时由主会话内联完成。子代理不写产品文件、不执行 `git commit`。
 - **提交**：将沉淀或审计场景、成果、文件范围、已有证据、关联交付、阻断及下一步交给 [nk-commit](../nk-commit/SKILL.md)，由其按 R3/R4 决定提交或暂留，提交时同步 current，不自行执行提交算法。
 - **提问**：按 [`../conventions/decision-autonomy.md`](../conventions/decision-autonomy.md) 批量选项提问；无人值守时的待确认项在 `docs/current.md` 登记 `[待确认]`。

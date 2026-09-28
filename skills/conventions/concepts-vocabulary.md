@@ -32,21 +32,21 @@ flowchart LR
 ```
 
 ### 1. 规划期即时写入（JIT 录入）
-在 `/nk-brainstorm` 明确业务范围和领域模型、或在 `/nk-plan` 敲定技术设计时，一旦确立了核心业务名词，**立即写入根目录 `CONCEPTS.md`**，并随同方案文档一同提交，确保后续会话沟通口径完全一致。
+在 [/nk-brainstorm](../nk-brainstorm/SKILL.md) 明确业务范围和领域模型、或在 [/nk-plan](../nk-plan/SKILL.md) 敲定技术设计时，一旦确立了核心业务名词，**立即写入根目录 `CONCEPTS.md`**，并随同方案文档一同提交，确保后续会话沟通口径完全一致。
 
 ### 2. 即时质疑机制 (Challenge against the Glossary)
 当用户或 Agent 在对话、需求描述或代码评审中使用了与 `CONCEPTS.md` 冲突的词汇（例如使用了词条中明确注明的 `*Avoid:*` 同义词，或混淆了两个已明确区分的概念），**应当面当场指出并对齐术语**。术语表不仅是被动查询的字典，更是主动维护认知一致性的标尺。
 
 ### 3. 沉淀期增量捕获 (Accretion)
-在 `/nk-compound` 沉淀技术方案或排查踩坑时，若遇到此前未被定义且具有非显而易见含义的业务术语，增量补录。
+在 [/nk-compound](../nk-compound/SKILL.md) 沉淀技术方案或排查踩坑时，若遇到此前未被定义且具有非显而易见含义的业务术语，增量补录。
 
 ### 4. 存量老项目初建路径 (Bootstrap / Seeding)
-JIT 即时写入主要覆盖新涌现的术语。对于尚未建立 `CONCEPTS.md` 的既有老项目，需要通过一次全仓初始化（Bootstrap / Seeding）来提炼核心领域名词。**这项全局初建职责由 `nk-compound` 的审计（refresh）模式承担**，通过扫描核心业务模型、对外接口与领域文档完成骨架搭建。
+JIT 即时写入主要覆盖新涌现的术语。对于尚未建立 `CONCEPTS.md` 的既有老项目，需要通过一次全仓初始化（Bootstrap / Seeding）来提炼核心领域名词。**这项全局初建职责由 [nk-compound](../nk-compound/SKILL.md) 的审计（refresh）模式承担**，通过扫描核心业务模型、对外接口与领域文档完成骨架搭建。
 
 区别于全局初建：`CONCEPTS.md` 不存在时，规划期即时写入可以由第一个合格条目创建该文件，只写本次敲定的术语，不顺带初建整个项目的术语表。
 
 ### 5. 分支收尾提炼 (Harvest during Close)
-在 `/nk-close` 清理阶段性 Plan 之前，核对 Plan 中是否有值得长期保留的领域新概念，提炼至 `CONCEPTS.md` 后再行删除 Plan。
+在 [/nk-close](../nk-close/SKILL.md) 清理阶段性 Plan 之前，核对 Plan 中是否有值得长期保留的领域新概念，提炼至 `CONCEPTS.md` 后再行删除 Plan。
 
 ---
 

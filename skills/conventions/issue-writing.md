@@ -1,7 +1,7 @@
 # Issue 生命周期与写作规范 (Issue Writing)
 
-> **定位：** Issue 全生命周期规则的唯一持有者：去向、标签、认领、关闭时机、写作格式。Issue 是跨 plan 事务的载体（D5），它可能在 backlog 里躺上数周，然后被一个毫无现场上下文的 Agent 或会话认领（`nk-work` 的合法输入之一）——写作质量直接决定接手质量。
-> **生产者与消费者：** `nk-to-issue` 是核实分析后的主要生产者；`nk-debug`、`nk-close`、`nk-review`、`nk-wayfinder` 在流程内"转 Issue"时遵循同一格式；`nk-brainstorm` / `nk-plan` / `nk-work` 是认领方。各技能正文只放指向本文件的指针，不重述规则。本约定不管"何时转 Issue"（时机见 [`artifact-lifecycle.md`](artifact-lifecycle.md) 第四章）。
+> **定位：** Issue 全生命周期规则的唯一持有者：去向、标签、认领、关闭时机、写作格式。Issue 是跨 plan 事务的载体（D5），它可能在 backlog 里躺上数周，然后被一个毫无现场上下文的 Agent 或会话认领（[nk-work](../nk-work/SKILL.md) 的合法输入之一）——写作质量直接决定接手质量。
+> **生产者与消费者：** [nk-to-issue](../nk-to-issue/SKILL.md) 是核实分析后的主要生产者；[nk-debug](../nk-debug/SKILL.md)、[nk-close](../nk-close/SKILL.md)、[nk-review](../nk-review/SKILL.md)、[nk-wayfinder](../nk-wayfinder/SKILL.md) 在流程内"转 Issue"时遵循同一格式；[nk-brainstorm](../nk-brainstorm/SKILL.md) / [nk-plan](../nk-plan/SKILL.md) / [nk-work](../nk-work/SKILL.md) 是认领方。各技能正文只放指向本文件的指针，不重述规则。本约定不管"何时转 Issue"（时机见 [`artifact-lifecycle.md`](artifact-lifecycle.md) 第四章）。
 
 ---
 
@@ -14,17 +14,17 @@
 
 1. 只用 GitHub 默认标签表达类型（`bug` / `enhancement`）。
 2. **不设状态标签**（如 in-progress、ready）：状态由 Issue 的 open/closed 与 `docs/current.md` 承载，多一处真相必然漂移。
-3. 唯一例外：`nk-wayfinder` 的 `wayfinder:*` 前缀标签，其 map / decision ticket 机制依赖它（见第七节）。
+3. 唯一例外：[nk-wayfinder](../nk-wayfinder/SKILL.md) 的 `wayfinder:*` 前缀标签，其 map / decision ticket 机制依赖它（见第七节）。
 
 ## 三、认领
 
-认领发生在 Issue 被纳入任何工作容器的时刻。三条路径做同两件事：**设 assignee**（`gh issue edit <N> --add-assignee @me`）+ **在 Issue 下评论指向承载它的产物**（plan 文件路径，或注明由 `nk-work` 直接认领）。
+认领发生在 Issue 被纳入任何工作容器的时刻。三条路径做同两件事：**设 assignee**（`gh issue edit <N> --add-assignee @me`）+ **在 Issue 下评论指向承载它的产物**（plan 文件路径，或注明由 [nk-work](../nk-work/SKILL.md) 直接认领）。
 
-- **`nk-brainstorm`**：把 Issue 作为需求来源时认领。
-- **`nk-plan`**：把既有 Issue 纳入 plan 范围的那一刻认领；对应单元交付后按第四节关闭。
-- **`nk-work`**：直接认领时除上述两件事外，还在 `docs/current.md` 登记——这是写文件，不是单独提交，由 [nk-commit](../nk-commit/SKILL.md) 在提交前核对并与交付入库；没有交付时暂留，用户显式保存现场时按 R4 处理。
+- **[nk-brainstorm](../nk-brainstorm/SKILL.md)**：把 Issue 作为需求来源时认领。
+- **[nk-plan](../nk-plan/SKILL.md)**：把既有 Issue 纳入 plan 范围的那一刻认领；对应单元交付后按第四节关闭。
+- **[nk-work](../nk-work/SKILL.md)**：直接认领时除上述两件事外，还在 `docs/current.md` 登记——这是写文件，不是单独提交，由 [nk-commit](../nk-commit/SKILL.md) 在提交前核对并与交付入库；没有交付时暂留，用户显式保存现场时按 R4 处理。
 
-**路由判断**：需求类 Issue 未澄清范围与成功标准时先经 `nk-brainstorm`；已写清行为与完成定义的可直接进 `nk-plan` 或 `nk-work`。
+**路由判断**：需求类 Issue 未澄清范围与成功标准时先经 [nk-brainstorm](../nk-brainstorm/SKILL.md)；已写清行为与完成定义的可直接进 [nk-plan](../nk-plan/SKILL.md) 或 [nk-work](../nk-work/SKILL.md)。
 
 **退回**：认领后决定不做（如 brainstorm 否决了方向）时，取消 assignee 并评论说明原因，Issue 保持 open。
 
@@ -32,9 +32,9 @@
 
 三个合法时机，先到先得：
 
-1. **`nk-work` 单元交付**：提交覆盖该 Issue 时关闭，评论注明单元编号与提交哈希。
+1. **[nk-work](../nk-work/SKILL.md) 单元交付**：提交覆盖该 Issue 时关闭，评论注明单元编号与提交哈希。
 2. **PR 合并**：PR 描述中写 `Fixes #N`，合并时自动关闭（PR 描述写法见 [`../nk-close/references/pr-description.md`](../nk-close/references/pr-description.md)）。
-3. **`nk-close` 兜底扫描**：分支收尾时扫描本分支引用过而未关闭的 Issue，逐条处理（评论关闭或说明遗留原因）。
+3. **[nk-close](../nk-close/SKILL.md) 兜底扫描**：分支收尾时扫描本分支引用过而未关闭的 Issue，逐条处理（评论关闭或说明遗留原因）。
 
 ## 五、写作四原则（吸收自 Matt `AGENT-BRIEF`）
 
@@ -68,4 +68,4 @@
 
 ## 七、例外
 
-`nk-wayfinder` 的 map 与 decision ticket 有自己的专用格式（Destination / Question / Decisions so far）与 `wayfinder:*` 标签，由该技能自行定义，不适用本规范。
+[nk-wayfinder](../nk-wayfinder/SKILL.md) 的 map 与 decision ticket 有自己的专用格式（Destination / Question / Decisions so far）与 `wayfinder:*` 标签，由该技能自行定义，不适用本规范。

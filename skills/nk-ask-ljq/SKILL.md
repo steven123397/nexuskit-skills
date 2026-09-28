@@ -6,8 +6,6 @@ disable-model-invocation: true
 
 # Ask ljq
 
-> **路径解析说明：** 本文件中引用的参考文件（如 `../conventions/`、`../nk-commit/`）均相对于本技能所在目录解析，不在目标代码仓库中查找。
-
 你不需要记住每个技能，直接问我就行。下面是我的实战地图：先讲这套体系最重要的一条规矩，再给一条最常用的参考路径，最后是按场景对号入座。每个场景末尾就是该去的技能，一步跳转。
 
 ## 工具箱，不是流水线
@@ -18,28 +16,28 @@ disable-model-invocation: true
 
 一条完整的功能开发通常这样走，每段都能在单元边界换会话：
 
-1. **找方向**（可选）：还没有具体想法，想先淘一批改进方向 → `/nk-ideate`
-2. **澄清做什么**：有想法但要明确范围、成功标准、做到哪算完 → `/nk-brainstorm`
-3. **规划怎么做**：需求清楚了，要拆实施单元、定技术方案 → `/nk-plan`
-4. **实施**：按单元实现，一个单元一个会话最舒服 → `/nk-work`
+1. **找方向**（可选）：还没有具体想法，想先淘一批改进方向 → [/nk-ideate](../nk-ideate/SKILL.md)
+2. **澄清做什么**：有想法但要明确范围、成功标准、做到哪算完 → [/nk-brainstorm](../nk-brainstorm/SKILL.md)
+3. **规划怎么做**：需求清楚了，要拆实施单元、定技术方案 → [/nk-plan](../nk-plan/SKILL.md)
+4. **实施**：按单元实现，一个单元一个会话最舒服 → [/nk-work](../nk-work/SKILL.md)
 5. **提交**：完成单元要求的验证与提交前审查后入库 → [nk-commit](../nk-commit/SKILL.md)
-6. **交付后精简**：行为不变，把刚写完的代码收拾干净 → `/nk-simplify`
-7. **版本审查**：对整版 diff 做审查，记录发现 → `/nk-review`
-8. **分支收尾**：提炼长期知识、清理生命周期工件 → `/nk-close`
+6. **交付后精简**：行为不变，把刚写完的代码收拾干净 → [/nk-simplify](../nk-simplify/SKILL.md)
+7. **版本审查**：对整版 diff 做审查，记录发现 → [/nk-review](../nk-review/SKILL.md)
+8. **分支收尾**：提炼长期知识、清理生命周期工件 → [/nk-close](../nk-close/SKILL.md)
 
 每次交付提交由 nk-commit 同步 current，之后可直接换会话。只有用户明确调用 nk-handoff 才执行额外现场保存，不根据结束会话的措辞推断。
 
 ## 按场景入口
 
-- **这个仓库第一次启用体系** → `/nk-init`
+- **这个仓库第一次启用体系** → [/nk-init](../nk-init/SKILL.md)
 - **接手工作 / 新会话冷启动**：先读目标仓库的 `docs/current.md`（约定见 [`../conventions/current-md.md`](../conventions/current-md.md)），分支、已验证能力、阻断项、下一步全在里面，别去翻聊天记录和 git log 大海捞针。
-- **有 bug、有异常、行为不对**：复现优先，先造一个能在症状上变红的复现再谈修复 → `/nk-debug`
-- **开发中冒出一个发现或新需求，但不想打断手头任务**：核实后落成 Issue，继续干活 → `/nk-to-issue`
-- **目标太大太模糊，看不见从这里到那里的路径**：先画决策地图，把雾推开再规划（需要 GitHub 远端）→ `/nk-wayfinder`
-- **有一串只能人来做的手动操作**（开通服务、点第三方后台、跑一次性迁移）→ `/nk-wizard`
-- **我没跟上，agent 刚才说的没听懂**：暂停，用你缺的上下文重新对齐 → `/nk-wait-what`
-- **刚解决了一个值得记住的问题，或想审计知识库有没有过时**：沉淀进 `docs/solutions/` → `/nk-compound`
-- **手动保存未完成现场**：用户显式调用 `/nk-handoff`；普通提交已同步 current，无需再次交接。
+- **有 bug、有异常、行为不对**：复现优先，先造一个能在症状上变红的复现再谈修复 → [/nk-debug](../nk-debug/SKILL.md)
+- **开发中冒出一个发现或新需求，但不想打断手头任务**：核实后落成 Issue，继续干活 → [/nk-to-issue](../nk-to-issue/SKILL.md)
+- **目标太大太模糊，看不见从这里到那里的路径**：先画决策地图，把雾推开再规划（需要 GitHub 远端）→ [/nk-wayfinder](../nk-wayfinder/SKILL.md)
+- **有一串只能人来做的手动操作**（开通服务、点第三方后台、跑一次性迁移）→ [/nk-wizard](../nk-wizard/SKILL.md)
+- **我没跟上，agent 刚才说的没听懂**：暂停，用你缺的上下文重新对齐 → [/nk-wait-what](../nk-wait-what/SKILL.md)
+- **刚解决了一个值得记住的问题，或想审计知识库有没有过时**：沉淀进 `docs/solutions/` → [/nk-compound](../nk-compound/SKILL.md)
+- **手动保存未完成现场**：用户显式调用 [/nk-handoff](../nk-handoff/SKILL.md)；普通提交已同步 current，无需再次交接。
 - **就是不知道该用哪个**：把当前情境用一两句话说给我，我给你指一个。
 
 ## 语境卫生（这条值回票价）
@@ -50,7 +48,7 @@ disable-model-invocation: true
 
 ## 提交节奏一句话版
 
-细节由 `/nk-commit` 承载（规则全文在 [`../nk-commit/SKILL.md`](../nk-commit/SKILL.md)），路由时记住这六句就够：
+细节由 [/nk-commit](../nk-commit/SKILL.md) 承载（规则全文在 [`../nk-commit/SKILL.md`](../nk-commit/SKILL.md)），路由时记住这六句就够：
 
 - **R1**：提交单位是一个经过验证的变化——代码、验证、配套文档一起入库，验证证据写进提交说明。
 - **R2**：中途记录默认随对应交付入库；显式现场保存按 R4 处理。

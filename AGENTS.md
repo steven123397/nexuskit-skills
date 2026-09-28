@@ -18,7 +18,9 @@
 
 ## 改动规则
 
-- 修改任何 `skills/nk-*/` 或 `skills/conventions/` 后，运行 `python tests/run_checks.py`，五项检查（链接、引用、字节上限、共享方法及调用关系、frontmatter 严格 YAML 与 name/目录同名）必须全绿；CI 会在推送时复跑。
+- 修改任何 `skills/nk-*/` 或 `skills/conventions/` 后，运行 `python tests/run_checks.py`，五项检查（链接、引用、字节上限、共享方法及调用关系、frontmatter 基础检查与 name/目录同名）必须全绿；CI 会在推送时复跑。
 - **新增技能目录不建加载链接**：发布模型下各客户端消费的是安装快照（见头部加载模型），仓库内改动不直接影响线上；需要即时试用时按头部说明重装本地插件或建临时 junction。
 - 所有提交通过 [`nk-commit`](skills/nk-commit/SKILL.md)，提交节奏由该入口统一持有：一个经过验证的变化一次提交，提交前按需同步 current 并一起入库；中途状态默认暂留，显式现场保存按入口规则处理。
 - `docs/skill-sources.md` 随技能的新建/修改同步更新；技能的 `SKILL.md` 正文不写来源备注。
+
+- **校验器适用范围**：本仓库的机械检查入口是 `python tests/run_checks.py`。外部 skill-creator 的 `quick_validate.py` 当前字段白名单不含本仓库使用的 `argument-hint`、`disable-model-invocation`；这类报错属于该校验器的字段范围限制，不是 PyYAML 解析失败，不应为通过它删除有效字段或修改外部安装文件。缺少 `yaml` 模块时安装 `PyYAML`；语法检查与客户端字段支持分别判断。仓库当前 frontmatter 检查仍为基础正则检查，真正 YAML 解析由 [#13](https://github.com/steven123397/nexuskit-skills/issues/13) 跟踪，不能将五项通过称为严格 YAML 校验通过。

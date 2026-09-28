@@ -67,7 +67,7 @@ When the change *is* a guard that stands in for the real thing -- a CI/CD gate, 
 
 ## Confidence calibration
 
-Use the anchored confidence rubric in the reviewer prompt (`../reviewer-prompt.md`). Persona-specific guidance:
+Use the anchored confidence rubric in the reviewer prompt ([../reviewer-prompt.md](../reviewer-prompt.md)). Persona-specific guidance:
 
 **Anchor 100** — the failure scenario is mechanically constructible: every step in the chain is verifiable from the diff and surrounding code, no assumed runtime conditions.
 

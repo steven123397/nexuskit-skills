@@ -19,7 +19,7 @@ Where a finding matches an OWASP Top 10 category or a CWE below, include that id
 
 Security findings have a **lower effective threshold** than other personas because the cost of missing a real vulnerability is high. Security findings at anchor 50 should typically be filed at P0 severity so the P0 exception keeps them in the report (P0 + anchor 50 always reports).
 
-Use the anchored confidence rubric in the reviewer prompt (`../reviewer-prompt.md`). Persona-specific guidance:
+Use the anchored confidence rubric in the reviewer prompt ([../reviewer-prompt.md](../reviewer-prompt.md)). Persona-specific guidance:
 
 **Anchor 100** — the vulnerability is verifiable from the code: a literal SQL injection (`f"SELECT ... {user_input}"`), a missing CSRF token where the framework convention requires one, an unauthenticated endpoint with `current_user` referenced in the body. No interpretation needed.
 

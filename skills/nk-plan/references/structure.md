@@ -1,6 +1,6 @@
 # 阶段 2–4：解决规划问题、划分结构、成文
 
-建规划问题清单之前读本文件。plan 的章节、ID、frontmatter 以 `../../conventions/plan-format.md` 为准；本文件只补充"怎么写好"。
+建规划问题清单之前读本文件。plan 的章节、ID、frontmatter 以 [../../conventions/plan-format.md](../../conventions/plan-format.md) 为准；本文件只补充"怎么写好"。
 
 ## 阶段 2：解决规划问题
 
@@ -10,7 +10,7 @@
 * **规划期解决**：答案可从仓库、文档或用户选择中得到；
 * **推迟到实现**：答案取决于改代码、运行时行为或执行中的发现。
 
-**只在答案实质影响架构、范围、顺序或风险，且无法合理推断时才问用户。** 提问遵循 `../../conventions/decision-autonomy.md`：互不依赖的问题合并为一轮（至多 3 个），每个给 2–3 个选项并标出 `(Recommended)`；有依赖关系时才分轮。自主决断区内的事（可逆、局部、有惯例可循）自己定，写进关键技术决策的理由。
+**只在答案实质影响架构、范围、顺序或风险，且无法合理推断时才问用户。** 提问遵循 [../../conventions/decision-autonomy.md](../../conventions/decision-autonomy.md)：互不依赖的问题合并为一轮（至多 3 个），每个给 2–3 个选项并标出 `(Recommended)`；有依赖关系时才分轮。自主决断区内的事（可逆、局部、有惯例可循）自己定，写进关键技术决策的理由。
 
 **不重问已定决策。** 带 `session-settled:` 标注或按 [`../../conventions/settled-decisions.md`](../../conventions/settled-decisions.md) 判为已定的决策是已答输入。未经审视的指令在这里接受恰好一次以调研证据为依据的质疑，结果写成（带或不带标注的）关键技术决策。
 
@@ -18,7 +18,7 @@
 
 **不在此阶段**运行测试、构建应用或探测运行时行为。
 
-**术语**：规划中敲定了新的领域术语，或发现用词与 `CONCEPTS.md` 冲突时，按 `../../conventions/concepts-vocabulary.md` 当场处理：冲突当面指出并对齐；合格的新术语立即写入 `CONCEPTS.md`（文件不存在时由第一个合格条目创建；整库初建属于 refresh 的职责，不在这里做）。
+**术语**：规划中敲定了新的领域术语，或发现用词与 `CONCEPTS.md` 冲突时，按 [../../conventions/concepts-vocabulary.md](../../conventions/concepts-vocabulary.md) 当场处理：冲突当面指出并对齐；合格的新术语立即写入 `CONCEPTS.md`（文件不存在时由第一个合格条目创建；整库初建属于 refresh 的职责，不在这里做）。
 
 ## 阶段 3：划分结构
 
@@ -92,7 +92,7 @@ plan 中的图是与文字并列的权威内容，不加"仅为方向性示意"�
 
 **Deep 可选扩展**（只在确实提高执行质量或对齐时加入）：Alternative Approaches Considered、Success Metrics（仅限产品成功标准没覆盖的运维指标：仪表盘、错误预算、告警阈值、发布遥测）、Dependencies / Prerequisites、Risk Analysis & Mitigation、Phased Delivery、Documentation Plan、Operational / Rollout Notes、确实影响当前设计的 Future Considerations。
 
-**备选方案要比较"怎么做"**：架构、顺序、边界、集成方式、发布策略。细小的实现变体（用哪个哈希函数）属于关键技术决策；产品形态的备选（不同的参与者、不同的核心结果）属于 `nk-brainstorm`，不在这里重新讨论。
+**备选方案要比较"怎么做"**：架构、顺序、边界、集成方式、发布策略。细小的实现变体（用哪个哈希函数）属于关键技术决策；产品形态的备选（不同的参与者、不同的核心结果）属于 [nk-brainstorm](../../nk-brainstorm/SKILL.md)，不在这里重新讨论。
 
 ### 4.2 行文
 
@@ -109,7 +109,7 @@ plan 中的图是与文字并列的权威内容，不加"仅为方向性示意"�
 plan-format 之外的呈现原则：
 
 * 不按固定列宽硬换行；每段一行或每句一行。
-* 不混入 HTML。唯一例外是约定的不可见语义标记（如 `nk-brainstorm` 写入的 `<!-- nk-section: work-relationships -->`），它为下游 Agent 标明章节含义、不影响版式，保留原样。
+* 不混入 HTML。唯一例外是约定的不可见语义标记（如 [nk-brainstorm](../../nk-brainstorm/SKILL.md) 写入的 `<!-- nk-section: work-relationships -->`），它为下游 Agent 标明章节含义、不影响版式，保留原样。
 * 内容形态决定呈现：叙述性内容（动机、决策理由、问题背景）用段落；3–5 个各带几行说明的平行项用要点；5 个以上结构一致的项用表格。
 * 要点有子结构时用加粗的前导标签（例如流程的 **Trigger:** / **Actors:** / **Steps:** / **Covered by:**），不用更深的标题层级。
 * Standard 与 Deep 的顶层章节之间用 `---` 分隔；一屏能放下的 Lightweight 省略。

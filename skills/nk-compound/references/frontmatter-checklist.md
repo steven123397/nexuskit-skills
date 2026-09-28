@@ -1,7 +1,5 @@
 # Frontmatter 自检清单
 
-> 路径解析：`../../conventions/` 相对于本技能目录解析。
-
 沉淀或重写 solution 条目后逐项核对。此清单替代 CE 的 `validate-frontmatter.py`（脚本已删除），核对范围与脚本一致：**解析安全**（防止 YAML 静默截断），另加 solution-schema 字段核对。
 
 ## A. 解析安全（静默损坏防线）

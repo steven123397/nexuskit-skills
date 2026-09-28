@@ -33,7 +33,7 @@
 * 新术语：新增（Add），归入对应的领域分组。
 * 已有术语获得了新的精确度：完善（Refine）。一个新词的全部含义已由现有条目承载时，这是对现有条目的完善（把新词列入 `*Avoid:*` 或别名），不是新条目。
 * 两个说法曾被混用、现在区分清楚了：在 `## Flagged Ambiguities` 记一行。
-* 合并（Fold）、退役（Retire）与删除不在头脑风暴中做；发现候选时在对话中提一句，留给 `nk-compound` 或 refresh。
+* 合并（Fold）、退役（Retire）与删除不在头脑风暴中做；发现候选时在对话中提一句，留给 [nk-compound](../../nk-compound/SKILL.md) 或 refresh。
 * 写入后在对话中用一行告知（"已写入 CONCEPTS.md：解析单元"），方便用户当场纠正。
 
 **第 3 阶段复核：** 写入 plan 后，把 Product Contract 中用到的领域名词与 `CONCEPTS.md` 对一遍：方案选择改变了某个名称的，完善对应条目；plan 与术语表用词不一致的，改 plan。

@@ -6,8 +6,6 @@ disable-model-invocation: true
 
 # /nk-wizard
 
-> **路径解析说明：** 本文件中引用的参考文件（如 `assets/`、`../conventions/`）均相对于本技能所在目录解析，不在目标代码仓库中查找。
-
 生成一个交互式 bash wizard，逐步引导人完成只有人能执行的手动流程——这类流程手动做很繁琐，每次重新向 AI 解释一遍也很繁琐。适用场景：provisioning 基础设施、配置凭据或 CI secrets、走查不熟悉的第三方 dashboard、一次性 migration 或 cutover。Agent 自己就能执行的步骤，不要用它。
 
 Wizard 会打开每个 URL、准确说明该点什么该复制什么、捕获这些值并写到该去的地方（`.env`、GitHub secrets）、逐阶段确认并显示剩余进度。Windows 下用 Git Bash 运行（template 已含跨平台 URL 打开）。
@@ -37,7 +35,7 @@ Wizard 默认是一次性产物：为单次运行而构建，保存到 scratch �
 
 ### 3. 编写 wizard (Author)
 
-把 `assets/template.sh` 复制到目标路径。用每个步骤一个 `stage` 替换示例 stage，按依赖顺序排列。使用 library helpers——`stage`、`say`/`step`、`open_url`、`ask`/`ask_secret`、`write_env`、`set_secret`/`set_var`、`pause`/`confirm`——并把 `TOTAL_STAGES` 设为你编写的 stage 数量。
+把 [assets/template.sh](assets/template.sh) 复制到目标路径。用每个步骤一个 `stage` 替换示例 stage，按依赖顺序排列。使用 library helpers——`stage`、`say`/`step`、`open_url`、`ask`/`ask_secret`、`write_env`、`set_secret`/`set_var`、`pause`/`confirm`——并把 `TOTAL_STAGES` 设为你编写的 stage 数量。
 
 守住 template 设定的标准：在索取某个 URL 的值之前先打开它；对任何 secret 使用 `ask_secret`；对每个持久化的值使用 `write_env`；只对 CI 确实需要的值使用 `set_secret`；在任何不可逆操作之前 `confirm`。每个 `stage` 都会清屏，只显示当前步骤——让一个 stage 只聚焦一项任务，这样人需要的内容就不会滚出视野。不要触碰标记之上的 library。
 
@@ -47,4 +45,4 @@ Wizard 默认是一次性产物：为单次运行而构建，保存到 scratch �
 - `chmod +x <script>`。
 - 不要自己端到端运行它——它会打开浏览器并阻塞在人的输入上。改为静态追踪：步骤 1 中列出的每个值都被捕获并落到它该去的位置，并且每个 `set_secret` 名称都与 CI 中的某处 `secrets.*` 引用精确匹配。
 - 告诉用户如何运行它。仅需入库的可重复 setup 路径交给 nk-commit，提供成果、已有证据、阻断和下一步，由其同步 current 并提交。
-- 生成过程中发现值得沉淀的非显性知识（如某服务配置文档没写的坑），建议调用 `nk-compound` 记入知识库。
+- 生成过程中发现值得沉淀的非显性知识（如某服务配置文档没写的坑），建议调用 [nk-compound](../nk-compound/SKILL.md) 记入知识库。

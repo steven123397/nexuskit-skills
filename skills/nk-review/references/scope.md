@@ -2,7 +2,9 @@
 
 第 1 步读取本文件。目标是解析出**被审 diff**：基线 ref、文件清单、带上下文的 diff 文本，以及供编队使用的范围信号。解析不出来就早停，不带着半个 diff 进入编队。
 
-## 一、四种审查对象
+## 一、接收范围与审查对象
+
+调用方已给出明确的单元、修复或针对性复核范围时，检查所给材料是否可读并对应同一快照，直接复用，不重新寻找分支基线或扩大到整分支。工作区范围须包含实际 diff 和文件内容或指纹；材料缺失、版本不一致时交回调用方补齐。调用方指定的新文件按全文纳入，外来改动不混入。以下解析只用于尚未定界的手动调用。
 
 按用户输入分流；逐条运行 Git 命令，检查结果后再决定下一步。
 
@@ -21,11 +23,11 @@ git ls-files --others --exclude-standard
 
 - `<base-ref>` 的确定顺序：目标项目工作流文档规定的基线分支 > 当前分支的 upstream > 远端默认分支（`origin/main` / `origin/master`）> 本地 `main` / `master`。
 - `git diff <base-sha>`（不带 `..HEAD`）对 merge-base 与工作树求 diff，三种状态的改动都覆盖到。
-- 无法解析出基线时停下说明，不要把范围悄悄退化成"只看未提交改动"——那会漏掉分支上已提交的工作。按 [`../../conventions/decision-autonomy.md`](../../conventions/decision-autonomy.md) 询问用户审查对象；无人值守时以"未提交改动"为兜底并在覆盖说明中注明。
+- 无法解析出基线时停下说明，不要把范围悄悄退化成"只看未提交改动"——那会漏掉分支上已提交的工作。按 [`../../conventions/decision-autonomy.md`](../../conventions/decision-autonomy.md) 询问用户审查对象；无法取得答案则报告范围未确定，不自行改换审查对象。
 
 ### 2. 指定基线 ref
 
-用户给了 commit、分支、tag（"review since X"）：先 `git rev-parse <ref>` 确认可解析，再单独运行 `git merge-base HEAD <ref>`；成功时使用输出哈希，失败时使用已解析的 ref 作为基线，产出同上。**diff 为空就在这里失败**，不要进入编队后才发现无事可审。同时用 `git log <ref>..HEAD --oneline` 记录提交清单，供意图摘要使用。
+用户给了 commit、分支、tag（"review since X"）：先 `git rev-parse <ref>` 确认可解析，再单独运行 `git merge-base HEAD <ref>`；成功时使用输出哈希，失败时使用已解析的 ref 作为基线，产出同上。**diff 为空且没有明确纳入的新文件时在此报告无可审变更并结束**，不要进入编队后才发现无事可审。同时用 `git log <ref>..HEAD --oneline` 记录提交清单，供意图摘要使用。
 
 ### 3. 指定文件或路径
 
@@ -33,19 +35,19 @@ git ls-files --others --exclude-standard
 
 ### 4. 未提交改动
 
-用户明确只看手头改动：`git diff -U10 HEAD`（含暂存区），加上 `git ls-files --others --exclude-standard` 中已被暂存的文件。
+用户明确只看手头改动：`git diff -U10 HEAD`（含暂存区），已暂存的新文件也由该 diff 覆盖；另列 `git ls-files --others --exclude-standard`，按下述未跟踪文件规则处理。
 
 ### 附：PR 编号或 URL（可选路径）
 
-项目走 PR 流程时，PR 编号/URL 也可作为审查对象：用 `gh pr view <n> --json title,body,baseRefName,headRefName,files,reviews,comments` 与 `gh pr diff <n>` 只读取数，**不切换分支、不 checkout**。当前分支与 PR head 一致（同名、非 fork、head 提交是 HEAD 祖先）时按本地 diff 审；不一致时以 PR 远端 diff 为准，且 reviewer 不得用工作区文件内容代替被审版本（用 `git show <ref>:<path>` 或只看 diff hunk）。已关闭/已合并的 PR 不审；明显的琐碎自动 PR（锁文件、版本号 chore）向用户确认后跳过。
+项目走 PR 流程时，PR 编号/URL 也可作为审查对象：用 `gh pr view <n> --json title,body,baseRefName,headRefName,files,reviews,comments` 与 `gh pr diff <n>` 只读取数，**不切换分支、不 checkout**。以 PR 的确切 base/head 提交和远端 diff 为被审对象；只有本地 HEAD 与 PR head 完全相同且涉及文件无工作区改动时才可用本地内容补证。其他情况下，且 reviewer 不得用工作区文件内容代替被审版本（用 `git show <ref>:<path>` 或只看 diff hunk）。已关闭/已合并的 PR 不审；明显的琐碎自动 PR（锁文件、版本号 chore）向用户确认后跳过。
 
 ## 二、未跟踪文件
 
-`UNTRACKED:` 非空时：未暂存的未跟踪文件在范围外，列入覆盖说明后继续，不停下也不追问。
+调用方或用户明确纳入的未跟踪文件按全文审查；其余未跟踪文件排除并列入覆盖说明，不自动暂存。
 
 ## 三、范围信号（路径分类规则）
 
-以下规则转写自原辅助脚本的确定性逻辑，由 Agent 按路径模式直接判定，供第 3 步编队使用：
+以下规则转写自原辅助脚本的确定性逻辑，由 Agent 按路径模式直接判定，供编队使用：
 
 **测试文件识别**（供测试风险判定，不用于扣减行数）：`tests?/`、`spec/`、`__tests__/` 目录；`*._-test / *._-spec / *.test.* / *.spec.*` 后缀；`test_*.py`、`conftest.py`；Java/C#/Scala/Swift/Kotlin 的 `*Test.*` / `*Tests.*` / `*Spec.*` 类文件（大小写敏感，`Contest.java` 这类不算）。
 
@@ -61,7 +63,7 @@ git ls-files --others --exclude-standard
 
 **静默放行守卫（无论改动多小都触发 adversarial）**：CI/CD 与门禁类路径——`.github/workflows/`、`.gitlab-ci.yml`、`.circleci/`、`Jenkinsfile`、`.buildkite/` 等。这类改动本身是"验证机制"，风险不在爆炸半径而在保真度：它可能在真实产物已坏时照样放行。
 
-**编队依据**：将结构变化、行为变化与验证机制的具体 diff 证据交给 `select-and-route.md` 判定，不计算可执行行数，也不因改动少而豁免风险角色。
+**编队依据**：将结构变化、行为变化与验证机制的具体 diff 证据交给 [select-and-route.md](select-and-route.md) 判定，不计算可执行行数，也不因改动少而豁免风险角色。
 
 ## 四、规范文件映射（供 project-standards）
 

@@ -1,6 +1,6 @@
 # Reviewer Prompt Template
 
-The orchestrator uses this template to seed each reviewer sub-agent (or to play the role inline when sub-agents are unavailable). Fill the `{...}` slots at dispatch time, including the matching review purpose below. Pass the selected method in full; do not load unselected roles. Include the template, JSON contract, hard constraints, calibration, evidence gates and rules below in each dispatch. From the shared-method table, include only the selected row; do not include the other roles.
+The orchestrator uses this template to seed each reviewer sub-agent (sub-agents are required). Fill the `{...}` slots at dispatch time, including the matching review purpose below. Pass the selected method in full; do not load unselected roles. Include the template, JSON contract, hard constraints, calibration, evidence gates and rules below in each dispatch. From the shared-method table, include only the selected row; do not include the other roles.
 
 ## Template
 
@@ -21,6 +21,7 @@ Find significant problems that affect the requested outcome. Do not seek complet
 </calibration>
 
 <scope>
+Repository and reviewed snapshot/material paths: {reviewed_snapshot}
 Review base: {base_ref}
 Changed files: {file_list}
 
@@ -30,6 +31,7 @@ Diff:
 
 <intent>
 {intent_summary}
+Project constraints and applicable prior verification: {constraints_and_evidence}
 </intent>
 
 <pr-context>
@@ -79,6 +81,7 @@ Pick the single anchor whose behavioral criterion you can honestly self-apply; n
 - `0` / `25` — a false positive, or a maybe you could not verify from the diff and surrounding code. **Suppress silently; never emit.** Gather more evidence (read related files, resolve call sites with the strongest search your runtime exposes, inspect git blame) until you can honestly anchor at 50+, or drop the finding.
 - `50` — evidence establishes a useful concern but it falls below the actionable bar, or one step depends on conditions you can see but cannot fully confirm. The P0 exception keeps a critical concern whose failure is not fully confirmed.
 - `75` — you traced the full path from input to defect and confirmed a concrete, observable consequence for users, callers, or runtime behavior in the reviewed scope.
+- For simplification findings, `75` requires a concrete reduction in owned complexity or work with traced callers and equivalence evidence; `100` requires mechanically demonstrable redundancy and equivalence. Put the benefit in `why_it_matters` and equivalence evidence in `evidence`. Never inflate an optional improvement into a blocking defect.
 - `100` — verifiable from the code alone with zero interpretation: compile error, wrong return type, swapped arguments, or an explicit project-standards violation with a quotable rule.
 
 Anchor and severity are independent axes: a P2 can be anchor 100; a P0 can be anchor 50.
@@ -113,7 +116,7 @@ The reader triages without re-reading the file; this field carries the finding.
 - Suggestions that restate what the code already does.
 - Generic "consider adding" advice with no concrete failure mode.
 - Code carrying a lint-ignore comment for the rule you were about to flag.
-- Code-quality concerns with no written rule behind them ("this file is getting long").
+- Subjective code-quality preferences with no concrete maintenance benefit or defect ("this file is getting long"). Simplification findings need a specific benefit and behavior-equivalence evidence, not necessarily a written style rule.
 - Speculative future-work concerns with no current signal.
 
 ## Rules
@@ -128,7 +131,7 @@ The reader triages without re-reading the file; this field carries the finding.
 
 ## Shared methods and review purposes
 
-Use the linked shared method for these roles; other personas remain under `personas/`. Inject only the selected row into `selected_review_purpose`. For a local persona, use its selected risk focus and the requested review scope. All return the JSON contract above, in-band and read-only.
+Use the linked shared method for these roles; other personas remain under `personas/`. Inject only the selected row into `selected_review_purpose`. For a local persona, use its selected risk focus and the requested review scope. For simplify roles, use the full persona and common requirements from the nk-simplify entry already loaded by the orchestrator; this JSON contract supersedes their prose return format. All return the JSON contract above, in-band and read-only.
 
 | Role method | Review purpose |
 | :-- | :-- |

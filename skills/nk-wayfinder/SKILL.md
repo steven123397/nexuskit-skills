@@ -7,8 +7,6 @@ disable-model-invocation: true
 
 # /nk-wayfinder
 
-> **路径解析说明：** 本文件及其 references 中引用的文件（`references/`、`../conventions/`、`../nk-*/`）均相对于本技能所在目录解析，不在目标代码仓库中查找。
-
 一个松散想法出现了：它太大，单个会话装不下，而且被 fog 包围，通往 **destination** 的路还看不见。Wayfinding 的目标是找到这条路，而不是朝 destination 猛冲：把路径绘制成 issue tracker 上的 **shared map**，逐个解决 **decision tickets**——它们承载需要决策才能解决的问题，而不是要执行的 build slice——直到路线清晰。
 
 **完成标志：** 别人动手前已没有任何事情需要决定、路径完全清晰，map 上不再有 tickets；charting 会话的完成标志是 map 与首批 tickets 建好、research 已派出。**工作原则：** map 是索引不是 store；ticket 只承载 decision；每个会话最多 resolve 一个 ticket（research 除外）；fog 不预切成 tickets。
@@ -62,7 +60,7 @@ HITL 对话按 [`../conventions/decision-autonomy.md`](../conventions/decision-a
 
 ## 两种模式
 
-**Chart the map**（用户带着松散想法调用）：命名 destination → 广撒网式对话浮现 open decisions（没有 fog 则停下建议直接 `nk-plan`）→ 建 map 与首批 tickets → 派发 research → 停止，charting 就是一个会话的工作。**Work through the map**（用户带 map 调用）：加载 map → claim 一个 frontier ticket → resolve → 以 comment 记录并 close、维护 map。两种模式下**每个会话最多 resolve 一个 ticket**（research 除外）。
+**Chart the map**（用户带着松散想法调用）：命名 destination → 广撒网式对话浮现 open decisions（没有 fog 则停下建议直接 [nk-plan](../nk-plan/SKILL.md)）→ 建 map 与首批 tickets → 派发 research → 停止，charting 就是一个会话的工作。**Work through the map**（用户带 map 调用）：加载 map → claim 一个 frontier ticket → resolve → 以 comment 记录并 close、维护 map。两种模式下**每个会话最多 resolve 一个 ticket**（research 除外）。
 
 详细步骤见 [`references/modes.md`](references/modes.md)；稳定下来值得实施的 build 工作在到达 map 边缘后交给 [`../nk-plan/SKILL.md`](../nk-plan/SKILL.md) / [`../nk-work/SKILL.md`](../nk-work/SKILL.md)。
 

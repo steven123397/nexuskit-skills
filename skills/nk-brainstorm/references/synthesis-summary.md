@@ -29,6 +29,6 @@ Path B 可按“要做什么 → 关键取舍 → 不在范围内 → 延续 →
 
 对话中的取舍小节融入 Key Decisions；"不在范围内"融入 Scope Boundaries。
 
-已定决策按 `sections.md` 写入 Key Decisions 并带 `session-settled:` 标注；行为规则仍完整写在对应 R，Key Decisions 只留来源、理由及所约束的 R-ID。不弱化为推断或假设；依据已确认上下文直接写文档时同样如此。
+已定决策按 [sections.md](sections.md) 写入 Key Decisions 并带 `session-settled:` 标注；行为规则仍完整写在对应 R，Key Decisions 只留来源、理由及所约束的 R-ID。不弱化为推断或假设；依据已确认上下文直接写文档时同样如此。
 
-不写斜体的过程说明（"于 2.5 阶段形成……"）。Summary 与 Problem Frame 的分工见 `sections.md`。
+不写斜体的过程说明（"于 2.5 阶段形成……"）。Summary 与 Problem Frame 的分工见 [sections.md](sections.md)。

@@ -1,6 +1,6 @@
 # Phase 1.5 主题拆轴
 
-本文件定义轴的标准、示例、跳过条件和证据侦察派发。何时读本文件由 `SKILL.md` 决定。
+本文件定义轴的标准、示例、跳过条件和证据侦察派发。何时读本文件由 [SKILL.md](../SKILL.md) 决定。
 
 ## Phase 1.5：主题拆轴
 
@@ -28,7 +28,7 @@
 
 **跳过条件。** 有些主题本质上不可拆——单个字符串产出（一个名字、一句标语）、范围很窄的 tactical 修复（"README 第 47 行的错别字"），或者候选轴本身就是交付物的主题（如"API 应该暴露哪些接口？"）。拆不出 3 条以上符合标准的正交轴时跳过拆轴，在扎根摘要中记 `Decomposition skipped — atomic subject`，让发想记录保留这一选择。
 
-**Surprise me 跳过。** Surprise me 模式下整个跳过本阶段，记 `Decomposition skipped — surprise-me mode`——套用 `scope-gates.md` 0.2 表中 `1.5 拆轴` 一行。
+**Surprise me 跳过。** Surprise me 模式下整个跳过本阶段，记 `Decomposition skipped — surprise-me mode`——套用 [scope-gates.md](scope-gates.md) 0.2 表中 `1.5 拆轴` 一行。
 
 **证据侦察（仓库模式，有轴时）。** 拆轴说明要看什么；侦察收集那里实际有什么。Phase 1 的扫描只是概览，太薄，发想代理无法从中摘引——所以每条轴派发一个提取档子代理（最多 5 个；tactical 范围下最多 3 个，与该模式的轴上限一致——侦察数永远不少于保留的轴数），并行运行。传给每个侦察 Phase 1 的 `<scratch-dir>` 绝对路径和该轴的 kebab-case 短名，提示如下：
 

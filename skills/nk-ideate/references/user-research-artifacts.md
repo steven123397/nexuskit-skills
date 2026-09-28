@@ -1,6 +1,6 @@
 # 用户提供的调研材料（Phase 1，条件性）
 
-当 `grounding.md` 中的 Phase 1 路由检验把一个点名文件判为*证据*而不是*指令*时读本文件。`grounding.md` 定义路由检验和等待；本文件定义处理方式和提炼代理的派发。
+当 [grounding.md](grounding.md) 中的 Phase 1 路由检验把一个点名文件判为*证据*而不是*指令*时读本文件。[grounding.md](grounding.md) 定义路由检验和等待；本文件定义处理方式和提炼代理的派发。
 
 ## 是补充，不是替代
 

@@ -6,8 +6,6 @@ disable-model-invocation: true
 
 # /nk-close
 
-> **路径解析说明：** 本文件及其 references 中引用的文件（`references/`、`../conventions/`、`../nk-commit/`）均相对于本技能所在目录解析，不在目标代码仓库中查找。`docs/plans/`、`docs/reviews/`、`docs/ideation/`、`docs/solutions/`、`docs/current.md`、`CONCEPTS.md` 指目标仓库中的文件。
-
 工作分支的一揽子工作交付完成、合并进 main 之前执行：把过程工件的长期价值提炼进知识库，清理已交付工件，让仓库干净地进入下一段工作。本技能是 [`../conventions/artifact-lifecycle.md`](../conventions/artifact-lifecycle.md) 第五章"分支收尾六步法"的可执行展开，规则以约定为准。
 
 **两种触发（同一套六步）：**
@@ -43,7 +41,7 @@ disable-model-invocation: true
 ### 1. 遗留项转移与甄别
 范围为分支（或降级路径下该 plan）上的**全部**产物，含顺带小修产生的决策点：
 
-* 检查 `docs/reviews/` 遗留条目（由 `nk-review` 产生，状态标记见 [`../nk-review/references/entry-format.md`](../nk-review/references/entry-format.md)；目录不存在则跳过并说明），以及 `docs/plans/` 各 plan 的未完成待办。
+* 检查 `docs/reviews/` 遗留条目（由 [nk-review](../nk-review/SKILL.md) 产生，状态标记见 [`../nk-review/references/entry-format.md`](../nk-review/references/entry-format.md)；目录不存在则跳过并说明），以及 `docs/plans/` 各 plan 的未完成待办。
 * **未完成或推迟的 plan 不随本技能删除**，逐项转入"用户决策点"流程；审查记录遗留项转为 Issue。
 * **Issue 兜底扫描**：处置规则见 [`../conventions/issue-writing.md`](../conventions/issue-writing.md) 第四节（逐条关闭注明提交哈希，或评论说明遗留原因）。Bash / Git Bash 下的机械方法（不直接复制到 PowerShell）：`git log <base>..HEAD --format=%B | grep -oE '#[0-9]+' | sort -u`（分支模式 base 为合并目标；降级路径取该 plan 起点），加上范围内 plan/文档中的 `#N` 引用去重，逐个 `gh issue view <N> --json state` 核对仍 open 的。
 

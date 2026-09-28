@@ -4,7 +4,7 @@
 
 ## 5.1 写前检查
 
-* plan 没有发明本应在 `nk-brainstorm` 中定义的产品行为。
+* plan 没有发明本应在 [nk-brainstorm](../../nk-brainstorm/SKILL.md) 中定义的产品行为。
 * 没有上游文档时，0.4 的规划引导已经建立足够的产品清晰度。
 * 每个重大决策都有上游文档或调研依据。
 * 关于现有代码和夹具的实质说法与仓库证据一致；妨碍实施的未满足前置条件已记为阻断项。计划中新建的东西不需要已存在。
@@ -14,28 +14,28 @@
 * 推迟项写得明确，没有伪装成确定。
 * 落实某个已定决策的单元，在 Requirements 或 Approach 中引用它：技术决策引用带标注的 `KTD<N>`，产品决策引用其 `Governs` 的 R-ID。执行者正是通过这些引用拿到标注的。
 * 不改变含义的 R 拆分或规则移动后，所有受影响的 `Governs R…`、`Covers R…`、行内 `per R…` 引用已改指新 ID。
-* **高层设计核对（必做）**：对照 `structure.md` 3.4 的触发条件，数一数适用的触发类别和已有的草图；草图数不少于适用的触发类别数。触发了却没有高层设计章节，或有章节但漏了某类草图，都要回到 3.4 补上。token 成本不是跳过的理由。
+* **高层设计核对（必做）**：对照 [structure.md](structure.md) 3.4 的触发条件，数一数适用的触发类别和已有的草图；草图数不少于适用的触发类别数。触发了却没有高层设计章节，或有章节但漏了某类草图，都要回到 3.4 补上。token 成本不是跳过的理由。
 * 高层设计用对了形式，没有实现代码；单元的技术设计字段简洁、是方向性的。
 * 新建目录结构时，考虑输出结构树是否有帮助。
 * Scope Boundaries 中属于另一个 PR、Issue 或仓库的计划工作放在 `#### Deferred to Follow-Up Work`，与真正的非目标分开。
 * U-ID 唯一，遵守稳定规则（没有因调整顺序或拆分而改号，删除留下的空号保留）。
 * 图示（依赖图、交互图、对比表）是否能让读者比扫文字更快看懂结构？
 
-有上游需求文档时，重读它并确认：做法仍符合产品意图；范围边界和成功标准得以保留；阻塞问题都已解决、写成明确假设，或送回 `nk-brainstorm`；上游每一节都在 plan 中有所体现，没有悄悄丢掉；上游有 A/F/AE ID 时，每个影响实施的 R/F/AE 都在需求、单元、测试场景、验证、范围边界中被引用或被明确推迟（目标是保留产品意图，不是堆 ID）。
+有上游需求文档时，重读它并确认：做法仍符合产品意图；范围边界和成功标准得以保留；阻塞问题都已解决、写成明确假设，或送回 [nk-brainstorm](../../nk-brainstorm/SKILL.md)；上游每一节都在 plan 中有所体现，没有悄悄丢掉；上游有 A/F/AE ID 时，每个影响实施的 R/F/AE 都在需求、单元、测试场景、验证、范围边界中被引用或被明确推迟（目标是保留产品意图，不是堆 ID）。
 
 ## 5.1.5 承接上游时的范围确认
 
 **只要 0.2 找到了上游 Product Contract 来源就运行**（需求阶段 plan 或历史需求文档）；续写和深化快速通道不运行；独立规划已在 0.7 做过，这里不做。
 
-这是写入磁盘前最后一个便宜的纠错时机：上游已确认"做什么"，这里展示规划的"怎么做"中真正的岔路。**先读 `synthesis-summary.md`**，按"承接上游变体"构造并**等待确认**再进入 5.2。Lightweight 且无待确认点时可以只发一行说明继续；Standard 与 Deep 总是等确认。用户说过不用确认或无人值守时不等待，推断项进 `### Assumptions`。
+这是写入磁盘前最后一个便宜的纠错时机：上游已确认"做什么"，这里展示规划的"怎么做"中真正的岔路。**先读 [synthesis-summary.md](synthesis-summary.md)**，按"承接上游变体"构造并**等待确认**再进入 5.2。Lightweight 且无待确认点时可以只发一行说明继续；Standard 与 Deep 总是等确认。用户说过不用确认或无人值守时不等待，推断项进 `### Assumptions`。
 
 ## 5.2 写入 plan
 
 **先把 plan 写到磁盘，再提供任何选项。**
 
-* 路径：`docs/plans/YYYY-MM-DD-HHMM-<type>-<描述>-plan.md`（见 `structure.md` 3.1）。
-* 内容按 `../../conventions/plan-format.md` 的章节契约和 frontmatter，写法按 `structure.md` 阶段 4。
-* **写得紧**：章节"有内容可写"不等于可以铺陈。成文前跑一遍 `structure.md` 4.2 的检验。
+* 路径：`docs/plans/YYYY-MM-DD-HHMM-<type>-<描述>-plan.md`（见 [structure.md](structure.md) 3.1）。
+* 内容按 [../../conventions/plan-format.md](../../conventions/plan-format.md) 的章节契约和 frontmatter，写法按 [structure.md](structure.md) 阶段 4。
+* **写得紧**：章节"有内容可写"不等于可以铺陈。成文前跑一遍 [structure.md](structure.md) 4.2 的检验。
 * 上游是需求阶段 plan：**就地更新同一文件**。frontmatter 已有的字段（包括 `topic:`）和正文中的 `<!-- nk-section: ... -->` 标记原样保留。保留 Product Contract 的含义和稳定 ID（0.3 允许的不改含义的重组照样可以做，并承担相应的保留说明和改指引用的义务），追加 Planning Contract、Implementation Units、Verification Contract、Definition of Done。
 * 上游是历史需求文档：在 `docs/plans/` 新建完整 plan，`origin:` 写上游路径。
 * 直接规划：新建完整 plan，`product_contract_source: nk-plan`。
@@ -44,9 +44,9 @@
 
 **写入时的已定决策**：本会话已定的技术决策写成带编号、带标注的关键技术决策：`(session-settled: user-directed — chosen over <备选>: <一句理由>)`（类别见 [`../../conventions/settled-decisions.md`](../../conventions/settled-decisions.md)）。已定的产品决策已经在 Product Contract 的 Key Decision 上并带 `Governs R…` 链接，**不要**在 KTD 中镜像；具体实现它的 KTD 继承标注并引用被管辖的 R-ID。
 
-**无人值守时的已定决策冲突**：调研发现证据表明某个已定决策（来自对话，或已在待补全文件中以 `session-settled:` 标注）不可行、做错东西或有破坏性时，不写 plan，也不悄悄解决；把决策和原因作为阻断项报告，并按 `../../conventions/decision-autonomy.md` 在 `docs/current.md` 登记为 `[待确认]`。
+**无人值守时的已定决策冲突**：调研发现证据表明某个已定决策（来自对话，或已在待补全文件中以 `session-settled:` 标注）不可行、做错东西或有破坏性时，不写 plan，也不悄悄解决；把决策和原因作为阻断项报告，并按 [../../conventions/decision-autonomy.md](../../conventions/decision-autonomy.md) 在 `docs/current.md` 登记为 `[待确认]`。
 
-**术语补漏**：plan 正文用到的领域术语在 `CONCEPTS.md` 中缺失时，按 `../../conventions/concepts-vocabulary.md` 补上（只限有项目特定含义的领域实体、命名流程和状态概念，不收文件路径、类名或实现决策；已有条目能承载的含义是对该条目的细化，不新开条目）。阶段 2 已即时写入的不重复写。
+**术语补漏**：plan 正文用到的领域术语在 `CONCEPTS.md` 中缺失时，按 [../../conventions/concepts-vocabulary.md](../../conventions/concepts-vocabulary.md) 补上（只限有项目特定含义的领域实体、命名流程和状态概念，不收文件路径、类名或实现决策；已有条目能承载的含义是对该条目的细化，不新开条目）。阶段 2 已即时写入的不重复写。
 
 写完后用绝对路径告知（便于点击）：
 
@@ -72,6 +72,6 @@ Plan 已写入 <plan 的绝对路径>
 * **本地依据薄弱时必做评分**：1.2 因本地写法薄弱（直接例子少于 3 个或只有相邻领域）而触发了外部调研时，无论 plan 看起来多扎实都进入评分。陌生领域的"系统行为"更可能是假设而不是已核实的事实。评分成本很低，plan 确实扎实时很快就会结束。
 * **外部调研塑造了 plan 时必做评分**：1.4 记录的标志为"是"时，即使本地写法成熟也进入评分。这只决定进入评分，不强制深化。
 
-plan 已足够扎实且两个必做条件都不适用时，报告"置信度检查通过——没有章节需要加强"，然后**读 `self-review.md` 做写后自检，再读 `handoff.md` 进入收尾**。置信度检查和写后自检发现的是不同类的问题，前者通过不代表可以跳过后者。
+plan 已足够扎实且两个必做条件都不适用时，报告"置信度检查通过——没有章节需要加强"，然后**读 [self-review.md](self-review.md) 做写后自检，再读 [handoff.md](handoff.md) 进入收尾**。置信度检查和写后自检发现的是不同类的问题，前者通过不代表可以跳过后者。
 
-需要深化时读 `deepening-workflow.md`，执行 5.3.3–5.3.7，再回到写后自检。深化不是终点，运行总会走到收尾。
+需要深化时读 [deepening-workflow.md](deepening-workflow.md)，执行 5.3.3–5.3.7，再回到写后自检。深化不是终点，运行总会走到收尾。

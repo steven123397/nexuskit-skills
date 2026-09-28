@@ -10,6 +10,8 @@
 
 nk-handoff 改为仅用户显式调用：保留 `disable-model-invocation: true`，新增 Codex 的 `agents/openai.yaml` 中 `policy.allow_implicit_invocation: false`；正文不重复元数据和 description 已表达的调用限制。current 的字段仍由共享契约维护，handoff 仅补充未完成现场。客户端实际触发与读取效果留待统一沙盒验证。
 
+2026-09-28 路径引用清理：删除技能入口及 references 中重复的路径解析声明。执行材料和跨技能入口采用可解析的相对 Markdown 链接，适用于全局和项目内安装；示例、通配模式及目标项目产物路径不伪装成技能资源链接。子代理收到材料时保留来源路径。此轮只调整引用，不改变其他技能的工作流程。
+
 ## nk-brainstorm
 
 #3 收口：读取复用和证据回传使用共享约定；复用证据、补查现状的阶段责任保持不变。
@@ -83,20 +85,17 @@ nk-handoff 改为仅用户显式调用：保留 `disable-model-invocation: true`
 
 ## nk-debug
 
-2026-09-28（#9 回归）：统计复现循环显式标注 Bash / Git Bash 前提；本次不重写调试流程。
+2026-09-28 按 CE 阶段结构重写。对照本地 CE 快照 `a763b392`（2026-09-25）的 `ce-debug/SKILL.md`、investigate、fix、anti-patterns 与 post-fix-handoff，以及 Matt 的 `diagnosing-bugs` 原文。
 
-#3 结果体量收口：只读调查子代理引用共享结果体量规则，保留假设、观测、反证与未验证项，原有日志脱敏边界不变。
+- **主流程归 CE**：保留调查、诊断后决定是否修复、测试先行修复和交付的阶段分工。入口持有阶段边界，investigate 与 fix 各自给出完整执行材料；不为减少文件强行合成一份大循环。
+- **Matt 方法按需增强**：复现构造、收紧及最小化保留为条件材料；已有回路直接复用。去掉固定 3～5 个假设、秒级和固定复现率等硬门槛，保留精确症状、可检验预测与真实观测。无法复现可以继续补证，试修需有对应授权且不得冒充已确认根因。
+- **反模式就近合入**：把预测质量、确认偏误、混杂实验和无信息重试合入调查/修复动作，删除独立 anti-patterns；reference 不再互相转读或引用 nk-work 私有 tdd-loop。测试规则以调试目的组织，明确不得通过改变既定行为契约让测试通过。
+- **恢复有效出口**：仅诊断可正常完成；明确修复请求不重复授权。受阻时报告证据、缺口及可选下一步，由用户选择，不自动更新 current 或调用 handoff。
+- **保留 NexusKit 边界**：分支遵循项目规则，所有提交交给 nk-commit；提交前调用 nk-review 获取报告，由 nk-debug 直接修复查证成立的问题，补做相关验证与针对性复核。不移植 CE 的模式令牌、固定返回体、默认 PR、branding、自动精简和审查编排，也不移植 Matt 的 HITL 脚本；人工复现用步骤与观测承接。
+- **证据与现场**：工作区对比按需隔离，stash 不是默认动作；结果只支持关联，不能直接当作根因证明。保留先前失败、历史检索、日志脱敏、原始场景回归和只读子代理证据边界；不新增子代理固定编队。
+- **条件技术**：保留竞态、性能、间歇性故障、边界调查等方法，入口按症状选章节。分层防御按实际复发路径和后果选择，不按文件数量或四层清单凑动作。
 
-主要参考：CE `ce-debug` (2026-09)、Matt `diagnosing-bugs`、NexusKit 共享约定
-与上游的主要差异及原因：
-* 复现优先（Matt 的 feedback loop）前置为流程灵魂：CE 把复现放在调查阶段的一个小节，本技能将"没有红得起来的复现就不得进入假设阶段"立为硬关卡。
-* 删除 CE 的编排与平台层：pipeline / return-to-caller 模式（mode 令牌、JSON 返回契约）、PR 路由、分支自动创建、branding、Artifact Root / `docs_root` 配置解析——NexusKit 没有流水线编排层，产物位置由约定固定，分支与 PR 策略归项目，提交统一走 nk-commit。
-* 删除 post-fix-handoff 的修复后精简/审查编排；现保留提交前必须审查的接口，具体方式待 nk-review 重构；其通用残值（尾部改动后复跑回归、遗留发现落地记录）并入 references/fix.md 与收尾步骤。
-* issue-of-record 规则简化：无法本轮定位的疑难缺陷本来就要按 artifact-lifecycle 转 Issue，无需禁令。
-* Matt 的 `hitl-loop.template.sh` 与 `agents/openai.yaml` 删除：体系纯 Markdown 约定驱动、客户端中立；人工在环复现转写为 references/reproduction.md 第十种回路。
-* defense-in-depth.md 保留为独立 reference：35 行的通用分层防御模式，触发条件清晰，便于按需加载。
-
-* 2026-09-28：收尾增加提交前必须审查的关口，具体方式留待 nk-review 重构；向 nk-commit 传递审查结论及已有验证证据，删除废弃提交约定的引用。
+本轮核对为文本、来源与机械检查，真实调试效果仍待全部技能重写后的统一沙盒实测。没有因本轮静态改写关闭需要实跑证据的 Issue。
 
 ## nk-grill
 
@@ -173,29 +172,30 @@ nk-handoff 改为仅用户显式调用：保留 `disable-model-invocation: true`
 
 2026-09-27 方案 C：learnings、migration、deployment 方法共享，审查目的与 JSON 结果契约由 reviewer-prompt.md 唯一持有；派发包含完整契约和选中角色说明。移除 agent-native 的独立 Markdown 报告要求，保留其检查方法。部署角色不再返回另一套检查单或使用上游角色名。
 
-主要参考：CE `ce-code-review`（2026-09，personas 与复核机制）、Matt `code-review`（固定点 diff、早停、意图/规范双轴思想）、NexusKit 共享约定
+主要参考：CE `ce-code-review`（2026-09，意图摘要、风险编队、personas 与复核机制）、NexusKit 共享约定。
+
+2026-09-28 联合重构：支持单元、修复与分支范围，复用调用方定界；主会话直接派发独立叶子 reviewer，必需代理不可用时不声称完成。simplify 负责精简机会，maintainability 聚焦结构边界风险；统一契约、语义去重与独立 validator 复核，保留 nk-close 消费的状态词和编号。不自动登记 current、建票或提交。
+
+2026-09-28 归因修正：不采用 Matt `code-review` 的 Standards / Spec 双轴编排与分轴报告；当前流程本就按风险编队并统一合并发现，移除原先“双轴思想”的来源表述。变更意图与项目规则仍作为 CE 式审查上下文，固定范围与空 diff 早停保留为基础检查。review 向 simplify 传递已确定的范围和快照，由主会话直接派发三个精简分析子代理，与风险审查并行，统一复核汇报。
 与 CE 的主要差异及原因：
 * 产出从临时运行目录与报告改为目标仓库 `docs/reviews/` 的状态化条目：审查记录是本体系的短期生命周期产物，由 `nk-close` 消费。
 * 删除全部脚本（范围信号、findings 机制、跨模型调度、运行日志等）：规则性内容转写为 references 中的 Markdown 条款，编排与跨模型对抗审查不内置（可一句话建议用另一个客户端复核）。
-* 删除 mode:agent JSON 输出、本地修复（apply）与 autofix 路由字段：本技能只报告不修复，修复归 `nk-work`，分流按严重级别与条目内容判断。
-* 深度闸门（lite/focused/full）简化为范围信号 + 后果判断：个人项目规模下三档编排的收益不抵复杂度；200 行阈值与静默放行守卫规则保留。
+* 删除 mode:agent JSON 输出、本地修复（apply）与 autofix 路由字段：本技能只产出报告，修复和分流归调用方或用户；work 与 debug 在各自入口处理。
+* 深度闸门（lite/focused/full）简化为范围信号 + 后果判断：个人项目规模下三档编排的收益不抵复杂度；保留基于具体行为的静默放行守卫，取消行数阈值。
 * PR 路径降级为可选：保留只读取数与 previous-comments persona 的适用条件，不切换分支。
 * reviewer 返回紧凑 JSON、由主会话渲染条目：persona 提示词保持英文原文，条目格式集中在 entry-format.md 单处维护。
 * 2026-09-27 审计修订：范围收集示例拆为独立命令，遵循跨 PowerShell 的单命令纪律。
 
 ## nk-simplify
 
-2026-09-28 吸收 Ponytail 的删减优先与原生能力复用：先删除确实无用的实现，再考虑行为等价的复用，保留必要职责和测试边界。复用/质量 persona 同步携带证据要求；净删行数只是辅助信息，不替代输出、错误、副作用、顺序、兼容性与性能验证。
+2026-09-28 与 nk-review 联合重构：独立调用须用户明确触发，review 可显式加载公开入口，直接复用其范围与快照。主会话派发复用、质量、效率三个叶子子代理，与风险审查并行；无子代理则报告未完成，不以内联角色替代。
 
-#3 收口：子代理直接返回有位置和行为保持依据的发现，使用共享结果体量规则，不增加完整报告。
+主要参考：CE `ce-simplify-code`（2026-09，三个分析视角）、Ponytail 的删减优先与原生能力复用、NexusKit 的已定决策及结果体量约定。
 
-主要参考：CE `ce-simplify-code` (2026-09)、NexusKit 共享约定 [nk-commit](../skills/nk-commit/SKILL.md)
-与 CE 的主要差异及原因：
-* 删除 CE 的平台编排细节（受限派发、代理生命周期、模型档位、权限模式参数、任务跟踪提示、阻塞提问工具的探测规则）：NexusKit 客户端中立，只保留“支持子代理则派发、否则内联”的一条规则。
-* 三视角从“固定并行三个”改为“按信号选用、默认全跑”：NexusKit 以单会话串行为主，小范围改动不必机械跑满三个视角。
-* 删除 `session-settled:` 结构钉与计划路径传参机制：NexusKit 的等价物是 `conventions/settled-decisions.md`，直接引用共享约定。
-* 验证与提交并入 NexusKit 提交节奏（R1 验证证据入提交说明），CE 原文只要求跑检查、不管提交。
-* 增加与 `nk-compound`、`nk-review` 的衔接一句话：精简在体系内的位置是实现之后、版本审查之前。
+- 与 CE 的自动应用不同：默认只分析；单独调用先报告，后续按用户决定执行；嵌入 review 时只返回发现，由 review 统一独立复核和成文。
+- 不自动提交，不串联另一次 review 或 handoff。获准修复后针对性验证，复用仍有效的证据。
+- 保留行为等价、安全与有效隔离边界的证据要求，不以净删行数、一个调用方或一个实现决定删除。
+- 不移植 CE 平台特定的模型档位、调度脚本或代理生命周期 API；受限容量通过主会话分批派发处理。
 
 ## nk-to-issue
 
@@ -281,7 +281,7 @@ nk-handoff 改为仅用户显式调用：保留 `disable-model-invocation: true`
 * 一次调用一个单元、完成后停止：不估计自身上下文余量；提交时由 nk-commit 同步 current，下一单元由后续调用接手，不自动 handoff。
 * 接手时"一致则继续，不一致才停"：`current.md` 是本仓库的单例文件，不像 CE 的交接文档那样来源不可信。
 * 脏文件分两类：`current.md` 登记的半成品由本会话接管，其余一律不暂存。
-* 提交前必须完成审查，保留流程接口；具体方法及与 `nk-review` 的衔接待其重构确定。
+* 提交前调用 nk-review 获取报告，由 nk-work 直接修复查证成立的单元内问题；超出单元的问题走阻断出口，转 Issue 或 handoff 等后续由用户决定。修复后针对性验证与复核，复用仍有效的证据。
 * 测试 seam 由 Agent 自选（改写 Matt `tdd` 的"先与用户确认"）：测试结构属于自主决断区。
 
 
@@ -332,3 +332,5 @@ nk-handoff 改为仅用户显式调用：保留 `disable-model-invocation: true`
 | synthesis-summary | 共用整理、术语、呈现与修订；本地保留阶段目的、确认入口和文档落点；两类预算计数对象不同，集中定义而不混为一个数字 |
 
 开发源没有可编辑副本。`tests/shared-resources.json` 登记唯一来源、调用点和独立流程职责；检查覆盖 references 根层、嵌套引用、同名及完全相同的改名副本。回归测试搬迁完整分发目录并注入缺文件、旧路径、意外副本等失败；这验证目录完整性，不等同于客户端安装或真实代理行为测试。
+
+2026-09-28 共享约定修订（#30）：settled-decisions 的适用范围改为所有记录或承接已定决策的引用技能，移除只列 brainstorm/plan/work 的不完整归属说明；判定与标注方法保持不变。

@@ -22,12 +22,12 @@
 
 问题：`Plan 已就绪：<plan 的绝对路径>。接下来做什么？`
 
-按 `../../conventions/decision-autonomy.md` 的提问方式给出（客户端的选择题工具放不下时，改为聊天中的编号列表并提示"选一个编号或直接说你想做什么"）：
+按 [../../conventions/decision-autonomy.md](../../conventions/decision-autonomy.md) 的提问方式给出（客户端的选择题工具放不下时，改为聊天中的编号列表并提示"选一个编号或直接说你想做什么"）：
 
 1. **由新会话接手实施** *(Recommended)*——报告已提交 Plan 的路径与首个可开工单元，结束本次调用。仅在 Plan 可实施且无阻断时显示，不调用 nk-handoff。
-2. **在本会话直接开始实施**——读取 `../../nk-work/SKILL.md`，传入已交付 Plan 路径和首个单元；不重复提交规划产物。显示条件同上。
+2. **在本会话直接开始实施**——读取 [../../nk-work/SKILL.md](../../nk-work/SKILL.md)，传入已交付 Plan 路径和首个单元；不重复提交规划产物。显示条件同上。
 3. **处理自检遗留的决定**——逐条展示需要用户决定的事项，按用户选择修改 plan，然后重新展示本菜单。仅当自检留下了需要用户决定的事项时显示。
-4. **继续深化**——进入 `deepening-workflow.md` 的交互模式，完成后回到自检和本菜单。
+4. **继续深化**——进入 [deepening-workflow.md](deepening-workflow.md) 的交互模式，完成后回到自检和本菜单。
 
 用户未选择或结束对话时停止，不推断为调用 handoff。未完成草稿明确标注暂留；已交付产物使用已有提交与 current 接手。
 
@@ -36,9 +36,9 @@
 用户在后续回合做出选择时，先重读本文件再执行。展示菜单、收到选择或宣布路线都不算完成，要真正执行所选动作：
 
 * **由新会话接手**：报告已有提交、Plan 路径和下一单元后结束，不重新交接或提交。
-* **本会话直接实施**：先确认 plan 支持代码实施且无阻断；需求阶段的 plan 回到本技能补全，非代码 plan 交给其非代码路线。然后按 `nk-work` 开始。无法按 `nk-work` 执行时，给出一段可复制的说明：让下一个执行者用 `nk-work` 执行该 plan，先按标题定位 Goal Capsule、Verification Contract、Definition of Done 和当前 U-ID，而不是先通读全文。
-* **处理遗留决定**：逐条确认后修改 plan，重跑 `structure.md` 4.2 的检验，重新展示菜单（更新计数）。
-* **继续深化**：见 `deepening-workflow.md`。
+* **本会话直接实施**：先确认 plan 支持代码实施且无阻断；需求阶段的 plan 回到本技能补全，非代码 plan 交给其非代码路线。然后按 [nk-work](../../nk-work/SKILL.md) 开始。无法按 [nk-work](../../nk-work/SKILL.md) 执行时，给出一段可复制的说明：让下一个执行者用 [nk-work](../../nk-work/SKILL.md) 执行该 plan，先按标题定位 Goal Capsule、Verification Contract、Definition of Done 和当前 U-ID，而不是先通读全文。
+* **处理遗留决定**：逐条确认后修改 plan，重跑 [structure.md](structure.md) 4.2 的检验，重新展示菜单（更新计数）。
+* **继续深化**：见 [deepening-workflow.md](deepening-workflow.md)。
 
 **其他自由输入**：用户直接提出修改意见时，接受修改、改进 plan，然后回到本菜单。
 

@@ -6,9 +6,7 @@ argument-hint: "[需求描述、需求阶段 plan 路径、要深化的 plan 路
 
 # /nk-plan
 
-> **路径解析说明：** 本文件及其 references 中引用的文件（`references/`、`../conventions/`、`../nk-work/`、`../nk-commit/`）均相对于本技能所在目录解析，不在目标代码仓库中查找。`docs/plans/`、`docs/solutions/`、`docs/current.md`、`CONCEPTS.md` 指目标仓库中的文件。
-
-`nk-brainstorm` 定义**做什么**，`nk-plan` 规划**怎么做**，`nk-work` 执行。上游 brainstorm 不是必需的。
+[nk-brainstorm](../nk-brainstorm/SKILL.md) 定义**做什么**，`nk-plan` 规划**怎么做**，[nk-work](../nk-work/SKILL.md) 执行。上游 brainstorm 不是必需的。
 
 **完成标志**：产出一份能指导执行和验证的 plan，保留约定的结果和约束；技术选择以证据为依据，已经足够的说明不改动。Durable 路线要到收尾菜单的所选动作真正执行后才算完成；Direct 与 Chat brief 在聊天中给出结果和交接提议即完成。
 
@@ -32,26 +30,26 @@ argument-hint: "[需求描述、需求阶段 plan 路径、要深化的 plan 路
 
 | 阶段 | 先读 | 内容 |
 | :-- | :-- | :-- |
-| 0 续写、分流、定界 | `references/phase-0.md` | 核心原则与质量底线；续写与深化快速通道；做法层规划与非软件分流；查找上游 Product Contract（含 `topic:` 识别）并就地补全；规划引导；阻塞处理；输出档位（Direct / Chat brief / Durable）与规划深度；独立规划的范围确认 |
-| 0.1a 做法层规划 | `references/approach-altitude.md` | 明确要求先规划做法，或用户接受该提议时读取；转入此路线 |
-| 0.1b 非软件路线 | `references/universal-planning.md` | 非软件任务，或深化不带 frontmatter 的非软件 plan 时读取；跳过软件阶段 |
+| 0 续写、分流、定界 | [references/phase-0.md](references/phase-0.md) | 核心原则与质量底线；续写与深化快速通道；做法层规划与非软件分流；查找上游 Product Contract（含 `topic:` 识别）并就地补全；规划引导；阻塞处理；输出档位（Direct / Chat brief / Durable）与规划深度；独立规划的范围确认 |
+| 0.1a 做法层规划 | [references/approach-altitude.md](references/approach-altitude.md) | 明确要求先规划做法，或用户接受该提议时读取；转入此路线 |
+| 0.1b 非软件路线 | [references/universal-planning.md](references/universal-planning.md) | 非软件任务，或深化不带 frontmatter 的非软件 plan 时读取；跳过软件阶段 |
 | 0.2 已定决策 | [`../conventions/settled-decisions.md`](../conventions/settled-decisions.md) | 软件路线需要判定和承接本会话决策时读取；此规则可与后续输出档位叠加 |
-| 0.6 聊天输出 | `references/output-contracts.md` | 选定 Direct / Chat brief 后读取；Durable 不读此文件 |
-| 范围确认（0.7 / 5.1.5） | `references/synthesis-summary.md` | 内部三分草稿、待确认点保留测试、确认模板、写入 plan 的去向 |
-| 1 调研 | `references/research.md` | 本地研究员、Agent 原生能力评估、执行方向、外部调研决策与派出、整合、升档、行为追踪、流程分析、设计对比入口 |
-| 1.6 设计对比（按需） | `references/design-alternatives.md` | 后果重大的"怎么做"未定时，并行展开截然不同的设计并比较 |
-| 2–4 问题、结构、成文 | `references/structure.md` | 规划问题归类与提问；单元划分与字段；高层设计触发条件；行文与 Markdown 写法；规划规则 |
-| 5.1–5.3 写前检查、写入、深化判断 | `references/final-review.md` | 写前清单；承接上游的范围确认；写入 plan；置信度检查与是否深化 |
-| 5.3.3–5.3.7 深化（按需） | `references/deepening-workflow.md` | 章节打分、章节到子代理的对应、执行方式、交互审阅、整合 |
-| 5.3.8 写后自检 | `references/self-review.md` | 连贯性与可行性（总是）、范围守护、安全、设计、产品、对抗性（按信号） |
-| 5.4 收尾 | `references/handoff.md` | 能否交给实施；自检结果；NexusKit 收尾菜单与执行 |
+| 0.6 聊天输出 | [references/output-contracts.md](references/output-contracts.md) | 选定 Direct / Chat brief 后读取；Durable 不读此文件 |
+| 范围确认（0.7 / 5.1.5） | [references/synthesis-summary.md](references/synthesis-summary.md) | 内部三分草稿、待确认点保留测试、确认模板、写入 plan 的去向 |
+| 1 调研 | [references/research.md](references/research.md) | 本地研究员、Agent 原生能力评估、执行方向、外部调研决策与派出、整合、升档、行为追踪、流程分析、设计对比入口 |
+| 1.6 设计对比（按需） | [references/design-alternatives.md](references/design-alternatives.md) | 后果重大的"怎么做"未定时，并行展开截然不同的设计并比较 |
+| 2–4 问题、结构、成文 | [references/structure.md](references/structure.md) | 规划问题归类与提问；单元划分与字段；高层设计触发条件；行文与 Markdown 写法；规划规则 |
+| 5.1–5.3 写前检查、写入、深化判断 | [references/final-review.md](references/final-review.md) | 写前清单；承接上游的范围确认；写入 plan；置信度检查与是否深化 |
+| 5.3.3–5.3.7 深化（按需） | [references/deepening-workflow.md](references/deepening-workflow.md) | 章节打分、章节到子代理的对应、执行方式、交互审阅、整合 |
+| 5.3.8 写后自检 | [references/self-review.md](references/self-review.md) | 连贯性与可行性（总是）、范围守护、安全、设计、产品、对抗性（按信号） |
+| 5.4 收尾 | [references/handoff.md](references/handoff.md) | 能否交给实施；自检结果；NexusKit 收尾菜单与执行 |
 
 调研与深化的共享角色及任务说明见 [`references/research-roles.md`](references/research-roles.md)，本技能专用角色在 `references/agents/`，是提示词资产而不是可按名字调用的 Agent：读取文件内容，用它初始化一个通用子代理。支持子代理的客户端并行派出；不支持时在主会话中依次完成。
 
 ## 始终成立的规则
 
 * **先写文件，再给选项**：Durable 路线在展示收尾菜单前 plan 已写入 `docs/plans/`。
-* **一个需求一个文件**：已有 `nk-brainstorm` 产出的需求阶段 plan 时，就地补全同一文件，保留 Product Contract 的含义、稳定 ID、`topic:` 字段和 `<!-- nk-section: ... -->` 标记。
+* **一个需求一个文件**：已有 [nk-brainstorm](../nk-brainstorm/SKILL.md) 产出的需求阶段 plan 时，就地补全同一文件，保留 Product Contract 的含义、稳定 ID、`topic:` 字段和 `<!-- nk-section: ... -->` 标记。
 * **plan 不记执行进度**：没有 `status` 字段，不加复选框；进度以带 U-ID 的提交为准。
 * **plan 吸收既有 Issue 即认领**：assignee 与溯源评论按 [`../conventions/issue-writing.md`](../conventions/issue-writing.md) 第三节执行，规则不重述。
 * **不重问已定决策**；已定标注也不压制缺陷证据。

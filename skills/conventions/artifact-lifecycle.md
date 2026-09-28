@@ -8,13 +8,13 @@
 
 | 产物类型 | 物理位置 | 生命周期 | 产生/演进方式 | 终点与归宿 |
 | :-- | :-- | :-- | :-- | :-- |
-| **Ideation (发想记录)** | `docs/ideation/*.md` | 短期 / 阶段性 | `/nk-ideate` 创建；30 天内同主题再次发想时更新原文件而非新建 | 被选中的方向进入 Plan 后，随消费它的分支收尾删除；未被消费的发想记录不随分支删除，收尾时询问是保留、转为 Issue 还是删除 |
-| **Plan (方案与计划)** | `docs/plans/*.md`（工作分支；单分支项目在 main 上，格式见 [`plan-format.md`](plan-format.md)） | 短期 / 阶段性 | `/nk-brainstorm` 创建需求部分，`/nk-plan` 补全实施部分，实施过程中根据新发现直接就地修改 | 收尾时提炼架构决策/术语后删除；不留未维护的历史死 Plan，完整过程由 Git 留存 |
-| **Review (审查记录)** | `docs/reviews/*.md`（工作分支；单分支项目在 main 上） | 短期 / 阶段性 | `/nk-review` 创建并追加审查条目 | 修复随代码提交更新；收尾时遗留项转 Issue，文件删除 |
+| **Ideation (发想记录)** | `docs/ideation/*.md` | 短期 / 阶段性 | [/nk-ideate](../nk-ideate/SKILL.md) 创建；30 天内同主题再次发想时更新原文件而非新建 | 被选中的方向进入 Plan 后，随消费它的分支收尾删除；未被消费的发想记录不随分支删除，收尾时询问是保留、转为 Issue 还是删除 |
+| **Plan (方案与计划)** | `docs/plans/*.md`（工作分支；单分支项目在 main 上，格式见 [`plan-format.md`](plan-format.md)） | 短期 / 阶段性 | [/nk-brainstorm](../nk-brainstorm/SKILL.md) 创建需求部分，[/nk-plan](../nk-plan/SKILL.md) 补全实施部分，实施过程中根据新发现直接就地修改 | 收尾时提炼架构决策/术语后删除；不留未维护的历史死 Plan，完整过程由 Git 留存 |
+| **Review (审查记录)** | `docs/reviews/*.md`（工作分支；单分支项目在 main 上） | 短期 / 阶段性 | [/nk-review](../nk-review/SKILL.md) 创建并追加审查条目 | 修复随代码提交更新；收尾时遗留项转 Issue，文件删除 |
 | **Current (会话入口)** | `docs/current.md` | 常驻（单例覆盖） | nk-commit 提交前按需更新；显式 nk-handoff 保存现场 | 持续覆盖更新，始终反映当前真实状态 |
-| **Issue / 待办 / 探针** | GitHub Issues（无远端时降级为 `docs/backlog.md`） | 中期（任务生命周期） | `/nk-to-issue`（核实落档）、`/nk-wayfinder`（探针）、跨 plan 疑难 bug、推迟项 | 完成后关闭（Closed），依靠 Issue 平台状态流转与归档；认领与关闭时机见 [`issue-writing.md`](issue-writing.md) 第三、四节 |
-| **Solutions (经验与决策)** | `docs/solutions/<category>/*.md` | 长期 / 永久资产 | `/nk-compound` 沉淀，或收尾时从 plan 提炼 | 永久沉淀；由 refresh 定期审计是否过时或漂移 |
-| **Concepts (领域术语)** | 根目录 `CONCEPTS.md` | 长期 / 永久资产 | `/nk-brainstorm` / `/nk-plan` 即时录入，`nk-compound` 补全 | 永久沉淀；由 refresh 定期审计 |
+| **Issue / 待办 / 探针** | GitHub Issues（无远端时降级为 `docs/backlog.md`） | 中期（任务生命周期） | [/nk-to-issue](../nk-to-issue/SKILL.md)（核实落档）、[/nk-wayfinder](../nk-wayfinder/SKILL.md)（探针）、跨 plan 疑难 bug、推迟项 | 完成后关闭（Closed），依靠 Issue 平台状态流转与归档；认领与关闭时机见 [`issue-writing.md`](issue-writing.md) 第三、四节 |
+| **Solutions (经验与决策)** | `docs/solutions/<category>/*.md` | 长期 / 永久资产 | [/nk-compound](../nk-compound/SKILL.md) 沉淀，或收尾时从 plan 提炼 | 永久沉淀；由 refresh 定期审计是否过时或漂移 |
+| **Concepts (领域术语)** | 根目录 `CONCEPTS.md` | 长期 / 永久资产 | [/nk-brainstorm](../nk-brainstorm/SKILL.md) / [/nk-plan](../nk-plan/SKILL.md) 即时录入，[nk-compound](../nk-compound/SKILL.md) 补全 | 永久沉淀；由 refresh 定期审计 |
 | **项目特有流程** | 项目自选工作流文档（由 `AGENTS.md` 索引） | 长期 | 项目自身维护 | 外部技能读取遵循、不内置、不侵入 |
 | **PR 描述 / Release Note** | GitHub PR 描述 / `docs/releases/*.md` | 可选 / 永久 | PR 开启时写 PR 描述；发布日写 release notes | PR 合并归档；release notes 永久留存 |
 
@@ -26,17 +26,17 @@
 
 为了确保任何新会话或新接入的 Agent 都能快速感知并复用沉淀的知识，必须保持全局指引可见：
 * 项目根目录的 **`AGENTS.md`（或等价的全局指令文件）必须包含指向 `docs/current.md`、`docs/solutions/` 和 `CONCEPTS.md` 的显式指引行**。
-* **维护责任归属**：在项目首次初始化（bootstrap）或初次运行 `/nk-compound` 时，Agent 应检查 `AGENTS.md`；若缺少对应入口指引，应补充指引声明，确保知识库可被后续会话检索。`/nk-close` 提炼阶段若首次创建 `CONCEPTS.md` 或 `docs/solutions/`，同样触发本检查。
+* **维护责任归属**：在项目首次初始化（bootstrap）或初次运行 [/nk-compound](../nk-compound/SKILL.md) 时，Agent 应检查 `AGENTS.md`；若缺少对应入口指引，应补充指引声明，确保知识库可被后续会话检索。[/nk-close](../nk-close/SKILL.md) 提炼阶段若首次创建 `CONCEPTS.md` 或 `docs/solutions/`，同样触发本检查。
 
 ### 项目指导的持续维护
 
-`nk-init` 只建立最小知识入口；项目指导随实际工作演进，不在初始化时全仓扫描并生成完整规则。
+[nk-init](../nk-init/SKILL.md) 只建立最小知识入口；项目指导随实际工作演进，不在初始化时全仓扫描并生成完整规则。
 
 * **准入**：只写用户明确确定的长期要求，或已验证、会反复影响后续任务的项目约束；注明适用范围。临时任务状态留在 `current.md`，排障因果与决策理由留在 `solutions/`，不把单次经验自动升级为全局规则。
-* **触发与责任**：修改构建/测试命令、目录职责、开发约束或发布流程时，执行该变化的 Agent 在同一任务中检查并同步相关项目指导；`nk-work` 在单元提交前负责此检查。没有相关变化就不扩写，不为补齐模板虚构规范。
+* **触发与责任**：修改构建/测试命令、目录职责、开发约束或发布流程时，执行该变化的 Agent 在同一任务中检查并同步相关项目指导；[nk-work](../nk-work/SKILL.md) 在单元提交前负责此检查。没有相关变化就不扩写，不为补齐模板虚构规范。
 * **内容落点**：沿用项目现有的 `AGENTS.md` 或等价指令文件，不另建竞争入口。高频命令与关键约束可直接写；较长流程写入项目已有或必要的专门文档，入口只放简短索引。已有唯一来源只引用，不复制规则；局部约束沿用项目的目录作用域，不提升为全仓规则。
 * **验证与冲突**：新增或替换指导前核实命令、路径与适用条件；可执行命令按项目验证要求运行，未运行明确标为未验证。保留无关既有内容；事实与已定规则冲突时报告依据，不擅自推翻用户决定。
-* **收尾兜底**：`nk-close` 仅针对本次收尾范围内的变化，检查遗漏及失效的指导或索引；补齐已有依据的更新，不借收尾重新制定项目规范。无相关变化不改指导文件。
+* **收尾兜底**：[nk-close](../nk-close/SKILL.md) 仅针对本次收尾范围内的变化，检查遗漏及失效的指导或索引；补齐已有依据的更新，不借收尾重新制定项目规范。无相关变化不改指导文件。
 * **提交**：指导维护随对应交付变化一同提交；收尾补漏随单次收尾提交。遵循 [nk-commit](../nk-commit/SKILL.md)，不因补一条指导单独生成状态提交。
 
 ---
@@ -75,7 +75,7 @@ flowchart TD
 
 ---
 
-## 五、分支收尾六步法（`/nk-close`）
+## 五、分支收尾六步法（[/nk-close](../nk-close/SKILL.md)）
 
 收尾锚定**分支生命周期**：plan 与审查记录活在当前工作分支，合并前收尾；分支不对应发布版本；发布是与收尾解耦的纯事件（见文末"发布日扫尾"）。
 

@@ -130,7 +130,7 @@ If an action looks like it belongs on this list but you are not sure, flag it as
 
 ## Confidence Calibration
 
-Use the anchored confidence rubric in the reviewer prompt (`../reviewer-prompt.md`). Persona-specific guidance:
+Use the anchored confidence rubric in the reviewer prompt ([../reviewer-prompt.md](../reviewer-prompt.md)). Persona-specific guidance:
 
 **Anchor 100** — the gap is mechanically verifiable: a new UI button with no matching tool registration, a tool definition that literally contains business-logic branching.
 

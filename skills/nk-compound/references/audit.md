@@ -1,7 +1,5 @@
 # 审计模式细则
 
-> 路径解析：本文件中 `../../conventions/`、`../../nk-commit/` 相对于本技能目录解析；`docs/solutions/`、`docs/current.md`、`CONCEPTS.md`、`AGENTS.md` 指目标仓库中的文件。
-
 对照当前代码库审计 `docs/solutions/` 与 `CONCEPTS.md`，让知识库保持可信。报告与修正后的文档集是交付物。
 
 ## 1. 范围与调查

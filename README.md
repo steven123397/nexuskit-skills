@@ -53,7 +53,7 @@
 | 显式保存未完成现场 | `/nk-handoff`（仅手动调用） |
 | 排查缺陷或异常 | `/nk-debug` |
 | 审查代码 | `/nk-review` |
-| 交付后精简代码 | `/nk-simplify` |
+| 手动分析代码精简机会 | `/nk-simplify` |
 | 沉淀一条经验或决策 | `/nk-compound` |
 | 分支收尾 | `/nk-close` |
 | 目标巨大、未知太多，无法直接写 plan | `/nk-wayfinder` |

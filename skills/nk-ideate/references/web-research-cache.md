@@ -18,7 +18,7 @@
 ]
 ```
 
-文件位于 `<scratch-dir>/web-research-cache.json`，其中 `<scratch-dir>` 是系统临时目录下的 `nk-ideate/<run-id>`，在 `grounding.md` Phase 1 中确定一次。
+文件位于 `<scratch-dir>/web-research-cache.json`，其中 `<scratch-dir>` 是系统临时目录下的 `nk-ideate/<run-id>`，在 [grounding.md](grounding.md) Phase 1 中确定一次。
 
 ## 复用检查
 

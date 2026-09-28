@@ -1,7 +1,5 @@
 # 价值提炼细则 (Harvest)
 
-> **路径解析说明：** 本文件中引用的约定文件（`../../conventions/`）均相对于本技能所在目录解析，不在目标代码仓库中查找。`docs/solutions/`、`CONCEPTS.md` 指目标仓库中的文件。
-
 收尾第 2 步的操作细则。准入门槛本身以约定为准，本文件只讲从 plan 里怎么找、找到后怎么办。
 
 ## 找什么
@@ -18,7 +16,7 @@
 
 * 写入 `docs/solutions/` 前，先过 [`../../conventions/solution-schema.md`](../../conventions/solution-schema.md) 的双轨准入：Bug 轨过反事实检验，Knowledge 轨过决策三门槛；任一不满足则不建档，内容留在 Git 历史中即可。
 * 写入 `CONCEPTS.md` 前，过 [`../../conventions/concepts-vocabulary.md`](../../conventions/concepts-vocabulary.md) 的准入标准（领域专属性 + 独立概念性）。
-* 拿不准的一律不建档：收尾提炼是减量动作，宁缺毋滥，错过的东西可由后续的 `nk-compound` 或 refresh 机制补捞。
+* 拿不准的一律不建档：收尾提炼是减量动作，宁缺毋滥，错过的东西可由后续的 [nk-compound](../../nk-compound/SKILL.md) 或 refresh 机制补捞。
 
 ## 怎么写
 

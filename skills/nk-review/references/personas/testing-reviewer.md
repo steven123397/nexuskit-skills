@@ -20,7 +20,7 @@ If you use mutation testing (edit a production file, run the suite, revert), do 
 
 ## Confidence calibration
 
-Use the anchored confidence rubric in the reviewer prompt (`../reviewer-prompt.md`). Persona-specific guidance:
+Use the anchored confidence rubric in the reviewer prompt ([../reviewer-prompt.md](../reviewer-prompt.md)). Persona-specific guidance:
 
 **Anchor 100** — a test gap is verifiable from the diff alone with zero interpretation: a new public function with no test file at all, or assertions that are syntactically present but reference a removed symbol.
 

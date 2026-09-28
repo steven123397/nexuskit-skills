@@ -1,6 +1,6 @@
 # 已定决策 (Session-Settled Decisions)
 
-> **归属与引用：** `nk-brainstorm`、`nk-plan` 共用本约定；`nk-work` 执行时尊重其标注（见 `nk-work/references/tdd-loop.md` 已定决策规则）。
+> **适用范围：** 本约定供所有需要记录或承接已定决策的技能共用；引用本约定的技能均须遵守，适用范围不限定于需求与规划阶段。
 
 用于承接用户在当前对话中已经做出的决定，让规划在其基础上推进，而不是重新讨论。标注格式以 [`plan-format.md`](plan-format.md) 第四节为准。
 
@@ -25,7 +25,7 @@
 
 ## 标注
 
-记录在 Product Contract 的 Key Decisions 条目上（`nk-plan` 中记录在 KTD 上），以内联英文括注：
+记录在 Product Contract 的 Key Decisions 条目上（[nk-plan](../nk-plan/SKILL.md) 中记录在 KTD 上），以内联英文括注：
 
 `(session-settled: user-directed — chosen over <备选>: <一句理由>)`
 

@@ -1,57 +1,43 @@
 ---
 name: nk-review
-description: "Review a version-level diff (current branch, named base ref, files, uncommitted changes, or a PR) for bugs, regressions, standards, and intent; record findings as statused entries in docs/reviews/. Use when asked to review code, review a version before merge, or audit a branch. 代码审查、版本审查、合并前审查、review。"
-argument-hint: "[空=当前分支相对基线，或 base ref / 文件路径 / PR 编号]"
+description: "Review a requested change, implementation unit, bug fix, branch or PR using independent subagents; report evidence-backed findings without fixing or committing. 代码审查、单元审查、版本审查；支持嵌入和手动调用。"
+argument-hint: "[调用方范围，或 base ref / 文件路径 / 未提交改动 / PR 编号]"
 ---
 
 # /nk-review
 
-> **路径解析说明：** 本文件及其 references 中引用的文件（`references/`、`../conventions/`、`../nk-commit/` 等）均相对于本技能所在目录解析，不在目标代码仓库中查找。`docs/reviews/`、`docs/plans/`、`docs/current.md`、`docs/solutions/`、`CONCEPTS.md` 指目标仓库中的文件。
+对明确范围的变更做独立审查，结合风险审查与精简分析，统一复核后产出 `docs/reviews/` 报告。既可由用户手动调用，也可嵌入 [nk-work](../nk-work/SKILL.md)、[nk-debug](../nk-debug/SKILL.md) 等流程；不自行修复、转 Issue、更新 current、提交或交接。报告后的处理归调用方或用户。
 
-在版本层面对一段 diff 做代码审查：按风险选出一队 reviewer persona，各自独立产出发现，合并复核后写入目标仓库的 `docs/reviews/`。审查发生在版本层面（合并前或阶段性），不是每个实施单元的关卡——实施单元内不设审查，由 `nk-work` 声明并执行。
+**完成标志：** 被审范围和快照明确，所选子代理完成审查，存留发现完成独立复核，报告包含证据与覆盖限制。零发现是有效结果；缺少必需代理或材料时明确未完成，不能给出完整审查通过结论。
 
-**完成标志：** 被审范围解析明确，存留发现均有证据支撑并按条目格式写入 `docs/reviews/<版本或分支标识>.md`，向用户给出结论、修复顺序与覆盖说明。
-**工作原则：** 只报告不修改（审查本身不改代码、不提交、不推送）；按变更的意图与项目准则评判，不按个人偏好重写；零发现是合法结果；拿不准的下沉进条目并标注缺失证据，不臆造。
+## 1. 确定审查对象
 
-**复杂度判断：** 满足同一需求时，优先更少的自维护代码与概念。发现重复实现、可由已验证原生能力替代的代码或无实际用途的扩展层时，由 maintainability 视角给出位置、可删除内容、替代方案和行为等价证据；不以行数或单一调用方判定问题，不削弱正确性、安全性、测试与已定需求。
+读取 [范围判定](references/scope.md)。嵌入调用时优先复用调用方的明确范围、快照、需求和已有验证证据，不退回整分支审查；用户手动调用时按输入解析。单元审查关注本单元实现及其影响，分支审查关注累计变更及跨单元集成，均不把结论外推到范围之外。
 
----
+确认基线、文件清单、diff 或材料路径、未跟踪文件的纳入/排除和项目规范映射。工作区快照须包含实际内容或指纹，不能仅记 HEAD。分析期间不修改被审内容；内容变化由主会话统一判定失效范围并补做受影响分析。
 
-## 执行步骤
+## 2. 整理意图与编队
 
-各阶段依次执行。阶段规则的读取与复用遵循 [`../conventions/resource-loading.md`](../conventions/resource-loading.md)：只加载命中路线；完整且未变的原文直接复用，缺失或变化时补读。
+从调用方上下文、关联 plan、提交信息或 PR 描述整理 2～3 句意图摘要与已定约束；缺失则注明覆盖限制，不编造。已有验证证据附给 reviewer 作背景，不以测试通过代替审查。
 
-```mermaid
-flowchart LR
-    A[1 定界] --> B[2 意图] --> C[3 编队] --> D[4 派发审查] --> E[5 合并复核] --> F[6 成文汇报]
-```
+读取 [角色选择](references/select-and-route.md)，correctness 常驻，其余按实际风险选择。加载 [nk-simplify](../nk-simplify/SKILL.md) 的分析入口，传入已确定的范围、快照、意图与约束，不让它重复定界。无可精简代码时按其预检跳过三个精简视角，仍审查实际变更的风险。
 
-### 1. 定界 (Scope)
-读取 [`references/scope.md`](references/scope.md)，解析被审 diff：基线 ref、文件清单、diff 文本、范围信号与规范文件映射。基线解析失败或 diff 为空在此早停。
+派发前简要说明编队及条件角色的入选原因；这是进度通报，不是请求批准。材料读取遵循 [资源加载约定](../conventions/resource-loading.md)，完整且未变的原文复用。
 
-### 2. 意图 (Intent)
-写一段 2~3 句的意图摘要（本次变更要达成什么），来源依次为：关联 plan、提交信息、PR 标题与正文、用户口述。每个 reviewer 都会收到它；意图与代码不符是高价值发现。找不到任何意图来源时在覆盖说明中注明"无意图来源"，不编造。
+## 3. 并行分析
 
-### 3. 编队 (Select reviewers)
-读取 [`references/select-and-route.md`](references/select-and-route.md)，按 diff 的实际风险选定 persona 编队：correctness 常驻，其余按条件触发。派发前向用户宣布编队与每个条件 reviewer 的一句入选原因。
+由当前主会话直接派发全部叶子 reviewer：simplify 的三个视角与所选风险角色并行，容量不足时分批，不新增管理子代理，不要求子代理再派发。每个 reviewer 使用 [派发模板](references/reviewer-prompt.md) 的完整结果契约、选中角色原文及同一快照材料；精简角色还须带上 simplify 的共同要求。
 
-### 4. 派发审查 (Dispatch)
-按 [`references/reviewer-prompt.md`](references/reviewer-prompt.md) 的模板，从模板指定的共享方法或本地 persona 读取角色，带上审查目的和完整结果契约初始化通用子代理，一批并行派发；客户端不支持子代理时，由主会话按同一模板依次内联扮演，评审纪律（置信度锚点、引用原文门、误报抑制目录）不变。
+各 reviewer 独立只读分析，不共享其他 reviewer 的结论。缺少子代理能力时报告未完成，不以内联扮演降级。个别代理失败可重新派发；不能补齐时报告缺失覆盖，不默认为零发现。
 
-### 5. 合并与复核 (Merge & validate)
-读取 [`references/validate.md`](references/validate.md)：校验与去重各 reviewer 的返回，套用置信度闸门，再对存留发现做一轮独立复核（confirmed / rejected / unresolved），定稿后一次性分配条目编号。
+## 4. 合并与独立复核
 
-### 6. 成文与汇报 (Record & report)
-读取 [`references/entry-format.md`](references/entry-format.md)：新一轮审查向本版本的 `docs/reviews/` 文件追加一轮区块，写入条目与覆盖说明；在聊天中给出浓缩结论（结论 / 理由 / 修复顺序）。
+读取 [合并与复核](references/validate.md)，统一处理精简与风险发现：校验契约、按实际根因去重、核对冲突建议，再派全新的 validator 子代理复核存留发现。精简建议须核对收益和行为等价依据；风险发现须核对可达路径与实际后果。定稿后分配稳定编号。
 
-**可选：PR 评论。** 项目走 PR 流程且用户需要时，把审查摘要同步为 PR 评论；不走 PR 的项目完全不影响主流程。
+## 5. 写报告并返回
 
----
+按 [报告格式](references/entry-format.md) 写入或追加 `docs/reviews/<版本或分支标识>.md`，记录本轮单元、修复或分支范围、快照、发现、覆盖限制和未验证项。报告是本技能的产物，不把未确认风险包装成已证实缺陷。
 
-## 与体系衔接（各守边界，规则以被引用方为准）
+嵌入调用时将报告路径、结论、发现和覆盖缺口交回调用方，由其决定与执行后续；不另外询问一轮处理方式。手动调用时向用户汇报相同内容，等待其决定后续。用户明确要求同步 PR 评论时才发送。
 
-- **修复**：本技能不改代码。条目由 `nk-work` 认领修复；修复时顺手把条目状态改为 `已修复`，随修复提交入库（[`../nk-commit/SKILL.md`](../nk-commit/SKILL.md) R2/R6）。
-- **新发现分流**：审查发现的处理遵循 [`../conventions/artifact-lifecycle.md`](../conventions/artifact-lifecycle.md) 第四章——小问题随修复走 `nk-work`，跨 plan 疑难转 Issue（无远端记 `docs/backlog.md`），不顺手扩大范围。
-- **阻断登记**：结论为"存在阻断项"（未修复的 P0）时，按 [`../conventions/current-md.md`](../conventions/current-md.md) 登记到目标仓库 `docs/current.md` 的"阻断与已知缺口"。
-- **提交**：本技能不发起提交；新建的审查记录留在工作区，随下一次相关交付（R2）或用户显式调用 nk-handoff 保存现场时（R4）入库。
-- **收尾**：分支收尾时由 `nk-close` 依据条目的状态标记甄别遗留项、转 Issue 并删除审查记录文件。
+修复后的针对性复核仍走本入口，只检查受影响条目、修复差异及新引入风险；无需重新扫描无关范围。确认修复后更新原条目状态，新增问题按新轮次编号。报告保留 `待修 / 已修复 / 遗留-转 Issue` 状态供 [nk-close](../nk-close/SKILL.md) 消费，随后续交付或用户要求的现场保存入库，本技能不发起提交。

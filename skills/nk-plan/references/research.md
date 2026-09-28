@@ -23,10 +23,10 @@ Standard 与 Deep：先写一段简短的**规划上下文摘要**（一两段�
 
 并行派出：
 
-* `agents/repo-research-analyst.md`，范围：**patterns**。传入规划上下文摘要、项目当前指令和报告路径 `<临时目录>/repo-research.md`，让它直接去看当前功能的写法和实现代码。上下文不足以确定范围时，允许一次针对根目录或工作区的探查。
-* `../../conventions/agents/learnings-researcher.md`。传入规划上下文摘要、`../../conventions/solution-schema.md` 的绝对路径和 `<临时目录>/learnings.md`。
+* [agents/repo-research-analyst.md](agents/repo-research-analyst.md)，范围：**patterns**。传入规划上下文摘要、项目当前指令和报告路径 `<临时目录>/repo-research.md`，让它直接去看当前功能的写法和实现代码。上下文不足以确定范围时，允许一次针对根目录或工作区的探查。
+* [../../conventions/agents/learnings-researcher.md](../../conventions/agents/learnings-researcher.md)。传入规划上下文摘要、[../../conventions/solution-schema.md](../../conventions/solution-schema.md) 的绝对路径和 `<临时目录>/learnings.md`。
 
-**Agent 原生能力评估**（按需）：请求、上游文档或调研显示以下任一情况时，同时派出 `agents/agent-native-planning-strategist.md`（报告 `<临时目录>/agent-native.md`）：
+**Agent 原生能力评估**（按需）：请求、上游文档或调研显示以下任一情况时，同时派出 [agents/agent-native-planning-strategist.md](agents/agent-native-planning-strategist.md)（报告 `<临时目录>/agent-native.md`）：
 
 * 涉及 agent、助手、聊天、工作流自动化、MCP、插件、技能、工具注册、提示词或自主循环；
 * 代码库已有 Agent 能力面，本功能改变了用户可见的能力；
@@ -81,8 +81,8 @@ Standard 与 Deep：先写一段简短的**规划上下文摘要**（一两段�
 
 按意图派出（`web-researcher` 传关注点和规划上下文摘要，**不传**代码库内容）：
 
-* **实现指导**：并行 `../../conventions/agents/best-practices-researcher.md`（`<临时目录>/best-practices.md`）与 `../../conventions/agents/framework-docs-researcher.md`（`<临时目录>/framework-docs.md`，附 1.1 得到的框架与版本）。
-* **格局 / 选项发现**：`../../conventions/agents/web-researcher.md`（`<临时目录>/web.md`）。目标是代码托管平台上的项目时（"GitHub 上的竞品"），在关注点中列出维度：项目名与链接、发布频率与活跃度、CLI/UX 形态、安装方式、文档与示例、插件或扩展面、常见 Issue 主题、许可证；star 数只作弱信号。
+* **实现指导**：并行 [../../conventions/agents/best-practices-researcher.md](../../conventions/agents/best-practices-researcher.md)（`<临时目录>/best-practices.md`）与 [../../conventions/agents/framework-docs-researcher.md](../../conventions/agents/framework-docs-researcher.md)（`<临时目录>/framework-docs.md`，附 1.1 得到的框架与版本）。
+* **格局 / 选项发现**：[../../conventions/agents/web-researcher.md](../../conventions/agents/web-researcher.md)（`<临时目录>/web.md`）。目标是代码托管平台上的项目时（"GitHub 上的竞品"），在关注点中列出维度：项目名与链接、发布频率与活跃度、CLI/UX 形态、安装方式、文档与示例、插件或扩展面、常见 Issue 主题、许可证；star 数只作弱信号。
 * **混合**：**依次**而非并行——先 `web-researcher` 摸清格局并给出入围名单，再只在入围技术的细节会实质影响 plan 时派出另外两个。
 
 **工具不可用**：`web-researcher` 会自检网络工具，缺失时停止。不要因此卡住：任何研究员报告无法调研或失败时，警告后继续，并把这个缺口带到 1.4 如实记录。
@@ -107,11 +107,11 @@ Standard 或 Deep 的某个选择依赖现有系统行为、或依赖调研尚�
 
 ## 1.5 流程与边界情况分析（按需）
 
-Standard 或 Deep，或用户流程的完整性仍不清楚时，派出 `agents/spec-flow-analyzer.md`，传入规划上下文摘要、调研结果、追踪结果（如有）和 `<临时目录>/spec-flow.md`。用结果补上遗漏的边界情况、状态转换或交接缺口，收紧需求追溯或验证策略，只加入实质改善 plan 的流程细节。
+Standard 或 Deep，或用户流程的完整性仍不清楚时，派出 [agents/spec-flow-analyzer.md](agents/spec-flow-analyzer.md)，传入规划上下文摘要、调研结果、追踪结果（如有）和 `<临时目录>/spec-flow.md`。用结果补上遗漏的边界情况、状态转换或交接缺口，收紧需求追溯或验证策略，只加入实质改善 plan 的流程细节。
 
 ## 1.6 关键做法未定时，做设计对比
 
-满足任一条件时，在定下关键技术决策和依赖它的单元之前，读 `design-alternatives.md`：
+满足任一条件时，在定下关键技术决策和依赖它的单元之前，读 [design-alternatives.md](design-alternatives.md)：
 
 * 用户要求比较几种设计；
 * Standard 或 Deep 的 Durable plan 在调研后仍有一个**后果重大的"怎么做"未定**：两种以上结构不同的机制都站得住，比较它们需要进一步展开而不只是判断现有材料，而且日后推翻代价高（其他工作会建立在它上面的数据形态、存储格式、接口或归属边界）。

@@ -1,6 +1,6 @@
 # 发想记录格式
 
-本文件定义 nk-ideate 产出文件的内容与 Markdown 写法。在写入时（`post-ideation-workflow.md` §4.1）读取。
+本文件定义 nk-ideate 产出文件的内容与 Markdown 写法。在写入时（[post-ideation-workflow.md](post-ideation-workflow.md) §4.1）读取。
 
 ## 发想记录包含什么
 
@@ -13,7 +13,7 @@
 * **focus** —— 给出关注点时填写；开放式时省略。
 * **mode** —— `repo-grounded`、`elsewhere-software` 或 `elsewhere-non-software`。这是文件内的机器可读字段，不在会话中向用户展示。
 
-**没有状态字段——文档上没有，每个想法上也没有。** 发想记录是某一时刻的探索产物，不是被追踪的工作项：没有 `active → completed` 生命周期，也没有逐想法的"已探索"标记。在文档里记录可变的工作进度会形成第二个会漂移的事实来源——一个想法后来是否被推进，可以从下游产物（采纳了它的 plan）得知，不在这里重复。文件何时删除由 `../../conventions/artifact-lifecycle.md` 的发想记录一行决定。
+**没有状态字段——文档上没有，每个想法上也没有。** 发想记录是某一时刻的探索产物，不是被追踪的工作项：没有 `active → completed` 生命周期，也没有逐想法的"已探索"标记。在文档里记录可变的工作进度会形成第二个会漂移的事实来源——一个想法后来是否被推进，可以从下游产物（采纳了它的 plan）得知，不在这里重复。文件何时删除由 [../../conventions/artifact-lifecycle.md](../../conventions/artifact-lifecycle.md) 的发想记录一行决定。
 
 ### 扎根背景（Grounding Context）
 
@@ -49,7 +49,7 @@ Phase 1.5 的 3~5 条轴，每行一条。Phase 1.5 被跳过时，用一行记�
 
 加图时的两条约束：
 
-* **保持在想法的高度——示意性的，不是规格。** 这和 plan 或需求里的图正好相反：plan 中的图是权威内容；发想里的图是对尚未确定的方向的示意性概览。保持概念化（对比、类比、大致流程）。详细架构、时序图和线框图属于方向选定之后的 `nk-brainstorm` / `nk-plan`，不属于这里。
+* **保持在想法的高度——示意性的，不是规格。** 这和 plan 或需求里的图正好相反：plan 中的图是权威内容；发想里的图是对尚未确定的方向的示意性概览。保持概念化（对比、类比、大致流程）。详细架构、时序图和线框图属于方向选定之后的 [nk-brainstorm](../../nk-brainstorm/SKILL.md) / [nk-plan](../../nk-plan/SKILL.md)，不属于这里。
 * **文字要能独立成立。** 忽略图的读者仍然能得到完整的想法及其依据。图加速理解，但不承载别处没有的内容。
 
 Markdown 中用围栏 mermaid 代码块画图（形态合适时）。
