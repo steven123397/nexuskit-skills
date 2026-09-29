@@ -1,62 +1,63 @@
 ---
 name: nk-ask-ljq
-description: Route the current situation to the right NexusKit skill or workflow — which skill should I use, how do I do X with this kit, where is the entry point. 该用哪个技能、怎么用、从哪开始、流程、路由。
+description: "User-invoked guide to NexusKit: choose a skill for the current situation and explain the route, expected output and handoff. 用户主动问路：该用哪个技能、从哪开始、下一步怎么走。"
 disable-model-invocation: true
 ---
 
 # Ask ljq
 
-你不需要记住每个技能，直接问我就行。下面是我的实战地图：先讲这套体系最重要的一条规矩，再给一条最常用的参考路径，最后是按场景对号入座。每个场景末尾就是该去的技能，一步跳转。
+不需要记住所有技能，告诉我你现在卡在哪里。
 
-## 工具箱，不是流水线
+这是一张工作地图。整套安装后，任意技能都能作为入口；已有需求、Plan 或代码，就从对应位置开始。小改动不必先发想，缺陷不必先写完整 Plan，问路也不会自动启动一整条流程。
 
-这套技能正式支持整套安装（包含共享约定），安装后是工具箱：**任意技能都可作为工作入口，不要求从第一步开始。** “单独用”指独立入口，不指单技能安装。不存在“必须先跑 A 才能跑 B”的必经链路。下面的参考路径只是说“大多数功能开发长这样”，不是强制顺序——bug 不用走规划，顺手的小改动不用发想，拿到现成 plan 直接实施也完全正当。
+## 先回答眼前的问题
 
-## 参考路径：从想法到收尾
+根据当前请求和已有上下文，给出**一个首选入口、一句话理由、需要带入的材料和预期结果**。只有两条路线会产生实质不同的结果时才解释分叉；信息不足以选择时，问一个能区分路线的问题。不要每次把整张地图复述给用户。
 
-一条完整的功能开发通常这样走，每段都能在单元边界换会话：
+接手仓库时按需看 `docs/current.md` 和项目指导；已经知道现场就直接复用。只为选路读取必要信息，不先加载所有技能或展开全仓调查。
 
-1. **找方向**（可选）：还没有具体想法，想先淘一批改进方向 → [/nk-ideate](../nk-ideate/SKILL.md)
-2. **澄清做什么**：有想法但要明确范围、成功标准、做到哪算完 → [/nk-brainstorm](../nk-brainstorm/SKILL.md)
-3. **规划怎么做**：需求清楚了，要拆实施单元、定技术方案 → [/nk-plan](../nk-plan/SKILL.md)
-4. **实施**：按单元实现，一个单元一个会话最舒服 → [/nk-work](../nk-work/SKILL.md)
-5. **提交**：完成单元要求的验证与提交前审查后入库 → [nk-commit](../nk-commit/SKILL.md)
-6. **交付后精简**：行为不变，把刚写完的代码收拾干净 → [/nk-simplify](../nk-simplify/SKILL.md)
-7. **版本审查**：对整版 diff 做审查，记录发现 → [/nk-review](../nk-review/SKILL.md)
-8. **分支收尾**：提炼长期知识、清理生命周期工件 → [/nk-close](../nk-close/SKILL.md)
+用户只问怎么用，就推荐后结束。用户已要求执行某项工作，选定后读取该技能的公开入口，携带原请求、范围、已有决定、证据和授权继续；遵守目标技能的调用边界。推荐一个手动技能不等于用户已调用它，问路不产生写入、提交或发布授权。
 
-每次交付提交由 nk-commit 同步 current，之后可直接换会话。只有用户明确调用 nk-handoff 才执行额外现场保存，不根据结束会话的措辞推断。
+## 从想法到分支收尾
 
-## 按场景入口
+常见功能开发沿这条路走，前面已有的成果直接接上：
 
-- **这个仓库第一次启用体系** → [/nk-init](../nk-init/SKILL.md)
-- **接手工作 / 新会话冷启动**：先读目标仓库的 `docs/current.md`（约定见 [`../conventions/current-md.md`](../conventions/current-md.md)），分支、已验证能力、阻断项、下一步全在里面，别去翻聊天记录和 git log 大海捞针。
-- **有 bug、有异常、行为不对**：复现优先，先造一个能在症状上变红的复现再谈修复 → [/nk-debug](../nk-debug/SKILL.md)
-- **开发中冒出发现或新需求，想先记下而不扩展当前实施范围**：在当前会话核实、查重并落成 Issue，返回继续原任务 → [/nk-to-issue](../nk-to-issue/SKILL.md)
-- **目标太大太模糊，看不见从这里到那里的路径**：先画决策地图，把雾推开再规划（需要 GitHub 远端）→ [/nk-wayfinder](../nk-wayfinder/SKILL.md)
-- **有一串只能人来做的手动操作**（开通服务、点第三方后台、跑一次性迁移）→ [/nk-wizard](../nk-wizard/SKILL.md)
-- **我没跟上，agent 刚才说的没听懂**：暂停，用你缺的上下文重新对齐 → [/nk-wait-what](../nk-wait-what/SKILL.md)
-- **刚解决了一个值得记住的问题，或想审计知识库有没有过时**：沉淀进 `docs/solutions/` → [/nk-compound](../nk-compound/SKILL.md)
-- **手动保存未完成现场**：用户显式调用 [/nk-handoff](../nk-handoff/SKILL.md)；普通提交已同步 current，无需再次交接。
-- **就是不知道该用哪个**：把当前情境用一两句话说给我，我给你指一个。
+1. **找值得做的方向** → [nk-ideate](../nk-ideate/SKILL.md)。从项目现状发想、筛选，形成候选方向和发想记录。已有具体想法就跳过。
+2. **明确做什么** → [nk-brainstorm](../nk-brainstorm/SKILL.md)。澄清目标、范围、行为和成功标准，形成需求阶段 Plan。
+3. **决定怎么做** → [nk-plan](../nk-plan/SKILL.md)。补全同一份 Plan 的技术决定、实施单元和验证方式；也能直接承接清楚的请求或深化已有 Plan，不强制先 brainstorm。
+4. **逐单元实现** → [nk-work](../nk-work/SKILL.md)。传入可实施 Plan 与本次 U-ID；也可承接清楚的 Issue 或有边界的请求。一次调用完成一个确认单元，验证、提交前审查和提交由它调度，汇报后结束；下一单元由后续调用启动。
+5. **累计工作全部交付后收尾** → 用户调用 [nk-close](../nk-close/SKILL.md)。覆盖 Plan、关联 Issue 与临时纳入的工作，做轻量合并前检查、遗留处置、知识承接和产物清理，再协调收尾提交。收尾不等于合并或发布。
 
-## 语境卫生（这条值回票价）
+项目需要工作分支时，按项目流程从已提交 Plan 所在的最新基点进入实施。这里不另定分支或发布规则。
 
-- **一个任务一个会话，新会话从 `docs/current.md` 接手**，不要在一个超长会话里硬撑。
-- **单元边界**：完成当前单元后停止，不估计上下文余量自动续作或调用 handoff。
-- 规划类会话（ideate / brainstorm / plan）可以连着走完，进入实施后再按单元切会话。
+例如：“按这份 Plan 实现 U2。”直接交给 nk-work。它负责审查、修复单元内成立的问题，并通过 nk-commit 提交；不需要用户再依次调用 commit、simplify、review。仍有阻断就报告未完成，不能靠补跑一次提交绕过去。
 
-## 提交节奏一句话版
+## 另外几条入口
 
-细节由 [/nk-commit](../nk-commit/SKILL.md) 承载（规则全文在 [`../nk-commit/SKILL.md`](../nk-commit/SKILL.md)），路由时记住这六句就够：
+- **目标巨大、未知相互牵连，连需要决定什么都说不清** → 用户调用 [nk-wayfinder](../nk-wayfinder/SKILL.md)。用 GitHub Map 与决策 tickets 逐步探索；范围收敛后把已定决定和证据交给 nk-plan，产出同规格的可实施 Plan，再进入 work。它是一条替代探索路线，无须先经过 ideate / brainstorm，也不直接把探索 ticket 当作实施单元。
+- **出错、回归、异常慢，需要查明原因或修复** → [nk-debug](../nk-debug/SKILL.md)。从复现和证据定位根因；仅诊断就交付结论，已授权修复则完成验证、审查和提交。无需为排障先走需求规划。
+- **工作中发现独立需求或缺陷，先记下以后做** → [nk-to-issue](../nk-to-issue/SKILL.md)。在当前会话复用证据、核实查重，按落档授权创建或补充 Issue 后返回原任务；记录问题不等于开始实现它。
 
-- **R1**：提交单位是一个经过验证的变化——代码、验证、配套文档一起入库，验证证据写进提交说明。
-- **R2**：中途记录默认随对应交付入库；显式现场保存按 R4 处理。
-- **R3**：补记交给 nk-commit 判断；仅当前会话最近交付、目标为 HEAD 且确认未推送未共享时可 amend。
-- **R4**：显式现场保存、规划产出、分支收尾或发布日扫尾、知识维护按 nk-commit 处理；规划完成可直接提交，不依赖交接。
-- **R5**：每次提交前由 nk-commit 核对 current，必要更新与交付一次入库；没有语义变化不重写。
-- **R6**：相互独立的行为变化分开提交。
+## 随时单独拿出来用的工具
 
-## 怎么用我
+| 你现在想做什么 | 入口与结果 |
+| :-- | :-- |
+| 首次让仓库接入 NexusKit | 用户调用 [nk-init](../nk-init/SKILL.md)，探测并补最小项目指引和 current；已有配置直接复用 |
+| “这个模块我没想清楚，详细问我” | 用户调用 [nk-grill](../nk-grill/SKILL.md)，严格追问直到理解对齐；共识不自动变成 Plan 或实施授权 |
+| “你刚才说的我没跟上” | 用户调用 [nk-wait-what](../nk-wait-what/SKILL.md)，由 Agent 补上下文重新解释 |
+| 审查当前改动、分支或 PR | [nk-review](../nk-review/SKILL.md)，返回发现与覆盖边界，不直接修复产品代码 |
+| 单独找代码精简机会 | 用户调用 [nk-simplify](../nk-simplify/SKILL.md)，分析复用、质量与效率，返回建议，不自动改代码 |
+| 已有完整改动，需要提交 | [nk-commit](../nk-commit/SKILL.md)，核对范围和证据、按需同步 current 并提交；它是直接提交入口，也被其他技能调用 |
+| 显式保存未完成现场 | 用户调用 [nk-handoff](../nk-handoff/SKILL.md)，保存可接手的现状；普通交付提交后不必再跑一次 |
+| 留下一条可复用经验或已采纳决策 | [nk-compound](../nk-compound/SKILL.md)，检索已有知识并沉淀到 solutions；明确要求复盘时先分析，明确要求 refresh 时审计知识库 |
+| 一串只能人完成的配置或操作 | 用户调用 [nk-wizard](../nk-wizard/SKILL.md)，生成交互式 Bash 向导交给人运行；脚本生成不代表操作完成 |
 
-直接描述你的处境：“我有个想法但不知道做到哪”“测试挂了”“会话太长了想交接”——我对照上面的地图给你一个技能名和一句话理由。别纠结选得对不对，选错了一个技能也随时能换，这正是工具箱的意义。
+常规 review 已包含精简分析与独立复核；成立的问题由 work / debug 或获授权的修复工作处理。close 调用 review 的 **pre-merge** 路径检查累计成果能否一起交付，默认主会话、至多两个只读专项子代理，不重复全套常规审查。只想做这项检查时也可直接请求 `nk-review pre-merge`。
+
+## 会话与产物怎么接上
+
+规划阶段可以在当前会话连续推进；单元完成后可以换会话，也可以后续调用继续。不按上下文余量自动续作，不要求为了落档或下一轮探索另开会话。
+
+接手时从 `docs/current.md` 找到实际状态，再读对应 Plan 单元及必要证据。current 的维护随提交由 nk-commit 负责；需要额外保存未完成现场时才显式调用 handoff。提交规则只由 nk-commit 持有，这里不维护副本。
+
+Plan 承载本次交付，solutions 保存长期经验，CONCEPTS.md 保存领域术语。遇到非琐碎设计或排障时定向检索已有经验，不为了检索自动启动沉淀或全库审计。分支收尾由 close 按生命周期处理已消费产物，仍被其他工作使用的材料保留。

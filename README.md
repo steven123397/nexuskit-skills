@@ -1,7 +1,7 @@
 # NexusKit (`nk-*`)
 
 > 面向 AI 编程 Agent 的个人工程技能体系。
-> 取 **Compound Engineering (EveryInc)** 的规划严谨性与知识沉淀，取 **Matt Pocock Skills** 的单任务新会话、测试先行与术语维护，按个人项目、多 Agent 协作的实际画像重新组织。
+> 取 **Compound Engineering (EveryInc)** 的规划严谨性与知识沉淀，取 **Matt Pocock Skills** 的任务边界、测试先行与术语维护，按个人项目、多 Agent 协作的实际画像重新组织。
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Prefix: nk-](https://img.shields.io/badge/Prefix-nk--*-brightgreen.svg)](#)
@@ -31,9 +31,9 @@
 
 1. **工具箱，不是流水线**：整套安装后，任意技能都可作为工作入口，按场景选取；这不表示支持单技能安装。
 2. **`docs/current.md` 是跨会话入口**：记录当前能力、验证结果、阻断项、下一步与所在分支。
-3. **产物有生命周期**：plan 与审查记录在工作分支上随代码演进，分支收尾时提炼长期价值后删除；Issue 只承载跨 plan 的待办、缺陷与探针。
+3. **产物有生命周期**：Plan 与审查记录在工作分支上演进，收尾时承接长期价值再清理已消费产物，其他活跃工作仍引用的材料保留；Issue 承载待办、缺陷与探针，也承载 wayfinder 的探索地图与决策 tickets。
 4. **知识双轨**：踩坑因果与决策理由进 `docs/solutions/`，领域术语进 `CONCEPTS.md`。
-5. **提交节奏**：所有提交统一经过 [nk-commit](skills/nk-commit/SKILL.md)。交付成果按 R1 提交；R4 区分显式现场保存、规划产出、分支收尾或发布日扫尾、知识维护四类场景，不按文件扩展名限制提交。每次提交前按需更新 current 并同次入库，完成后无需再运行 handoff。
+5. **提交节奏**：所有提交统一经过 [nk-commit](skills/nk-commit/SKILL.md)，由它核对交付范围、证据并按需同步 current。work / debug 已调度提交，无需再补跑；显式保存未完成现场才调用 handoff。
 6. **项目流程归项目**：分支、发布、签名等项目特有约定写在项目自己的工作流文档中，技能读取而不内置。
 
 ---
@@ -43,10 +43,10 @@
 | 场景 | 技能 |
 | :-- | :-- |
 | 不确定该用哪个 | `/nk-ask-ljq` |
-| 在新仓库首次启用本体系 | `/nk-init` |
+| 在新仓库首次启用本体系 | `/nk-init`（仅手动调用） |
 | 想找改进方向 | `/nk-ideate` |
 | 有想法，要明确做什么、做到哪 | `/nk-brainstorm` |
-| 想让 Agent 详细追问，严格对齐设计、决策或想法 | `/nk-grill` |
+| 想让 Agent 详细追问，严格对齐设计、决策或想法 | `/nk-grill`（仅手动调用） |
 | 需求明确，要设计怎么做 | `/nk-plan` |
 | 实现一个实施单元或 Issue | `/nk-work` |
 | 提交交付成果 | `/nk-commit` |
@@ -55,14 +55,16 @@
 | 审查代码 | `/nk-review` |
 | 只检查累计成果能否一起交付 | `/nk-review pre-merge`（主会话为主，最多两个专项子代理） |
 | 手动分析代码精简机会 | `/nk-simplify` |
-| 沉淀一条经验或决策 | `/nk-compound` |
-| 分支收尾 | `/nk-close`（含轻量合并前检查、提炼和清理） |
-| 目标巨大、未知太多，无法直接写 plan | `/nk-wayfinder` |
+| 沉淀经验、记录决策，或明确要求协作复盘 / 知识审计 | `/nk-compound` |
+| 分支收尾 | `/nk-close`（仅手动调用；含轻量合并前检查、提炼和清理） |
+| 目标巨大、未知太多，无法直接写 Plan | `/nk-wayfinder`（仅手动调用；探索后交给 nk-plan） |
 | 开发中冒出 bug 或新需求，在当前会话先记下来、不展开实施 | `/nk-to-issue` |
-| 引导人完成一系列手动操作 | `/nk-wizard` |
-| Agent 发散了，需要重新梳理 | `/nk-wait-what` |
+| 引导人完成一系列手动操作 | `/nk-wizard`（仅手动调用） |
+| 没跟上 Agent 的解释，请它补上下文重讲 | `/nk-wait-what`（仅手动调用） |
 
-实施进度见 RFC 第八章；全部技能已就位，接下来是 paper-30min 的迁移与集中验收。
+常见路线是：可选 ideate → brainstorm 的需求阶段 Plan → nk-plan 补全同一份 Plan → nk-work 逐单元交付 → 用户调用 nk-close。已有清楚请求或 Plan 可从中间进入；wayfinder 是替代探索路线，同样交给 nk-plan 形成标准 Plan。
+
+“按 Plan 实现 U2”交给 nk-work 即可：它调度验证、常规 review（含精简分析与独立复核）、问题处理及 nk-commit，不需要用户再串行调用这些技能。close 的 pre-merge 检查关注累计成果，收尾不自动合并或发布。详细选路见 [ask-ljq](skills/nk-ask-ljq/SKILL.md)。当前维护进度与未验证项见 [docs/current.md](docs/current.md)。
 
 ---
 

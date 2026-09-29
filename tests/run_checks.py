@@ -6,7 +6,7 @@ Five checks, each maps to a class of failure that actually happened:
 2. references       - nk-* mentions resolve to real skills; no dangling K/R code refs
 3. byte-budget      - SKILL.md <= 8000 bytes (Codex injection limit), ratchet list
 4. shared-resources - canonical methods, caller references, local workflow ownership
-                      controlled planning guardrail copies and complete distribution layouts
+                      controlled planning guardrail copies, distribution and manifest inventories
 5. frontmatter      - safe YAML parsing with duplicate-key rejection, name and
                       description, and name matches its directory (installers such
                       as the skills CLI derive the install dir from frontmatter name)
@@ -125,7 +125,8 @@ def work_fragment_problems():
 
 def check_shared_resources():
     from check_shared_resources import validate
-    check("shared-resources", validate(ROOT) + work_fragment_problems())
+    from check_manifests import validate as validate_manifests
+    check("shared-resources", validate(ROOT) + work_fragment_problems() + validate_manifests(ROOT))
 
 
 # --- 5. frontmatter ---

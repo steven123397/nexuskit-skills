@@ -1,10 +1,10 @@
 # 当前状态
 
-- 所在分支：`feat/skill-deep-audit`；核对基点：`7d5342c`（2026-09-29 本轮整理时 HEAD）。
-- 工作范围：[技能深读计划](plans/2026-09-27-1525-test-skill-deep-audit-plan.md) U2。前十七项已处理；本次联合交付 wayfinder、wizard、wait-what，最后一项 ask-ljq。
-- 本次成果：wayfinder 保留决策地图探索，经 nk-plan 公开入口形成统一 Plan，补齐消费端承接；每轮维护后可同会话续作，不从 ticket 直接实施。三个技能均明确用户主动调用。
-- 相关边界：wizard 按目的地保存值、限定范围，模板有跳过项时显示未完成；wait-what 由 Agent 重新解释。Tracker 明确认领非原子锁、完整查询与并发合并，HITL 未解决不伪造答案。
-- 验证：`python -B -X utf8 tests/run_checks.py` 五项通过；Git Bash `bash -n skills/nk-wizard/assets/template.sh` 通过；`git diff --check` 通过。主会话已核对输入、交接、完成条件及失败出口；未运行交互向导或受测技能。检查器未修改，既有 23 项测试结果不冒充本轮重跑。
+- 所在分支：`feat/skill-deep-audit`；核对基点：`c788c13`（2026-09-29 本轮整理时 HEAD）。
+- 工作范围：[技能深读计划](plans/2026-09-27-1525-test-skill-deep-audit-plan.md) U2。十八项文本重构及入口统一已完成；本次重写 ask-ljq，下一阶段 U3 统一实测。
+- 本次成果：参考 ask-matt 的工作地图写法，ask-ljq 按情境推荐入口，说明主线、wayfinder 替代探索及独立工具；区分问路与执行、用户调用与内部调度，去掉重复提交/精简/审查步骤及 R1–R6 副本。
+- 配套：README 同步职责和当前进度入口；插件介绍完整列出 18 个技能；清单 JSON、技能数/集合、分发路径与市场标识检查接入既有五项检查和 CI，新增 8 项回归测试。
+- 验证：`python -B -X utf8 tests/run_checks.py` 五项通过；`python -B -X utf8 -m unittest discover -s tests -p test_*.py` 31 项通过；`git diff --check` 通过。主会话对照现有技能核对路由、产物交接和授权边界；未执行受测技能或插件安装。
 
 ## 接手依据与边界
 
@@ -24,10 +24,12 @@
 
 PyYAML 检查依赖已在 tests/requirements.txt 声明并接入 CI；新环境先安装依赖。外部 quick_validate 字段限制按 AGENTS.md 处理，不改有效字段或外部安装文件。
 
+#32 已关闭。#28 实现及机械验收完成，但 GitHub GraphQL / REST 关闭请求均 TLS 超时；最后一次成功读取仍为 OPEN，待网络恢复后核实并关闭，不重复实现。
+
 ## 下一步
 
-最后核对并讨论 nk-ask-ljq：参考路径去除重复提交/精简/审查暗示，呈现 wayfinder 替代路线，统一 README 与插件介绍；处理 #28 与 #32。全部技能完成后进入 U3。
+U3：由用户统一安排独立会话沙盒实测，先核实实际加载的技能路径及已提交版本，再按真实开发场景验证；#2 客户端语言实验一并安排。本轮不自动启动沙盒执行或分支收尾。
 
 ## 工作区未提交改动
 
-本轮三个手动技能、nk-plan 承接、来源、Plan 与 current 同次提交，预期无残留；不自动推送。ask-ljq 仅核对，尚未修改；未执行受测技能或真实落档测试。
+本轮 ask-ljq、README、插件介绍、检查器与回归测试、来源、Plan 与 current 同次提交，预期无残留；不自动推送。

@@ -287,9 +287,10 @@ nk-handoff 改为仅用户显式调用：保留 `disable-model-invocation: true`
 
 关键设计决定：
 * 名字含作者缩写 ljq（个人元素）；曾定名无前缀的 `ask-ljq`，后统一回 `nk-` 前缀保持命名一致。
-* Matt 的"main flow + on-ramps"单主线结构改为"工具箱宣言 → 参考路径 → 按场景入口"：落实 D1（工具箱不是流水线），路由而不规训，明说每步可单独用、可跳过、可从中间进入。
-* 保留"问我就行"的作者口吻与语境卫生建议（`docs/current.md` 接手、完成单元后停止、凭 current 接手；不估算上下文阈值触发交接）。
-* 新增 R1–R6 提交节奏一句话版（细节路由给 `nk-commit`）；删去 phase boundaries 决策树、prototype/triage/vocabulary layer 等 NexusKit 无对应物的内容。
+* 2026-09-29 对照本地 ask-matt 原文及全部重构后入口重写：保留“问我就行”、常见主线、其他入口和独立工具的地图写法，按用户情境先给一个推荐，不逐次倾倒整张地图。
+* 主线改为可选 ideate → brainstorm → plan → 单元 work → 手动 close；wayfinder 经 plan 汇合。说明输入、产物与职责，常规 review / simplify / commit 已由交付流程调度，不要求用户重复串行调用（#32）。
+* 单文件、仅手动调用；问路与执行分开，已有执行授权传给目标公开入口，手动技能不因被推荐自动启动。保留 current 接手和单元边界，不复制 Matt 的 phase-boundaries、固定上下文阈值、强制新会话或 NK 未提供的技能。
+* 删除 R1–R6 副本，提交规则只由 nk-commit 持有。覆盖知识沉淀 / 审计 / 条件复盘及所有独立工具，同步 README 和完整插件介绍；清单数量、技能集合、分发路径与市场标识纳入机械检查（#28）。
 
 ## nk-work
 

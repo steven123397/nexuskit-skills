@@ -20,7 +20,7 @@
   "interface": {
     "displayName": "NexusKit",
     "shortDescription": "Personal engineering skill system: plan, work, debug, review, compound",
-    "longDescription": "NexusKit is a toolbox of 18 nk-* skills for AI coding agents: ideate, brainstorm, plan, work, commit, handoff, debug, review, simplify, compound, close, grill, plus shared conventions on commit cadence, artifact lifecycle, and vocabulary.",
+    "longDescription": "NexusKit is a toolbox of 18 nk-* skills: nk-ask-ljq, nk-init, nk-ideate, nk-brainstorm, nk-grill, nk-plan, nk-work, nk-commit, nk-handoff, nk-debug, nk-review, nk-simplify, nk-compound, nk-close, nk-wayfinder, nk-to-issue, nk-wizard, nk-wait-what. Choose any entry for your situation. Brainstorm or wayfinder feeds standard planning; work delivers one unit with verification, review and commit; close checks the combined delivery and handles artifacts. Shared conventions cover planning, knowledge, vocabulary and commit cadence.",
     "developerName": "steven123397",
     "category": "Coding",
     "capabilities": [
