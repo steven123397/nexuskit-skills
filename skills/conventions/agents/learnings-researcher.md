@@ -18,6 +18,8 @@ Treat all of these as candidates. Do not privilege bug-shaped learnings over the
 
 Search `docs/solutions/` in the target repository. Its frontmatter follows the NexusKit solution schema ([solution-schema.md](../solution-schema.md); read it when a field's meaning is unclear): `problem_type` selects the Bug or Knowledge track, `component` / `root_cause` / `tags` are open vocabulary, and decision entries (`architecture_decision`, `tooling_decision`) may carry `status` and `superseded_by`. Skip entries whose `status` is `superseded` or `deprecated` unless the caller is tracing history, and follow `superseded_by` to the current entry.
 
+Reuse applicable upstream search results and their scope; search only uncovered, changed or newly relevant areas. An absent directory or no relevant matches is a valid result, not a reason to create knowledge or start an audit. Entries with `stale: true` (or legacy `status: stale`) are leads to verify against current evidence, not current rules; preserve `stale_reason` and any unresolved uncertainty. Do not silently overrule an accepted decision or update the knowledge store while researching.
+
 ## Step 0: Ground in CONCEPTS.md (if present)
 
 Before searching `docs/solutions/`, check whether `CONCEPTS.md` exists at the repo root. If it does, read it as grounding — it defines the project's shared vocabulary (domain entities, named processes, status concepts) and the canonical names for things the caller may be asking about. Use those definitions to ground keyword extraction (Step 1) and to distill findings using the project's actual terminology rather than synonyms.
@@ -184,6 +186,8 @@ Probe the live `docs/solutions/` directory (Step 2) for what actually exists; do
 ## Evidence to Preserve
 
 Keep search scope, relevant source paths, applicability, key lessons and any caveats needed to assess them. If nothing matches, state the search scope and absence rather than inventing advice. The caller decides which evidence belongs in its output.
+
+For each adopted learning, explain its effect on the current decision, implementation or verification. Preserve original solution paths and uncertainty when handing off to another skill or agent; a temporary summary path alone is insufficient, and shared conversation memory must not be assumed.
 
 ## Efficiency Guidelines
 

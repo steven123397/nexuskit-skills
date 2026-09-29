@@ -1,10 +1,10 @@
 # 当前状态
 
-- 所在分支：`feat/skill-deep-audit`；核对基点：`e7df699`（2026-09-29 本轮整理时 HEAD）。
-- 工作范围：[技能深读计划](plans/2026-09-27-1525-test-skill-deep-audit-plan.md) U2。前八项已交付；ideate / grill 联合整理本次交付，下一项为 nk-compound。
-- 本次成果：ideate 入口持有主流程、条件加载、写入与交付；保留六视角及核查方法，明确续作授权、局部调整、非软件深度与证据交接。grill 保持用户主动调用的单文件严格对齐技能，不强制文档或后续流程。
-- 共享规则：ideate 复用决策自主与读取规则的受控副本，已登记一致性检查；共享研究角色保持单源。来源、README 和 Plan 同步。
-- 验证：`python -B -X utf8 tests/run_checks.py` 五项通过；`python -B -X utf8 -m unittest discover -s tests -p test_*.py` 14 项通过；两个入口 PyYAML 解析通过；`git diff --check` 通过。主会话已核对方法保留、调用关系与 Issue 范围，未执行受测技能。
+- 所在分支：`feat/skill-deep-audit`；核对基点：`3f1cb55`（2026-09-29 本轮整理时 HEAD）。
+- 工作范围：[技能深读计划](plans/2026-09-27-1525-test-skill-deep-audit-plan.md) U2。前十一项已交付；本次为 nk-compound，下一项为 nk-close。
+- 本次成果：compound 保留沉淀 / 审计双模式，新增条件性协作复盘；入口持有路由、授权、术语、可见性、最终两项自检与提交。work / debug 默认建议、授权后调用，成果返回统一提交。
+- 共享规则：决策与实践分开准入，stale 不覆盖决策生命周期；空库不阻塞术语初建。补齐经验消费契约：项目入口标明检索时机，work / debug 复用或补查，子代理交接携带原始来源及任务影响；init / close 的最小入口维护同步，主体重构仍待后续。
+- 验证：`python -B -X utf8 tests/run_checks.py` 五项通过；`python -B -X utf8 -m unittest discover -s tests -p test_*.py` 14 项通过；四个改动入口 PyYAML 解析通过；`git diff --check` 通过。主会话已核对方法保留、调用关系、经验消费与 Issue 范围，未执行受测技能。
 
 ## 接手依据与边界
 
@@ -20,14 +20,14 @@
 
 无编辑阻断。全部技能重构后才由用户统一安排独立会话沙盒实测，本会话不执行受测技能。提交钩子同步、机械检查和 Issue 关闭均不代表行为验证。
 
-#29、#36 已按本轮文本修复关闭，前十项无未关闭的节点关联问题；真实效果仍纳入 U3。#2 的客户端语言实验保留。历史 Issue 处置见 Plan，#21 不新增 reference 总量硬阈值，#40 保持否决。
+本轮 #15 已按文本修复关闭，前十一项无未关闭的节点关联问题；真实效果仍纳入 U3。#2 的客户端语言实验保留。历史 Issue 处置见 Plan，#21 不新增 reference 总量硬阈值，#40 保持否决。
 
 PyYAML 已可用；全仓 frontmatter 检查仍为基础检查，真正解析由 #13 跟踪。外部 quick_validate 字段限制按 AGENTS.md 处理，不改有效字段或外部安装文件。
 
 ## 下一步
 
-继续上述 Plan 的 U2，下一项 nk-compound：读实际入口、引用和来源，先讨论结构与取舍，核对 #15。全部技能完成后进入 U3。
+继续上述 Plan 的 U2，下一项 nk-close：读实际入口、引用和来源，讨论收尾结构及 compound 公共接口，核对 #16、#18。全部技能完成后进入 U3。
 
 ## 工作区未提交改动
 
-本轮技能、来源、README、检查登记、Plan 与 current 一起提交，预期无本轮残留；不自动推送。
+本轮技能、共享规范、来源、检查登记、Plan 与 current 一起提交，预期无本轮残留；不自动推送。

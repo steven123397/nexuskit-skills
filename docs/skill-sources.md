@@ -73,11 +73,19 @@ nk-handoff 改为仅用户显式调用：保留 `disable-model-invocation: true`
 
 ## nk-compound
 
+2026-09-29 重构：以本地 CE `a763b392` 的 compound / refresh 与 Matt `skills/in-progress/retro/SKILL.md` 为参考。保留沉淀 / 审计两个模式，Bug / Knowledge 为内容轨道；显式协作复盘是沉淀前的条件分析，也可仅交付建议。入口持有路由、授权、术语、可见性、最终两项自检、提交和汇报；capture / audit 保留连续方法，retro 提供六类复盘视角，不自动实施建议或建票。
+
+架构/工具决策须已采纳且满足三门槛；工作流与实践以实际证据、适用条件和未被现有产物表达的认识准入，不要求难以撤回。审计 stale 改为独立布尔字段，保留决策生命周期；空 solution 库不阻塞术语初建，Applied 与 Recommended 区分实际标记和待定替换。#15 的两项自检在所有增强和审计修改之后执行，并进入完成条件。
+
+跨技能接口：work / debug 默认建议，已有授权才从公开入口沉淀，成果返回调用方随交付统一提交；close 本轮仅同步准入分类，完整收尾接口留到下一轮。所有实际技能测试仍待 U3。
+
+同轮补齐经验消费契约：artifact-lifecycle 持有知识导航、定向检索时机、证据复用及交接要求，init / compound / close 写入最小项目指引；本仓 AGENTS 同步采用。work 的开工材料补齐直接实施时的经验检索，子代理任务包带原始路径、适用条件、约束与验证影响；debug 明确 solutions 检索落点。共享 learnings-researcher 复用上游覆盖、处理 stale 和继任条目并返回任务影响，capture 补可搜索标题和适用条件。不新增检索技能、索引文件或数据库，不因读取经验自动启动 compound；close / init 主体仍按原顺序后续重构。
+
 #3 收口：阶段间复用已掌握的 capture 原文，修订建议按共享结果体量规则直接回传。
 
 2026-09-27 方案 C：6 个角色复用 conventions/agents，文档校验目的保留在 capture.md 的选择处，返回紧凑修订意见，不扩为产品代码修改或全仓审计。
 
-主要参考：CE `ce-compound` / `ce-compound-refresh` (2026-09)、NexusKit 共享约定
+主要参考：CE `ce-compound` / `ce-compound-refresh` (2026-09)、Matt `retro` 与 ADR 准入、NexusKit 共享约定
 与 CE 的主要差异及原因：
 * refresh 并入为审计模式而非独立技能：同一知识库的写入与维护收拢在一个入口，`refresh` 参数切换。
 * scripts/ 整体删除：两份校验脚本转写为 `references/frontmatter-checklist.md` 与 `references/claims-checklist.md` 的人工核对清单；session-history 脚本组删除，改用当前会话上下文 + `git log` 定位刚解决的问题，依赖脚本的 session-historian 提示词随之删除。
@@ -85,7 +93,7 @@ nk-handoff 改为仅用户显式调用：保留 `disable-model-invocation: true`
 * 模式裁剪：去掉 mode/depth token 体系（interactive/non-interactive、full/lightweight），沉淀走单一流程；无人值守场景由 `../conventions/decision-autonomy.md` 统一覆盖。
 * 提交交给 nk-commit R3/R4：相关沉淀随交付，遗漏补记须符合完整 amend 条件，独立且已验证的知识成果可正常提交，未完成部分暂留；不自动建分支。
 * 可见性检查并入首运行职责：按 artifact-lifecycle 第二章补 `AGENTS.md` 指引，而非每次运行单独征询。
-* 术语表规则归 `../conventions/concepts-vocabulary.md`：本技能沉淀模式只做 Add/Refine，Fold/Retire/Scrub 与整库初建归审计模式。
+* 术语表规则归 `../conventions/concepts-vocabulary.md`：本技能沉淀模式只做 Add/Refine，Fold/Retire/Scrub 归审计模式；明确整库初建由入口单独路由，不顺带审计全部 solution。
 
 ## nk-debug
 

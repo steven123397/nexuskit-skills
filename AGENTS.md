@@ -8,6 +8,7 @@
 
 - **[`docs/current.md`](docs/current.md)**：仓库当前状态、验证结果、下一步——新会话先读它。
 - **[`docs/solutions/`](docs/solutions/)**：经验与决策库（长期资产）；沉淀与审计规则见 `skills/conventions/solution-schema.md`。
+- 涉及设计取舍、非琐碎实现或排障时，按主题、模块或症状定向检索 `docs/solutions/`；已有适用结果直接复用，只精读相关条目。无匹配照常推进，不因此触发沉淀或审计。交接相关经验时带上来源路径、适用条件、关键约束及验证影响；存疑或已取代条目先核实现状。
 - **[`CONCEPTS.md`](CONCEPTS.md)**：领域术语表（分支收尾、容器中立认领、前沿轮次等体系术语的唯一真实来源）；维护规则见 `skills/conventions/concepts-vocabulary.md`。
 - **[`docs/skill-sources.md`](docs/skill-sources.md)**：每个技能的上游来源与取舍理由（维护者向；执行技能的 Agent 不需要读）。
 - **[`conventions/`](skills/conventions/)**：共享约定的维护源（提交节奏、产物生命周期、术语、plan 格式等）。一般按需引用；每次必需的短底线可按 nk-work 范式同步到入口，并校验副本一致性，不维护未经核对的改写副本。

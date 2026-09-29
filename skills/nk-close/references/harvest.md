@@ -14,7 +14,7 @@
 
 ## 怎么判断
 
-* 写入 `docs/solutions/` 前，先过 [`../../conventions/solution-schema.md`](../../conventions/solution-schema.md) 的双轨准入：Bug 轨过反事实检验，Knowledge 轨过决策三门槛；任一不满足则不建档，内容留在 Git 历史中即可。
+* 写入 `docs/solutions/` 前，先过 [`../../conventions/solution-schema.md`](../../conventions/solution-schema.md) 的双轨准入：Bug 轨须已解决、已验证并过反事实检验；Knowledge 中架构/工具决策须已采纳并过决策三门槛，工作流与实践按实际证据、适用条件及可复用认识准入；任一不满足则不建档，内容留在 Git 历史中即可。
 * 写入 `CONCEPTS.md` 前，过 [`../../conventions/concepts-vocabulary.md`](../../conventions/concepts-vocabulary.md) 的准入标准（领域专属性 + 独立概念性）。
 * 拿不准的一律不建档：收尾提炼是减量动作，宁缺毋滥，错过的东西可由后续的 [nk-compound](../../nk-compound/SKILL.md) 或 refresh 机制补捞。
 
@@ -23,3 +23,4 @@
 * **`docs/solutions/`**：先检索既有语料，子目录与 `component`、`tags` 等开放词汇沿用既有拼写（语料优先）；frontmatter 与正文模板按 solution-schema 的第三、四节，决策类记录按内容分量选轻量或结构化档位。
 * **`CONCEPTS.md`**：按 concepts-vocabulary 的词条结构书写，只使用其规定的 5 种原子变更；退役术语需要正面证据，拿不准保持现状。
 * 提炼产物不单独提交，与被删除的 plan 一起进入收尾那一次 R4 提交（见 SKILL.md 第 5 步）。
+* 知识入口检查按 [产物生命周期](../../conventions/artifact-lifecycle.md) 第二章，同时核对 solutions 导航与定向检索时机；已有等效指引复用，不只检查目录链接，也不覆盖项目现有流程。
