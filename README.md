@@ -6,7 +6,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Prefix: nk-](https://img.shields.io/badge/Prefix-nk--*-brightgreen.svg)](#)
 
-当前预发布版：[v0.2.0-beta.1](docs/releases/v0.2.0-beta.1.md)。技能重构与机械检查已完成，代表性 notes CLI 沙盒流程已通过；下一步准备并发布 v0.2.0，再在 paper30min 实装，实际开发修正进入 v0.2.x。实测范围与未覆盖项见 [验证记录](docs/reviews/feat-skill-deep-audit.md)。
+当前正式版：[v0.2.0](docs/releases/v0.2.0.md)。本轮技能重构与 U3 沙盒验收已完成，基本使用和触发流程通过维护者验收；接下来在 paper30min 实际开发中使用，内容、方法论及其他问题在 v0.2.x 中逐步修复。v0.3.0 仅有初步构想，暂不启动新一轮大迭代。实测范围见 [验证记录](docs/reviews/feat-skill-deep-audit.md)。
 
 ---
 
