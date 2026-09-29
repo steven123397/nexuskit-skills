@@ -1,17 +1,15 @@
 ---
 name: nk-wayfinder
-description: Chart an oversized, foggy goal into a shared decision map on the issue tracker, then resolve decision tickets one per session until the path to the destination is clear. Use when a goal is too big and too unknown for a single plan or session, when the path forward cannot be seen, for decision maps and wayfinding. 超大模糊目标、看不清路径、决策地图、decision ticket、wayfinding。
+description: "User-invoked exploration of a large, uncertain goal through a shared GitHub decision map and tickets. Resolve questions until scope and decisions are ready for planning, then hand evidence to nk-plan for a standard implementation Plan. Explore the route rather than deliver the implementation."
 argument-hint: "[可选：map issue URL 或编号；留空则带着新想法 chart]"
 disable-model-invocation: true
 ---
 
 # /nk-wayfinder
 
-> **路径解析说明：** 本文件及其 references 中引用的文件（`references/`、`../conventions/`、`../nk-*/`）均相对于本技能所在目录解析，不在目标代码仓库中查找。
-
 一个松散想法出现了：它太大，单个会话装不下，而且被 fog 包围，通往 **destination** 的路还看不见。Wayfinding 的目标是找到这条路，而不是朝 destination 猛冲：把路径绘制成 issue tracker 上的 **shared map**，逐个解决 **decision tickets**——它们承载需要决策才能解决的问题，而不是要执行的 build slice——直到路线清晰。
 
-**完成标志：** 别人动手前已没有任何事情需要决定、路径完全清晰，map 上不再有 tickets；charting 会话的完成标志是 map 与首批 tickets 建好、research 已派出。**工作原则：** map 是索引不是 store；ticket 只承载 decision；每个会话最多 resolve 一个 ticket（research 除外）；fog 不预切成 tickets。
+**完成标志：** 目标、关键范围和产品取舍足以进入实施规划，剩余未知已区分为规划期解决、实施期验证或真正阻断。Charting 完成指 map 与首批 tickets 已建立，研究的完成、进行中与未启动状态已说明；派发不等于研究完成。**工作原则：** map 是索引不是 store；ticket 服务于 decision；每轮调用默认处理一个非 research ticket；fog 不预切成 tickets。
 
 ## 前置条件：GitHub tracker
 
@@ -19,7 +17,7 @@ Tracker 固定为 GitHub Issues，通过 `gh` CLI 操作。开始前确认仓库
 
 ## Plan, don't do
 
-Wayfinder 默认用于 **planning**：每个 ticket 解决一个 decision，只产出 decisions，不产出 deliverables。想直接动手做的冲动通常表示你已到达 map 边缘，该交接了。Effort 可以在 map 的 **Notes** 中覆盖这个默认值，把 execution 纳入 map。
+Wayfinder 负责探索目标与决策路径。Research、廉价 prototype 和解锁 decision 所需的 task 可以执行，正式交付统一进入 Plan → work。Map 的 Notes 记录背景和偏好，不覆盖技能职责、手动调用边界或外部操作授权。
 
 ## The Map
 
@@ -48,8 +46,8 @@ Map 是带 `wayfinder:map` label 的单个 issue，是 canonical artifact；tick
 
 每个 ticket 是 map 的 child issue；body 是一节 `## Question`，写清这个 ticket 要解决的 decision 或 investigation，大小控制在单个会话能装下。每个 ticket 带一个 `wayfinder:<type>` label；四种类型与 HITL/AFK 判定细则见 [`references/ticket-types.md`](references/ticket-types.md)。
 
-- **Claim**：开始任何工作**之前**先把 ticket assign 给自己，并发会话才会跳过它。Open 且 unassigned 才算 unclaimed。
-- **Blocking**：优先用 GitHub 原生依赖关系，tracker UI 会可视化 frontier；不支持时退回 body 约定。所有 blockers 关闭后 ticket 即 unblocked；**frontier** = open + unblocked + unclaimed 的 tickets，也就是已知世界的边缘。
+- **Claim**：开始工作前读取归属并 assign 给自己，再核对；open 且 unassigned 才算 unclaimed。Assignee 不是原子锁，同账号多会话须明确分工，不能宣称仅凭 assign 已排除竞争。
+- **Blocking**：优先用 GitHub 原生依赖关系，确认不支持才退回 body 约定。核对 blockers 的实际解决结果，不能把作废关闭当作依赖已满足；**frontier** = open + unblocked + unclaimed 的 tickets，也就是已知世界的边缘。
 - 答案不写进 body，在 resolution 时以 comment 记录；解决中产生的 assets 从 issue 链接出去，不粘贴进 body。
 
 ## Fog of war 与 Out of scope
@@ -62,11 +60,17 @@ HITL 对话按 [`../conventions/decision-autonomy.md`](../conventions/decision-a
 
 ## 两种模式
 
-**Chart the map**（用户带着松散想法调用）：命名 destination → 广撒网式对话浮现 open decisions（没有 fog 则停下建议直接 `nk-plan`）→ 建 map 与首批 tickets → 派发 research → 停止，charting 就是一个会话的工作。**Work through the map**（用户带 map 调用）：加载 map → claim 一个 frontier ticket → resolve → 以 comment 记录并 close、维护 map。两种模式下**每个会话最多 resolve 一个 ticket**（research 除外）。
+按输入选择模式并读取 [modes.md](references/modes.md)：新目标先 chart map，已有 map 则选择、认领并处理一个 frontier ticket，记录答案后维护 map。完成本轮后汇报；用户要求继续可在同一会话开始下一轮，不强制换会话。独立 research 可批量处理。
 
-详细步骤见 [`references/modes.md`](references/modes.md)；稳定下来值得实施的 build 工作在到达 map 边缘后交给 [`../nk-plan/SKILL.md`](../nk-plan/SKILL.md) / [`../nk-work/SKILL.md`](../nk-work/SKILL.md)。
+## 收敛并交接 Plan
+
+每轮维护后核对 destination、fog 与全部相关 tickets。Frontier 为空不等于完成：仍可能有阻塞或他人正在处理的 ticket。已关闭也不自动代表已采纳决定；区分事实、用户确认的取舍与作废项。真正阻断未解决时说明卡点，不宣称可开工。
+
+范围足够清楚后，向 [nk-plan](../nk-plan/SKILL.md) 交接目标、范围与非目标、已定决定及理由、排除方案、成功标准、研究证据、剩余未知及 Map/ticket 链接。无需再经过 ideate 或 brainstorm。已有继续规划授权就调用公开入口；否则汇报已可规划并停止。没有可调用入口时提供同样的交接材料，不冒充已生成 Plan。
+
+由 nk-plan 整理 Product Contract 并交付统一规格的可实施 Plan；软件 Plan 使用 `nk-plan/v1` 与 `product_contract_source: nk-plan`，复用已定决定，只补缺口。非软件任务遵循 nk-plan 对应路线。Map 保留为探索依据，不充当实施容器；Plan 交付后在 Map 记录路径与提交等可追溯位置、交接范围和残留，不把探索完成称为实施完成。只有完整 Plan 且已有实施授权才进入 nk-work，不从 ticket 直接跳入实施。
 
 ## 与体系衔接
 
 - ticket 解决中沉淀出非显而易见的经验或决策理由 → [`../nk-compound/SKILL.md`](../nk-compound/SKILL.md)。
-- 会话结束 → [`../nk-handoff/SKILL.md`](../nk-handoff/SKILL.md) 登记现场；无人值守时的 `[待确认]` 项登记在 `docs/current.md`（见 decision-autonomy 约定第三章）。HITL ticket 在无人值守下不可 resolve，登记后跳过。
+- 结束时汇报现场，不自动调用 nk-handoff 或维护 current。HITL ticket 无人响应时保留未解决状态、记录卡点；本轮无法继续且无保留认领约定时释放自己的 claim。涉及合格仓库产物提交时交给 nk-commit，由其维护 current。

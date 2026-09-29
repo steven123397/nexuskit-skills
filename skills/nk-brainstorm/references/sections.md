@@ -1,9 +1,9 @@
-# 第 3 阶段：写入需求阶段 plan
+# 需求成文与规划就绪检查
 
-文件结构、章节标题、ID 规则、frontmatter 与行文规则以 [`../../conventions/plan-format.md`](../../conventions/plan-format.md) 为准，本文件不重述，只写头脑风暴特有的判断与要求。
+入口同时加载统一 Plan 格式和已定标注规则；本文件提供需求阶段的成文方法与检查，不再沿链接拼装流程。
 
 一份好的需求阶段 plan 让三类读者都能行动：
-* **规划者**（`nk-plan` 或人）能写出实施方案，而不必发明用户行为、范围边界或成功标准；
+* **规划者**（[nk-plan](../../nk-plan/SKILL.md) 或人）能写出实施方案，而不必发明用户行为、范围边界或成功标准；
 * **审阅者**能看到框架性选择，区分已定和未定的决定，在规划前发现范围缺口；
 * **未来的读者**能追溯这件事为什么重要、为谁做、成功是什么样子。
 
@@ -13,7 +13,7 @@
 
 ## 一、是否需要文件
 
-头脑风暴默认在对话中结束，文件需要"挣来"：对话产生了下游（规划者、审阅者、未来读者）需要以稳定 ID 引用的结构性决定、范围边界或验收标准，或者用户要求写文件。决定能自然流入下游产物（`nk-plan` 的输入、提交说明、`docs/solutions/`）时，不需要文件。
+头脑风暴默认在对话中结束，文件需要"挣来"：对话产生了下游（规划者、审阅者、未来读者）需要以稳定 ID 引用的结构性决定、范围边界或验收标准，或者用户要求写文件。决定能自然流入下游产物（[nk-plan](../../nk-plan/SKILL.md) 的输入、提交说明、`docs/solutions/`）时，不需要文件。
 
 **检验示例：** 关于一个小缺陷修复的头脑风暴，用户问"用空值检查还是在上游校验？"，Agent 确认"上游校验，原因如下"——不需要文件，这个决定直接流入规划或提交说明。反过来，涉及多个参与者、范围有争议、有若干行为条件的功能，规划者需要对话产生的结构化内容，通常需要文件。
 
@@ -25,17 +25,17 @@
 
 1. **路径**：`docs/plans/YYYY-MM-DD-HHMM-<type>-<topic>-plan.md`（`HHMM` 为写入时的本地时间）。不分配每日序号。目标路径已存在时，在扩展名前加最小可用的数字后缀（`-2`、`-3`……），不覆盖已有文件。续作时更新原文件。
 2. **frontmatter**：按 `plan-format.md` 第五节，`product_contract_source: nk-brainstorm`。另写 `topic:`（kebab-case 主题标识，与文件名中的 `<topic>` 一致），供 0.1 续作时识别。能判断执行领域时写 `execution`（软件功能为 `code`）。标题以 ` - Plan` 结尾，不带 `feat:` 之类前缀。
-3. **正文**：`## Goal Capsule` + `## Product Contract`。不写空的 Planning Contract、Implementation Units、Verification Contract、Definition of Done——空占位会让需求阶段文件看起来像可以实施，也浪费下游的阅读量。这些由 `nk-plan` 在同一文件中补充。
-4. **声明核实结果**：按 2.6 的判定修正被驳斥的断言，把无法核实的标为假设。
-5. **已定决策**：进入 Product Contract 的 Key Decisions，带 `session-settled:` 标注（见 [`../../conventions/settled-decisions.md`](../../conventions/settled-decisions.md)），`nk-plan` 据此继承到 KTD。
-6. **术语复核**：按 `terminology.md` 第三节第 3 阶段复核。
-7. **Ready for Planning Check**（第五节），通过后在对话中给出文件的绝对路径。
+3. **正文**：`## Goal Capsule` + `## Product Contract`。不写空的 Planning Contract、Implementation Units、Verification Contract、Definition of Done——空占位会让需求阶段文件看起来像可以实施，也浪费下游的阅读量。这些由 [nk-plan](../../nk-plan/SKILL.md) 在同一文件中补充。
+4. **声明核实结果**：按声明核实判定修正被驳斥的断言，把无法核实的标为假设。
+5. **已定决策**：进入 Product Contract 的 Key Decisions，带 `session-settled:` 标注（使用入口已加载的标注规则），[nk-plan](../../nk-plan/SKILL.md) 据此继承到 KTD。
+6. **术语复核**：将最终 Product Contract 用词与 CONCEPTS.md 对照；名称变化时完善条目，文档混用时改文档。
+7. **Ready for Planning Check**（第六节），通过后在对话中给出文件的绝对路径。
 
 ---
 
 ## 三、Goal Capsule（需求阶段）
 
-需求阶段的 Goal Capsule 包含 Objective、产品层面的权威说明、以及仍未解决的阻塞项。Objective 的写法以 `plan-format.md` 为准：它是结果，换一种实现仍是目标，不了解被改组件内部的人也能判断是否达成。请求本身给出了做法（"把 X 挪到 Y"）时，那是 Means（单独一行），Objective 是它服务的结果，从对话或项目已陈述的问题中得出，不自行假设。单一工作单元检查拆分了更大的请求时，Objective 点明当前部分，权威说明写明其余部分不在本次范围内。
+按 `plan-format.md` 的 Goal Capsule 规则写目标、手段与权威顺序。需求阶段补明尚未解决的阻塞项；拆分了更大的请求时，Objective 点明当前部分，权威说明限定其余部分不在本次范围内。不引用尚未产生的 KTD。
 
 ---
 
@@ -44,11 +44,11 @@
 ### 必有
 
 * **Summary**：提议的是什么，1~3 行，面向未来。
-* **Requirements**（带 R-ID）：提议的东西必须满足什么。非常简短的头脑风暴（不超过 3 条简单项，且这些条目本身就是摘要）可以不编 ID；是否编 R-ID 取决于下游是否会引用。需求涉及不同关注点时，用加粗的行内小标题分组，按能力或关注点分组，而不是按讨论顺序；触发条件是关注点不同，不是条数多少。R-ID 跨组连续编号。
+* **Problem Frame**：为什么要做，不复述方案；动机已在上游说明时写一两行即可。
+* **Requirements**（带 R-ID）：提议的东西必须满足什么。写入文件的需求一律按 `plan-format.md` 编 R-ID；仅在对话中对齐、不写文件时无需编号。需求涉及不同关注点时，用加粗的行内小标题分组，按能力或关注点分组，而不是按讨论顺序；触发条件是关注点不同，不是条数多少。R-ID 跨组连续编号。
 
 ### 有内容才写
 
-* **Problem Frame**：动机从 Summary 看不出来、需要几段话时写。回顾性、描述情境，不复述提议——解决方案在 Summary 里。（`plan-format.md` 把它列为必有；内容很少时写一两行即可。）
 * **Key Decisions**：头脑风暴产生了约束下文的框架性选择（默认值、范围收窄、基础性的技术选择）时写，放在靠前位置，让读者在深入细节前先看到。每条是**来源索引，不是规则的第二次表述**：决定加粗，至多一行理由；约束具体需求时，写明 `Governs R5, R7`。完整的规则写在被约束的 R 上。没有约束具体 R 的纯框架性决定只写理由。
 * **How This Work Fits Together**：单一工作单元检查拆分了更大请求时必写；本 plan 是一组分别规划的工作中的一部分、且这种关系对不了解背景的读者有实质帮助时也写。在标题前一行放 `<!-- nk-section: work-relationships -->`，作为稳定的语义标记（标题措辞可以改，标记不变）。先写本 plan 覆盖的那一部分，并说明整体拆分只是当前理解、不是承诺的路线图；然后用浅层缩进列表列出其他部分，用明确的关系短语（`依赖`、`促成`、`共享`、`可独立于……推进`、`尚待决定`），不要只靠缩进表达关系。其他部分只是背景，不是需求，也不暗示实施单元。之后的 plan 可以修改、拆分、合并或放弃它们，并以仓库相对路径引用本 plan；不另建或同步一张总图。本 plan 排除什么仍以 Scope Boundaries 为准。默认不画图，只有非线性交叉、汇入或发散让列表产生误导时才加。
 * **Actors**：有多方行为（多个人、Agent 或系统实质参与）时写。命名类、数据结构类、纯调研、决策框架类的头脑风暴跳过。
@@ -70,18 +70,9 @@ Markdown 中图用 mermaid 代码块（默认 `flowchart TB`）；界面布局�
 
 **图是文字的补充，永远不替代文字。** 带 ID 的文字（Requirements、Key Decisions、Acceptance Examples）必须完整、可独立阅读——忽略所有图的读者仍能从文字获得全部内容，按线性文本阅读的下游 Agent 不会遇到只存在于图中的关系。
 
-### Summary 与 Problem Frame 的分工
-
-| 章节 | 回答什么 | 时间方向 | 长度 |
-| :-- | :-- | :-- | :-- |
-| Summary | 这份文档提议什么？ | 面向未来 | 1~3 行 |
-| Problem Frame | 为什么会有这个提议？ | 回顾、情境性 | 若干段 |
-
-Summary 不需要问题背景；Problem Frame 不复述提议，只交代情境、具体的痛点时刻和代价，然后停下。
-
 ### 额外的内容规则
 
-* ID 命名空间只有 R、A（有 Actors 时）、F（有 Key Flows 时）、AE（有 Acceptance Examples 时）；KTD 与 U 由 `nk-plan` 添加。流程与验收示例内部用加粗的引导标签（`**Trigger:**`、`**Covers R4, R8.**`、Given/When/Then），不用更深的标题层级。
+* ID 命名空间只有 R、A（有 Actors 时）、F（有 Key Flows 时）、AE（有 Acceptance Examples 时）；KTD 与 U 由 [nk-plan](../../nk-plan/SKILL.md) 添加。流程与验收示例内部用加粗的引导标签（`**Trigger:**`、`**Covers R4, R8.**`、Given/When/Then），不用更深的标题层级。
 * 默认不写实现细节：库、表结构、接口、文件布局、代码结构不写，除非头脑风暴本身就是关于技术或架构决策、这些细节正是决定的对象。
 * 不写 `## Next Steps` 之类指向下一个技能的内容，不写过程说明。
 
@@ -102,11 +93,32 @@ Summary 不需要问题背景；Problem Frame 不复述提议，只交代情境�
 
 ## 六、Ready for Planning Check
 
-写入文件后、宣告写入完成或呈现第 4 阶段交接之前，对实际文件运行这四项检查：
+写入文件后、宣告写入完成或交付之前，对实际文件运行这四项检查：
 
 1. **完整**：没有占位符、`TBD` 或写到一半的章节；每个 Outstanding Question 都已归类为 `Resolve Before Planning` 或 `Deferred to Planning`。单一工作单元检查拆分过请求时，How This Work Fits Together 一节存在且带有 `<!-- nk-section: work-relationships -->` 标记。
 2. **一致**：Goal Capsule、Requirements、Key Flows、Acceptance Examples、Scope Boundaries 与 How This Work Fits Together 之间不矛盾。读者一遍读下来能在每节找出矛盾吗？没参与对话的同事只看 Objective 能说出这项工作是什么吗？一句话带不止一个括号说明、一条需求规定了两种结果、同一条规则在多处写全——都不通过：拆开、把分歧推到 Outstanding Questions、或用承载规则的 ID 替代重复内容。
 3. **聚焦**：Product Contract 只覆盖一个完整的工作单元。周边工作只作为背景、推迟项或明确的非目标出现，不渗入当前的需求、流程或验收示例。
-4. **规划可用**：`nk-plan` 能决定如何构建当前工作，而不必发明产品行为、范围、参与者或成功标准。
+4. **规划可用**：[nk-plan](../../nk-plan/SKILL.md) 能决定如何构建当前工作，而不必发明产品行为、范围、参与者或成功标准。
 
-某项不通过时，若修正不改变已定意图，就地修正后重跑该项。修正需要选择或改变产品行为或范围时，问一个针对性问题，得到答案后更新文件并重跑。用户不在时，保持文件为阻塞状态（在 Outstanding Questions 中列为 Resolve Before Planning，并在 `docs/current.md` 登记 `[待确认]`），不让规划去发明答案。检查清单本身不写进 Product Contract，修正后的文件就是产出。
+某项不通过时，若修正不改变已定意图，就地修正后重跑该项。修正需要选择或改变产品行为或范围时，问一个针对性问题，得到答案后更新文件并重跑。用户不在时，保持文件为阻塞状态（在 Outstanding Questions 中列为 Resolve Before Planning，并向用户报告 `[待确认]`；有提交时交给 nk-commit 同步 current，无提交不强制另写状态），不让规划去发明答案。检查清单本身不写进 Product Contract，修正后的文件就是产出。
+
+## 综述落入文档
+
+内部草稿不另设 Synthesis 章节；未经确认的推断记为假设，不冒充用户决定。
+
+| 内部草稿 | 文档中的去处 |
+| :-- | :-- |
+| "要做什么" | Summary（1~3 行，面向未来） |
+| 已陈述 | Requirements（带 R-ID，完整细节），需要叙述背景时也进入 Problem Frame |
+| 推断 | Key Decisions（附理由）——用户在对话中接受的押注成为文档中的决定 |
+| 范围外 | Scope Boundaries |
+| 成功信号（已陈述或推断） | 行为验收条件写在对应 R；只有需求未承载的质量或交接信号写入 Success Criteria，其他位置引用而不重复 |
+
+对话中的取舍小节融入 Key Decisions；"不在范围内"融入 Scope Boundaries。
+
+
+## 用户请求的需求自查
+
+可委派一个未看过对话的审阅者，派发方法由入口加载证据材料；无此能力时主会话核对，不声称独立审阅。检查连贯性、与仓库现状相符的可行性、周边工作是否侵入范围，以及规划者是否仍需发明行为。
+
+发现须有项目证据与不改的实际后果；不改变已定意图的错误就地修正，产品范围或行为的新选择交给用户。修改后复查受影响的规划就绪项，返回入口交付，不在此调度后续技能。

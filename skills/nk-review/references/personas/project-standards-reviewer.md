@@ -37,7 +37,7 @@ The shapes below are examples of how a written rule gets violated, drawn from an
 
 ## Confidence calibration
 
-Use the anchored confidence rubric in the reviewer prompt (`../reviewer-prompt.md`). Persona-specific guidance:
+Use the anchored confidence rubric in the reviewer prompt ([../reviewer-prompt.md](../reviewer-prompt.md)). Persona-specific guidance:
 
 **Anchor 100** — the violation is verifiable from the code: the standards file has a quotable rule, the diff has a line that mechanically violates it (e.g., "do not use absolute paths in skills" + a literal absolute path), and no interpretation is needed.
 

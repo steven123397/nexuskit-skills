@@ -5,9 +5,10 @@ Five checks, each maps to a class of failure that actually happened:
 1. link-integrity   - relative markdown links must resolve
 2. references       - nk-* mentions resolve to real skills; no dangling K/R code refs
 3. byte-budget      - SKILL.md <= 8000 bytes (Codex injection limit), ratchet list
-4. prompt-copies    - duplicated subagent prompts match tests/prompt-copies.txt and
-                      carry the nk-copy declaration header
-5. frontmatter      - SKILL.md frontmatter parses under strict YAML, has name and
+4. shared-resources - canonical methods, caller references, local workflow ownership
+                      controlled planning guardrail copies, distribution and manifest inventories
+5. frontmatter      - safe YAML parsing with duplicate-key rejection, English description,
+                      boolean invocation policy, name and
                       description, and name matches its directory (installers such
                       as the skills CLI derive the install dir from frontmatter name)
 """
@@ -108,71 +109,44 @@ def check_byte_budget():
     check("byte-budget", problems)
 
 
-# --- 4. duplicated prompt copies ---
-def check_prompt_copies():
+# --- 4. shared method ownership ---
+def work_fragment_problems():
+    source = os.path.join(ROOT, "skills", "conventions", "work-guardrails.md")
+    target = os.path.join(ROOT, "skills", "nk-work", "SKILL.md")
     problems = []
-    manifest_path = "tests/prompt-copies.txt"
-    manifest = {}
-    for line in open(manifest_path, encoding="utf-8"):
-        line = line.strip()
-        if not line or line.startswith("#"):
-            continue
-        name, paths = line.split(":", 1)
-        manifest[name.strip()] = [p.strip() for p in paths.split(",")]
+    source_text = open(source, encoding="utf-8").read()
+    target_text = open(target, encoding="utf-8").read()
+    names = re.findall(r"<!-- fragment: ([^ ]+) -->\n(.*?)\n<!-- /fragment -->", source_text, flags=re.S)
+    for name, body in names:
+        marker = f"<!-- fragment: {name} -->\n{body}\n<!-- /fragment -->"
+        if marker not in target_text:
+            problems.append(f"nk-work: fragment {name} is missing or differs from conventions/work-guardrails.md")
+    return problems
 
-    on_disk = {}
-    for f in glob.glob("skills/nk-*/references/agents/*.md") + glob.glob("skills/nk-*/references/personas/*.md"):
-        on_disk.setdefault(os.path.basename(f), []).append(f.replace(os.sep, "/"))
-    on_disk = {k: sorted(v) for k, v in on_disk.items() if len(v) > 1}
 
-    for name, paths in manifest.items():
-        for p in paths:
-            if not os.path.exists(p):
-                problems.append(f"manifest lists missing file {p}")
-                continue
-            head = open(p, encoding="utf-8").read(200)
-            if not head.startswith("<!-- nk-copy:"):
-                problems.append(f"{p}: missing nk-copy declaration header")
-    for name, paths in on_disk.items():
-        if name not in manifest:
-            problems.append(f"unregistered duplicated prompt: {name} ({', '.join(paths)})")
-        elif sorted(manifest[name]) != paths:
-            problems.append(f"{name}: manifest {sorted(manifest[name])} != on-disk {paths}")
-    check("prompt-copies", problems)
+def check_shared_resources():
+    from check_shared_resources import validate
+    from check_manifests import validate as validate_manifests
+    ref = os.environ.get("GITHUB_REF", "")
+    release_tag = ref.removeprefix("refs/tags/") if ref.startswith("refs/tags/") else None
+    check("shared-resources", validate(ROOT) + work_fragment_problems() + validate_manifests(ROOT, release_tag))
 
 
 # --- 5. frontmatter ---
 def check_frontmatter():
     problems = []
+    try:
+        from check_frontmatter import validate_frontmatter
+    except ModuleNotFoundError as exc:
+        if exc.name != "yaml":
+            raise
+        check("frontmatter", ["PyYAML is required; run python -m pip install -r tests/requirements.txt"])
+        return
     for f in sorted(glob.glob("skills/*/SKILL.md")):
         f = f.replace(os.sep, "/")
-        text = open(f, encoding="utf-8").read()
-        if not text.startswith("---\n"):
-            problems.append(f"{f}: missing frontmatter")
-            continue
-        end = text.find("\n---", 4)
-        if end == -1:
-            problems.append(f"{f}: unterminated frontmatter")
-            continue
-        name = desc = None
-        for line in text[4:end].splitlines():
-            m = re.match(r"^(\w[\w-]*):\s*(.*)$", line)
-            if not m:
-                continue
-            key, val = m.group(1), m.group(2)
-            if val and not val.startswith(('"', "'")) and ": " in val:
-                problems.append(f"{f}: plain scalar containing ': ' breaks strict YAML parsers; quote the value")
-            if key == "name":
-                name = val.strip("\"'")
-            elif key == "description":
-                desc = val
-        dirname = f.split("/")[1]
-        if not name:
-            problems.append(f"{f}: frontmatter missing name")
-        elif name != dirname:
-            problems.append(f"{f}: name '{name}' != directory '{dirname}' (installers derive install dir from frontmatter name)")
-        if not desc:
-            problems.append(f"{f}: frontmatter missing description")
+        with open(f, encoding="utf-8") as stream:
+            text = stream.read()
+        problems.extend(f"{f}: {problem}" for problem in validate_frontmatter(text, f.split("/")[1]))
     check("frontmatter", problems)
 
 
@@ -180,7 +154,7 @@ if __name__ == "__main__":
     check_links()
     check_references()
     check_byte_budget()
-    check_prompt_copies()
+    check_shared_resources()
     check_frontmatter()
     if failures:
         print(f"\n{sum(len(p) for _, p in failures)} problem(s) in {len(failures)} check(s)")

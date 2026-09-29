@@ -1,10 +1,8 @@
 # 沉淀模式细则
 
-> 路径解析：本文件中 `../../conventions/`、`../../nk-commit/` 相对于本技能目录解析；`docs/solutions/`、`CONCEPTS.md`、`AGENTS.md` 指目标仓库中的文件。
-
 ## 1. 定位与采样
 
-**定位刚解决的问题**：以当前会话上下文为主——排查过程、失败的尝试、最终修复、验证证据。需要补充事实时用 `git log`、`git diff` 查看本会话的提交与工作区改动。不挖掘历史会话记录：CE 用脚本扫描各客户端的历史会话文件，NexusKit 已删除该脚本组；刚解决的问题就在当前会话里，历史会话中未沉淀的线索交给审计模式或下一次遭遇。
+**定位本次结论**：以当前会话的排查过程、失败尝试、修复验证、已采纳决定与实践证据为主。需要补充事实时用 `git log`、`git diff` 核对关联提交与改动；不默认搜索历史会话。明确复盘指定历史材料时由入口先走 retro，再将合格结论交到这里。
 
 **一次一条**：一个会话产出多条经验时分多次运行。交叉引用在草稿之间缝合，会把"第 3 条"这类草稿编号泄漏进成文。
 
@@ -20,62 +18,36 @@
 
 更新而非重复新建的原因：两份描述同一问题的文档必然逐渐漂移；新上下文更新鲜，并入既有条目。
 
-**文件名**：`[problem-slug].md`，不加日期后缀（`date` frontmatter 字段即创建日期）。写前确认目标路径不存在；已存在且覆盖同一问题则走更新。
+**文件名**：`[problem-slug].md`，不加日期后缀（`date` frontmatter 字段即创建日期）。写前确认目标路径不存在；已存在且覆盖同一问题则走更新，不同问题则换明确的 slug，不覆盖。
 
-## 2. 编写与自检
+## 2. 编写
 
 模板与字段以 [`../../conventions/solution-schema.md`](../../conventions/solution-schema.md) 第三、四章为准。写作纪律：
 
 - **行为断言先读源码**：断言代码行为（枚举值、状态语义、限制、默认值）前，读当前树的定义行并在文中标注 `file:line`；无法核实的断言软化或注明"按本次会话结论"，不写成事实。
 - **合并状态引用 PR 编号而非裸 SHA**：SHA 会被 rebase/squash 重写；"已在 X 修复"要求修复在当前树可达，否则写为待定（如"已在 #123 打开，本文撰写时未合并"）。
 - **流程复盘线**：工作流/协作过程本身的问题用 `workflow_issue`（Knowledge 轨），正文同样走模板：当时怎么卡住、根因在流程哪个环节、以后怎么防。
+- **可检索性**：标题使用未来任务会出现的模块、症状或决定名称；`component`、`module`、`tags` 沿用项目术语。Knowledge 写明 `applies_when`，Bug 保留具体错误或症状。检查这些信息能否对应真实查询，不用泛称标题、同义标签堆砌或另建强制索引。
 
-写完后执行两项自检（给 Agent 读的核对清单，替代 CE 的校验脚本）：
+## 3. 可选增强评审（按 problem_type 映射）
 
-1. [`frontmatter-checklist.md`](frontmatter-checklist.md)——frontmatter 解析安全与字段核对；
-2. [`claims-checklist.md`](claims-checklist.md)——正文引用（路径、SHA、链接、草稿残留）逐项裁决：修正、标注为历史、或确认有意为之。
+支持子代理的客户端仅读取下表选中的共享方法，连同该行目的及本节返回要求初始化通用子代理；不支持时在主会话内联评审。派发时同时传入选中方法的绝对路径，供子代理解析相对引用。评审只针对文档与示例，不修改产品代码；无收益则跳过本阶段。
 
-## 3. 术语补全
+| problem_type / 情形 | 共享方法 | 文档评审目的 |
+| :-- | :-- | :-- |
+| `performance_issue` | [performance-oracle](../../conventions/agents/performance-oracle.md) | 核实瓶颈类型、修复原理、测量证据和扩展假设，补充复发监控建议；不提出无关优化。 |
+| `security_issue` | [security-sentinel](../../conventions/agents/security-sentinel.md) | 核实漏洞类别、利用路径、修复效果、残余限制和预防办法；不扩展为全仓安全审计。 |
+| `database_issue` | [data-integrity-guardian](../../conventions/agents/data-integrity-guardian.md) | 核实受影响的不变量、修复如何保护它、验证证据、回滚或迁移限制及复用前提。 |
+| 反复出现 / 疑似反模式 | [pattern-recognition-specialist](../../conventions/agents/pattern-recognition-specialist.md) | 说明导致或避免问题的模式、其他出现位置、识别方法及经验可推广的边界。 |
+| 需要业界实践佐证 | [best-practices-researcher](../../conventions/agents/best-practices-researcher.md) | 补充预防指引、权威引用、准确术语与取舍，纠正过度泛化，使经验可复用。 |
+| 需要框架/库官方文档佐证 | [framework-docs-researcher](../../conventions/agents/framework-docs-researcher.md) | 用官方依据核实经验原理、版本限制和术语；补充能验证、限定或改善结论的引用。 |
 
-按 [`../../conventions/concepts-vocabulary.md`](../../conventions/concepts-vocabulary.md) 执行，本模式只做 **Add / Refine**：
-
-- 扫描新文档与会话中出现的合格领域术语，增量补录 `CONCEPTS.md`；
-- 文件不存在且本次确有合格术语时，可创建文件并只写本次的术语，不顺带初建整个项目的术语表（整库初建是审计模式的职责）；
-- 词条的行为规则类断言（生命周期、状态流转）写入前同样先读源码核对；
-- Fold / Retire / Scrub 不在本模式执行——发现需要时记入汇报，留给审计模式。
-
-## 4. 可选增强评审（按 problem_type 映射）
-
-支持子代理的客户端读取 `agents/` 下对应提示词，用它初始化一个通用子代理；不支持时在主会话内联评审。评审只针对文档与示例，不修改产品代码；无收益则跳过本阶段。
-
-| problem_type / 情形 | 提示词 |
-| :-- | :-- |
-| `performance_issue` | `agents/performance-oracle.md` |
-| `security_issue` | `agents/security-sentinel.md` |
-| `database_issue` | `agents/data-integrity-guardian.md` |
-| 反复出现 / 疑似反模式 | `agents/pattern-recognition-specialist.md` |
-| 需要业界实践佐证 | `agents/best-practices-researcher.md` |
-| 需要框架/库官方文档佐证 | `agents/framework-docs-researcher.md` |
+按 [`../../conventions/subagent-results.md`](../../conventions/subagent-results.md) 直接返回紧凑的文档修订建议、证据、适用限制和预防要点；只评估当前经验，不额外生成全仓审计报告。
 
 评审发现由主会话裁决并落到文档；子代理不直接改知识库文件。
 
-## 5. 可见性检查与提交
+## 4. 返回入口
 
-**可见性（首次在某项目运行时必查）**：按 [`../../conventions/artifact-lifecycle.md`](../../conventions/artifact-lifecycle.md) 第二章，检查目标项目根的 `AGENTS.md`（或等价全局指令文件）是否有指向 `docs/current.md`、`docs/solutions/`、`CONCEPTS.md` 的指引；缺则补一行最小指引，描述性语气（如"在已记录领域实施或排障时相关"），不写"必须先检索"式命令句。`CONCEPTS.md` 不存在时不补它的指引，不催促项目采纳。
+返回条目路径、类型、证据与验证边界、重叠处理、已采纳的增强意见，以及术语和定向审计信号。增强修改完成后回到入口，统一处理术语、可见性、最终两项自检、提交与报告；本材料不自行收尾。
 
-**提交去向（R4 第 4 条，见 [`../../conventions/commit-cadence.md`](../../conventions/commit-cadence.md)）**：
-
-1. 优先在修复/特性提交**之前**完成沉淀，随代码与测试一同提交；
-2. 代码已提交但尚未推送 → 按 R3 amend，且必须显式限定路径，防止把工作区半成品带进提交：
-   ```bash
-   git add docs/solutions/<category>/<file>.md  # 以及本次改动的 CONCEPTS.md、AGENTS.md
-   git commit --amend --no-edit -- docs/solutions/<category>/<file>.md  # 末尾同样列出全部路径
-   ```
-3. 已推送到远端 → 留在工作区，待下一个交接点或下一次代码提交一同入库，并在汇报中说明去向。
-
-本技能自己发起提交时，先读 [`../../nk-commit/SKILL.md`](../../nk-commit/SKILL.md) 并遵循其规则。
-
-## 6. 汇报
-
-- **已建档**：文件路径、轨道与 problem_type、重叠结论、两项自检结果、术语补全结果（"扫描，无合格术语"也是有效结果）、可见性检查结论、提交去向、审计建议（有明确过期候选时给出最窄的范围提示）。
-- **未建档**：一句话说明哪条准入门槛不通过。
+术语涉及行为规则（生命周期、状态流转）时，返回当前源码依据；需 Fold / Retire / Scrub 时只报告审计信号，不在沉淀中执行。

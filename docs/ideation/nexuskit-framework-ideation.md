@@ -1,11 +1,13 @@
 # NexusKit 体系架构立项与设计构想 (Ideation RFC)
 
-> **Document Version:** 2.0.0
-> **Date:** 2026-09-25
-> **Status:** Approved — 进入实施
+> **Document Version:** 2.1.0
+> **Date:** 2026-09-28（初版立项：2026-09-25）
+> **Status:** Approved — 技能迭代与逐项审查中
 > **Author:** steven123397（设计评审：Claude）
 
 v2.0 相对 v1.0 的主要变化：从"固定流水线"改为"按场景取用的工具箱"；Issue 的职责收窄到跨 plan 的事务；新增产物生命周期、`current.md` 入口约定、提交节奏规则、术语维护时机；ADR 并入 `solutions/`；新增实施方法一章。
+
+v2.1 将 nk-work 的组织方式纳入 D12，更新单元边界与子代理提交规则，纠正规则下沉、打包、加载方式等过时表述。本文保留立项背景与历史阶段；当前进度以 [current.md](../current.md) 为入口，执行细则以技能和共享约定为准，设计理由见 [nk-work 范式决定](../solutions/architecture-decisions/2026-09-28-skill-execution-locality.md)。review 的触发安排留待审查该技能时决定。
 
 ---
 
@@ -16,12 +18,15 @@ v2.0 相对 v1.0 的主要变化：从"固定流水线"改为"按场景取用的
 参考源：
 * **Matt Pocock Skills**：[mattpocock/skills](https://github.com/mattpocock/skills)（2026-08 本地备份）
 * **Compound Engineering (CE)**：[EveryInc/compound-engineering-plugin](https://github.com/EveryInc/compound-engineering-plugin)（本地安装）
+* **Ponytail**（2026-09-28 补充）：本地 `D:/codex_project/upstreams/ponytail`，快照 `e3ba2aa`；吸收“更少自维护代码满足同一需求”的理念，来源与未采纳部分见 [skill-sources.md](../skill-sources.md)。
 
-NexusKit 是一套**个人体系**：用户画像是个人项目、同时使用多种 Agent（Claude Code / Codex / Antigravity 等）、不强制走 PR、中文协作。两套参考源是素材库，不是需要保持同步的上游。
+NexusKit 是一套**个人体系**：用户画像是个人项目、同时使用多种 Agent（Claude Code / Codex / Antigravity 等）、不强制走 PR、中文协作。参考源是素材库，不要求与上游保持同步。
 
 ---
 
 ## 二、两套体系的得失（基于 paper-30min 实证）
+
+以下是立项时对本地使用版本的观察，保留用于解释取舍；不作为上游当前版本的能力清单。
 
 ### CE
 
@@ -56,17 +61,18 @@ NexusKit 是一套**个人体系**：用户画像是个人项目、同时使用�
 
 | # | 决定 | 要点 |
 | :-- | :-- | :-- |
-| D1 | **工具箱，不是流水线** | 每个技能可独立使用；README 给出"什么场景用哪个"的路由表，而非必经链路。与 paper-30min `release-workflow.md` 的结论一致："不要求每个版本走固定的技能链"。 |
+| D1 | **工具箱，不是流水线** | 正式支持整套安装，任意技能都可作为工作入口；不表示单技能可独立安装。README 按场景路由，不规定每个版本必经的技能链。 |
 | D2 | **`docs/current.md` 是跨会话入口** | 新会话从这里进入。只记当前能力、验证结果、阻断项、下一步、所在分支；不记操作流水。 |
-| D3 | **所有产物都有生命周期** | 每类产物诞生时就确定终点（见第四章）。清理挂在"版本收尾"上，不挂在 PR 上；PR 可选。 |
+| D3 | **所有产物都有生命周期** | 每类产物诞生时就确定终点（见第四章）。清理挂在"分支收尾"上，不挂在 PR 上；PR 可选。 |
 | D4 | **plan 与审查记录"活时在本地，死后从 main 消失"** | 执行期留在版本分支、随代码一起修改提交；收尾时提炼长期价值后删除，git 历史保留原文。 |
 | D5 | **Issue 负责跨 plan 的事务** | 待办、疑难缺陷、推迟的工作、wayfinder 探针。plan 内部的实施单元不拆 Issue，靠 plan + `current.md` 接力。不设 plan→Issue 的转换技能（长期挂起由 `nk-close` 覆盖，并行认领按 YAGNI 不建）；Issue 格式由 `conventions/issue-writing.md` 统一约定，开发中冒出的 bug/需求由 `nk-to-issue` 核实分析后落档。 |
-| D6 | **去掉 grill；术语即时写入** | 以 CE 的 ideate/brainstorm 为主体。Agent 对可逆、局部、有惯例可循的事自行决定并注明理由；只对范围变化、不可逆、数据/API 契约类分歧询问人。术语写入时机取 Matt（brainstorm/plan 中敲定即写），格式规则取 CE（`concepts-vocabulary.md`）。 |
+| D6 | **不强制盘问；术语即时写入** | 以 CE 的 ideate/brainstorm 为主体。Agent 对可逆、局部、有惯例的事自行决定；范围变化、不可逆、数据/API 契约等分歧按共享约定确认。`nk-grill` 已作为用户主动选择的压力测试工具补入，不是必经环节。术语在 brainstorm/plan 中敲定即写，格式由 `concepts-vocabulary.md` 持有。 |
 | D7 | **ADR 并入 `solutions/`** | 取消 `docs/adr/`，"决策"作为 solution 的一种类型。入选门槛沿用 Matt 三条：难以撤回、无背景会困惑、确有取舍。D4 删除 plan 后，决策理由需要去处，这正是收尾时提炼的主要内容。 |
-| D8 | **自主体系，审慎派生** | 以 CE/Matt 原文为起点改写，按自己的画像取舍；来源与取舍集中记录于 `docs/skill-sources.md`，不维护同步机制。删减原则见第七章。 |
+| D8 | **自主体系，审慎派生** | 以 CE/Matt 等材料为起点，按自身场景改写；吸收 Ponytail 的减少自维护代码理念，不照搬其运行机制。来源与取舍集中记录于 `docs/skill-sources.md`，不维护上游同步机制。删减原则见第七章。 |
 | D9 | **提交节奏规则** | 见第五章。 |
-| D10 | **任务粒度按实现内容切** | 200k~300k Token 是设计理念（单会话能舒适完成），不是硬约束，不写进任何可执行规则。设计动机：让 Agent 始终处于 context window 的最佳推理区间（<100k tokens，理想 <30k——Matt 的 Smart Zone 原则）。 |
-| D11 | **不为子代理建编排层** | 各客户端的子代理机制差异大（Claude Code / Codex / Cursor / zcode / deepseek-harness / Kimi Code），用脚本或返回契约约束子代理的维护成本过高；子代理只作可选工具，纪律用 Markdown 约定表达。也据此不设 return-to-caller 式的结构化返回（没有编排层消费）。 |
+| D10 | **任务粒度按实现内容切** | 以明确目标、依赖、文件范围和可验证的完成条件切分单元；不以 Token 数或模型估计的上下文余量决定执行边界。一次 nk-work 调用只完成一个已确认单元，完成或形成不可自行解除的阻断后交接，不自动顺延。 |
+| D11 | **不为子代理建通用编排层** | nk-work 中，客户端支持且指令允许时，由 Agent 自主决定是否委派；不以用户点名为前提，也不强制派发。子代理不提交，主会话核对、整合并亲自验证，按完整交付变化提交。不同技能可保留必要的结果字段或格式；不为所有技能增加统一调度脚本或 return-to-caller 返回协议。 |
+| D12 | **执行规则就近读取，共享规则单源维护** | 以 nk-work 为范式：入口组织主流程与短底线，完整执行方法和条件分支按使用时机拆分，本地执行 reference 优先保持叶子结构。短底线允许受控复制并检查一致性；理由与来源留在维护者文档。公开技能入口仍可协作，整套安装不变。详见 [设计决定](../solutions/architecture-decisions/2026-09-28-skill-execution-locality.md)。 |
 
 ---
 
@@ -74,12 +80,12 @@ NexusKit 是一套**个人体系**：用户画像是个人项目、同时使用�
 
 | 产物 | 位置 | 生命周期 |
 | :-- | :-- | :-- |
-| Plan（目标、范围、关键决策、实施单元、变更记录） | 版本分支 `docs/plans/` | 执行中直接修改，与代码同一提交；版本收尾时提炼后删除 |
+| Plan（目标、范围、关键决策、实施单元、变更记录） | 工作分支 `docs/plans/` | 执行中直接修改，与代码同一提交；分支收尾时提炼后删除 |
 | 审查记录（待修清单、收敛结论） | 版本分支 `docs/reviews/` | 同上；遗留项转 Issue 或 `current.md` 阻断项 |
-| 进度、阻断项、下一步 | `docs/current.md` | 常驻，在交接点覆盖更新 |
+| 进度、阻断项、下一步 | `docs/current.md` | 常驻，由 nk-commit 提交前按需更新；显式 handoff 可保存未完成现场 |
 | 待办、疑难缺陷、推迟项、探针 | GitHub Issues（无远端时退化为 `docs/backlog.md`） | 关闭即结束 |
-| 踩坑因果、决策理由 | `docs/solutions/` | 永久；由 refresh 审计过期 |
-| 领域术语 | `CONCEPTS.md` | 永久；由 refresh 审计 |
+| 踩坑因果、决策理由 | `docs/solutions/` | 长期保留；由 `nk-compound` 审计模式维护过期条目 |
+| 领域术语 | `CONCEPTS.md` | 长期保留；由 `nk-compound` 审计模式维护 |
 | 项目特有流程（分支、发布、签名等） | 项目自己的工作流文档，由 `AGENTS.md` 指向 | 项目自行维护；技能读取、不内置 |
 | PR 描述 | 可选 | 有 PR 时收尾步骤写摘要，没有就跳过 |
 
@@ -88,39 +94,37 @@ NexusKit 是一套**个人体系**：用户画像是个人项目、同时使用�
 * 与当前 plan 无关的需求或疑难缺陷 → 开 Issue。
 * 小缺陷 → 随当前实施单元修复并验证。
 
-**版本收尾**（`nk-close`）依次完成：遗留项转移 → 提炼 solutions/术语 → 删除 plans 与 reviews → 更新 `current.md` 为合并后仍准确的状态 → 单个收尾提交 →（可选）写 PR 摘要。
+**分支收尾**（`nk-close`）依次完成：定界与交付预检 → review 的轻量 pre-merge 检查 → 遗留与知识承接 → 清理已交付且无活跃消费者的产物 → nk-commit 同次维护 current 与收尾提交 →（可选）写 PR 摘要。未完成或仍被后续工作使用的 Plan/记录保留，收尾不自动合并或发布。
 
 ---
 
 ## 五、提交节奏规则
 
-* **R1 提交单位是"一个经过验证的变化"**：代码、测试及描述该变化的文档（plan、`CONCEPTS.md`、`current.md`）同一提交。顺序固定为 实现 → 验证 → 更新文档 → 一次性提交。
-* **R2 纯状态改动不单独提交**：中途产生的 `current.md`、plan 进度、审查记录改动留在工作区，随下一个代码提交走。
-* **R3 未推送的补记用 amend**：上一个提交未推送、要补的只是它的状态记录时，`git commit --amend`。已推送则走 R2。
-* **R4 纯文档提交只允许两个时刻**：会话结束交接（每会话最多一次）和版本收尾。
-* **R5 `current.md` 只在交接点更新**：会话结束、阻断项变化、版本状态变化时。
-* **R6 不同的行为变化可以分开提交**，但相关的审查记录更新随最后一个修复一起，不追加提交。
+提交以“一个经过验证的变化”为单位，实现、测试和配套文档一并交付。进度由提交及其证据体现，不为标记完成而修改 Plan；`current.md` 不作实时进度日志，由 nk-commit 在提交前按需同步并一起入库。handoff 仅由用户显式调用，不从结束会话的措辞触发。
 
-这套规则由 `nk-commit` 持有，`nk-work`、`nk-debug`、`nk-compound`、`nk-close`、`nk-handoff` 引用，不各写一遍。
+R1–R6 的完整规则、amend 条件和纯文档提交例外及提交操作统一由 [nk-commit](../../skills/nk-commit/SKILL.md) 持有。此处不再维护另一份节奏规则；旧版“纯文档提交只允许两个时刻”不能覆盖现有规划与知识库维护等具体条件。
 
-通用的执行纪律（同样作为共享约定）：
+通用执行底线：
 * 未运行的测试或走查不记为通过。
-* 子代理交回改动和验证证据，由主对话核对后提交。
+* 子代理返回结果不触发提交。主会话核对并整合实际改动，验证待交付状态后，按交付变化提交；多个代理可共同贡献一个提交。
 
 ---
 
 ## 六、技能清单
 
+“阶段”保留初始建设时的归属，不表示这些技能已通过真实执行验收；当前审查安排从 [current.md](../current.md) 进入。
+
 | 技能 | 用途 | 主要来源 | 阶段 |
 | :-- | :-- | :-- | :-- |
 | `nk-work` | 认领一个实施单元或 Issue，测试先行实现、验证、按 R1 提交 | CE `ce-work` + Matt `tdd`/`implement` | P1 |
 | `nk-commit` | 提交信息 + 提交节奏规则的唯一持有者 | CE `ce-commit` | P1 |
-| `nk-handoff` | 会话结束：更新 `current.md`，按 R4 提交；接手时读取 | CE `ce-handoff` + Matt `handoff` | P1 |
+| `nk-handoff` | 仅用户显式调用时保存未完成现场；正常交付由 nk-commit 同步 current | CE `ce-handoff` + Matt `handoff` | P1 |
 | `nk-brainstorm` | 澄清要做什么、范围与边界；术语即时写入 | CE `ce-brainstorm` + Matt `domain-modeling` | P2 |
+| `nk-grill` | 用户主动选择的计划、决策或想法压力测试 | Matt `grilling`（具体取舍见来源记录） | 后续补入 |
 | `nk-plan` | 技术方案与实施单元；plan 落在版本分支 | CE `ce-plan` | P2 |
 | `nk-ideate` | 基于代码现状发散并筛选改进方向 | CE `ce-ideate` | P2 |
-| `nk-close` | 版本收尾（第四章流程） | 新增 | P3 |
-| `nk-compound` | 沉淀 solution（含决策类型）与术语；refresh 作为模式或独立技能，实施时定 | CE `ce-compound` / `ce-compound-refresh` + Matt ADR 门槛 | P3 |
+| `nk-close` | 分支收尾（第四章流程） | 新增 | P3 |
+| `nk-compound` | 沉淀 solution（含决策类型）与术语；通过审计模式维护既有知识 | CE `ce-compound` / `ce-compound-refresh` + Matt ADR 门槛 | P3 |
 | `nk-debug` | 先建立可快速变红的复现，再做因果排错 | CE `ce-debug` + Matt `diagnosing-bugs` | P4 |
 | `nk-review` | 代码审查；结果写版本分支 `docs/reviews/` | CE `ce-code-review` + Matt `code-review` | P4 |
 | `nk-simplify` | 交付后精简 | CE `ce-simplify-code` | P4 |
@@ -131,97 +135,73 @@ NexusKit 是一套**个人体系**：用户画像是个人项目、同时使用�
 | `nk-init` | 目标仓库首次启用 NexusKit 的初始化 | 新增（灵感源自 Matt `setup-matt-pocock-skills`） | P6 |
 | `nk-ask-ljq` | 场景路由器：当前情境该用哪个技能/流程（名字含作者缩写，个人元素） | Matt `ask-matt` | P6 |
 
-全部技能已实现（2026-09-26）；尚未迁移的项目可继续用 CE 原版过渡。
+初始技能建设已完成；当前仍在逐项审查和修改。文件已存在、机械检查通过与真实客户端验收是不同状态，不用“已实现”代替全部验收通过。
 
 ---
 
 ## 七、派生与删减原则
 
-"重"主要贵在**常驻上下文**：技能的 `description` 始终加载，`SKILL.md` 正文在触发时加载，`references/` 只在需要时读取。因此：
+减重同时考虑注入体量、实际读取路径和执行动作。仅将内容移入 references，或将检查压成一句口号，并不能证明成本下降。具体客户端的加载效果仍需实际验证。
 
-1. **瘦身优先级**：`description` 与 `SKILL.md` 正文优先精简；`references/` 可以保留得宽松。
-2. **正文是控制器，不是百科**：`SKILL.md` 只放流程框架，实质规则下沉 `references/` 按需加载（Matt `writing-for-agents` 的 Context Pointer 原则）。
-3. **每一段内容三选一**：保留 / 改写 / 删除，并写明理由。
-4. **删除需要理由**：与第三章决定冲突，或依赖确定不会使用的基础设施。paper-30min 没用到不构成删除理由。
-5. **拿不准就下沉**：从正文移入 `references/`，改成按需读取，而不是删掉。
-6. **多 Agent 中立**：正文不依赖某个客户端专有的工具名；写成"支持子代理时……否则……"。
-7. **来源备注集中维护**：每个技能的来源与取舍记录在 `docs/skill-sources.md`（维护者向，由 `AGENTS.md` 指向）；`SKILL.md` 正文不写来源备注——它是给维护者看的元信息，不该占用触发时的注入字节。
+1. **入口能直接指导执行**：SKILL.md 保留流程、短底线、条件分支与结束条件；不要求所有实质规则下沉。
+2. **按使用时机拆分**：同一路径连续使用的方法可放在一个完整 reference；条件分支由入口显式加载，优先保持本地执行 reference 为叶子，避免按章节号递归拼装规则。
+3. **共享规则单源维护**：短底线允许在入口保留受控副本并检查一致性；长方法不无差别复制。资料链接与公开技能入口仍可保留，不将“叶子材料”误解为禁止全部链接。
+4. **质量要求逐项核对**：保留 / 改写 / 删除均应有理由；不能因精简而丢失真实调用链、测试发现、集成风险、构建检查、外部状态与验收证据。拿不准时先厘清职责与使用时机，不机械下沉。
+5. **更少自维护代码满足同一需求**：先理解现状，复用既有实现和原生能力，再新增必要实现；不以删行数、单行表达式或缩减已定需求为目标。
+6. **执行约束清晰可判定**：单元边界、交接条件和提交单位直接说明；不依赖模型估计上下文占用，不把子代理结束与提交绑定。委派遵守客户端能力、用户与项目限制。
+7. **文案直接，理由另存**：开头说明适用场景与动作，长条件拆句；来源与取舍集中放在 `docs/skill-sources.md`，长期决策进 `docs/solutions/`，不要求运行技能时阅读维护史。
 
----
-
-## 八、实施方法
-
-### 分工
-
-* **实施**：在其他 Agent 中编写技能。
-* **审核**：Claude Code 在两个检查点介入——技能简报评审、成稿评审；阶段完成时做一次整体评审。
-
-### 共享约定先行（P0）
-
-在写任何技能之前，先在 `conventions/` 下写出被多个技能引用的约定：
-
-* `current-md.md`：`current.md` 的字段与更新时机
-* `artifact-lifecycle.md`：第四章内容
-* `commit-cadence.md`：第五章内容
-* `concepts-vocabulary.md`：术语格式与写入时机（改写自 CE）
-* `solution-schema.md`：solution 格式，含"决策"类型与三条门槛
-* `decision-autonomy.md`：D6 的自决/询问分类
-
-插件化时如何让各技能共享这些文件（引用 vs 构建时复制进各技能 `references/`），留到打包阶段决定；开发期先用相对路径引用。
-
-### 单个技能的流程
-
-1. **写简报** `docs/briefs/nk-xxx.md`：
-   * 来源技能与版本
-   * 保留 / 改写 / 删除清单（逐段，附理由）
-   * 与其他 nk 技能、共享约定的接口
-   * 验收场景：2~3 个真实场景，说明期望行为
-2. **简报评审**（Claude）。
-3. **编写** `nk-xxx/SKILL.md` 与 `references/`。
-4. **成稿评审**（Claude）：对照简报与共享约定，检查冲突、遗漏、客户端相关写法、`description` 的触发准确度。
-5. **单元验证**：在临时仓库中按简报列出的验证方法逐项检查；实战验收统一放到"迁移与验收"阶段。
-
-简报在技能定稿后按 D3 的精神处理：有长期价值的取舍理由并入 `docs/skill-sources.md` 的来源记录，简报本身删除。
-
-### 验证策略
-
-各技能按接口配合（`nk-work` 读取 `nk-plan` 的产出，`nk-close` 清理 `nk-review` 的记录），半套体系混用 CE 无法测到正确的接口。因此：
-
-* **开发期**：每个阶段只做单元验证（临时仓库）和成稿评审，不在 paper-30min 上试用。
-* **自用试用**：P1 完成后，NexusKit 仓库自身的后续开发用已完成的 nk 技能推进，以便尽早暴露基础约定（提交节奏、`current.md`）的设计问题。
-* **整体验收**：全部技能完成后，paper-30min 一次性迁移到 NexusKit，按各阶段方案中的验收场景集中验收。
-
-### 阶段
-
-| 阶段 | 内容 | 完成标志 |
-| :-- | :-- | :-- |
-| P0 | 共享约定 | 6 份约定评审通过 |
-| P1 | `nk-work`、`nk-commit`、`nk-handoff` | 单元验证与成稿评审通过；开始在本仓库自用 |
-| P2 | `nk-brainstorm`、`nk-plan`、`nk-ideate` | 单元验证与成稿评审通过；用 `nk-plan` 规划本仓库的后续阶段 |
-| P3 | `nk-close`、`nk-compound` | 单元验证与成稿评审通过 |
-| P4 | `nk-debug`、`nk-review`、`nk-simplify` | 单元验证与成稿评审通过 |
-| P5 | `nk-wayfinder`、`nk-to-issue`、`nk-wizard`、`nk-wait-what` | 单元验证与成稿评审通过 |
-| P6 | `nk-init`、`nk-ask-ljq` | 单元验证与成稿评审通过 |
-| 迁移与验收 | paper-30min 从 CE 迁移到 NexusKit，集中验收 | 见下文 |
-| 打包 | 仿照 CE 结构做多 Agent 插件 | 各客户端可安装 |
-
-### 迁移与验收
-
-动手前单独写一份迁移方案，至少覆盖：
-
-* **现有产物的处理**：`docs/plans/`、`docs/reviews/` 按生命周期规则提炼后清理；`docs/current.md` 改写为 `conventions/current-md.md` 格式；现有 `docs/solutions/` 与 `CONCEPTS.md` 按新约定核对。
-* **指令文件**：`AGENTS.md` 改为指向 nk 约定与三个知识入口；`docs/release-workflow.md` 中与 CE 技能相关的表述同步更新。
-* **CE 的去留**：在 paper-30min 中停用还是并存（并存时一律显式调用 nk 技能）。
-* **验收场景**：汇总各阶段方案的验收场景，至少包括一次跨客户端接手，以及一个完整的"规划 → 实施 → 审查 → 收尾"周期。
-* **回退办法**：迁移前打标签，验收失败时可以回到 CE 体系。
+以上是 nk-work 已采纳的范式，后续随逐技能审查应用。它不宣告整仓完成迁移，也不预先确定 review 的触发安排。具体取舍与证据边界见 [设计记录](../solutions/architecture-decisions/2026-09-28-skill-execution-locality.md)。
 
 ---
 
-## 九、开放问题
+## 八、实施与验证
 
-> 2026-09-26 v0.1.0 收尾时更新：2–4 已关闭，仅 1 存续（转为 Issue #2，v1.1.0 处理）。
+### 当前迭代方式
 
-1. **技能正文用中文还是英文**：**存续** → 转为 [Issue #2](https://github.com/steven123397/nexuskit-skills/issues/2)，v1.1.0 以"实弹观察 + 迷你对照实验兜底"处理。
-2. ~~**refresh 是 `nk-compound` 的模式还是独立技能**~~：**已关闭**（P3）——并入 `nk-compound` 审计模式。
-3. ~~**共享约定的打包方式**~~：**已关闭**（v0.1.0）——`skills/conventions/` 平级布局 + 最小 SKILL.md 使其成为第 18 个可安装单元，三形态路径几何一致；决策记录见 `docs/solutions/architecture-decisions/2026-09-26-distribution-layout.md`。
-4. ~~**开发目录即加载目录**~~：**已关闭**（2026-09-26）——仓库迁出 `~/.agents/skills`，加载经 junction 指向 `skills/` 内目录。
+- 当前逐技能深读、修改与外部实跑安排由 [current.md](../current.md) 指向的计划维护，本 RFC 不复制进度或问题清单。
+- 本轮对话负责文档修改、机械检查和反馈核对；实际技能执行由用户另行安排独立会话。遵循当前计划，不把静态阅读或模拟记为技能实跑。
+- 后续整理以 nk-work 范式为参考，逐项核对动作与质量要求。跨技能规则、来源与消费端随改动同步维护，不因目录看起来整齐就认定迁移完成。
+- 来源取舍写入 [skill-sources.md](../skill-sources.md)，长期设计决定进入 [solutions/](../solutions/)。不再把每个技能新建简报或固定由某个客户端审核作为本轮必经步骤。
+
+### 共享维护与分发
+
+共享约定已位于 `skills/conventions/`，包含产物、提交、术语、Plan 格式及共享角色方法等内容。正式支持整套安装；平级分发布局继续有效，详见 [分发决定](../solutions/architecture-decisions/2026-09-26-distribution-layout.md)。
+
+nk-work 的四段短底线在维护时同步到入口，由一致性检查约束。其他共享规则仍按当前技能的使用路径消费，后续逐步审查；这不是全仓生成系统，也不代表 conventions 只剩维护用途。
+
+正式加载使用安装快照，不直接消费开发目录。试用未发布改动时按根目录 [AGENTS.md](../../AGENTS.md) 重装本地插件或建立临时 junction。安装快照不会因仓库修改而自动刷新；采用临时 junction 时须核对实际指向路径。验证前确认客户端读到的版本，不能假设沙盒已读取本轮文案。
+
+### 验证层次
+
+1. **内容核对**：比较改动前后的目标、条件、动作、质量要求、产物接口与结束条件，检查是否遗漏或冲突。
+2. **机械检查**：修改技能或约定后运行 `python -B -X utf8 tests/run_checks.py`；涉及检查逻辑时运行对应测试，当前回归入口为 `python -B -X utf8 -m unittest discover -s tests -p 'test_*.py'`；同时检查 `git diff --check`。
+3. **真实执行**：由独立会话在沙盒中执行实际任务，核对所用版本、触发路径、读取过程、产物和验证证据。机械检查不代替这层验收。
+4. **目标项目迁移**：单独制定迁移方案，处理既有产物、项目指令、CE 的停用或并存、跨客户端接手及回退方案。本文不宣称 paper-30min 已完成迁移验收。
+
+### 初始阶段路线图（历史）
+
+以下保留立项时的建设顺序，便于解释各技能的来源；它不是当前待办，也不作为验收通过记录。
+
+| 阶段 | 原始建设范围 |
+| :-- | :-- |
+| P0 | 共享约定 |
+| P1 | nk-work、nk-commit、nk-handoff |
+| P2 | nk-brainstorm、nk-plan、nk-ideate |
+| P3 | nk-close、nk-compound |
+| P4 | nk-debug、nk-review、nk-simplify |
+| P5 | nk-wayfinder、nk-to-issue、nk-wizard、nk-wait-what |
+| P6 | nk-init、nk-ask-ljq |
+
+原路线图中的“写简报 → Claude 评审 → 编写 → 成稿评审 → 单元验证”是初始建设方法；“全部完成后再迁移、最后打包”也属于当时的排期。现在已有分发形态，正在按审计计划迭代，不再按该历史排期安排当前工作。
+
+---
+
+## 九、问题与决策边界
+
+1. **技能语言策略已定（2026-09-29，#2）**：维护者选择 description 统一英文，按重构后职责重写，正文保持现有语言；取消以中英对照实验决定策略的要求。理由是统一维护口径，避免以高随机性小样本决定语言；这不构成英语触发效果更优的实验证据。实际技能加载、选路及执行仍在 U3 验证，语言选择不再是开放问题。
+2. **知识审计形态**：已定为 nk-compound 的审计模式，不再待选独立 refresh 技能。
+3. **共享约定如何分发与消费**：整套平级分发继续有效；nk-work 的运行时规则组织按 D12 调整。后续技能随审查迁移，不预设全面内联或移除 conventions。
+4. **开发目录如何加载**：采用安装快照；临时 junction 是开发试用选项，不是正式加载模型。
+5. **review 的触发安排已定**：work/debug 提交前调用常规审查，包含精简分析与独立复核；close 调用独立的轻量 pre-merge 路径，默认主会话、最多两个只读专项代理，不重复常规编队。具体规则由技能入口持有。
+6. **nk-work 范式的运行效果**：设计已采纳，实际读取与完成质量仍需独立执行证据；当前没有客户端对照实验结论。

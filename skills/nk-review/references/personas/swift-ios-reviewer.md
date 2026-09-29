@@ -64,7 +64,7 @@ Generic magic-number, threshold, and hardcoded-rate concerns are not Swift-speci
 
 ## Confidence calibration
 
-Use the anchored confidence rubric in the reviewer prompt (`../reviewer-prompt.md`). Persona-specific guidance:
+Use the anchored confidence rubric in the reviewer prompt ([../reviewer-prompt.md](../reviewer-prompt.md)). Persona-specific guidance:
 
 **Anchor 100** — the bug is mechanical: `@ObservedObject` on a locally-instantiated object literal, a closure capturing `self` strongly in a known-escaping context with no `[weak self]`, UI mutation in a `Task.detached` block.
 

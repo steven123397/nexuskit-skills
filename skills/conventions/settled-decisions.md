@@ -1,6 +1,10 @@
 # 已定决策 (Session-Settled Decisions)
 
-> **归属与引用：** `nk-brainstorm`、`nk-plan` 共用本约定；`nk-work` 执行时尊重其标注（见 `nk-work/references/implementation-loop.md` 已定决策规则）。
+<!-- fragment: planning-settled -->
+用户看过取舍后选定的决定直接承接；未经检验的指示只在相关阶段检验一次，Agent 自己的推断不冒充已定。最新明确修订替换冲突的旧内容，保留其余有效决定。已定不压制反证：次优但可行则沿用，证据表明不可行、偏离目标或有破坏性时说明并阻断。
+<!-- /fragment -->
+
+> **适用范围：** 本约定供所有需要记录或承接已定决策的技能共用；引用本约定的技能均须遵守，适用范围不限定于需求与规划阶段。
 
 用于承接用户在当前对话中已经做出的决定，让规划在其基础上推进，而不是重新讨论。标注格式以 [`plan-format.md`](plan-format.md) 第四节为准。
 
@@ -25,7 +29,7 @@
 
 ## 标注
 
-记录在 Product Contract 的 Key Decisions 条目上（`nk-plan` 中记录在 KTD 上），以内联英文括注：
+记录在 Product Contract 的 Key Decisions 条目上（[nk-plan](../nk-plan/SKILL.md) 中记录在 KTD 上），以内联英文括注：
 
 `(session-settled: user-directed — chosen over <备选>: <一句理由>)`
 
@@ -35,7 +39,7 @@
 
 ## 使用规则
 
-* 已定决策不再追问。范围综述中写成 `Carrying forward:` 行，不作为提醒项；提问阶段跳过它。
+* 已定决策不再追问。范围综述按 [scope-synthesis.md](scope-synthesis.md) 的“延续”方式承接，不作为待确认点；提问阶段跳过它。
 * 调研在已定决策基础上进行，只能凭证据与之相悖。按严重程度处理：
   * 没发现问题 → 照常推进，不提；
   * 次优但可行 → 按已定推进，在写入产物时于该决定条目附上冲突说明；

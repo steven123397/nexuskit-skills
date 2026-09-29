@@ -1,5 +1,9 @@
 # 领域术语表规范与维护机制 (`CONCEPTS.md`)
 
+<!-- fragment: planning-terms -->
+使用 CONCEPTS.md 的规范名称；冲突影响决定时当场对齐，用具体场景检验概念边界。领域专属且独立的术语敲定即新增或完善，一句话定义，必要时加别名和行为规则；不收实现细节。文件缺失可为本次术语创建，不扩成全仓初建；不在需求与规划中合并、退役或删除词条。
+<!-- /fragment -->
+
 > **定位：** 位于代码仓库根目录的 `CONCEPTS.md` 是当前项目业务领域概念的唯一真实术语源（Single Source of Domain Truth）。  
 > **核心改进：** 继承 Compound Engineering (CE) 的高质量词条与自成一体原则，解决其“只在 compound 时期录入导致规划期术语流失”的缺陷，吸收 Matt Pocock“在需求与规划敲定时即刻录入”的即时性，并引入即时质疑机制。
 
@@ -27,26 +31,27 @@
 flowchart LR
     B["/nk-brainstorm<br>(澄清概念即写)"] --> P["/nk-plan<br>(方案敲定即写)"]
     P --> W["/nk-work<br>(即时质疑 + 遵循)"]
-    W --> C["/nk-compound<br>(增量捕获遗漏)"]
-    C --> R["/nk-close / refresh<br>(收尾提炼 + 全局审计)"]
+    W -. "有沉淀授权" .-> C["/nk-compound<br>(增量捕获遗漏)"]
+    W -. "用户要求收尾" .-> R["/nk-close<br>(本次交付的术语提炼)"]
+    A["明确要求初建或审计"] --> S["/nk-compound<br>(术语初建或按范围 refresh)"]
 ```
 
 ### 1. 规划期即时写入（JIT 录入）
-在 `/nk-brainstorm` 明确业务范围和领域模型、或在 `/nk-plan` 敲定技术设计时，一旦确立了核心业务名词，**立即写入根目录 `CONCEPTS.md`**，并随同方案文档一同提交，确保后续会话沟通口径完全一致。
+在 [/nk-brainstorm](../nk-brainstorm/SKILL.md) 明确业务范围和领域模型、或在 [/nk-plan](../nk-plan/SKILL.md) 敲定技术设计时，一旦确立了核心业务名词，**立即写入根目录 `CONCEPTS.md`**，并随同方案文档一同提交，确保后续会话沟通口径完全一致。
 
 ### 2. 即时质疑机制 (Challenge against the Glossary)
 当用户或 Agent 在对话、需求描述或代码评审中使用了与 `CONCEPTS.md` 冲突的词汇（例如使用了词条中明确注明的 `*Avoid:*` 同义词，或混淆了两个已明确区分的概念），**应当面当场指出并对齐术语**。术语表不仅是被动查询的字典，更是主动维护认知一致性的标尺。
 
 ### 3. 沉淀期增量捕获 (Accretion)
-在 `/nk-compound` 沉淀技术方案或排查踩坑时，若遇到此前未被定义且具有非显而易见含义的业务术语，增量补录。
+在 [/nk-compound](../nk-compound/SKILL.md) 沉淀技术方案或排查踩坑时，若遇到此前未被定义且具有非显而易见含义的业务术语，增量补录。
 
 ### 4. 存量老项目初建路径 (Bootstrap / Seeding)
-JIT 即时写入主要覆盖新涌现的术语。对于尚未建立 `CONCEPTS.md` 的既有老项目，需要通过一次全仓初始化（Bootstrap / Seeding）来提炼核心领域名词。**这项全局初建职责由 `nk-compound` 的审计（refresh）模式承担**，通过扫描核心业务模型、对外接口与领域文档完成骨架搭建。
+JIT 即时写入主要覆盖新涌现的术语。用户明确要求为既有项目初建整个 `CONCEPTS.md` 时，由 [nk-compound](../nk-compound/SKILL.md) 的术语初建路径提炼核心领域名词：读取 schema、核心类型、主模型和顶层领域文档，形成必要词条，不全仓漫游、不凑数。初建不自动进入 refresh，也不因 solutions 为空而阻塞；审计既有知识需另有明确请求或持续授权。
 
 区别于全局初建：`CONCEPTS.md` 不存在时，规划期即时写入可以由第一个合格条目创建该文件，只写本次敲定的术语，不顺带初建整个项目的术语表。
 
 ### 5. 分支收尾提炼 (Harvest during Close)
-在 `/nk-close` 清理阶段性 Plan 之前，核对 Plan 中是否有值得长期保留的领域新概念，提炼至 `CONCEPTS.md` 后再行删除 Plan。
+在 [/nk-close](../nk-close/SKILL.md) 清理阶段性 Plan 之前，核对 Plan 中是否有值得长期保留的领域新概念，提炼至 `CONCEPTS.md` 后再行删除 Plan。
 
 ---
 

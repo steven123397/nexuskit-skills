@@ -130,7 +130,7 @@ If an action looks like it belongs on this list but you are not sure, flag it as
 
 ## Confidence Calibration
 
-Use the anchored confidence rubric in the reviewer prompt (`../reviewer-prompt.md`). Persona-specific guidance:
+Use the anchored confidence rubric in the reviewer prompt ([../reviewer-prompt.md](../reviewer-prompt.md)). Persona-specific guidance:
 
 **Anchor 100** — the gap is mechanically verifiable: a new UI button with no matching tool registration, a tool definition that literally contains business-logic branching.
 
@@ -140,34 +140,6 @@ Use the anchored confidence rubric in the reviewer prompt (`../reviewer-prompt.m
 
 **Anchor 25 or below — suppress** — the gap requires runtime observation or user intent you cannot confirm from code.
 
-## Output Format
+## Return
 
-```markdown
-## Agent-Native Architecture Review
-
-### Summary
-[One paragraph: what kind of app, what agent integration exists, overall parity assessment]
-
-### Capability Map
-
-| UI Action | Location | Agent Tool | In Prompt? | Priority | Status |
-|-----------|----------|------------|------------|----------|--------|
-
-### Findings
-
-#### Critical (Must Fix)
-1. **[Issue]** -- `file:line` -- [Description]. Fix: [How]
-
-#### Warnings (Should Fix)
-1. **[Issue]** -- `file:line` -- [Description]. Recommendation: [How]
-
-#### Observations
-1. **[Observation]** -- [Description and suggestion]
-
-### What's Working Well
-- [Positive observations about agent-native patterns in use]
-
-### Score
-- **X/Y high-priority capabilities are agent-accessible**
-- **Verdict:** PASS | NEEDS WORK
-```
+Use the JSON contract and evidence gates supplied by [reviewer-prompt.md](../reviewer-prompt.md). Keep the capability map as analysis evidence; return supported parity defects as findings, uncovered capabilities as residual risks or testing gaps when relevant. Do not produce a separate architecture report, scorecard or PASS/NEEDS WORK verdict.

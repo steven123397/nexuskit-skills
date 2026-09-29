@@ -1,32 +1,24 @@
 # 当前状态
 
-- **所在分支**：`main`
-- **HEAD**：`c5392f6`（Issue 生命周期迭代已合并入库，PR [#7](https://github.com/steven123397/nexuskit-skills/pull/7)，双平台 CI 通过）
-- **版本/里程碑**：v0.1.1 已发布（2026-09-27，Issue 生命周期迭代，release notes 见 [`releases/v0.1.1.md`](releases/v0.1.1.md)）。版本规则：v1.0.0 前均为试用版；大迭代走 minor，小迭代走 patch。发布与收尾已解耦——收尾锚定分支生命周期，发布是 main 上打 tag + release notes 的纯事件。
-- **已具备能力**：18 个 `nk-*` 技能 + 共享约定 `skills/conventions/`（选用见 [`../README.md`](../README.md) 路由表）；三形态分发——Kimi 插件、Codex 插件、npx skills CLI；五项机械检查 + 双平台 CI。本次迭代新增/变更：
-  - `nk-grill`：手动触发的盘问微技能（豁免单轮 3 问上限，理由见其正文与 `docs/skill-sources.md`）；
-  - Issue 全生命周期规则成文于 `skills/conventions/issue-writing.md`（标签最小化、容器中立认领、三个关闭时机、可选完成定义）；
-  - 收尾锚定分支生命周期（`nk-close` 两种触发 + 发布日扫尾；R6 降级路径保留）；
-  - PR 描述规范 `skills/nk-close/references/pr-description.md`（`Fixes #N` 闭环接入 Issue 生命周期）；
-  - Kimi 插件清单迁至 `.kimi-plugin/plugin.json`（目录形态，与 `.codex-plugin/` 对齐）；
-  - 新建 `CONCEPTS.md` 术语表并挂入 `AGENTS.md` 知识入口。
-- **加载模型**：本仓库是半成品工作区，客户端消费发布快照；细节见 `AGENTS.md`。
-- **验证结果**：
-  - `python tests/run_checks.py` 五项全绿（每个交付提交均复跑）；PR #7 双平台 CI 通过。
-  - `npx skills@1.5.23 add <本仓库> --list` 发现列表含 18 个 nk-* 技能（含 nk-grill）与 conventions。
-  - Issue #4、#5、#6 已带提交哈希评论关闭。
-  - Kimi 本地路径重装实装 ✅：`.kimi-plugin/plugin.json` 目录形态识别正常，`/nk-grill` 已在可调用列表。
-  - 新版 `nk-close` 在上一分支完成首次真实收尾，发现的 5 处摩擦已修复（`a7199ad`）。
-  - 未验证：Codex / WSL Kimi 的 GitHub 安装路径（合并后用户实测）；真实项目端到端使用（paper-30min 迁移验收，v0.2.0 目标）。
+- 所在分支：`feat/skill-deep-audit`；核对基点：`311e1c2`（2026-09-29 收尾前 HEAD）。
+- 本次交付：18 个技能文本重构及英文 description 统一完成；按用户最新决定先收尾合并，再从 main 发布 `v0.2.0-beta.1`。沙盒实际测试留到另一会话。
+- 发布准备：CI 增加版本 tag 与手动入口，Windows/Linux 均运行五项检查、回归测试与 Bash 模板语法；检查插件 SemVer/版本一致性、tag 与 release notes、英文描述残留和调用标志类型；固定文本 LF。
+- 合并前检查：主会话加一个只读专项代理，核对跨技能接口和累计交付；修复共享术语约定将初建误导向 refresh 的残留。依据与限制见 [验证记录](reviews/feat-skill-deep-audit.md)。
+- 验证：`python -B -X utf8 tests/run_checks.py` 五项通过；`python -B -X utf8 -m unittest discover -s tests -p test_*.py` 35 项通过；Git Bash 模板 `bash -n` 与 `git diff --check` 通过。远端 PR/main/tag CI 及发布状态待后续步骤确认。
 
-## 阻断与已知缺口
+## 接手依据与边界
 
-- [Issue #1](https://github.com/steven123397/nexuskit-skills/issues/1)：提示词副本终局——触发时机为"首次需要跨副本同步修订"。
-- [Issue #2](https://github.com/steven123397/nexuskit-skills/issues/2)：中文 description 触发可靠性（v1.1.0）。
-- [Issue #3](https://github.com/steven123397/nexuskit-skills/issues/3)：增强泊车场（未拍板，随时可逐项处理）。
+- [审计 Plan](plans/2026-09-27-1525-test-skill-deep-audit-plan.md) 的 U1/U2 已交付，U3 未完成。本次按 beta 范围收尾，不宣称整份审计完成；Plan、验证记录和仍有消费者的体系 RFC 保留。
+- 设计依据：[组织范式](solutions/architecture-decisions/2026-09-28-skill-execution-locality.md)、[技能来源](skill-sources.md) 与当前技能入口。已有长期资产覆盖本次设计理由，不为收尾重复建档。
+- review 常规路径含 simplify 与独立复核；close 只调度轻量 pre-merge，不承担产品修复。commit 持有 current 与提交规则，handoff 仅显式调用。
+- #2 已按维护者统一英文策略关闭，取消中英 A/B 实验；不声称英文触发效果更优。#28、#32 已关闭；本轮相关 Issue 无开放遗留。机械检查、同步钩子与 Issue 关闭不等于真实执行验证。
 
-## 下一步
+## 下一步与版本路线
 
-- [ ] 用户在 Codex 与 WSL Kimi 侧通过 GitHub 安装实测（main 已含本次迭代）。
-- [ ] 日常使用中观察各客户端触发情况，案例喂给 Issue #2。
-- [ ] paper-30min 迁移验收（v0.2.0 目标），实战检验分支收尾规则。
+1. 本会话完成重构分支合并，从 main 发布 `v0.2.0-beta.1`，标为 prerelease。
+2. 另一会话从实际加载路径与发布版本核对开始，执行 U3 沙盒测试；通过后发布 `v0.2.0` 正式版。
+3. 正式版随后在 paper30min 实装；真实开发发现的问题在后续 `v0.2.x` 修正。
+
+## 工作区未提交改动
+
+CI/检查器、共享契约修正、审查记录、Plan、来源和 current 同次收尾提交；无其他工作混入。不在本会话运行沙盒技能测试。

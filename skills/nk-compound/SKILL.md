@@ -1,57 +1,80 @@
 ---
 name: nk-compound
-description: "Capture a verified solved problem or durable decision as a learning in docs/solutions/, or audit the knowledge base (docs/solutions/ + CONCEPTS.md) for stale, drifted, or contradictory entries. Use when verified work produced non-obvious reasoning the final code and tests don't record, when asked to document a lesson or decision, or when asked to audit/refresh/clean up the learnings store. 沉淀经验、记录决策、复盘工作流、审计知识库、清理过期条目、refresh。"
-argument-hint: "[可选：简短上下文 | refresh [范围提示]]"
+description: "Capture reusable lessons from verified work or accepted decisions in docs/solutions, or audit existing knowledge when requested. Support explicitly requested collaboration retrospectives before deciding what merits capture. Reuse existing entries and distinguish evidence from proposals; do not modify product code."
+argument-hint: "[简短上下文 | 复盘 [对象] | refresh [范围提示]]"
 ---
 
 # /nk-compound
 
-> **路径解析说明：** 本文件及其 references 中引用的文件（`references/`、`../conventions/`、`../nk-commit/`）均相对于本技能所在目录解析，不在目标代码仓库中查找。`docs/solutions/`、`docs/current.md`、`CONCEPTS.md`、`AGENTS.md` 指目标仓库中的文件。
+两个模式：沉淀形成或更新一条长期知识，审计维护已有知识库。协作复盘是沉淀前的条件性分析，可只交付建议；Bug / Knowledge 是条目分类，不是另两套执行流程。
 
-两个模式：**沉淀模式**（默认）把刚解决并验证过的问题或决策写入 `docs/solutions/`；**审计模式**（`refresh`）对照当前代码库审计既有条目与 `CONCEPTS.md`。条目的 frontmatter 与正文模板以 [`../conventions/solution-schema.md`](../conventions/solution-schema.md) 为准，本技能不另造格式。
+完成条件：需写入的条目已成文，**frontmatter 与正文声明两项自检均通过**，术语、可见性、提交去向及汇报已处理；审计还须交代每个对象的分类、实际动作及未执行建议。不合格可不建档，纯复盘可只给建议；缺证、写入失败或自检未过不能称为完成沉淀。
 
-**完成标志：** 沉淀模式——一条合格条目写入（或明确报告为何不建档），术语补全、可见性检查、提交去向处理完毕并汇报；审计模式——范围内每条目得到分类，动作执行完毕，报告直接呈现给用户。
+## 调用与边界
 
-## 模式判定
+- 用户可直接要求沉淀。其他技能可通过本入口评估已验证工作中未被现有产物表达的因果与取舍，调用不保证建档。
+- work / debug 默认只建议，有沉淀授权才写入；不是每次交付都加固定步骤。close 可在收尾检查知识缺口，复用已有条目。调用方传对象、证据、已有决定、关联交付与授权范围，不读取本技能私有材料。
+- 协作复盘、知识审计及清理仅在用户明确要求或已有相应持续授权时执行。发现某条失准可建议定向审计，不自动扩成全库维护。
+- 仅主会话写知识文件；子代理只读调查或评审，不提交。共享角色是提示词资产，按选中方法初始化通用子代理；无能力时内联并说明独立性限制。
+- 不修改产品代码、技能、检查器或 runbook。沉淀只改本条 solution 及合格术语，审计只改范围内知识与引用；AGENTS 的最小知识入口指引是明确例外。越界事项只报告建议。
 
-- 参数以 `refresh` 开头，或明确要求审计/清理知识库 → **审计模式**，其余词作范围提示；无提示则全量。
-- 明确要求初建 `CONCEPTS.md`（建立整个项目的术语表）→ 审计模式的整库初建路径（见 `references/audit.md`）。
-- 其余 → **沉淀模式**，其余词作简短上下文。
+短底线维护源：[决策自主权](../conventions/decision-autonomy.md)、[读取复用](../conventions/resource-loading.md)。
 
-## 准入门槛（沉淀模式）
+<!-- fragment: planning-autonomy -->
+能从现状或已有决定推断的局部选择自行处理并说明理由；只有尚未授权、会实质改变范围、顺序、风险或外部契约的分歧才问。独立问题合并，每轮至多 3 个；决策给 2–3 个选项与推荐，事实和意图允许开放提问。明确续作或“改后继续”的授权仍有效，范围未变不重复确认。
+<!-- /fragment -->
 
-只沉淀**已解决且已验证**的问题（未运行的验证不记为通过，见 [`../conventions/commit-cadence.md`](../conventions/commit-cadence.md) 通用纪律）。按 solution-schema 第一章的双轨准入判断：
+<!-- fragment: planning-reading -->
+只加载本次路线和选中角色所需材料。上下文中完整、适用且未变的原文直接复用，缺失或变化才补读；阶段切换不触发重读。必需材料缺失且无降级路径时，停在其管辖动作之前。
+<!-- /fragment -->
 
-- **Bug 轨**（排查/缺陷/性能/构建）：反事实检验——若无此文，未来仅凭代码与单测是否仍极可能重蹈覆辙或耗时重探？
-- **Knowledge 轨**（架构决策/规范/最佳实践）：决策三门槛——难以撤回、无背景会困惑、确有取舍。`workflow_issue` 让工作流与协作过程本身的复盘也可入库。
+无人值守时未决项留在报告，不伪造授权或自行写 current。
 
-任一不通过：不建档，向用户说明原因。完成度、工作量、diff 大小不构成资格；已有条目失准则更新它，不建重复文档。**一次运行只沉淀一条**；一个会话产出多条时分多次运行。
+## 1. 识别请求
 
-## 沉淀模式流程
+- `refresh` 或明确审计/清理知识库：审计模式，按范围提示收窄；无提示才全量。
+- 明确初建整个 `CONCEPTS.md`：直接走第 3 步的术语初建，经验库为空不阻塞，也不顺带审计所有 solution。
+- 明确复盘某次协作：先读 [retro.md](references/retro.md)，基于指定材料或当前会话形成候选建议。未采纳或未验证的改进不写成已成立经验；纯建议返回第 5 步汇报。已有符合准入的结论且有写入授权时，继续沉淀。
+- 其余走沉淀判断。对象不清且会影响本次范围时才问，不靠扫描全库猜用户要记录什么。
 
-进入各阶段时完整读取对应 reference：
+## 2A. 沉淀一条知识
 
-| 阶段 | 先读 | 内容 |
-| :-- | :-- | :-- |
-| 1 定位与采样 | `references/capture.md` | 从当前会话上下文与 `git log`/diff 定位刚解决的问题；语料优先采样；重叠判定（高重叠→更新既有条目） |
-| 2 编写与自检 | `references/capture.md`、`references/frontmatter-checklist.md`、`references/claims-checklist.md` | 按 solution-schema 模板成文；frontmatter 与正文引用逐项自检 |
-| 3 术语补全 | `references/capture.md`、[`../conventions/concepts-vocabulary.md`](../conventions/concepts-vocabulary.md) | 只做 Add/Refine，不整库初建 |
-| 4 可选增强评审 | `references/capture.md` | 按 problem_type 映射 `references/agents/` 提示词；只评审文档，不改产品代码 |
-| 5 可见性与提交 | `references/capture.md` | 首运行检查 `AGENTS.md` 入口指引；按 R4 第 4 条决定提交去向 |
+读 [solution-schema.md](../conventions/solution-schema.md)，按类型判断准入：Bug 须已解决并验证；架构/工具决策须已采纳且通过决策门槛；工作流与实践须有实际证据、适用条件和可复用认识。决策采纳不等于实施效果已验证，文中分别说明。
 
-## 审计模式流程
+不合格则说明原因后结束，不制造文件。合格但尚未获写入授权时给出建议。一次运行只沉淀一条，多个候选先按用户范围确定一条，不扩成批量建档。
 
-| 阶段 | 先读 | 内容 |
-| :-- | :-- | :-- |
-| 1 范围与调查 | `references/audit.md` | 范围提示收窄；逐条对照当前代码库核对；`retire_when` 条件检查；集合层面查重叠/取代/矛盾 |
-| 2 分类与执行 | `references/audit.md` | Keep / Update / Consolidate / Replace / Delete；删除需正面证据 |
-| 3 术语对账 | `references/audit.md` | `CONCEPTS.md` 全操作集（含 Fold/Retire/Scrub）与老项目整库初建 |
-| 4 报告与提交 | `references/audit.md` | 报告直接呈现，分 Applied / Recommended；默认不落地成长期文件 |
+有写入授权时读 [capture.md](references/capture.md)：定位证据、检索既有语料和重叠，优先更新同问题条目，按共享模板成文。有实质收益才按其中角色映射做增强评审；主会话裁决后修改文档，再进入第 3、4 步。反证或未解决问题须保留，不把建议写成验证结果。
 
-## 始终成立的规则
+## 2B. 审计既有知识
 
-- **写入边界**：沉淀模式只写本次条目（或更新既有条目）、`CONCEPTS.md` 补全、缺指引时 `AGENTS.md` 的一行指引；审计模式只改知识库文件。两种模式都不改产品代码；条目与其点名的指导文件（SKILL.md、runbook、指令文件）冲突时只报告，不编辑指导文件。
-- **删除需要正面证据**：代码被删不构成删除条目的理由；不确定时保留（细则见 `references/audit.md`）。
-- **子代理**：`references/agents/` 是提示词资产而非具名 Agent——读取文件内容初始化通用子代理；客户端不支持子代理时由主会话内联完成。子代理不写产品文件、不执行 `git commit`。
-- **提交**：沉淀严格按 [`../conventions/commit-cadence.md`](../conventions/commit-cadence.md) R4 第 4 条；amend 必须显式限定路径（`git add <具体文件>` + `git commit --amend --no-edit -- <路径>`）。本技能自己发起提交时先读 [`../nk-commit/SKILL.md`](../nk-commit/SKILL.md)。
-- **提问**：按 [`../conventions/decision-autonomy.md`](../conventions/decision-autonomy.md) 批量选项提问；无人值守时的待确认项在 `docs/current.md` 登记 `[待确认]`。
+读 [audit.md](references/audit.md)，按范围逐条及集合对照证据。命中范围为空如实报告，不放大范围；solution 为空不妨碍请求范围内的术语对账。
+
+按五类结果及删除保全规则，只执行已授权且证据充分的动作。值得性裁减仅在明确清理请求下评估，候选交用户决定。
+
+分歧补问，已有批准复用；缺证保留，实际失准才标 stale。材料返回分类、已改文件和建议，不自行提交。
+
+## 3. 术语与可见性
+
+读 [concepts-vocabulary.md](../conventions/concepts-vocabulary.md)，核对合格领域术语。沉淀仅 Add / Refine，可为本条经验创建最小术语表；审计按范围执行完整操作集，退役仍需正面证据。单独初建时从 schema、核心类型、主模型和顶层领域文档提炼，不全库漫游、不凑数。缺文件不自动把局部沉淀扩为全库初建。
+
+首次沉淀或本次审计按 [产物生命周期](../conventions/artifact-lifecycle.md) 第二章核对 AGENTS 知识入口：补齐 current、solutions、已存在 CONCEPTS 的导航及定向检索时机；已有等效指引复用，不覆盖既有流程。冲突另作建议，纯复盘不触发写入。
+
+## 4. 最终自检与提交
+
+所有成文、增强评审和审计修改完成后，读 [frontmatter-checklist.md](references/frontmatter-checklist.md) 与 [claims-checklist.md](references/claims-checklist.md)：
+- 新建、替换或实质重写的 solution 全项检查；更新、合并、stale 标记按最终条目核对适用项，不能跳过两份清单。
+- 移动、删除或合并后核对入站引用及剩余文档的出站链接；指导文件和产品代码不在写入范围内，需修改时作为阻断或建议报告。
+- CONCEPTS 按术语契约核对，不强套 solution frontmatter。自检后又修改的，复查受影响项。不能修正的缺口如实报告，不宣称通过。
+
+完成写入且自检通过后，将文件范围、场景、证据、关联交付、已知发布状态、阻断和下一步交给 [nk-commit](../nk-commit/SKILL.md)，由其决定随交付、遗漏补记、独立提交或暂留，并按需维护 current。已有提交协调方时把成果返回该方统一调用，不重复提交。不自行执行提交算法，不自动 handoff；无文件变化直接汇报。
+
+## 5. 汇报或返回调用方
+
+沉淀报告路径、轨道与类型、重叠处理、验证边界、两项自检、术语与可见性结果、提交或暂留状态；未建档说明原因。复盘按影响排序给出建议、证据和去向，不冒充已实施改进。
+
+审计报告是交付物，直接在对话呈现：
+- 范围、扫描数、五类结果及未能分类的对象；stale 是附加标记，不作为互斥第六类。说明术语的实际处理或未检查原因。
+- **Applied**：实际写入及证据，包括 stale 标记，合并列出基准与被并入者。
+- **Recommended**：尚未执行的替换/裁减、写入失败、证据缺口、疑似产品回归及指导冲突。同一文件可以已标 stale、但替换仍待定，分别写清。
+
+报告默认不新建长期文件；用户要求留存时按产物生命周期选择位置。嵌入调用返回同样的实质结果及未决项，由调用方统一汇报，不扩大任务。

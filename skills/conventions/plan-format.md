@@ -1,6 +1,6 @@
 # 统一 Plan 格式 (Plan Format)
 
-> **归属与引用：** 本约定定义 plan 文件的结构契约。`nk-brainstorm` 写入 Product Contract，`nk-plan` 补全实施部分，`nk-work` 按本约定定位章节。三者都以本文件为准，不各自重述章节规则。
+> **归属与引用：** 本约定定义 plan 文件的结构契约。[nk-brainstorm](../nk-brainstorm/SKILL.md) 写入 Product Contract，[nk-plan](../nk-plan/SKILL.md) 补全实施部分，[nk-work](../nk-work/SKILL.md) 按本约定定位章节。三者都以本文件为准，不各自重述章节规则。
 > **来源：** 改写自 CE `ce-plan/references/plan-sections.md` 与 `markdown-rendering.md`（2026-09）。只输出 Markdown。
 
 ---
@@ -9,8 +9,8 @@
 
 同一个需求只有一个 plan 文件，随规划阶段逐步充实：
 
-1. **需求阶段**（`nk-brainstorm` 产出）：只有 Goal Capsule 与 Product Contract。
-2. **可实施阶段**（`nk-plan` 补全）：追加 Planning Contract、Implementation Units、Verification Contract、Definition of Done。
+1. **需求阶段**（[nk-brainstorm](../nk-brainstorm/SKILL.md) 产出）：只有 Goal Capsule 与 Product Contract。
+2. **可实施阶段**（[nk-plan](../nk-plan/SKILL.md) 补全）：追加 Planning Contract、Implementation Units、Verification Contract、Definition of Done。
 
 不另写单独的需求文档。需求阶段的文件不能出现指向尚不存在的实施章节的内容。
 
@@ -99,5 +99,5 @@ execution: code                # 可选：code（默认）或 knowledge-work（�
 ---
 ```
 
-* 不设 `status` 字段，不记录执行进度。进度以带 U-ID 的提交为准（见 [`commit-cadence.md`](commit-cadence.md) R1）。
+* 不设 `status` 字段，不记录执行进度。进度以带 U-ID 的提交为准（见 [nk-commit](../nk-commit/SKILL.md) R1）。
 * 字段名固定，不得改名；可以新增字段。

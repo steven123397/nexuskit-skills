@@ -35,7 +35,7 @@ If the PR has no prior review comments, return an empty findings array immediate
 
 ## Confidence calibration
 
-Use the anchored confidence rubric in the reviewer prompt (`../reviewer-prompt.md`). Persona-specific guidance:
+Use the anchored confidence rubric in the reviewer prompt ([../reviewer-prompt.md](../reviewer-prompt.md)). Persona-specific guidance:
 
 **Anchor 100** — a prior comment explicitly requested a specific named change ("rename `foo` to `bar`", "remove this `console.log`") and the diff shows the change was not made.
 

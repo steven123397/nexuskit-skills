@@ -44,31 +44,31 @@ body 按 SKILL.md 的 map body 模板填写。Map 的 title 就是它的 name；
    - [ ] [<blocker ticket name>](link)
    ```
 
-   blocker 关闭后勾掉对应行；全部勾掉即 unblocked。
+   blocker 关闭后同步勾选；查询时核对链接所指 Issue 的当前状态及关闭原因。作废或未解决的 blocker 不视为已满足，先修订依赖。
 
-不确定当前账号/仓库支持哪种时，先尝试原生调用，失败后退回 body 约定，并在 map 的 **Notes** 里记一行本 effort 采用的约定，让后续会话一致。
+先沿用 map 已记录的约定。只有确认原生能力不支持时才退回 body 约定并记入 Notes；网络、认证或权限失败应报告阻断，不切换表示或重复创建。写入结果不明时先查询核实。
 
 ## Claim 与 frontier 查询
 
-- **Claim**：`gh issue edit <number> --add-assignee @me`。任何工作开始之前执行；assignee 就是 claim。
+- **Claim**：先核对无人认领，再执行 `gh issue edit <number> --add-assignee @me` 并复查归属。它不是原子锁；发现竞争先协调，同账号多会话须用会话标识或用户分工区分，不凭 `@me` 判断独占。
 - **Frontier**：open、unblocked、unclaimed 的 tickets。基础查询：
 
   ```bash
-  gh issue list --state open --search "label:wayfinder:research OR label:wayfinder:prototype OR label:wayfinder:grilling OR label:wayfinder:task" --json number,title,assignees,labels
+  gh issue list --state open --search "label:wayfinder:research OR label:wayfinder:prototype OR label:wayfinder:grilling OR label:wayfinder:task" --json number,title,body,assignees,labels
   ```
 
-  再过滤掉有 assignee 的（已 claim）和仍有 open blocker 的（blocked）：原生依赖用 `gh api` 查 `blocked_by`；body 约定则读 body 中未勾选的 `## Blocked by` 行。属于哪张 map 由 sub-issue 关系或 `Part of:` 行判定。
+  此命令仅为候选查询，不代表完整结果。核对分页，必要时用分页 API 取全本 map 的子项与依赖；不能用默认列表长度判断无剩余工作。再过滤掉已认领和依赖未满足的项：原生依赖查 `blocked_by`，body 约定读取链接并核实当前状态。属于哪张 map 由 sub-issue 关系或 `Part of:` 行判定。
 
 ## Resolution 与关闭
 
 ```bash
-gh issue comment <number> --body "<resolution：答案、理由、后续 tickets 依赖的事实>"
+gh issue comment <number> --body-file <resolution-file>
 gh issue close <number>
-gh issue edit <map number> --body "<在 Decisions so far 追加一行后的完整 body>"
+gh issue edit <map number> --body-file <merged-map-file>
 ```
 
 Resolution comment 至少包含：答案本身、关键理由、解决中产生的 assets 链接、后续 tickets 依赖的事实（凭据位置、新 URL、数据规模等）。向 map 追加时遵循 Refer by name：`[name](link) — 一行 gist`。
 
 ## 并发
 
-多个会话可能同时处理 unblocked tickets。所有判定（claim 是否成功、frontier 内容）以查询时刻的 tracker 实时状态为准；claim 失败（已被 assign）就换下一个 frontier ticket，不等待、不抢占。
+多个会话可能同时处理 unblocked tickets。写 map 前重新读取最新 body，只合入本轮增量，写后复查；检测到冲突就重新合并或协调，不用旧快照覆盖他人的记录。Assignee 操作可能成功但仍有竞争，不能把命令成功当作锁成功。不要抢占他人的 ticket；无人可处理时汇报阻塞或进行中状态。

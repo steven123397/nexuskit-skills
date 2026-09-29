@@ -1,83 +1,72 @@
 ---
 name: nk-close
-description: "Close a work branch before merge (or one delivered plan on single-branch projects): transfer leftovers, harvest decisions and terms, delete delivered artifacts, rewrite docs/current.md, make the single R4 close commit; release-day sweep is leak-check + tag only. 分支收尾、合并前清理、发布日扫尾、提炼删除 plan、close version。"
+description: "User-invoked closeout of delivered branch or Plan work. Coordinate a focused pre-merge review, resolve artifact dispositions, preserve reusable knowledge, and commit the closeout. Explicit release-day requests add release checks and notes; do not automatically merge, push, or publish."
 disable-model-invocation: true
+argument-hint: "[分支或 Plan 范围 | 发布日扫尾]"
 ---
 
 # /nk-close
 
-> **路径解析说明：** 本文件及其 references 中引用的文件（`references/`、`../conventions/`、`../nk-commit/`）均相对于本技能所在目录解析，不在目标代码仓库中查找。`docs/plans/`、`docs/reviews/`、`docs/ideation/`、`docs/solutions/`、`docs/current.md`、`CONCEPTS.md` 指目标仓库中的文件。
+用户主动调用的分支交付确认与生命周期收尾入口。核对交付证据，调度轻量合并前审查，处置遗留，提炼后清理；不承担产品修复，不自动合并、推送或删除分支。其他技能可以建议收尾，不因最后一个单元完成自动启动。
 
-工作分支的一揽子工作交付完成、合并进 main 之前执行：把过程工件的长期价值提炼进知识库，清理已交付工件，让仓库干净地进入下一段工作。本技能是 [`../conventions/artifact-lifecycle.md`](../conventions/artifact-lifecycle.md) 第五章"分支收尾六步法"的可执行展开，规则以约定为准。
+**完成条件**：本次范围与交付证据明确，合并前检查适用且无未处理阻断，遗留已有可追踪去向，知识缺口已处理，可删除产物及引用已清理，收尾变化由 nk-commit 同次入库。无变化可报告已收尾；用户要求只准备、不提交时停在可审阅状态，不能称为已入库。保留、延期和未执行动作如实报告。
 
-**两种触发（同一套六步）：**
-1. **分支收尾（主路径）**：工作分支合并进 main 之前，范围为分支上的全部产物。
-2. **降级路径（直推 main）**：单分支项目中某 plan 全部单元交付后，对该 plan 执行，范围收窄为该 plan 及其关联产物；无归属产物留待发布日扫尾。
+维护依据：[产物生命周期](../conventions/artifact-lifecycle.md)；该约定持有产物寿命与归属，本入口持有执行顺序。短底线源：[决策自主权](../conventions/decision-autonomy.md)、[读取复用](../conventions/resource-loading.md)。
 
-**完成标志：** 遗留项与用户决策点全部处置完毕，有价值内容已提炼，已交付的 plan/审查记录已删除，范围内引用的 Issue 已兜底处置，`docs/current.md` 覆写为收尾后状态，以上改动合为一次 R4 收尾提交入库。
-**工作原则：** 提炼先于删除；只删已交付完成的工件；收尾提交只含本技能涉及的文件。
+<!-- fragment: planning-autonomy -->
+能从现状或已有决定推断的局部选择自行处理并说明理由；只有尚未授权、会实质改变范围、顺序、风险或外部契约的分歧才问。独立问题合并，每轮至多 3 个；决策给 2–3 个选项与推荐，事实和意图允许开放提问。明确续作或“改后继续”的授权仍有效，范围未变不重复确认。
+<!-- /fragment -->
 
----
+<!-- fragment: planning-reading -->
+只加载本次路线和选中角色所需材料。上下文中完整、适用且未变的原文直接复用，缺失或变化才补读；阶段切换不触发重读。必需材料缺失且无降级路径时，停在其管辖动作之前。
+<!-- /fragment -->
 
-## 用户决策点（先读，第 1/3 步会用到）
+未获答复不等于授权；无人值守时保留需裁决的产物并返回未决项，不按推荐值擅自删除、延期或发布。
 
-对以下两类产物**逐项询问用户**，遵循 [`../conventions/decision-autonomy.md`](../conventions/decision-autonomy.md) 第三节的批量提问规则（选项驱动、标注 `(Recommended)`、互不依赖合并为一轮、每轮最多 3 个）：
+## 1. 定界与交付预检
 
-1. **未被消费的发想记录**（`docs/ideation/` 中方向未进入任何 plan 的；被长期文档如 `AGENTS.md` 引用的视为已消费，不问）：
-   * 选项：保留 / 转为 Issue / 删除；推荐项按内容质量判断——仍有辨识度且可能复用则保留，值得排期则转 Issue，已被取代或无信息量则删除。
-2. **推迟的 plan**：转为 GitHub Issue（Recommended，可追踪）/ 移至后续工作分支 / 其他。
+- **分支收尾**：以实际合并目标与累计交付为范围，覆盖 Plan 单元、关联 Issue 和临时纳入的需求或修复；Plan 可能在开分支前已提交，不能只按新增文件认领。
+- **单分支项目**：明确一个已交付 Plan 及关联产物、实施起点；不把 main 上其他工作混入。
+- **明确发布日请求**：仅此时读 [release-day.md](references/release-day.md)，按其步骤执行后返回第 6 步；普通收尾不进入发布流程。
 
-无人值守时按推荐默认推进，并在 `docs/current.md` 阻断/缺口章节逐项登记 `[待确认]`。无 GitHub 远端时 Issue 降级为 `docs/backlog.md` 条目。
+正常收尾读 [closure.md](references/closure.md)，依次完成范围清单和证据预检。清点工作区与暂存区，保留外来或后续工作；不为收尾要求整仓干净。提交编号仅是线索，核对实际变更、Plan 验收、单元审查与验证证据。缺少必要交付条件时返回缺口，不能用建票替代验收。
 
----
+## 2. 轻量合并前检查
 
-## 执行步骤
+通过 [nk-review](../nk-review/SKILL.md) 的 **pre-merge 路径**核对累计成果；单分支项目用相同路径检查本 Plan 的组合结果。传入目标分支/基线、被审快照、文件范围、Plan 目标与已定取舍、临时纳入工作、已有单元审查和验证证据。
 
-### 0. 前置检查
-前提不成立时列出缺口并停下问用户，不放行：
+这条路径默认主会话检查，至多两个只读专项子代理；不默认调用 simplify、常规风险编队或独立 validator。审查方法归 review，close 不复制或再次执行它。已有整体检查覆盖当前内容时复用；后续变化仅补受影响复核，不能因有单元报告就直接视为整体通过。
 
-1. **单元交付核对**：对范围内每个 plan 的每个实施单元，用 `git log --oneline --grep "(U<编号>)"` 确认存在带单元编号的验证提交（进度以提交为准，见 [`../conventions/commit-cadence.md`](../conventions/commit-cadence.md) R1）。
-2. **工作区清点**：`git status` 中不应有未交代的半成品；有则先处置——能收尾的随最后单元提交，不能的登记进 `docs/current.md` 并向用户说明。
-3. **验证证据核对**：交付声明必须由实际运行过的测试或走查支撑；未运行的记为未验证而非通过（纪律见 commit-cadence 第三节）。证据缺失时警告用户，由用户决定是否继续收尾。
+review 返回报告、范围与快照、结论、发现和覆盖缺口。需修复问题交回 work / debug；缺少深入审查则提出明确范围，不能在轻量路径静默扩容。保留待收尾产物并停在清理之前，用户处理后可续作；不自动调用实施技能。新实现变化须重新核对受影响证据。
 
-### 1. 遗留项转移与甄别
-范围为分支（或降级路径下该 plan）上的**全部**产物，含顺带小修产生的决策点：
+## 3. 遗留与知识处置
 
-* 检查 `docs/reviews/` 遗留条目（由 `nk-review` 产生，状态标记见 [`../nk-review/references/entry-format.md`](../nk-review/references/entry-format.md)；目录不存在则跳过并说明），以及 `docs/plans/` 各 plan 的未完成待办。
-* **未完成或推迟的 plan 不随本技能删除**，逐项转入"用户决策点"流程；审查记录遗留项转为 Issue。
-* **Issue 兜底扫描**：处置规则见 [`../conventions/issue-writing.md`](../conventions/issue-writing.md) 第四节（逐条关闭注明提交哈希，或评论说明遗留原因）。机械方法：`git log <base>..HEAD --format=%B | grep -oE '#[0-9]+' | sort -u`（分支模式 base 为合并目标；降级路径取该 plan 起点），加上范围内 plan/文档中的 `#N` 引用去重，逐个 `gh issue view <N> --json state` 核对仍 open 的。
+继续 closure 材料的分类和承接方法。既有延期决定直接复用；尚未决定的未消费发想和推迟 Plan 提供保留、转 Issue、转移或删除等适用选项。转移必须确认目标已承接；交付阻断不能靠转 Issue 消失。
 
-### 2. 价值提炼 (Harvest)
-从即将删除的 plan 与审查记录中提炼长期价值内容，细则见 [`references/harvest.md`](references/harvest.md)：
+Issue 按 [生命周期与写作规范](../conventions/issue-writing.md) 查重、落档及兜底处置，引用编号不等于已解决。不把无关仓库的编号或 PR 当成本仓 Issue。用户限制外部写入时只返回待执行动作。
 
-* 架构选型与踩坑因果：先过 [`../conventions/solution-schema.md`](../conventions/solution-schema.md) 的双轨准入门槛，合格才写入 `docs/solutions/`，平庸内容不建档；
-* 新稳定领域术语：按 [`../conventions/concepts-vocabulary.md`](../conventions/concepts-vocabulary.md) 写入根目录 `CONCEPTS.md`；
-* 若本次提炼**首次创建** `CONCEPTS.md` 或 `docs/solutions/`：按生命周期约定第二章检查 `AGENTS.md` 的知识入口指引，缺则补。
+需要核实并新建或补充遗留记录时，将已有证据、目标仓库和落档授权交给 [nk-to-issue](../nk-to-issue/SKILL.md)，复用调查并返回本流程。Issue 关闭兜底仍由 close 负责。
 
-### 3. 清理已交付工件
-确认第 1 步无遗留、第 2 步提炼完成后，用 `git rm` 删除本次**已交付完成**的 plan 与审查记录（`git rm` 已暂存删除，后续提交无需再 add）。只删已交付的：推迟的已转走，未消费发想记录按用户决策点处置，均不在此删除。完整设计演进由 Git 历史保留。
+按 closure 的候选清单检索已有知识。已有条目足够则复用；合格缺口通过 [nk-compound](../nk-compound/SKILL.md) 沉淀，传对象、证据、已采纳决定、来源、写入授权及“由 close 统一提交”。多个候选逐条处理，返回两项自检和实际文件范围；不读取 compound 私有材料，不顺带复盘或全库审计。只有术语缺口时按 [术语契约](../conventions/concepts-vocabulary.md) 增量补全，不扩大为整库初建或退役。
 
-### 4. 更新 `docs/current.md`
-分支收尾是 R5 的合法更新时机（阶段跃迁）。先读 [`../conventions/current-md.md`](../conventions/current-md.md)，再按其结构覆写为收尾后的真实状态：已具备能力、验证结果（含未验证项）、阻断与 `[待确认]` 项、下一步指向。
+按产物生命周期第二章补本次项目指导与知识入口的实际遗漏；不重订项目规范。知识写入失败或独有内容尚未承接时，保留相关源材料，不进入其删除动作。
 
-### 5. 单个收尾提交（R4）
-读取 [`../nk-commit/SKILL.md`](../nk-commit/SKILL.md) 并遵循其规则：
+## 4. 清理与收尾核对
 
-* 本次属于 R4 规定的"分支收尾点"，允许且只发起**一次**纯文档收尾提交；
-* **显式暂存并限定路径**：只含本技能涉及的文件——`docs/solutions/` 新增、`CONCEPTS.md`、`docs/current.md`、被 `git rm` 的 plan/审查记录（已暂存）、可能新增的 `docs/backlog.md`、`AGENTS.md` 入口指引补行。不使用 `git add -A`；
-* 提交信息风格遵循项目既有惯例，不写死格式。
+按 closure 的产物矩阵决定删除范围：已交付 Plan、已处置审查记录、已消费且依赖工作均交付的发想记录。其他活跃工作仍使用的文件保留；长期引用先迁移内容与修复引用。
 
-### 6. PR 摘要（可选）
-项目走 PR 流程且用户要求时，按 [`references/pr-description.md`](references/pr-description.md) 生成 PR 描述（写 diff 看不出来的东西、长度随决策成本伸缩；对应 Issue 用 `Fixes #N` 闭环）；用户没要求则跳过。release notes 不属于本步，归发布日扫尾。
+删除前确认独有知识、待办和审查证据的去向；从未提交过的材料不能声称可从 Git 历史找回。只对确认可删的受跟踪路径执行 git rm；未跟踪文件逐项确认归属与处置，避免连带删除目录。
 
----
+清理后核对差异、入站引用、相对链接、Issue 去向与材料承接，按项目要求验证本次文档变化。仅知识、引用及状态变化不机械重跑产品审查；若改变产品行为或流程契约，先返回受影响验证。不能修正的缺口保留并报告。
 
-## 发布日扫尾（Release Day）
+## 5. 一次协调提交
 
-触发与原则（发布与收尾解耦、不做提炼删除、不带病发布）以生命周期约定第五章末节为准，此处只展开操作：
+将全部成果、文件范围、已有审查与验证证据、遗留去向及下一步交给 [nk-commit](../nk-commit/SKILL.md)，由其维护 current 并按 R4 合为一次收尾提交。compound 不单独提交；不复制 Git 提交算法，也不限定文件扩展名。无变化不制造提交，用户要求暂留时遵循。
 
-1. **漏网检查**：已交付但未删除的 plan/审查记录、未处置的发想记录、被引用但仍 open 的 Issue（核对方法同第 1 步兜底扫描）。发现漏网项：能当场补一次六步收尾的补收尾，来不及的转 Issue 并在 release notes 中说明。
-2. **Release notes**：写入 `docs/releases/`。
-3. **打 tag**：按项目工作流文档的版本规则执行。
+审查报告若将被清理，提交说明或保留产物需留下审查范围、快照、结论和未验证项，避免唯一证据随未提交文件一起消失。下一步写可定位事实，不把“已收尾”写成“已合并”或“已发布”。
 
-本小节改动（release notes 等）允许发起一次纯文档提交（R4 分支收尾点含发布日扫尾）。
+## 6. 汇报与可选 PR 描述
+
+报告范围、整体检查方式与覆盖、已处置/保留产物、知识路径、Issue 去向、验证边界、提交或暂留状态及下一步。中途退出说明哪些阶段未完成；重入复用有效成果，不重复建票或沉淀。
+
+用户要求 PR 描述时才读 [pr-description.md](references/pr-description.md)，根据最终成果生成；已完成的 Issue 才使用关闭语义。生成描述不等于创建、更新或合并 PR，外部动作按用户授权执行。发布路径额外报告 release notes、提交与 tag 的实际状态。

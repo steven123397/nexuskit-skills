@@ -1,12 +1,10 @@
 ---
 name: nk-init
-description: Initialize a repository for NexusKit on first adoption — probe existing state, confirm with the user, then idempotently set up AGENTS.md guidance, docs/current.md and the backlog fallback. Use when asked to initialize, set up, or bootstrap a repo for NexusKit. 初始化仓库、首次启用 NexusKit、setup、bootstrap。
+description: "User-invoked first-time NexusKit setup for a repository. Inspect existing guidance and workflow choices, then idempotently add the required project instructions, docs/current.md, and a backlog fallback where applicable. Preserve existing project content and configuration."
 disable-model-invocation: true
 ---
 
 # /nk-init
-
-> **路径解析说明：** 本文件中引用的参考文件（如 `../conventions/`、`../nk-commit/`）均相对于本技能所在目录解析；`docs/`、`AGENTS.md`、`CONCEPTS.md` 等产物路径均指**目标代码仓库**中的路径。
 
 在目标仓库首次启用 NexusKit 时运行一次，把仓库变成"体系就绪"状态：知识入口在全局指令文件中可见、会话入口 `docs/current.md` 就位、待办去向明确。全程幂等，可重复运行；已存在的内容一律跳过并向用户说明，不覆盖既有内容。
 
@@ -33,16 +31,16 @@ disable-model-invocation: true
 ### 3. 写入产物 (Write)
 逐项检查，幂等写入；每跳过一个已存在项，向用户说明一次。
 
-- **全局指令文件**：`AGENTS.md` 不存在则新建最小骨架（项目名占位 + 知识入口指引）；已存在（或仅有 `CLAUDE.md` 等等价文件）则只追加缺失的指引行，不改动其他内容，也不新建第二份等价文件。指引指向 `docs/current.md`、`docs/solutions/`、`CONCEPTS.md`，用描述性语气（如"`docs/solutions/` 收录本项目已验证的经验与决策，在已记录领域实施或排障时相关"），不写命令句。依据：[`../conventions/artifact-lifecycle.md`](../conventions/artifact-lifecycle.md) 第二章。
-- **`docs/current.md`**：按 [`../conventions/current-md.md`](../conventions/current-md.md) 模板创建，填"刚启用 NexusKit"的初始状态——所在分支与 HEAD、已具备能力用一句话概述项目现状、阻断写"无"、下一步写从描述第一个任务开始。
+- **全局指令文件**：`AGENTS.md` 不存在则新建最小骨架（项目名占位 + 知识入口指引）；已存在（或仅有 `CLAUDE.md` 等等价文件）则只追加缺失的指引，不改动其他内容，也不新建第二份等价文件。按 [`../conventions/artifact-lifecycle.md`](../conventions/artifact-lifecycle.md) 第二章补齐 current、solutions 及已存在 CONCEPTS 的导航，并说明设计取舍、非琐碎实施或排障时定向检索经验、复用已有结果；已有等效指引直接复用，不以不同措辞判为缺失，不覆盖相冲突的项目规则。
+- **`docs/current.md`**：按 [`../conventions/current-md.md`](../conventions/current-md.md) 模板创建，填"刚启用 NexusKit"的初始状态——所在分支与核对基点、已具备能力用一句话概述项目现状、阻断写"无"、下一步写从描述第一个任务开始。
 - **不创建 `CONCEPTS.md`**：由第一个合格词条创建（见 [`../conventions/concepts-vocabulary.md`](../conventions/concepts-vocabulary.md)）；**不创建空目录**：`docs/solutions/`、`docs/plans/` 等在首个条目产生时再建（git 不跟踪空目录）。
 - **无远端降级**：创建 `docs/backlog.md`，带格式说明头部——"本文件是无 GitHub 远端时的待办降级承载，每条一个条目，格式遵循 NexusKit 的 issue-writing 约定（Category / Current behavior / Desired behavior / Acceptance criteria / Out of scope / Source）"——不预填条目。
 
 ### 4. 提交入库 (Commit)
-以上产物是本次初始化的交付物。读取 [`../nk-commit/SKILL.md`](../nk-commit/SKILL.md)，按提交节奏规则显式暂存这些文件并发起一次初始化提交，提交信息风格遵循项目既有惯例。
+以上产物是本次初始化的交付物。提交时提供成果、已有证据、阻断和下一步，由 nk-commit 按需同步 current 并同次入库。读取 [`../nk-commit/SKILL.md`](../nk-commit/SKILL.md)，按提交节奏规则显式暂存这些文件并发起一次初始化提交，提交信息风格遵循项目既有惯例。
 
 ### 5. 收尾指引 (Done)
-告诉用户体系已就绪，列出本次创建、补充与跳过的产物清单，说明之后可手动编辑这些文件。建议从 `/nk-ask-ljq`（场景路由）或直接描述任务开始。
+告诉用户体系已就绪，列出本次创建、补充与跳过的产物清单，说明之后可手动编辑这些文件。建议从 [/nk-ask-ljq](../nk-ask-ljq/SKILL.md)（场景路由）或直接描述任务开始。
 
 ---
 
