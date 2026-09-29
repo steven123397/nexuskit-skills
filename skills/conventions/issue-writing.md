@@ -1,7 +1,7 @@
 # Issue 生命周期与写作规范 (Issue Writing)
 
 > **定位：** Issue 全生命周期规则的唯一持有者：去向、标签、认领、关闭时机、写作格式。Issue 是跨 plan 事务的载体（D5），它可能在 backlog 里躺上数周，然后被一个毫无现场上下文的 Agent 或会话认领（[nk-work](../nk-work/SKILL.md) 的合法输入之一）——写作质量直接决定接手质量。
-> **生产者与消费者：** [nk-to-issue](../nk-to-issue/SKILL.md) 是核实分析后的主要生产者；[nk-debug](../nk-debug/SKILL.md)、[nk-close](../nk-close/SKILL.md)、[nk-review](../nk-review/SKILL.md)、[nk-wayfinder](../nk-wayfinder/SKILL.md) 在流程内"转 Issue"时遵循同一格式；[nk-brainstorm](../nk-brainstorm/SKILL.md) / [nk-plan](../nk-plan/SKILL.md) / [nk-work](../nk-work/SKILL.md) 是认领方。各技能正文只放指向本文件的指针，不重述规则。本约定不管"何时转 Issue"（时机见 [`artifact-lifecycle.md`](artifact-lifecycle.md) 第四章）。
+> **生产者与消费者：** [nk-to-issue](../nk-to-issue/SKILL.md) 负责核实、查重与落档；work / debug / close 决定分流并传入已有证据及落档授权，review 只返回发现而不自行建票。brainstorm / plan / work 是认领方；wayfinder 的专用格式见第七节。各技能引用本规范，不另造字段或生命周期；分流时机见 [artifact-lifecycle.md](artifact-lifecycle.md) 第四章。
 
 ---
 

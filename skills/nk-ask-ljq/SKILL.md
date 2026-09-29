@@ -32,7 +32,7 @@ disable-model-invocation: true
 - **这个仓库第一次启用体系** → [/nk-init](../nk-init/SKILL.md)
 - **接手工作 / 新会话冷启动**：先读目标仓库的 `docs/current.md`（约定见 [`../conventions/current-md.md`](../conventions/current-md.md)），分支、已验证能力、阻断项、下一步全在里面，别去翻聊天记录和 git log 大海捞针。
 - **有 bug、有异常、行为不对**：复现优先，先造一个能在症状上变红的复现再谈修复 → [/nk-debug](../nk-debug/SKILL.md)
-- **开发中冒出一个发现或新需求，但不想打断手头任务**：核实后落成 Issue，继续干活 → [/nk-to-issue](../nk-to-issue/SKILL.md)
+- **开发中冒出发现或新需求，想先记下而不扩展当前实施范围**：在当前会话核实、查重并落成 Issue，返回继续原任务 → [/nk-to-issue](../nk-to-issue/SKILL.md)
 - **目标太大太模糊，看不见从这里到那里的路径**：先画决策地图，把雾推开再规划（需要 GitHub 远端）→ [/nk-wayfinder](../nk-wayfinder/SKILL.md)
 - **有一串只能人来做的手动操作**（开通服务、点第三方后台、跑一次性迁移）→ [/nk-wizard](../nk-wizard/SKILL.md)
 - **我没跟上，agent 刚才说的没听懂**：暂停，用你缺的上下文重新对齐 → [/nk-wait-what](../nk-wait-what/SKILL.md)

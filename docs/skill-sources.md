@@ -220,13 +220,15 @@ nk-handoff 改为仅用户显式调用：保留 `disable-model-invocation: true`
 
 ## nk-to-issue
 
-主要参考：Matt `triage`（核实与 brief 部分）、NexusKit 共享约定 [`../conventions/issue-writing.md`](../skills/conventions/issue-writing.md)
-与 Matt `triage` 的主要差异及原因：
-* **不是状态机形态**：Matt 围绕 maintainer 的 labels/buckets/state roles（needs-triage、ready-for-agent 等）组织批量分诊；NexusKit 是个人项目、用户自己就是 maintainer，没有"分诊队列"，本技能只处理单条"开发中冒出的发现"，状态流转交给 Issue 平台自身。
-* 删除 external PR surface、AI disclaimer 与 setup 配置探测：个人项目无外部贡献者分诊需求，产物位置由 artifact-lifecycle 约定固定。
-* 删除 grilling 循环：需求澄清按 decision-autonomy 的批量提问规则进行；用户主动想被盘问时可另行调用 `nk-grill`（2026-09 新增）。
-* 保留第 1 步的查重与冗余检查、第 3 步"按步骤复现后再落档"，以及 triage notes 的"已确认事实/还缺什么"二分——后者转写为 issue-writing 约定中 Evidence 小节的核实结论与缺口写法。
-* `.out-of-scope/` 知识库未引入：其"曾被否决的请求"在本体系中的对应物是 `docs/ideation/` 未选中方向、已关闭 Issue 与 `docs/solutions/`（见第 3 步）。
+定位由用户自定义：把当前发现转成可接手待办，不扩展当前实施范围。历史上参考 Matt triage 的核实、查重和事实/缺口表达；这些局部方法不决定本技能的调用方式或会话组织。条目格式和生命周期由 NexusKit issue-writing 维护。
+
+2026-09-29 重构：用户明确无需另开会话，保持单文件，按接收对象与授权、复用证据并补缺、查重与历史判断、创建/更新、返回当前任务组织。保留自然语言触发及授权后的嵌入调用，不添加 disable-model-invocation；被模型选中本身不是外部写入授权。#20 原先从“另开会话”推导“必须手动”的前提不再适用。
+
+- 复用 work / debug / close 已有调查；不固定重跑复现，不修复或启动新 Issue 的实施。
+- 查重命中已有记录时区分无增量与补充更新；曾否决、未选中、已关闭、已有知识均需核对当前条件，不机械拒绝新证据。
+- 无远端使用 backlog；有目标但失败保留草稿，结果不明先确认是否已写入，避免重试重复建票。未授权只给草稿。
+- 调用方传对象、证据、仓库和落档授权，返回实际动作及链接；backlog 随相关交付通过 nk-commit 入库，不自动维护 current 或 handoff。
+- 同步 work / debug / close 的调用接口、ask-ljq 与 README 场景表、共享分流及 Issue 职责；其他技能主体不在本轮重构。
 
 ## nk-wait-what
 

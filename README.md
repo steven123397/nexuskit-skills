@@ -58,7 +58,7 @@
 | 沉淀一条经验或决策 | `/nk-compound` |
 | 分支收尾 | `/nk-close`（含轻量合并前检查、提炼和清理） |
 | 目标巨大、未知太多，无法直接写 plan | `/nk-wayfinder` |
-| 开发中冒出 bug 或新需求，先记下来不打断当前任务 | `/nk-to-issue` |
+| 开发中冒出 bug 或新需求，在当前会话先记下来、不展开实施 | `/nk-to-issue` |
 | 引导人完成一系列手动操作 | `/nk-wizard` |
 | Agent 发散了，需要重新梳理 | `/nk-wait-what` |
 

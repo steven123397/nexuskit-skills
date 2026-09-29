@@ -125,6 +125,7 @@
     "planning-autonomy": {
       "source": "skills/conventions/decision-autonomy.md",
       "targets": [
+        "skills/nk-to-issue/SKILL.md",
         "skills/nk-close/SKILL.md",
         "skills/nk-compound/SKILL.md",
         "skills/nk-ideate/SKILL.md",
@@ -149,6 +150,7 @@
     "planning-reading": {
       "source": "skills/conventions/resource-loading.md",
       "targets": [
+        "skills/nk-to-issue/SKILL.md",
         "skills/nk-close/SKILL.md",
         "skills/nk-compound/SKILL.md",
         "skills/nk-ideate/SKILL.md",
