@@ -1,14 +1,21 @@
 ---
 name: nk-review
-description: "Review a requested change, implementation unit, bug fix, branch or PR using independent subagents; report evidence-backed findings without fixing or committing. 代码审查、单元审查、版本审查；支持嵌入和手动调用。"
-argument-hint: "[调用方范围，或 base ref / 文件路径 / 未提交改动 / PR 编号]"
+description: "Review units, fixes, branches or PRs with independent reviewers; use the explicit pre-merge path for a focused integration and evidence check, normally in the main session. Report findings without fixing or committing. 代码审查、单元审查、合并前检查；支持嵌入和手动调用。"
+argument-hint: "[pre-merge 范围 | 调用方范围 | base ref / 文件路径 / 未提交改动 / PR 编号]"
 ---
 
 # /nk-review
 
-对明确范围的变更做独立审查，结合风险审查与精简分析，统一复核后产出 `docs/reviews/` 报告。既可由用户手动调用，也可嵌入 [nk-work](../nk-work/SKILL.md)、[nk-debug](../nk-debug/SKILL.md) 等流程；不自行修复、转 Issue、更新 current、提交或交接。报告后的处理归调用方或用户。
+对明确范围的变更做审查，产出 `docs/reviews/` 报告。常规路径结合风险审查、精简分析与独立复核；pre-merge 路径聚焦累计成果的组合关系与证据缺口。可手动调用，也可嵌入 [nk-work](../nk-work/SKILL.md)、[nk-debug](../nk-debug/SKILL.md) 或 [nk-close](../nk-close/SKILL.md)。不自行修复、转 Issue、更新 current、提交或交接，后续归调用方或用户。
 
-**完成标志：** 被审范围和快照明确，所选子代理完成审查，存留发现完成独立复核，报告包含证据与覆盖限制。零发现是有效结果；缺少必需代理或材料时明确未完成，不能给出完整审查通过结论。
+**完成标志：** 范围与快照明确，所选路径要求的检查与发现复核已完成，报告包含证据及覆盖限制。常规路径须完成子代理审查和独立 validator；pre-merge 由主会话核实，不宣称独立审查。零发现有效，缺少必需材料或覆盖时明确未完成，不能给出完整通过结论。
+
+## 0. 选择审查路径
+
+- 用户或调用方明确要求合并前检查、pre-merge：只读 [pre-merge.md](references/pre-merge.md)，按其定界、检查和复核后直接进入第 5 步；不加载第 1–4 步的常规编队、simplify 或 validator。
+- 单元、修复、一般分支/PR 审查：走第 1–5 步。对象是分支或 PR 不自动代表轻量模式；针对性复核沿用原路径，仅检查受影响内容。
+
+pre-merge 默认主会话，最多两个只读专项子代理，不派生、不另加 validator；需要深入审查时返回具体缺口，由调用方另行安排，不静默升级。两条路径均复用适用原文和既有证据。
 
 ## 1. 确定审查对象
 
@@ -36,8 +43,10 @@ argument-hint: "[调用方范围，或 base ref / 文件路径 / 未提交改动
 
 ## 5. 写报告并返回
 
-按 [报告格式](references/entry-format.md) 写入或追加 `docs/reviews/<版本或分支标识>.md`，记录本轮单元、修复或分支范围、快照、发现、覆盖限制和未验证项。报告是本技能的产物，不把未确认风险包装成已证实缺陷。
+按 [报告格式](references/entry-format.md) 写入或追加 `docs/reviews/<版本或分支标识>.md`，记录常规或 pre-merge 路径、本轮范围、快照、发现、复用证据、覆盖限制和未验证项。报告是本技能的产物，不把未确认风险包装成已证实缺陷。
 
 嵌入调用时将报告路径、结论、发现和覆盖缺口交回调用方，由其决定与执行后续；不另外询问一轮处理方式。手动调用时向用户汇报相同内容，等待其决定后续。用户明确要求同步 PR 评论时才发送。
+
+公共返回包含基线/快照、路径、检查方式、结论（未发现需处理问题 / 存在待处理发现 / 存在阻断项 / 审查未完成）、发现的编号/严重度/状态/证据及覆盖缺口。三种状态语义：待修需处理；已修复有适用复核证据；遗留-转 Issue 已获延期决定且有承接位置。消费者使用本接口，不读取本技能私有材料来重建状态契约。
 
 修复后的针对性复核仍走本入口，只检查受影响条目、修复差异及新引入风险；无需重新扫描无关范围。确认修复后更新原条目状态，新增问题按新轮次编号。报告保留 `待修 / 已修复 / 遗留-转 Issue` 状态供 [nk-close](../nk-close/SKILL.md) 消费，随后续交付或用户要求的现场保存入库，本技能不发起提交。

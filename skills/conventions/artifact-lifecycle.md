@@ -8,13 +8,13 @@
 
 | 产物类型 | 物理位置 | 生命周期 | 产生/演进方式 | 终点与归宿 |
 | :-- | :-- | :-- | :-- | :-- |
-| **Ideation (发想记录)** | `docs/ideation/*.md` | 短期 / 阶段性 | [/nk-ideate](../nk-ideate/SKILL.md) 创建；30 天内同主题再次发想时更新原文件而非新建 | 被选中的方向进入 Plan 后，随消费它的分支收尾删除；未被消费的发想记录不随分支删除，收尾时询问是保留、转为 Issue 还是删除 |
+| **Ideation (发想记录)** | `docs/ideation/*.md` | 短期 / 阶段性 | [/nk-ideate](../nk-ideate/SKILL.md) 创建；30 天内同主题再次发想时更新原文件而非新建 | 被消费且依赖工作全部交付后提炼删除；尚有活跃消费者则保留；未消费者按用户决定保留、转 Issue 或删除，长期引用须先迁移 |
 | **Plan (方案与计划)** | `docs/plans/*.md`（工作分支；单分支项目在 main 上，格式见 [`plan-format.md`](plan-format.md)） | 短期 / 阶段性 | [/nk-brainstorm](../nk-brainstorm/SKILL.md) 创建需求部分，[/nk-plan](../nk-plan/SKILL.md) 补全实施部分，实施过程中根据新发现直接就地修改 | 收尾时提炼架构决策/术语后删除；不留未维护的历史死 Plan，完整过程由 Git 留存 |
 | **Review (审查记录)** | `docs/reviews/*.md`（工作分支；单分支项目在 main 上） | 短期 / 阶段性 | [/nk-review](../nk-review/SKILL.md) 创建并追加审查条目 | 修复随代码提交更新；收尾时遗留项转 Issue，文件删除 |
 | **Current (会话入口)** | `docs/current.md` | 常驻（单例覆盖） | nk-commit 提交前按需更新；显式 nk-handoff 保存现场 | 持续覆盖更新，始终反映当前真实状态 |
 | **Issue / 待办 / 探针** | GitHub Issues（无远端时降级为 `docs/backlog.md`） | 中期（任务生命周期） | [/nk-to-issue](../nk-to-issue/SKILL.md)（核实落档）、[/nk-wayfinder](../nk-wayfinder/SKILL.md)（探针）、跨 plan 疑难 bug、推迟项 | 完成后关闭（Closed），依靠 Issue 平台状态流转与归档；认领与关闭时机见 [`issue-writing.md`](issue-writing.md) 第三、四节 |
-| **Solutions (经验与决策)** | `docs/solutions/<category>/*.md` | 长期 / 永久资产 | [/nk-compound](../nk-compound/SKILL.md) 沉淀，或收尾时从 plan 提炼 | 永久沉淀；由 refresh 定期审计是否过时或漂移 |
-| **Concepts (领域术语)** | 根目录 `CONCEPTS.md` | 长期 / 永久资产 | [/nk-brainstorm](../nk-brainstorm/SKILL.md) / [/nk-plan](../nk-plan/SKILL.md) 即时录入，[nk-compound](../nk-compound/SKILL.md) 补全 | 永久沉淀；由 refresh 定期审计 |
+| **Solutions (经验与决策)** | `docs/solutions/<category>/*.md` | 长期 / 永久资产 | [/nk-compound](../nk-compound/SKILL.md) 沉淀，或收尾时从 plan 提炼 | 永久沉淀；由明确请求的 refresh 审计是否过时或漂移 |
+| **Concepts (领域术语)** | 根目录 `CONCEPTS.md` | 长期 / 永久资产 | [/nk-brainstorm](../nk-brainstorm/SKILL.md) / [/nk-plan](../nk-plan/SKILL.md) 即时录入，[nk-compound](../nk-compound/SKILL.md) 补全 | 永久沉淀；由明确请求的 refresh 审计 |
 | **项目特有流程** | 项目自选工作流文档（由 `AGENTS.md` 索引） | 长期 | 项目自身维护 | 外部技能读取遵循、不内置、不侵入 |
 | **PR 描述 / Release Note** | GitHub PR 描述 / `docs/releases/*.md` | 可选 / 永久 | PR 开启时写 PR 描述；发布日写 release notes | PR 合并归档；release notes 永久留存 |
 
@@ -86,32 +86,14 @@ flowchart TD
 
 ---
 
-## 五、分支收尾六步法（[/nk-close](../nk-close/SKILL.md)）
+## 五、分支收尾与发布的责任边界
 
-收尾锚定**分支生命周期**：plan 与审查记录活在当前工作分支，合并前收尾；分支不对应发布版本；发布是与收尾解耦的纯事件（见文末"发布日扫尾"）。
+收尾锚定交付范围，不与版本发布绑定。执行顺序、前置检查和条件分支由 [nk-close](../nk-close/SKILL.md) 唯一持有，本约定不再复制执行算法。
 
-**两种触发（同一套六步）：**
-
-1. **分支收尾（主路径）**：工作分支的一揽子工作（plan ± 顺带小修 ± 杂事）交付完成、合并进 main 之前执行，范围为分支上的全部产物——所有 plan、审查记录、发想记录、顺带小修中产生的决策点。
-2. **降级路径（直推 main）**：项目不使用工作分支时，某 plan 的全部实施单元交付后即对该 plan 执行六步，范围收窄为该 plan 及其关联产物（引用的审查条目、覆盖的 Issue）；与任何 plan 无关的产物不在此范围，留待发布日扫尾。
-
-六步如下：
-
-1. **遗留项转移与甄别**：
-   * 检查当前分支的审查记录（`docs/reviews/`）与 Plan 中的待办事项；
-   * 未完成或计划推迟的 Plan，必须先转移成 GitHub Issue 或移至相应后续分支，不可直接遗弃；
-   * 按 [`issue-writing.md`](issue-writing.md) 第四节兜底扫描本范围引用过而未关闭的 Issue，逐条处理。
-2. **价值提炼 (Harvest)**：
-   * 将实施中确立的重要架构选型、踩坑因果按 [`solution-schema.md`](solution-schema.md) 提炼写入 `docs/solutions/`；
-   * 将新引入的稳定领域术语按 [`concepts-vocabulary.md`](concepts-vocabulary.md) 写入根目录 `CONCEPTS.md`。
-   * 按第二章核对知识入口，并检查本次收尾范围涉及的项目指导是否遗漏或失效。
-3. **清理已交付工件**：
-   * 确认无遗留项后，删除本次开发已交付完成的临时 Plan 与 Review 文档（`git rm`）。
-4. **准备收尾状态**：
-   * 整理成果、证据、阻断和下一步供 nk-commit 更新 current。
-5. **单个收尾提交（遵循 R4）**：
-   * 委托 nk-commit 将收尾产物与 current 同次入库，风格遵循项目惯例。
-6. **PR 摘要（可选）**：
-   * 若项目走 PR 流程，按 PR 描述规范生成摘要；release notes 不属于本步，归发布日扫尾。
-
-**发布日扫尾（main 上的发布事件）**：发布是打 tag + release notes 的纯事件，附带一次漏网检查——是否存在已交付但未删除的 plan/审查记录、未处置的发想记录、被引用但仍 open 的 Issue。发布日**不做提炼与删除**（那是收尾六步的职责）；发现漏网项时不带病发布：能当场补一次收尾的补收尾，来不及的转 Issue 并在 release notes 中说明。
+- **分支模式**：覆盖本次合并目标下的累计交付，包括开分支前已形成的 Plan、实施单元和临时纳入的工作；目录中存在不代表属于本次。
+- **单分支模式**：覆盖一个已交付 Plan 及关联产物，不混入同期其他工作；无归属产物可在明确收尾或发布日检查中定界处置。
+- **质量责任**：work / debug 负责实施、修复及相应验证；review 常规路径负责具体改动审查。close 调度 review 的 pre-merge 路径确认累计成果的组合关系与证据覆盖，默认主会话，至多两个专项只读代理，不默认运行 simplify 或独立 validator。缺少必要深入审查时返回缺口，不以轻量检查代替。
+- **知识责任**：close 识别将清理材料中的独有价值，通过 compound 公共入口完成合格沉淀与自检；已有知识复用。术语按共享契约增量维护，不默认启动全库审计。
+- **保全责任**：知识和遗留先承接、引用先处理，再删除已交付过程产物。未消费发想按用户决定处置；已消费未交付或仍被活跃工作使用的保留。长期文件引用不等于工作已交付，也不允许留下断链。
+- **提交责任**：close 协调一次收尾变化，nk-commit 持有 current 与提交规则。显式只准备或不提交时暂留；无变化不制造提交。收尾不自动合并、推送或删除分支。
+- **发布日**：仅明确请求时执行漏网检查、release notes 和已授权 tag；需要提炼/清理则返回收尾路径。先提交发布材料，再核对 tag 目标。交付阻断不能靠转 Issue 放行；非阻断维护遗漏仅按明确延期决定披露。发布准备不等于已发布。

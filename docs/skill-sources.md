@@ -39,22 +39,17 @@ nk-handoff 改为仅用户显式调用：保留 `disable-model-invocation: true`
 
 ## nk-close
 
-2026-09-28（#9 回归）：Issue 引用提取管道显式标注 Bash / Git Bash 前提，与 README 的通用命令及平台脚本边界一致。
+主要来源：NexusKit 自有的分支生命周期设计；PR 描述方法参考 CE 的 pr-description-writing，保留行为变化优先、长度随决策成本伸缩、真实验证和项目模板优先。
 
-2026-09-27 人工审计采纳：收尾按产物生命周期约定第二章补查本分支变化涉及的项目指导，修复有依据的遗漏与失效；不是全仓规范生成。指导文件及索引更新纳入同一次收尾提交。
+2026-09-29 重构：用户确认从已提交 Plan 开分支、逐单元实施并容纳临时工作、全部结束后调用 close。入口成为交付确认与生命周期收尾协调者：定界与证据预检 → review 的 pre-merge 检查 → 遗留与知识承接 → 清理与引用核对 → nk-commit 同次维护 current 并提交 → 汇报/可选 PR 描述。保留仅用户主动调用，不自动合并或发布。
 
-主要参考：NexusKit 共享约定 [`../conventions/artifact-lifecycle.md`](../skills/conventions/artifact-lifecycle.md)（本技能为其第五章的可执行展开）
-关键设计决定：
-* 未消费发想记录与推迟 plan 逐项询问用户、每轮最多 3 个——用户 2026-09-25 拍板；无人值守时采用推荐默认并在 `docs/current.md` 登记 `[待确认]`。
-* 在六步法前增加第 0 步前置检查（单元提交核对、工作区清点、验证证据核对）：证据缺失时警告用户而非放行，依据原提交约定的通用纪律补入（现归 nk-commit 第 3 步）。
-* 提炼的判断细则下沉到 `references/harvest.md`，SKILL.md 保持聚焦"怎么做"。
-* `docs/reviews/` 目录不存在时跳过并说明（项目可能尚未运行过 `nk-review`）。
-* 收尾提交显式限定本技能涉及的文件路径：收尾时工作区可能仍有后续版本的半成品，防止混入提交。
-* 提交信息风格遵循项目惯例而不写死格式：与 nk-commit、nk-handoff 的口径一致。
-
-* 2026-09-27 起收尾锚点从"版本合并"改为分支生命周期（plan U3，用户拍板）：两种触发（分支合并前全量扫 / 单分支项目按 plan 小范围扫）+ 发布日扫尾小节（漏网检查 + release notes + 打 tag，不做提炼删除）；发布与收尾解耦为纯事件。第 1 步纳入 Issue 兜底扫描，指针引用 `issue-writing.md` 第四节不重述。
-* 新增 `references/pr-description.md`（plan U4）：蒸馏自 CE `ce-commit-push-pr/references/pr-description-writing.md`（208 行 → 约 50 行），保留 value-first 原则、按决策成本伸缩的分级、`Fixes #N` / `Related: #N` 语义与"项目约定优先"；裁掉 base 解析机制、stack/多 PR 叙事、概念教学归档（概念与决策的沉淀由 `CONCEPTS.md` / `docs/solutions/` 在更早阶段接住）、branding、session-settled provenance；标题不写死 conventional commits，与 nk-commit "风格遵循项目惯例" 口径一致。
-* 首次实战后修订（2026-09-27，本仓库自身分支收尾）：Issue 兜底扫描补机械方法（grep 收集引用 + `gh issue view` 核对，原条文只说不做）；"用户决策点"章节前置到执行步骤之前（第 1/3 步引用它，原先放在文末阅读顺序颠倒）；发布日扫尾去重——原则归约定第五章，技能只留操作展开；补 `git rm` 已暂存删除的提示；发现"首次创建 CONCEPTS.md 时挂 AGENTS.md 入口"无触发点，已补进生命周期约定第二章与第 2 步。
+- 执行顺序归入口；closure.md 连续持有归属、证据、遗留、知识候选和删除矩阵，取代旧 harvest；release-day.md 是明确发布意图的条件分支。artifact-lifecycle 仅持有寿命、归属和跨技能责任，不复制六步算法。
+- 合并前检查默认主会话，最多两个只读专项代理，不自动启动 simplify、常规编队或独立 validator；深入缺口返回，修复交给 work / debug，不在 close 内实施。证据可复用，后续变化只补查影响链。
+- 单元编号只是定位线索，结合 Plan、变更、审查和验证核对，支持开分支前已有 Plan、多 Plan 重号、squash 和临时工作。未获授权不采用推荐默认删除或延期，建票不替代交付条件。
+- compound 公共入口处理合格知识并返回两项自检与文件范围，close 协调提交；review 以公共返回提供状态，close 不读取其私有格式材料。
+- #18：明确未消费、已消费未交付、已消费已交付及多消费者发想的处置；长期引用须先迁移。未提交报告的必要证据先保留，不能谎称 Git 历史已保存。
+- #16：description 与发布材料统一包含 release notes；提交发布材料后再对确认提交打 tag，不覆盖已有 tag，不自动远端发布。
+- 本轮已获用户审阅与提交授权；实际技能测试仍统一留到 U3。
 
 ## nk-commit
 
@@ -187,6 +182,8 @@ nk-handoff 改为仅用户显式调用：保留 `disable-model-invocation: true`
 * 收尾菜单改为 NexusKit 流程：完成的 Plan 通过 nk-commit 携 current 入库，新会话可用 `nk-work` 接手，不额外触发 handoff；去掉 `/goal`、原型和浏览器打开选项。
 
 ## nk-review
+
+2026-09-29 增加 NK 自有的 pre-merge 路径：显式合并前请求由主会话检查整体目标、跨单元契约、后续变化与组合遗漏；最多两个只读专项代理，不派生、不额外加 validator，不自动调 simplify。证据缺口返回，不静默升级。常规单元/修复/分支审查仍保留 CE 风险编队、精简与独立复核；对象是分支不自动选轻量路径。两路径共用报告与公共结果契约，标明检查方式及覆盖。
 
 2026-09-28（#11、#9 回归）：统一收尾术语；范围探针改为逐条 Git 命令与输出哈希占位符，去掉 Bash 赋值及链式回退，保持现有基线选择逻辑。
 

@@ -53,9 +53,10 @@
 | 显式保存未完成现场 | `/nk-handoff`（仅手动调用） |
 | 排查缺陷或异常 | `/nk-debug` |
 | 审查代码 | `/nk-review` |
+| 只检查累计成果能否一起交付 | `/nk-review pre-merge`（主会话为主，最多两个专项子代理） |
 | 手动分析代码精简机会 | `/nk-simplify` |
 | 沉淀一条经验或决策 | `/nk-compound` |
-| 分支收尾 | `/nk-close` |
+| 分支收尾 | `/nk-close`（含轻量合并前检查、提炼和清理） |
 | 目标巨大、未知太多，无法直接写 plan | `/nk-wayfinder` |
 | 开发中冒出 bug 或新需求，先记下来不打断当前任务 | `/nk-to-issue` |
 | 引导人完成一系列手动操作 | `/nk-wizard` |

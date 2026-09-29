@@ -1,6 +1,6 @@
 # PR 描述规范
 
-> 挂在 [nk-close](../SKILL.md) 第 6 步（PR 摘要）。蒸馏自 CE `pr-description-writing.md`：保留"写 diff 看不出来的东西"与"长度随决策成本伸缩"两条核心原则；裁掉 stack 叙事、概念教学归档与 branding（取舍理由见维护者文档 `docs/skill-sources.md` 的 nk-close 条目）。
+用户需要 PR 描述时由入口加载。根据最终成果和实际证据成文，完成后返回入口；不自行创建、更新或合并 PR。
 
 ## 核心原则：写 diff 看不出来的东西
 
