@@ -31,8 +31,9 @@
 flowchart LR
     B["/nk-brainstorm<br>(澄清概念即写)"] --> P["/nk-plan<br>(方案敲定即写)"]
     P --> W["/nk-work<br>(即时质疑 + 遵循)"]
-    W --> C["/nk-compound<br>(增量捕获遗漏)"]
-    C --> R["/nk-close / refresh<br>(收尾提炼 + 全局审计)"]
+    W -. "有沉淀授权" .-> C["/nk-compound<br>(增量捕获遗漏)"]
+    W -. "用户要求收尾" .-> R["/nk-close<br>(本次交付的术语提炼)"]
+    A["明确要求初建或审计"] --> S["/nk-compound<br>(术语初建或按范围 refresh)"]
 ```
 
 ### 1. 规划期即时写入（JIT 录入）
@@ -45,7 +46,7 @@ flowchart LR
 在 [/nk-compound](../nk-compound/SKILL.md) 沉淀技术方案或排查踩坑时，若遇到此前未被定义且具有非显而易见含义的业务术语，增量补录。
 
 ### 4. 存量老项目初建路径 (Bootstrap / Seeding)
-JIT 即时写入主要覆盖新涌现的术语。对于尚未建立 `CONCEPTS.md` 的既有老项目，需要通过一次全仓初始化（Bootstrap / Seeding）来提炼核心领域名词。**这项全局初建职责由 [nk-compound](../nk-compound/SKILL.md) 的审计（refresh）模式承担**，通过扫描核心业务模型、对外接口与领域文档完成骨架搭建。
+JIT 即时写入主要覆盖新涌现的术语。用户明确要求为既有项目初建整个 `CONCEPTS.md` 时，由 [nk-compound](../nk-compound/SKILL.md) 的术语初建路径提炼核心领域名词：读取 schema、核心类型、主模型和顶层领域文档，形成必要词条，不全仓漫游、不凑数。初建不自动进入 refresh，也不因 solutions 为空而阻塞；审计既有知识需另有明确请求或持续授权。
 
 区别于全局初建：`CONCEPTS.md` 不存在时，规划期即时写入可以由第一个合格条目创建该文件，只写本次敲定的术语，不顺带初建整个项目的术语表。
 

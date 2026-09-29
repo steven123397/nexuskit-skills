@@ -1,4 +1,5 @@
 """Parse skill metadata safely without imposing a client-specific field allowlist."""
+import re
 import yaml
 from yaml.constructor import ConstructorError
 from yaml.nodes import MappingNode
@@ -48,6 +49,11 @@ def validate_frontmatter(text, dirname):
         if not isinstance(value, str) or not value.strip():
             problems.append(f"frontmatter {field} must be a non-empty string")
     name = metadata.get("name")
+    description = metadata.get("description")
+    if isinstance(description, str) and re.search(r"[\u3400-\u9fff]", description):
+        problems.append("description must follow the English-only repository policy (CJK text found)")
+    if "disable-model-invocation" in metadata and not isinstance(metadata["disable-model-invocation"], bool):
+        problems.append("disable-model-invocation must be a YAML boolean")
     if isinstance(name, str) and name.strip() and name != dirname:
         problems.append(f"name '{name}' != directory '{dirname}' (installers derive install dir from frontmatter name)")
     return problems

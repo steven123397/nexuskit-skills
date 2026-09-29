@@ -34,6 +34,25 @@ class ManifestChecks(unittest.TestCase):
     def test_current_inventory(self):
         self.assertEqual([], validate(self.root))
 
+    def test_semver_and_matching_plugin_versions(self):
+        for invalid in [None, 2, "0.2.0beta", "01.2.0", "0.2.0-01"]:
+            with self.subTest(version=invalid):
+                self.mutate(".codex-plugin/plugin.json", lambda d: d.update(version=invalid))
+                self.assertTrue(any("SemVer" in p for p in validate(self.root)))
+        self.mutate(".codex-plugin/plugin.json", lambda d: d.update(version="99.0.0-beta.1"))
+        self.assertTrue(any("versions must match" in p for p in validate(self.root)))
+
+    def test_release_tag_and_notes(self):
+        for rel in [".codex-plugin/plugin.json", ".kimi-plugin/plugin.json"]:
+            self.mutate(rel, lambda d: d.update(version="0.2.0-beta.1"))
+        self.assertEqual([], validate(self.root))
+        self.assertTrue(any("release tag" in p for p in validate(self.root, "v0.1.1")))
+        self.assertTrue(any("release notes missing" in p for p in validate(self.root, "v0.2.0-beta.1")))
+        notes = self.root / "docs/releases/v0.2.0-beta.1.md"
+        notes.parent.mkdir(parents=True)
+        notes.write_text("# Beta release\n", encoding="utf-8")
+        self.assertEqual([], validate(self.root, "v0.2.0-beta.1"))
+
     def test_invalid_json_and_root_types(self):
         for rel in [".codex-plugin/plugin.json", ".kimi-plugin/plugin.json", ".agents/plugins/marketplace.json"]:
             path = self.root / rel

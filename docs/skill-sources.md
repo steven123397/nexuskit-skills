@@ -70,6 +70,8 @@ nk-handoff 改为仅用户显式调用：保留 `disable-model-invocation: true`
 
 ## nk-compound
 
+2026-09-29 beta 合并前检查：共享 concepts-vocabulary 的术语初建改为与入口一致的独立分流，不再要求 refresh；图示分开授权沉淀、分支收尾和显式初建/审计，避免共享材料重新引入已移除的自动全局审计。
+
 2026-09-29 重构：以本地 CE `a763b392` 的 compound / refresh 与 Matt `skills/in-progress/retro/SKILL.md` 为参考。保留沉淀 / 审计两个模式，Bug / Knowledge 为内容轨道；显式协作复盘是沉淀前的条件分析，也可仅交付建议。入口持有路由、授权、术语、可见性、最终两项自检、提交和汇报；capture / audit 保留连续方法，retro 提供六类复盘视角，不自动实施建议或建票。
 
 架构/工具决策须已采纳且满足三门槛；工作流与实践以实际证据、适用条件和未被现有产物表达的认识准入，不要求难以撤回。审计 stale 改为独立布尔字段，保留决策生命周期；空 solution 库不阻塞术语初建，Applied 与 Recommended 区分实际标记和待定替换。#15 的两项自检在所有增强和审计修改之后执行，并进入完成条件。

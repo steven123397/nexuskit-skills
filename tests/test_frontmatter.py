@@ -10,7 +10,7 @@ class FrontmatterChecks(unittest.TestCase):
 
     def test_supported_metadata_and_multiline_description(self):
         self.assertEqual([], self.check(
-            "name: nk-demo\ndescription: >\n  A multiline description\n  with 中文 text.\n"
+            "name: nk-demo\ndescription: >\n  A multiline description\n  with English text.\n"
             "argument-hint: '[scope]'\ndisable-model-invocation: true\n"
             "metadata:\n  tags: [review, plans]\n  custom-field: enabled"
         ))
@@ -46,6 +46,18 @@ class FrontmatterChecks(unittest.TestCase):
 
     def test_directory_mismatch(self):
         self.assertTrue(self.check("name: nk-other\ndescription: example"))
+
+    def test_description_policy_does_not_restrict_body_language(self):
+        self.assertTrue(any("English-only" in p for p in self.check(
+            "name: nk-demo\ndescription: English with 中文 keywords")))
+        self.assertEqual([], validate_frontmatter(
+            "---\nname: nk-demo\ndescription: Explain clearly.\n---\n中文正文\n", "nk-demo"))
+
+    def test_invocation_flag_is_boolean(self):
+        for value in ('"true"', '1', 'null'):
+            with self.subTest(value=value):
+                self.assertTrue(any("YAML boolean" in p for p in self.check(
+                    f"name: nk-demo\ndescription: Example\ndisable-model-invocation: {value}")))
 
     def test_delimiters_are_whole_lines(self):
         self.assertTrue(validate_frontmatter("---\nname: nk-demo\n---extra", "nk-demo"))

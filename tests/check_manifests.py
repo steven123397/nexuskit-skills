@@ -4,7 +4,13 @@ from pathlib import Path
 import re
 
 
-def validate(root):
+# SemVer, including prereleases such as 0.2.0-beta.1.
+NUMBER = r"(?:0|[1-9][0-9]*)"
+IDENTIFIER = rf"(?:{NUMBER}|[0-9]*[A-Za-z-][0-9A-Za-z-]*)"
+VERSION = re.compile(rf"{NUMBER}\.{NUMBER}\.{NUMBER}(?:-{IDENTIFIER}(?:\.{IDENTIFIER})*)?(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?")
+
+
+def validate(root, release_tag=None):
     root = Path(root).resolve()
     problems = []
     names = {p.parent.name for p in (root / "skills").glob("nk-*/SKILL.md")}
@@ -31,12 +37,18 @@ def validate(root):
         if not counts or any(int(n) != len(names) for n in counts):
             problems.append(f"{label}: skill count must match disk ({len(names)})")
 
+    versions = []
     for rel in [".codex-plugin/plugin.json", ".kimi-plugin/plugin.json"]:
         data = load(rel)
         if data is None:
             continue
         if data.get("name") != "nexuskit":
             problems.append(f"{rel}: plugin name must be nexuskit")
+        version = data.get("version")
+        if not isinstance(version, str) or not VERSION.fullmatch(version):
+            problems.append(f"{rel}: version must be valid SemVer")
+        else:
+            versions.append(version)
         path = data.get("skills")
         if not isinstance(path, str) or (root / path).resolve() != root / "skills":
             problems.append(f"{rel}: skills path must distribute ./skills/")
@@ -48,6 +60,14 @@ def validate(root):
                 long_text = ""
             count(f"{rel} longDescription", long_text)
             inventory(f"{rel} longDescription", long_text, names)
+
+    if len(versions) == 2 and len(set(versions)) != 1:
+        problems.append("plugin versions must match across Codex and Kimi")
+    if release_tag is not None:
+        if len(versions) != 2 or any(release_tag != f"v{version}" for version in versions):
+            problems.append("release tag must match both plugin versions")
+        elif not (root / "docs/releases" / f"{release_tag}.md").is_file():
+            problems.append(f"release notes missing for {release_tag}")
 
     market_rel = ".agents/plugins/marketplace.json"
     market = load(market_rel)
