@@ -7,7 +7,7 @@ Five checks, each maps to a class of failure that actually happened:
 3. byte-budget      - SKILL.md <= 8000 bytes (Codex injection limit), ratchet list
 4. shared-resources - canonical methods, caller references, local workflow ownership
                       controlled planning guardrail copies and complete distribution layouts
-5. frontmatter      - basic frontmatter scalar checks, name and
+5. frontmatter      - safe YAML parsing with duplicate-key rejection, name and
                       description, and name matches its directory (installers such
                       as the skills CLI derive the install dir from frontmatter name)
 """
@@ -131,35 +131,18 @@ def check_shared_resources():
 # --- 5. frontmatter ---
 def check_frontmatter():
     problems = []
+    try:
+        from check_frontmatter import validate_frontmatter
+    except ModuleNotFoundError as exc:
+        if exc.name != "yaml":
+            raise
+        check("frontmatter", ["PyYAML is required; run python -m pip install -r tests/requirements.txt"])
+        return
     for f in sorted(glob.glob("skills/*/SKILL.md")):
         f = f.replace(os.sep, "/")
-        text = open(f, encoding="utf-8").read()
-        if not text.startswith("---\n"):
-            problems.append(f"{f}: missing frontmatter")
-            continue
-        end = text.find("\n---", 4)
-        if end == -1:
-            problems.append(f"{f}: unterminated frontmatter")
-            continue
-        name = desc = None
-        for line in text[4:end].splitlines():
-            m = re.match(r"^(\w[\w-]*):\s*(.*)$", line)
-            if not m:
-                continue
-            key, val = m.group(1), m.group(2)
-            if val and not val.startswith(('"', "'")) and ": " in val:
-                problems.append(f"{f}: plain scalar containing ': ' breaks strict YAML parsers; quote the value")
-            if key == "name":
-                name = val.strip("\"'")
-            elif key == "description":
-                desc = val
-        dirname = f.split("/")[1]
-        if not name:
-            problems.append(f"{f}: frontmatter missing name")
-        elif name != dirname:
-            problems.append(f"{f}: name '{name}' != directory '{dirname}' (installers derive install dir from frontmatter name)")
-        if not desc:
-            problems.append(f"{f}: frontmatter missing description")
+        with open(f, encoding="utf-8") as stream:
+            text = stream.read()
+        problems.extend(f"{f}: {problem}" for problem in validate_frontmatter(text, f.split("/")[1]))
     check("frontmatter", problems)
 
 

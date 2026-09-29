@@ -1,10 +1,10 @@
 # 当前状态
 
-- 所在分支：`feat/skill-deep-audit`；核对基点：`c3bea7c`（2026-09-29 本轮整理时 HEAD）。
-- 工作范围：[技能深读计划](plans/2026-09-27-1525-test-skill-deep-audit-plan.md) U2。前十二项完成；nk-close 与 review 合并前路径已获用户审阅，随本次提交入库。
-- 本次成果：close 协调轻量合并前检查、遗留承接、compound 沉淀、清理与统一提交；review 新增 pre-merge，默认主会话、最多两个只读专项代理，不自动调用 simplify 或 validator。
-- 共享规则：生命周期约定保留归属与责任，执行顺序归 close；发想三类状态、共享消费者、长期引用及未提交证据均有保全规则。发布日独立加载，release notes 提交后才创建已授权 tag。
-- 验证：`python -B -X utf8 tests/run_checks.py` 五项通过；`python -B -X utf8 -m unittest discover -s tests -p test_*.py` 14 项通过；两个本轮入口 PyYAML 解析通过；`git diff --check` 通过。主会话已核对两条审查路径隔离、代理上限、产物矩阵与 Issue 范围，未执行受测技能。
+- 所在分支：`feat/skill-deep-audit`；核对基点：`72b69c4`（2026-09-29 本轮整理时 HEAD）。
+- 工作范围：[技能深读计划](plans/2026-09-27-1525-test-skill-deep-audit-plan.md) U2。前十二项已提交；第十三项 nk-init 按用户要求保留主体，关联检查器问题已修复。
+- 本次成果：#13 使用 PyYAML 安全解析并拒绝重复键，补 CI 依赖和 9 项元数据回归测试；#20 的 init description 已明确为用户主动调用，主体保持原样。
+- 相关边界：不新增可选字段白名单；合法 YAML 注释保留，name/description 须为非空字符串且 name 与目录匹配。解析通过不代表客户端加载或技能行为验证。
+- 验证：`python -B -X utf8 tests/run_checks.py` 五项通过；`python -B -X utf8 -m unittest discover -s tests -p test_*.py` 23 项通过；`git diff --check` 通过。主会话已核对解析器接入、字段兼容、CI 依赖与 Issue 范围，未执行受测技能。
 
 ## 接手依据与边界
 
@@ -20,14 +20,14 @@
 
 无编辑阻断；用户已授权提交本轮重构，不执行本仓分支收尾。全部技能重构后才由用户统一安排独立会话沙盒实测，本会话不执行受测技能。提交钩子同步、机械检查和 Issue 关闭均不代表行为验证。
 
-前轮 #15 已关闭；本轮 #16、#18 已按文本修复关闭。真实效果仍纳入 U3。#2 的客户端语言实验保留。历史 Issue 处置见 Plan，#21 不新增 reference 总量硬阈值，#40 保持否决。
+#15、#16、#18 已关闭；#13 本轮已关闭，#20 已完成 init 部分并回写评论，其余涉及 to-issue / wayfinder，仍开放。真实效果仍纳入 U3。#2 的客户端语言实验保留。历史 Issue 处置见 Plan，#21 不新增 reference 总量硬阈值，#40 保持否决。
 
-PyYAML 已可用；全仓 frontmatter 检查仍为基础检查，真正解析由 #13 跟踪。外部 quick_validate 字段限制按 AGENTS.md 处理，不改有效字段或外部安装文件。
+PyYAML 检查依赖已在 tests/requirements.txt 声明并接入 CI；新环境先安装依赖。外部 quick_validate 字段限制按 AGENTS.md 处理，不改有效字段或外部安装文件。
 
 ## 下一步
 
-按用户要求保留其调整后的 nk-init 主体，只处理相关 #13、#20；#20 跨技能部分按实际范围收口。全部技能完成后进入 U3。
+下一项 nk-to-issue：讨论职责与使用流程，处理 #20 的对应调用策略；wayfinder 部分留待其节点。全部技能完成后进入 U3。
 
 ## 工作区未提交改动
 
-本轮 close / review、共享规范、CONCEPTS、README、来源、检查登记、Plan 与 current 同次提交，预期无本轮残留。新增 closure、release-day、pre-merge 材料，旧 harvest 方法迁入 closure 后删除；未运行 nk-close、nk-review 或实际技能测试。
+本轮检查器、回归测试、CI 依赖、init description、AGENTS、来源、Plan 与 current 同次提交，预期无残留；不自动推送。未运行受测技能或真实初始化。

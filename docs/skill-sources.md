@@ -258,6 +258,8 @@ nk-handoff 改为仅用户显式调用：保留 `disable-model-invocation: true`
 
 ## nk-init
 
+2026-09-29 按用户要求保留已调整的主体，仅将 description 明确为用户主动调用，与 disable-model-invocation 一致（#20 的 init 部分）。同期 #13 将仓库 frontmatter 检查改为 PyYAML 安全解析并拒绝重复键，保留可选字段口径；新增检查依赖、CI 安装与畸形元数据回归测试。此为维护检查，不代表初始化技能已实跑。
+
 2026-09-28：随 current-md 契约调整，将初始状态中的 HEAD 描述改为核对基点，不要求记录尚未产生的交接提交哈希。
 
 主要参考：Matt `setup-matt-pocock-skills`（2026-08 备份；仅借鉴骨架）
