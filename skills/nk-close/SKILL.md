@@ -1,6 +1,6 @@
 ---
 name: nk-close
-description: "Close delivered branch or plan work: run a focused pre-merge review, transfer leftovers, preserve knowledge, clean artifacts and coordinate one close commit. Explicit release-day requests add leak checks, release notes and authorized tagging. 分支收尾、合并前检查、发布日扫尾。"
+description: "User-invoked closeout of delivered branch or Plan work. Coordinate a focused pre-merge review, resolve artifact dispositions, preserve reusable knowledge, and commit the closeout. Explicit release-day requests add release checks and notes; do not automatically merge, push, or publish."
 disable-model-invocation: true
 argument-hint: "[分支或 Plan 范围 | 发布日扫尾]"
 ---

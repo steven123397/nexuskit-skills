@@ -1,6 +1,6 @@
 ---
 name: nk-init
-description: "User-invoked repository initialization for NexusKit: probe state, confirm unresolved choices, then idempotently set up AGENTS.md guidance, docs/current.md and the backlog fallback. 用户主动调用：初始化仓库、首次启用 NexusKit、setup、bootstrap。"
+description: "User-invoked first-time NexusKit setup for a repository. Inspect existing guidance and workflow choices, then idempotently add the required project instructions, docs/current.md, and a backlog fallback where applicable. Preserve existing project content and configuration."
 disable-model-invocation: true
 ---
 

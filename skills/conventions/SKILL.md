@@ -1,6 +1,6 @@
 ---
 name: conventions
-description: NexusKit 共享约定参考库（提交节奏、产物生命周期、术语、plan 格式等），由 nk-* 技能正文按需引用；不是可执行技能，不要直接调用。Shared conventions referenced by nk-* skills; not an executable skill — do not invoke directly.
+description: "Shared reference library for NexusKit planning contracts, commit cadence, artifact lifecycle, vocabulary, and role methods. Loaded as needed by nk-* skills; not an executable skill or a direct invocation target."
 disable-model-invocation: true
 ---
 

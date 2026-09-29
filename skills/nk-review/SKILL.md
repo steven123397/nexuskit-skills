@@ -1,6 +1,6 @@
 ---
 name: nk-review
-description: "Review units, fixes, branches or PRs with independent reviewers; use the explicit pre-merge path for a focused integration and evidence check, normally in the main session. Report findings without fixing or committing. 代码审查、单元审查、合并前检查；支持嵌入和手动调用。"
+description: "Review implementation units, fixes, branches, or PRs and report findings without fixing or committing. The regular path combines risk-based review, simplification analysis, and independent validation. The explicit pre-merge path checks combined delivery and evidence, normally in the main session."
 argument-hint: "[pre-merge 范围 | 调用方范围 | base ref / 文件路径 / 未提交改动 / PR 编号]"
 ---
 

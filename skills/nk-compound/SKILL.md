@@ -1,6 +1,6 @@
 ---
 name: nk-compound
-description: "Capture reusable reasoning from verified work or accepted decisions. Explicitly requested retrospectives and knowledge audits/refresh. 沉淀经验、记录决策、复盘工作流、审计知识库、refresh。"
+description: "Capture reusable lessons from verified work or accepted decisions in docs/solutions, or audit existing knowledge when requested. Support explicitly requested collaboration retrospectives before deciding what merits capture. Reuse existing entries and distinguish evidence from proposals; do not modify product code."
 argument-hint: "[简短上下文 | 复盘 [对象] | refresh [范围提示]]"
 ---
 

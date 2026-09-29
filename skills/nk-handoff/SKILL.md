@@ -1,6 +1,6 @@
 ---
 name: nk-handoff
-description: "Only when explicitly invoked by the user, save unfinished work and context in docs/current.md via nk-commit. 仅用户显式调用；保存未完成现场。"
+description: "Only when explicitly invoked by the user, save an unfinished work checkpoint with current progress, evidence, blockers, and next steps in docs/current.md through nk-commit. Not an automatic end-of-session step or a follow-up required after normal delivery commits."
 disable-model-invocation: true
 ---
 

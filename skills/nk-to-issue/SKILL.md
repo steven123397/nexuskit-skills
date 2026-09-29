@@ -1,6 +1,6 @@
 ---
 name: nk-to-issue
-description: "Turn an explicitly requested or already-authorized finding into a ready-to-pick-up Issue: reuse evidence, fill gaps, deduplicate, then create or update. Supports the current session or a caller workflow without starting implementation. 记个待办、落档 bug、把发现转成 issue、补充已有 Issue。"
+description: "Turn a finding, bug, or request into an actionable Issue when recording it is requested or already authorized. Reuse evidence, fill material gaps, check for duplicates, and create or update the record. Work in the current session or a caller workflow, then return without starting implementation."
 argument-hint: "[发现 / 新需求 / Issue 编号或链接]"
 ---
 

@@ -1,6 +1,6 @@
 ---
 name: nk-wayfinder
-description: "User-invoked exploration of an oversized, foggy goal through a GitHub decision map and tickets, handing settled scope and evidence to nk-plan for a standard implementation plan. 仅用户主动调用：超大模糊目标、决策地图、探索后交接统一 Plan。"
+description: "User-invoked exploration of a large, uncertain goal through a shared GitHub decision map and tickets. Resolve questions until scope and decisions are ready for planning, then hand evidence to nk-plan for a standard implementation Plan. Explore the route rather than deliver the implementation."
 argument-hint: "[可选：map issue URL 或编号；留空则带着新想法 chart]"
 disable-model-invocation: true
 ---

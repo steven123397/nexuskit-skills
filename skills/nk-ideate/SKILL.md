@@ -1,6 +1,6 @@
 ---
 name: nk-ideate
-description: "Generate and critique grounded ideas before choosing what to build: many candidates from six lenses, adversarial filtering, ranked survivors saved to docs/ideation/. Use when the user wants ideas, improvements, or surprising directions. Not for refining an idea they already have (nk-brainstorm). 发想、找改进方向、有什么值得做、给点点子。"
+description: "Discover worthwhile ideas and improvement directions before choosing what to build. Generate grounded candidates from multiple perspectives, challenge and rank them, and save an ideation record. Use for finding directions; use nk-brainstorm to clarify a chosen idea into requirements."
 argument-hint: "[主题、关注点或约束，可选；可带 'go deep'、'quick wins'、'top 3' 等]"
 ---
 

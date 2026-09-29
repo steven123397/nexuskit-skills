@@ -1,6 +1,6 @@
 ---
 name: nk-brainstorm
-description: Explore a vague or ambitious idea into a right-sized requirements-only plan (Goal Capsule + Product Contract) that nk-plan can build on; resolve WHAT to build, scope and success criteria through dialogue, capturing domain terms into CONCEPTS.md as they settle. Not for executing specified work (nk-work) or planning HOW (nk-plan). 头脑风暴、需求澄清、明确范围、要做什么、产品需求。
+description: "Clarify what to build through dialogue: goals, product behavior, scope, and success criteria. Produce a requirements-stage Plan for nk-plan to complete. Use for an existing idea that needs definition; use nk-ideate to find ideas, nk-plan to plan implementation, or nk-work to execute specified work."
 ---
 
 # /nk-brainstorm

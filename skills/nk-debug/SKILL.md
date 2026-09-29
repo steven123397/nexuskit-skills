@@ -1,6 +1,6 @@
 ---
 name: nk-debug
-description: "Diagnose bugs, errors, regressions and unexpectedly slow behavior; apply a verified fix when requested. 排查缺陷、定位报错、修复回归、性能异常；支持仅诊断。"
+description: "Investigate bugs, errors, regressions, and unexpected slowness using reproduction and root-cause evidence. Deliver diagnosis alone when requested, or implement an authorized fix with verification, review, and commit. Use for unexplained failures rather than already specified implementation work."
 argument-hint: "[缺陷描述、报错信息、Issue 编号或测试路径]"
 ---
 

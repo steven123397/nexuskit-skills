@@ -1,6 +1,6 @@
 ---
 name: nk-plan
-description: "Create or enrich a technical implementation plan (HOW) for multi-step work, including non-software tasks: research, key technical decisions, implementation units, verification. Use when asked to plan, break down implementation, plan from a brainstorm/requirements doc, or deepen an existing plan; prefer nk-brainstorm for exploratory scoping. 技术规划、实施计划、拆分实施单元、补全需求文档、深化 plan。"
+description: "Plan how to deliver a defined goal: research gaps, choose an approach, divide implementation units, and specify verification. Complete a requirements-stage Plan, turn wayfinder decisions or a direct request into a Plan, or deepen an existing Plan. Supports non-software work; does not implement the plan."
 argument-hint: "[需求描述、需求阶段 plan 路径、要深化的 plan 路径，或任何要规划的任务]"
 ---
 

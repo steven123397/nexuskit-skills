@@ -1,6 +1,6 @@
 ---
 name: nk-grill
-description: 用户主动发起的严格对齐对话，通过详细追问澄清设计、决策或想法，直到双方理解一致。详细问我、想被盘问、严格对齐、grill。
+description: "User-invoked intensive questioning to align understanding of a design, decision, or idea. Investigate facts and ask focused rounds of questions until the user and agent share a clear interpretation. Agreement does not automatically authorize a Plan, implementation, or other writes."
 disable-model-invocation: true
 ---
 

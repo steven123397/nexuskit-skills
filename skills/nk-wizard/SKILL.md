@@ -1,6 +1,6 @@
 ---
 name: nk-wizard
-description: "User-invoked generation of an interactive bash wizard for human-only procedures: setup, credentials, provisioning, migrations or cutovers. 仅用户主动调用：生成手动操作向导；不用于 Agent 自己即可完成的流程。"
+description: "User-invoked creation of an interactive Bash wizard for procedures that require a human, such as service setup, credentials, provisioning, or cutovers. Generate and statically check a staged script for the user to run; do not substitute a wizard for work the agent can perform itself."
 disable-model-invocation: true
 ---
 

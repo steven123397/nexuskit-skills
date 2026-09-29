@@ -1,6 +1,6 @@
 ---
 name: nk-commit
-description: "Single entry for local Git commits and pre-commit current.md updates. 提交、commit、amend。"
+description: "Create or amend local Git commits, check delivery evidence, and update docs/current.md. The shared commit entry for users and workflows."
 ---
 
 # /nk-commit

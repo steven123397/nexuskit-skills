@@ -1,6 +1,6 @@
 ---
 name: nk-ask-ljq
-description: "User-invoked guide to NexusKit: choose a skill for the current situation and explain the route, expected output and handoff. 用户主动问路：该用哪个技能、从哪开始、下一步怎么走。"
+description: "User-invoked guide for choosing a NexusKit entry point. Recommend a skill for the current situation, explain its inputs and expected result, and show how work moves between skills without imposing a fixed pipeline."
 disable-model-invocation: true
 ---
 

@@ -1,6 +1,6 @@
 ---
 name: nk-wait-what
-description: "User-invoked pause asking the agent to re-explain its last unclear message with context and plain project terminology. 仅用户主动调用：没跟上、请 Agent 重新解释、wait what。"
+description: "User-invoked pause when the agent's explanation was unclear. Re-explain the goal, conclusion, reasoning, and unresolved points in plain language with the missing context and project terminology. The agent restates its explanation rather than asking the user to restate it."
 disable-model-invocation: true
 ---
 

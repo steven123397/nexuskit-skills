@@ -6,6 +6,8 @@
 
 ---
 
+2026-09-29 description 语言策略（#2）：维护者决定不再以随机性较大的语言对照实验选择策略，统一使用英文。按本轮重构后的职责重新撰写全部 18 个 nk-* 技能及 conventions 参考库的 description，覆盖适用场景、产物、调用方式与关键分流；不只是删除中文尾句。保留正文语言和既有调用字段，不推断英语具有已验证的触发优势。后续实际执行验证仍属 U3，取消专门的中英 A/B 实验要求。
+
 2026-09-28 提交与现场归属调整：nk-commit 的 R1–R6 统一覆盖已验证交付、中途记录、遗漏补记、场景、提交前 current 更新和独立变化。常规提交携 current 一次完成，取消固定的提交后 handoff/amend 链；复用适用的审查与验证证据。同步 work、debug、plan、brainstorm、close、compound、init、simplify、wizard 的提交接口，以及 ideate、review、to-issue、wayfinder、ask-ljq 的暂留和结束说明。这些是跨技能接口迁移，不代表所有技能主体已重写完成。
 
 nk-handoff 改为仅用户显式调用：保留 `disable-model-invocation: true`，新增 Codex 的 `agents/openai.yaml` 中 `policy.allow_implicit_invocation: false`；正文不重复元数据和 description 已表达的调用限制。current 的字段仍由共享契约维护，handoff 仅补充未完成现场。客户端实际触发与读取效果留待统一沙盒验证。

@@ -1,6 +1,6 @@
 ---
 name: nk-simplify
-description: "Analyze code simplification opportunities while preserving behavior. Explicit standalone invocation or analysis embedded by nk-review; report recommendations without automatic fixes or commits. 精简分析、复用、质量与效率建议。"
+description: "Analyze opportunities to simplify code while preserving behavior, covering reuse, quality, and efficiency. Available through explicit user invocation or analysis embedded by nk-review. Return actionable recommendations without automatically editing code or committing."
 disable-model-invocation: true
 ---
 

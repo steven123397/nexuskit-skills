@@ -1,6 +1,6 @@
 ---
 name: nk-work
-description: "Execute one implementation unit from a plan, an Issue, or a clear request: orient from docs/current.md, test-first implementation, verification evidence, cadence-compliant commits. Use nk-debug for open-ended bugs. 执行实施单元、按计划实现、测试先行。"
+description: "Implement one confirmed unit from a Plan, Issue, or clear request. Inspect current project state, make the scoped change, verify it, resolve applicable review findings, and commit the delivery through nk-commit. Stop after that unit; use nk-debug for failures that still need diagnosis."
 ---
 
 # /nk-work
