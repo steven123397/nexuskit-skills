@@ -1,6 +1,6 @@
 ---
 name: nk-wizard
-description: Generate an interactive bash wizard that walks a human through manual-only procedures — setup, provisioning infrastructure, configuring credentials or CI secrets, one-time migrations or cutovers, guiding manual operations. Not for steps the agent can execute itself. 生成引导脚本、交互式向导、配置 secrets、provisioning、一次性迁移、引导手动操作。
+description: "User-invoked generation of an interactive bash wizard for human-only procedures: setup, credentials, provisioning, migrations or cutovers. 仅用户主动调用：生成手动操作向导；不用于 Agent 自己即可完成的流程。"
 disable-model-invocation: true
 ---
 
@@ -20,10 +20,10 @@ Wizard 默认是一次性产物：为单次运行而构建，保存到 scratch �
 
 梳理出人必须执行的每一个手动步骤，以及沿途捕获的每一个值。先读仓库——不要凭空发问：
 
-- 对于 setup：`.env`、`.env.example`、`.env.*`、`README`、`docker-compose*`、framework config，以及 `.github/workflows/*`（每一处 `secrets.*` / `vars.*` 引用都是 wizard 必须产出的一个值）。
+- 对于 setup：先读 `.env.example`、README、framework config 与相关 CI 引用，定位本次需要的变量名和目的地。只纳入本次范围内缺失的值，不把全部 secrets/vars 扩成配置任务；需要核对现有 `.env` 时避免输出秘密值，已有值优先复用，不写入生成脚本的字面量。
 - 对于 migration 或 cutover：当前状态、目标状态，以及两者之间不可逆的操作。
 
-然后向用户展示有序的 stages 列表以及每个 stage 产出的值，并请其确认——用户可能增删或重新排序。
+然后展示有序 stages 与各值的目的地；已有明确确认直接复用，仅对新增范围、顺序或风险取舍提问。
 
 **Done when：** 每个 stage 都按顺序命名；对于每个捕获的值，你知道 (a) 人从哪里获取它，(b) 它写到哪里（`.env`、一个 GitHub secret、两者，或都不写——有些 stage 是纯操作），以及 (c) 它是 secret（隐藏输入）还是 public。
 
@@ -35,14 +35,14 @@ Wizard 默认是一次性产物：为单次运行而构建，保存到 scratch �
 
 ### 3. 编写 wizard (Author)
 
-把 [assets/template.sh](assets/template.sh) 复制到目标路径。用每个步骤一个 `stage` 替换示例 stage，按依赖顺序排列。使用 library helpers——`stage`、`say`/`step`、`open_url`、`ask`/`ask_secret`、`write_env`、`set_secret`/`set_var`、`pause`/`confirm`——并把 `TOTAL_STAGES` 设为你编写的 stage 数量。
+把 [assets/template.sh](assets/template.sh) 复制到不覆盖现有工作的目标路径。用每个步骤一个 `stage` 替换示例 stage，按依赖顺序排列。使用 library helpers——`stage`、`say`/`step`、`open_url`、`ask`/`ask_secret`、`write_env`、`set_secret`/`set_var`、`pause`/`confirm`——并把 `TOTAL_STAGES` 设为你编写的 stage 数量。明确运行目录、ENV_FILE 与目标 GitHub 仓库，避免从错误目录写入。
 
-守住 template 设定的标准：在索取某个 URL 的值之前先打开它；对任何 secret 使用 `ask_secret`；对每个持久化的值使用 `write_env`；只对 CI 确实需要的值使用 `set_secret`；在任何不可逆操作之前 `confirm`。每个 `stage` 都会清屏，只显示当前步骤——让一个 stage 只聚焦一项任务，这样人需要的内容就不会滚出视野。不要触碰标记之上的 library。
+守住 template 设定的标准：在索取某个 URL 的值之前先打开它；对 secret 使用 `ask_secret`；只有目的地包含 `.env` 才使用 `write_env`；CI secret 与 public variable 分别使用 `set_secret` / `set_var`；在不可逆操作之前用 `confirm` 阻止未获确认的继续执行。每个 stage 聚焦一项任务。不要触碰标记之上的 library。
 
 ### 4. 验证与交付 (Verify and hand off)
 
 - `bash -n <script>`；环境中有 `shellcheck` 则一并运行。
 - `chmod +x <script>`。
 - 不要自己端到端运行它——它会打开浏览器并阻塞在人的输入上。改为静态追踪：步骤 1 中列出的每个值都被捕获并落到它该去的位置，并且每个 `set_secret` 名称都与 CI 中的某处 `secrets.*` 引用精确匹配。
-- 告诉用户如何运行它。仅需入库的可重复 setup 路径交给 nk-commit，提供成果、已有证据、阻断和下一步，由其同步 current 并提交。
+- 告诉用户运行目录、命令与前置条件；区分脚本已生成、静态检查通过和用户实际操作完成。一次性脚本在用户完成前保留，不因交付即删除。仅需入库的可重复 setup 路径交给 nk-commit，提供成果、已有证据、阻断和下一步，由其同步 current 并提交。
 - 生成过程中发现值得沉淀的非显性知识（如某服务配置文档没写的坑），建议调用 [nk-compound](../nk-compound/SKILL.md) 记入知识库。

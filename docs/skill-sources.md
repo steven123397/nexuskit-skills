@@ -234,6 +234,8 @@ nk-handoff 改为仅用户显式调用：保留 `disable-model-invocation: true`
 
 主要参考：Matt `wait-what`。差异：术语表从 `CONTEXT.md` 换成 `CONCEPTS.md`；ASD-STE100 的硬性要求放宽为"简单直接、没有歧义"（中文协作场景）。
 
+2026-09-29 修正主客体：用户调用后由 Agent 重新解释上一条不清楚的消息，补上下文、依据和待对齐项；不要求用户重新表述，也不自动规划或修改产物。保持手动单文件技能。
+
 ## nk-wayfinder
 
 #3 结果体量收口：research 回传引用共享约定，同时保留 ticket 对持久研究成果的链接，不用临时路径代替跨会话依据。
@@ -247,16 +249,19 @@ nk-handoff 改为仅用户显式调用：保留 `disable-model-invocation: true`
 * `/research` subagent → 中性写法：支持子代理则派发，否则主会话内联完成；去掉一次性 research branch 约定（客户端无关性，findings 直接从 ticket 链接）。
 * `/prototype` → 一句话内联：构建廉价粗糙的具体产物辅助讨论，不依赖技能。
 * 删除 `agents/openai.yaml`：客户端专有配置。
-* 新增与 `nk-compound`、`nk-plan`/`nk-work` 的衔接说明；结束只汇报，不自动 handoff，以及无人值守下 HITL ticket 的登记规则。
+* 保留与 `nk-compound` 的知识衔接；探索结果统一交给 `nk-plan` 公开入口，由其整理 Product Contract 并产出标准 Plan，不直接从 ticket 进入 work，不强制经过 brainstorm。同步 nk-plan 的输入承接规则，Map/tickets 作为 Sources，不新增 Plan 契约或来源枚举。
+* 2026-09-29 明确仅用户主动调用；完成判据改为足以规划，而非所有未来决定已解决。Map 不接管正式实施；每轮默认一个非 research ticket，维护后可在同一会话继续。HITL 未解决时保留卡点并按约定释放 claim，不自动维护 current。
+* Tracker 明确认领非原子锁、完整分页、失败分类与并发合并；失效 tickets 关闭留痕。研究只有独立且允许委派时并行，派发不等于完成。
 
 ## nk-wizard
 
 主要参考：Matt `wizard`（2026-08 备份，`skills/wizard/`）
 与上游的差异及原因：
 * 正文改写为中文并套用 NexusKit 体例（执行步骤编号、"Done when" 判据原义保留）；上游描述段精简为适用场景说明。
-* `template.sh` 逐字节保留为 `assets/template.sh`，不翻译不精简：上游明确 library 部分永不手改，一致性正是重点；该文件是技能交付物的模板资产，不是技能自身的自动化设施，不违反体系"纯 Markdown 无脚本"原则。
+* `template.sh` 作为 `assets/template.sh` 保留；生成向导时统一复制 library，不由每次生成改写。2026-09-29 对维护源的唯一行为调整：有 SKIPPED 项时显示未完成，避免虚报完成。该文件是交付物的模板资产，不是技能自身的自动化设施。
 * 删除 `agents/openai.yaml`：客户端专用配置，NexusKit 客户端中立。
 * 新增两处衔接：Windows 下用 Git Bash 运行的说明；入库例外明确指向 nk-commit R1，并提示用 `nk-compound` 沉淀过程中发现的非显性知识。
+* 2026-09-29 保持仅手动调用，限定本次配置范围、复用已确认步骤；按目的地写值，不强制将 CI-only 值落入 .env；避免输出凭据、覆盖已有脚本和运行前清理。区分静态检查与人工实际完成。
 
 ## nk-init
 

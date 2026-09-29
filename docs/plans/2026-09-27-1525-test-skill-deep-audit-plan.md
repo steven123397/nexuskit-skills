@@ -9,7 +9,7 @@ topic: skill-deep-audit
 
 # 技能逐个重构、深读审计与微项目实跑
 
-**当前位置：U2。前十三项已处理；本次交付 nk-to-issue，#20 的 init / to-issue 部分已处理；下一项 nk-wait-what。全部实际行为仍待重写完成后由用户统一安排 U3 沙盒验证。**
+**当前位置：U2。前十七项已处理；本次联合交付 nk-wayfinder、nk-wizard 与 nk-wait-what；最后一项 nk-ask-ljq 待统一入口。全部实际行为仍待重写完成后由用户统一安排 U3 沙盒验证。**
 
 **推进方式：逐技能深读、重构，并处理关联 Issue。** GitHub Issues 是唯一问题清单；本计划记录重构顺序与任务范围，不另设问题编号或复制 Issue 验收要求。问题详情、讨论和完成状态以对应 Issue 为准；只有取得所需证据并满足验收后才关闭。
 
@@ -33,16 +33,18 @@ topic: skill-deep-audit
 | 10 | `nk-ideate` | 主流程与交付归入口，条件材料返回；保留发想方法，修复续作授权与证据交接 | 无未关闭关联 Issue；真实效果纳入 U3 |
 | 11 | `nk-compound` | 已完成：沉淀 / 审计及条件复盘，入口收拢自检与提交边界 | 无 |
 | 12 | `nk-close` | 已完成：轻量合并前检查、知识承接、产物矩阵与发布分支 | 无未关闭关联 Issue；真实效果纳入 U3 |
-| 13 | `nk-init` | 主体保持用户调整，修复 YAML 检查及主动调用描述 | #13 已关闭；#20 的 init 部分完成，其余见后续节点 |
-| 14 | `nk-to-issue` | 已完成：当前会话/授权嵌入、证据复用、查重更新与失败出口 | #20 本节点已处理，仅余 wayfinder |
-| 15 | `nk-wait-what` | 整理重对齐步骤、已有产物有效性及后续返回条件 | 无未关闭关联 Issue；真实效果纳入 U3 |
-| 16 | `nk-wayfinder` | 整理决策地图、Issue 关联与按需材料 | [#20](https://github.com/steven123397/nexuskit-skills/issues/20) |
-| 17 | `nk-wizard` | 整理手动操作步骤、观察证据与人机交接 | 无未关闭关联 Issue；真实效果纳入 U3 |
+| 13 | `nk-init` | 主体保持用户调整，修复 YAML 检查及主动调用描述 | #13、#20 已关闭；真实效果纳入 U3 |
+| 14 | `nk-to-issue` | 已完成：当前会话/授权嵌入、证据复用、查重更新与失败出口 | #20 已关闭；真实效果纳入 U3 |
+| 15 | `nk-wait-what` | 已完成：由 Agent 补上下文重新解释，保持手动轻量入口 | 无未关闭关联 Issue；真实效果纳入 U3 |
+| 16 | `nk-wayfinder` | 已完成：决策地图收敛、标准 Plan 交接、同会话续轮与 tracker 边界 | #20 已关闭；真实效果纳入 U3 |
+| 17 | `nk-wizard` | 已完成：范围、值目的地、人工交接与跳过项未完成提示 | 无未关闭关联 Issue；真实效果纳入 U3 |
 | 18 | `nk-ask-ljq` | 最后统一入口引导，并同步 README 与插件介绍 | [#28](https://github.com/steven123397/nexuskit-skills/issues/28)、[#32](https://github.com/steven123397/nexuskit-skills/issues/32) |
 
 第 18 项完成入口统一后，进入 U3 统一开展沙盒实际测试，核对全部 Issue 验收与外部证据，再做主仓库分支收尾。前面节点的未完成项保留在原行和对应 Issue，不另建收尾待办。
 
 ## 已关闭的关联 Issue
+
+2026-09-29 三个手动技能联合重构后关闭 #20：init / wayfinder 的主动调用描述及 to-issue 的最新授权边界已对齐；五项静态检查、wizard 模板 Bash 语法检查通过。实际行为仍待 U3。
 
 截至 2026-09-28：[#1](https://github.com/steven123397/nexuskit-skills/issues/1)、[#3](https://github.com/steven123397/nexuskit-skills/issues/3)、[#8](https://github.com/steven123397/nexuskit-skills/issues/8)、[#9](https://github.com/steven123397/nexuskit-skills/issues/9)、[#10](https://github.com/steven123397/nexuskit-skills/issues/10)、[#11](https://github.com/steven123397/nexuskit-skills/issues/11)、[#14](https://github.com/steven123397/nexuskit-skills/issues/14)、[#19](https://github.com/steven123397/nexuskit-skills/issues/19)、[#22](https://github.com/steven123397/nexuskit-skills/issues/22)、[#23](https://github.com/steven123397/nexuskit-skills/issues/23)、[#26](https://github.com/steven123397/nexuskit-skills/issues/26)、[#30](https://github.com/steven123397/nexuskit-skills/issues/30)、[#31](https://github.com/steven123397/nexuskit-skills/issues/31)、[#34](https://github.com/steven123397/nexuskit-skills/issues/34)。关闭原因与讨论以对应 Issue 为准，不在此复制问题正文。
 
@@ -100,7 +102,7 @@ ideate / grill 联合整理收口：[#29](https://github.com/steven123397/nexusk
 ## Implementation Units
 
 - **U1：沙盒准备。** 已完成骨架与远端配置；外部 nk-init 首次接入已核对。
-- **U2：逐技能重构与机械检查。** 按上表及“逐技能重构任务”推进，nk-to-issue 本次交付，下一项 nk-wait-what。每次核对当前技能和关联 Issue，修改后完成内容核对、来源同步与机械检查；不安排逐技能沙盒实跑。全部技能重写及入口统一完成后进入 U3。
+- **U2：逐技能重构与机械检查。** 按上表及“逐技能重构任务”推进，三个手动技能本次联合交付，最后一项 nk-ask-ljq。每次核对当前技能和关联 Issue，修改后完成内容核对、来源同步与机械检查；不安排逐技能沙盒实跑。全部技能重写及入口统一完成后进入 U3。
 - **U3：统一沙盒实测与收口。** 确认沙盒加载全部重写后的已提交版本，由用户安排独立会话按真实开发场景测试；核对触发、读取路径、产物、验证证据和关联 Issue 验收。实测发现的问题修复后重跑受影响场景，满足验收再关闭 Issue。全部通过后汇总用户确认并收尾；必要长期结论进既有经验库，不再建立成果流水账。
 
 ## Verification Contract

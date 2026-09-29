@@ -60,6 +60,8 @@
 
 Durable 且没有采用上游时，从请求出发写出完整 Plan，`product_contract_source: nk-plan`。
 
+承接 wayfinder Map 时，读取交接摘要及必要的 ticket resolution：目标、范围、已定决定及理由、排除方案、成功标准、证据与剩余未知。Map 是探索来源，不是需求阶段 Plan；不强制返回 brainstorm。明确要求标准实施 Plan 时走 Durable，由本入口整理 Product Contract，使用 `product_contract_source: nk-plan`，在 Sources 保留 Map/ticket 链接。已定决定直接承接，只补缺口；真正的产品阻塞按 0.5 处理。已有对应 Plan 则续写，不重复创建。交付时把 Plan 路径与提交等可追溯位置返回 wayfinder。
+
 **已定决策与上游产品决策同等保护**：调研只能补充，不重问、不悄悄改写。发现矛盾证据时按严重程度处理：没发现问题 → 照常；可行但不理想 → 按已定执行，并在对应条目上附冲突说明；导致不可行、做错东西或有破坏性 → 停下，作为阻断项报告给用户。当前用户已经明确纠正的目标优先于冲突的旧条目；修改时保留其他有效内容与稳定 ID，不把普通澄清当成全盘作废。
 
 ## 0.4 没有需求文档或输入不清时的规划引导

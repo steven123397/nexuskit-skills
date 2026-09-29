@@ -8,9 +8,9 @@
 
 阅读文档、第三方 API、本地知识库等资源，找出某项 decision 正在等待的事实。当需要当前工作目录之外的知识时使用。
 
-- 支持子代理的客户端并行派发研究子代理；不支持时在主会话内联完成。
+- 客户端支持且允许委派时，可并行派发独立研究；否则主会话内联完成。
 - Resolution 记录找到的事实、来源链接，以及它对 pending decisions 意味着什么。
-- Research tickets 不受"每会话一个 ticket"限制：它们互不依赖、无状态，可以在 charting 会话中成批派出。
+- Research tickets 可批量处理，但先核对实际依赖，不假定所有研究都独立；每项仍须认领、记录结果并维护 map。
 
 ### Prototype（HITL）
 
@@ -21,6 +21,8 @@
 ### Grilling（HITL，默认类型）
 
 纯对话。拿不准类型时用 grilling。
+
+这是 ticket 类型，不自动调用仅由用户主动发起的 nk-grill。
 
 - 对话按 [`../../conventions/decision-autonomy.md`](../../conventions/decision-autonomy.md) 的提问规则进行：选项驱动、互不依赖的问题合并一轮（至多 3 个）、标注推荐项；收集事实与叙述的问题可以开放式提问。
 - 对话中敲定的新领域术语按 [`../../conventions/concepts-vocabulary.md`](../../conventions/concepts-vocabulary.md) 即时写入 `CONCEPTS.md`；用词与术语表冲突时当面指出并对齐。
@@ -35,8 +37,8 @@
 
 ## 无人值守限制
 
-无人值守（无人类即时响应）时，HITL ticket 不可 resolve：按 decision-autonomy 约定的兜底规则，不挂起等待，而是把该 ticket 在 `docs/current.md` 登记为 `[待确认]`，附当前卡点，然后结束本会话或转去处理 AFK 工作。
+无人值守时，HITL ticket 不可 resolve，也不替用户回答。保留未解决状态并记录卡点；无法继续且无保留认领约定时释放本轮自己的 claim，汇报后结束，或按已有授权处理 AFK 工作。不自动维护 current。
 
-## 每会话一个 ticket
+## 每轮一个 ticket
 
-无论类型（research 除外），每个会话最多 resolve 一个 ticket。原因：ticket 之间的依赖靠 resolution 后的 map 维护（升级 fog、wire 新 edges、作废失效 tickets）保持准确，一次解决多个会跳过这些维护，让 map 失真；而且每个 ticket 都值得一个干净的会话上下文。完成一个 ticket 的全部记录与 map 维护后，本会话结束，下一个 ticket 交给下一个会话（或交给你自己新开的一轮）。
+非 research ticket 每轮默认处理一个，先完成 resolution 和 map 维护，再选择下一项。用户要求继续时可在同一会话进入下一轮；不能跨过维护步骤批量关单。

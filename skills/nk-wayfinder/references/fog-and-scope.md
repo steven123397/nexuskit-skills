@@ -4,7 +4,7 @@
 
 ## Fog of war
 
-Tickets 之外是 fog：你能感觉到以后会来的 decisions 和 investigations，但它们悬在仍未解决的问题之上，暂时无法钉住。解决一个 ticket 会清掉它前方的一片 fog，把现在已经能说明的问题升级成新 tickets；一次一个，直到通往 destination 的路清楚、不再有 tickets 剩下。
+Tickets 之外是 fog：你能感觉到以后会来的 decisions 和 investigations，但它们悬在仍未解决的问题之上，暂时无法钉住。解决一个 ticket 会清掉它前方的一片 fog，把现在已经能说明的问题升级成新 tickets。每轮回到入口核对是否足以进入规划；不要求消除所有实施期未知，也不以 ticket 数量作为完成标准。
 
 **Not yet specified** 一节记录这种朦胧视野：怀疑中的问题、之后要回访的区域。这里的内容全部在 scope 内，只是还不够清晰成为 ticket。可以按视野允许的粗细来写；它也是协作者阅读这个 effort 走向时的路标。
 
@@ -19,7 +19,7 @@ Tickets 之外是 fog：你能感觉到以后会来的 decisions 和 investigati
 
 - **排除**：Not yet specified 不包含已决定的内容（Decisions so far）、已是 live ticket 的内容、以及 out of scope 的内容。
 - **升级（graduate）**：ticket 解决后，把答案已经说清的 fog 建成新 tickets（先创建、拿到编号后再 wire blocking edges），并从 Not yet specified 删去每个已升级条目——它只作为新 ticket 存在，不在两处重复。
-- **无 fog 即无 map**：charting 时如果 breadth-first 扫完发现没有 fog，说明路径已清晰、一个会话能走完，不需要 map。
+- **无 fog 即无须建 map**：charting 时如果 breadth-first 扫完已足以规划，直接交接 nk-plan；不据此承诺实施规模或会话数量。
 
 ## Out of scope
 
