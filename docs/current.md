@@ -1,7 +1,8 @@
 # 当前状态
 
-- 所在分支：`main`；核对基点：`c70abd0`（U3 沙盒实跑结论）。
-- 本次交付：`v0.2.0` 正式版发布材料，Codex/Kimi 清单均为 `0.2.0`；[发布说明](releases/v0.2.0.md) 随发布提交入库。18 个技能文本重构及英文 description 统一完成；技能执行内容与 beta 一致。远端发布结果以对应 tag、CI 与 [GitHub Release](https://github.com/steven123397/nexuskit-skills/releases/tag/v0.2.0) 为准。
+- 所在分支：`main`；核对基点：`49de48e`（v0.2.0 首次发布）。
+- `v0.2.0` 正式版已发布，Codex/Kimi 清单均为 `0.2.0`；本次补充 ask-ljq 个性化交互及 README 入口文案，维护者授权将同名 tag 移至本次提交，GitHub Release 标题和正文保持原样。发布说明中“与 beta 一致”描述的是首次发布快照；当前差异以 Git 为准。
+- 本次五项机械检查及差异检查通过，已核对交互确认与正常选路边界；新增交互未做客户端实跑。原 U3 证据仍适用于此前覆盖的基本流程。
 - 发布准备：CI 增加版本 tag 与手动入口，Windows/Linux 均运行五项检查、回归测试与 Bash 模板语法；检查插件 SemVer/版本一致性、tag 与 release notes、英文描述残留和调用标志类型；固定文本 LF。
 - 合并前检查：主会话加一个只读专项代理，核对跨技能接口和累计交付；修复共享术语约定将初建误导向 refresh 的残留。依据与限制见 [验证记录](reviews/feat-skill-deep-audit.md)。
 - 验证：五项检查、35 项回归测试、Bash 模板语法和差异检查通过；PR #41 的 Windows/Linux CI 已通过。U3 在独立 notes CLI 沙盒会话中观察到 beta 快照的技能读取、需求规划、调试、实施、审查、提交和分支收尾；合并后的 10 项 CLI 测试通过。场景、提交与边界见 [验证记录](reviews/feat-skill-deep-audit.md)。
@@ -15,10 +16,10 @@
 
 ## 下一步与版本路线
 
-1. 发布材料提交后从 main 打 `v0.2.0` tag，核对 Windows/Linux CI 并创建正式 GitHub Release；维护者已授权。
+1. 将本次补充提交推送至 main 并移动 `v0.2.0` tag，核对 CI 与远端指向；保留现有 Release 内容。
 2. 维护者在 paper30min 实际开发中使用 `v0.2.0`；内容、方法论及其他实际开发问题进入后续 `v0.2.x`，包括 #42。
 3. `v0.3.0` 仅有初步概念构想，暂不启动新一轮大迭代。
 
 ## 工作区未提交改动
 
-本次发布材料随发布提交入库；本地测试生成的 `tests/__pycache__/` 未跟踪缓存不纳入提交。不修改技能执行内容或 paper30min 仓库。
+本次 ask-ljq、README、来源说明和 current 随提交入库；本地测试生成的 `tests/__pycache__/` 未跟踪缓存不纳入提交。不修改 paper30min 仓库。
