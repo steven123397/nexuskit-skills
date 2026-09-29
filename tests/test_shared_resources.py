@@ -62,8 +62,33 @@ class SharedResourceChecks(unittest.TestCase):
         self.assertTrue(any("unresolved reference" in x for x in self.failures()))
 
     def test_missing_local_workflow(self):
-        (self.root / "skills/nk-plan/references/handoff.md").unlink()
+        (self.root / "skills/nk-plan/references/phase-0.md").unlink()
         self.assertTrue(any("membership differs" in x for x in self.failures()))
+
+    def test_fragment_drift_in_each_consumer(self):
+        registry = json.loads((self.root / "tests/shared-resources.json").read_text(encoding="utf-8"))
+        for name, entry in registry["fragments"].items():
+            for rel in entry["targets"]:
+                with self.subTest(fragment=name, target=rel):
+                    path = self.root / rel
+                    original = path.read_text(encoding="utf-8")
+                    marker = f"<!-- fragment: {name} -->\n"
+                    path.write_text(original.replace(marker, marker + "drift\n"), encoding="utf-8")
+                    self.assertTrue(any(f"fragment {name} is missing, duplicated or differs" in x for x in self.failures()))
+                    path.write_text(original, encoding="utf-8")
+
+    def test_missing_fragment_source_block(self):
+        path = self.root / "skills/conventions/resource-loading.md"
+        path.write_text("# missing guardrail\n", encoding="utf-8")
+        self.assertTrue(any("fragment source must contain one nonempty block" in x for x in self.failures()))
+
+    def test_duplicate_fragment_copy(self):
+        path = self.root / "skills/nk-plan/SKILL.md"
+        original = path.read_text(encoding="utf-8")
+        start = original.index("<!-- fragment: planning-reading -->")
+        end = original.index("<!-- /fragment -->", start) + len("<!-- /fragment -->")
+        path.write_text(original + "\n" + original[start:end], encoding="utf-8")
+        self.assertTrue(any("fragment planning-reading is missing, duplicated or differs" in x for x in self.failures()))
 
     def test_incomplete_plugin_manifest(self):
         p = self.root / ".codex-plugin/plugin.json"

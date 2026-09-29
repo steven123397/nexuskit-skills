@@ -1,32 +1,33 @@
 # 当前状态
 
-- 所在分支：`feat/skill-deep-audit`；核对基点：`d643287`（2026-09-29 交接时 HEAD）。
-- 工作范围：[技能深读计划](plans/2026-09-27-1525-test-skill-deep-audit-plan.md) U2；下一项为 nk-plan。
-- 已提交：nk-work 范式、nk-commit 统一入口与 current 归属、nk-handoff 显式调用边界。
-- 本次交付：nk-debug 阶段重构、simplify/review 联合重构、work/debug 审查接入、全技能路径声明与链接清理、Issue 核对及 Plan 分区；随本次交接入库。
-- 验证：最近一次 `python -B -X utf8 tests/run_checks.py` 五项与 `git diff --check` 通过；review/simplify 经 PyYAML 解析及必要字段核对通过。此后仅整理交接文档，未重复跑技能测试。
+- 所在分支：`feat/skill-deep-audit`；核对基点：`23630b3`（2026-09-29 Issue 收口时 HEAD）。
+- 工作范围：[技能深读计划](plans/2026-09-27-1525-test-skill-deep-audit-plan.md) U2。前六项 work、commit、handoff、debug、simplify、review 已交付；brainstorm / plan 联合重构本次交付，下一项为 nk-grill。
+- 本次成果：两个入口持有主流程、条件加载和交付；需求对话与压力测试合并，证据工作集中；明确续作与历史参考、授权复用、视觉偏好、定向深化及自检边界。保留 CE 的具体方法和统一 Plan 契约。
+- 共享规则：四段短底线由原共享约定维护，两个入口持有受控副本；范围综述直接读共享方法，本地成文材料持有落点。检查覆盖副本缺失、重复与漂移；没有生成脚本。
+- 验证：`python -B -X utf8 tests/run_checks.py` 五项通过；`python -B -X utf8 -m unittest discover -s tests -p test_*.py` 14 项通过；`git diff --check` 通过；两个入口另经 PyYAML 解析及必要字段核对。静态核对不等于客户端执行验证。
 
-## 接手必读与重构理念
+## 接手依据与边界
 
-先读 [组织范式](solutions/architecture-decisions/2026-09-28-skill-execution-locality.md)、上述 Plan 的逐技能任务与联合设计，再按需读 [来源与取舍](skill-sources.md) 对应章节。当前技能与用户后续决定优先于历史来源描述。
+先读 [组织范式](solutions/architecture-decisions/2026-09-28-skill-execution-locality.md)、Plan 的逐技能顺序及联合设计，按需读 [来源与取舍](skill-sources.md)。当前技能与用户后续决定优先于历史来源描述。
 
-- 主流程直接写执行顺序；同阶段必需方法集中成完整材料，条件分支按需读完返回，不递归拼装。共享源单处维护，短底线可受控复制；跨技能通过公开入口。精简不等于删质量要求，也不照搬 work 的文件数量。
-- 保留具体方法、证据与真实行为边界，避免繁琐仪式、重复确认、重复读取和重复验证；非代码路径不额外堆规则。引用写实际 Markdown 链接，已删除反复出现的路径解析声明，不恢复。
-- review/debug 主要采用 CE 的流程与方法；Ponytail 只借鉴减少自维护复杂度和复用原生能力，不追求删行数。review 不采用 Matt 的规范/意图双轴；这不否定其他技能适用的 Matt 方法。
-- review 手动或嵌入均只产报告；simplify 独立调用由用户明确发起，只分析，获授权才修。review 复用其分析能力并传入已定范围；主会话直接派三个精简叶子代理与风险 reviewer 并行，容量不足分批，无管理代理层。两者分析必须派子代理，无能力就明确未完成；review 独立 validator 复核后统一报告。
-- work 调用 review 后直接修复查证成立的单元内问题；超出单元则阻断，由用户决定 Issue、handoff 等后续。debug 直接修复查证成立的问题。修后针对性验证与复核，复用仍有效证据。review/simplify 不自动提交。
-- 所有提交经 nk-commit，提交前按需更新 current；plan 落成须提交，ideate 不自动提交。handoff 仅用户显式调用，不猜措辞、不自动触发。受阻无提交时不强制更新 current；#40 为用户否决的误判。
+- 主流程直接写执行顺序；同阶段材料连续可读，条件分支返回入口，共享方法按需复用。精简不删质量要求，不以文件数或字节减少证明实际收益。
+- review/debug 主要采用 CE 方法。review 与 simplify 均产分析结果；review 主会话派精简叶子与风险 reviewer，独立 validator 复核，不引入管理代理层。两者要求子代理的策略不变。
+- work 修复查证成立的单元内问题，范围外阻断交给用户；debug 修复查证成立的问题。修后针对性验证与复核，复用有效证据。
+- 本次 brainstorm/plan 仍支持无子代理时按相同方法内联，不把内联称为独立核实。真实副作用与确认要求以当前任务授权为准。
+- 所有提交经 nk-commit，current 随提交按需维护；handoff 仅显式调用。Plan 交付与后续选择分开，未获实施授权不调用 work。无提交受阻不强制写 current；#40 保持已否决。
 
 ## 阻断与已知缺口
 
-无编辑阻断。全部技能重构完毕后才由用户统一安排独立会话沙盒实测，本会话不执行受测技能；静态审查、机械检查和提交同步均不等于运行验证。Issue 关闭也不代表实跑通过。
+无编辑阻断。全部技能重构后才由用户统一安排独立会话沙盒实测，本会话不执行受测技能。提交钩子同步、机械检查和 Issue 关闭均不代表行为验证。
 
-PyYAML 已安装；外部 quick_validate 的字段白名单不接受 argument-hint / disable-model-invocation，勿为此删除字段或改外部安装文件。处理边界见 [AGENTS.md](../AGENTS.md)；仓库真正 YAML 解析仍由 #13 跟踪。
+用户确认已实现或已失效的 Issue 不等待实测关闭：#12、#24、#25 已由用户关闭；本轮核对后关闭 #17、#27、#33、#35、#37–#39，#21 按不再计划关闭，不增设 reference 总量硬阈值。#36 保留 ideate 续作仍无条件询问的缺口，按原节点处理；#2 的真实客户端语言实验仍待 U3。
+
+PyYAML 已可用；仓库 frontmatter 检查仍为基础检查，真正解析由 #13 跟踪。外部 quick_validate 字段限制按 AGENTS.md 处理，不改有效字段或外部安装文件。
 
 ## 下一步
 
-继续上述 Plan 的 U2，从 `skills/nk-plan/SKILL.md` 及 references 开始：读取实际内容与对应 CE 来源，先与用户讨论结构和取舍，再改写；只读核对表内开放 Issue，别重开已关闭项。用户下一会话继续逐技能重构，不自动扩至其余技能。所有技能完成后进入 U3。
+继续上述 Plan 的 U2，下一项 nk-grill：读实际入口、引用和对应来源，先讨论结构与取舍再改写；只核对关联开放 Issue，不重开已关闭项。全部技能完成后进入 U3。
 
-## 交接范围与残留
+## 工作区未提交改动
 
-本轮已知技能、约定、入口文档、Plan、来源说明和本交接记录一起入库，无计划暂留文件。其他技能多数仅做路径说明删除/链接修正，不代表主体重构完成；debug 的 anti-patterns.md 已合并删除，simplify 的显式调用策略已新增。用户已明确授权此次 handoff 提交，先前“暂不提交”限制已解除；不自动推送。提交钩子的沙盒同步不代表技能实测。
+本次仅同步 Issue 审计结论及 Plan/current，复用联合重构的机械检查证据，另核对远端 Issue 状态与文档差异。提交后预期无本轮暂留文件；不自动推送。

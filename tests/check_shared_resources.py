@@ -47,6 +47,24 @@ def validate(root):
                 problems.append(f"missing caller: {rel}")
             elif source.resolve() not in set(referenced_paths(caller)):
                 problems.append(f"{rel}: does not reference {entry['source']}")
+    # Short execution guardrails are copied deliberately and checked verbatim.
+    for name, entry in registry.get("fragments", {}).items():
+        source = root / entry["source"]
+        pattern = rf"<!-- fragment: {re.escape(name)} -->\n(.*?)\n<!-- /fragment -->"
+        if not source.is_file():
+            problems.append(f"missing fragment source: {entry['source']}")
+            continue
+        original = re.findall(pattern, source.read_text(encoding="utf-8"), flags=re.S)
+        if len(original) != 1 or not original[0].strip():
+            problems.append(f"{name}: fragment source must contain one nonempty block")
+            continue
+        if not entry["targets"]:
+            problems.append(f"{name}: no fragment target")
+        for rel in entry["targets"]:
+            target = root / rel
+            copies = re.findall(pattern, target.read_text(encoding="utf-8"), flags=re.S) if target.is_file() else []
+            if copies != original:
+                problems.append(f"{rel}: fragment {name} is missing, duplicated or differs from {entry['source']}")
     # Canonical role files cannot silently escape ownership registration.
     for path in (root / "skills/conventions/agents").glob("*.md"):
         if path.resolve() not in sources:

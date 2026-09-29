@@ -6,8 +6,8 @@ Five checks, each maps to a class of failure that actually happened:
 2. references       - nk-* mentions resolve to real skills; no dangling K/R code refs
 3. byte-budget      - SKILL.md <= 8000 bytes (Codex injection limit), ratchet list
 4. shared-resources - canonical methods, caller references, local workflow ownership
-                      and complete distribution layouts
-5. frontmatter      - SKILL.md frontmatter parses under strict YAML, has name and
+                      controlled planning guardrail copies and complete distribution layouts
+5. frontmatter      - basic frontmatter scalar checks, name and
                       description, and name matches its directory (installers such
                       as the skills CLI derive the install dir from frontmatter name)
 """

@@ -1,6 +1,6 @@
-# 第 3 阶段：写入需求阶段 plan
+# 需求成文与规划就绪检查
 
-文件结构、章节标题、ID 规则、frontmatter 与行文规则以 [`../../conventions/plan-format.md`](../../conventions/plan-format.md) 为准，本文件不重述，只写头脑风暴特有的判断与要求。
+入口同时加载统一 Plan 格式和已定标注规则；本文件提供需求阶段的成文方法与检查，不再沿链接拼装流程。
 
 一份好的需求阶段 plan 让三类读者都能行动：
 * **规划者**（[nk-plan](../../nk-plan/SKILL.md) 或人）能写出实施方案，而不必发明用户行为、范围边界或成功标准；
@@ -26,9 +26,9 @@
 1. **路径**：`docs/plans/YYYY-MM-DD-HHMM-<type>-<topic>-plan.md`（`HHMM` 为写入时的本地时间）。不分配每日序号。目标路径已存在时，在扩展名前加最小可用的数字后缀（`-2`、`-3`……），不覆盖已有文件。续作时更新原文件。
 2. **frontmatter**：按 `plan-format.md` 第五节，`product_contract_source: nk-brainstorm`。另写 `topic:`（kebab-case 主题标识，与文件名中的 `<topic>` 一致），供 0.1 续作时识别。能判断执行领域时写 `execution`（软件功能为 `code`）。标题以 ` - Plan` 结尾，不带 `feat:` 之类前缀。
 3. **正文**：`## Goal Capsule` + `## Product Contract`。不写空的 Planning Contract、Implementation Units、Verification Contract、Definition of Done——空占位会让需求阶段文件看起来像可以实施，也浪费下游的阅读量。这些由 [nk-plan](../../nk-plan/SKILL.md) 在同一文件中补充。
-4. **声明核实结果**：按 2.6 的判定修正被驳斥的断言，把无法核实的标为假设。
-5. **已定决策**：进入 Product Contract 的 Key Decisions，带 `session-settled:` 标注（见 [`../../conventions/settled-decisions.md`](../../conventions/settled-decisions.md)），[nk-plan](../../nk-plan/SKILL.md) 据此继承到 KTD。
-6. **术语复核**：按 [terminology.md](terminology.md) 第三节第 3 阶段复核。
+4. **声明核实结果**：按声明核实判定修正被驳斥的断言，把无法核实的标为假设。
+5. **已定决策**：进入 Product Contract 的 Key Decisions，带 `session-settled:` 标注（使用入口已加载的标注规则），[nk-plan](../../nk-plan/SKILL.md) 据此继承到 KTD。
+6. **术语复核**：将最终 Product Contract 用词与 CONCEPTS.md 对照；名称变化时完善条目，文档混用时改文档。
 7. **Ready for Planning Check**（第六节），通过后在对话中给出文件的绝对路径。
 
 ---
@@ -93,11 +93,32 @@ Markdown 中图用 mermaid 代码块（默认 `flowchart TB`）；界面布局�
 
 ## 六、Ready for Planning Check
 
-写入文件后、宣告写入完成或呈现第 4 阶段交接之前，对实际文件运行这四项检查：
+写入文件后、宣告写入完成或交付之前，对实际文件运行这四项检查：
 
 1. **完整**：没有占位符、`TBD` 或写到一半的章节；每个 Outstanding Question 都已归类为 `Resolve Before Planning` 或 `Deferred to Planning`。单一工作单元检查拆分过请求时，How This Work Fits Together 一节存在且带有 `<!-- nk-section: work-relationships -->` 标记。
 2. **一致**：Goal Capsule、Requirements、Key Flows、Acceptance Examples、Scope Boundaries 与 How This Work Fits Together 之间不矛盾。读者一遍读下来能在每节找出矛盾吗？没参与对话的同事只看 Objective 能说出这项工作是什么吗？一句话带不止一个括号说明、一条需求规定了两种结果、同一条规则在多处写全——都不通过：拆开、把分歧推到 Outstanding Questions、或用承载规则的 ID 替代重复内容。
 3. **聚焦**：Product Contract 只覆盖一个完整的工作单元。周边工作只作为背景、推迟项或明确的非目标出现，不渗入当前的需求、流程或验收示例。
 4. **规划可用**：[nk-plan](../../nk-plan/SKILL.md) 能决定如何构建当前工作，而不必发明产品行为、范围、参与者或成功标准。
 
-某项不通过时，若修正不改变已定意图，就地修正后重跑该项。修正需要选择或改变产品行为或范围时，问一个针对性问题，得到答案后更新文件并重跑。用户不在时，保持文件为阻塞状态（在 Outstanding Questions 中列为 Resolve Before Planning，并在 `docs/current.md` 登记 `[待确认]`），不让规划去发明答案。检查清单本身不写进 Product Contract，修正后的文件就是产出。
+某项不通过时，若修正不改变已定意图，就地修正后重跑该项。修正需要选择或改变产品行为或范围时，问一个针对性问题，得到答案后更新文件并重跑。用户不在时，保持文件为阻塞状态（在 Outstanding Questions 中列为 Resolve Before Planning，并向用户报告 `[待确认]`；有提交时交给 nk-commit 同步 current，无提交不强制另写状态），不让规划去发明答案。检查清单本身不写进 Product Contract，修正后的文件就是产出。
+
+## 综述落入文档
+
+内部草稿不另设 Synthesis 章节；未经确认的推断记为假设，不冒充用户决定。
+
+| 内部草稿 | 文档中的去处 |
+| :-- | :-- |
+| "要做什么" | Summary（1~3 行，面向未来） |
+| 已陈述 | Requirements（带 R-ID，完整细节），需要叙述背景时也进入 Problem Frame |
+| 推断 | Key Decisions（附理由）——用户在对话中接受的押注成为文档中的决定 |
+| 范围外 | Scope Boundaries |
+| 成功信号（已陈述或推断） | 行为验收条件写在对应 R；只有需求未承载的质量或交接信号写入 Success Criteria，其他位置引用而不重复 |
+
+对话中的取舍小节融入 Key Decisions；"不在范围内"融入 Scope Boundaries。
+
+
+## 用户请求的需求自查
+
+可委派一个未看过对话的审阅者，派发方法由入口加载证据材料；无此能力时主会话核对，不声称独立审阅。检查连贯性、与仓库现状相符的可行性、周边工作是否侵入范围，以及规划者是否仍需发明行为。
+
+发现须有项目证据与不改的实际后果；不改变已定意图的错误就地修正，产品范围或行为的新选择交给用户。修改后复查受影响的规划就绪项，返回入口交付，不在此调度后续技能。

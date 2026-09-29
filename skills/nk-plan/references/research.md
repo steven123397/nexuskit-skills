@@ -1,8 +1,8 @@
 # 阶段 1：调研
 
-派出任何调研子代理前读本文件。返回体量按 [`../../conventions/subagent-results.md`](../../conventions/subagent-results.md)，本阶段指定各报告路径；只加载选中的角色。
+入口加载本文件后按缺口调研，完成后返回技术设计步骤。派发的共同任务与返回规则由入口同时加载 research-roles；本阶段只决定实际研究问题及报告路径。
 
-角色路径与规划任务说明见 [research-roles.md](research-roles.md)，只加载选中的方法；这些文件是提示词资产，不是可按名字调用的独立 Agent。派出时读取对应文件，用其内容加 research-roles 中该角色的目的、返回方式及上下文所述的任务信息去初始化一个通用子代理。支持子代理的客户端上并行派出；不支持时在主会话中依次完成同样的工作。
+使用入口已加载的角色任务说明，只加载选中的方法；这些文件是提示词资产，不是可按名字调用的独立 Agent。派出时读取对应文件，用其内容加 research-roles 中该角色的目的、返回方式及上下文所述的任务信息去初始化一个通用子代理。支持子代理的客户端上并行派出；不支持时在主会话中依次完成同样的工作。
 
 **模型选择**：外部或资料型调研（`web-researcher`、`framework-docs-researcher`、`best-practices-researcher`）在客户端提供中档模型时可以用中档；架构、迁移和深化类判断用会话默认模型。
 
@@ -12,21 +12,23 @@
 
 **Lightweight** 的 Durable plan 不派下面这些研究员：只读请求点名的文件及其测试，留意 `docs/solutions/` 中标题与主题相关的条目，然后进入 1.1b。1.4b 的升档规则仍然适用。
 
-Standard 与 Deep：先写一段简短的**规划上下文摘要**（一两段）作为研究员的输入：
+Standard 与 Deep：先检查上游证据覆盖，再写一段简短的**规划上下文摘要**（一两段）作为研究员的输入：
 
 * 有上游文档时，概括问题背景、需求和关键决策；否则用需求描述本身。
 * 仓库根目录有 `STRATEGY.md`（或 `PRODUCT.md`、`VISION.md`）时读取，摘出目的、定位、当前方向、明确的边界或非目标，让调研和决策与产品方向一致。
 * 仓库根目录有 `CONCEPTS.md` 时读取，用其中的规范术语，不用同义词。
-* 按 [`../../conventions/settled-decisions.md`](../../conventions/settled-decisions.md) 附上已定决策、被否的备选，以及那句固定说明。
+* 附上已定决策和被否的备选，要求有不可行反证直接报告；核实或对抗性研究不提供已定标签及支持论证，以免锚定。
+
+**复用上游证据**：接收 brainstorm 或其他调用方传来的决定、档案路径与覆盖摘要，核对主题、来源和当前相关文件是否变化。需要具体判断时读相关原始摘录；只补缺失、失效或新增范围。档案丢失则针对来源补查，不因换技能全仓重扫。需求侦察不能代替技术设计所需的实现、依赖与测试证据。
 
 **临时目录**：派出第一个研究员前，在系统临时目录下建一个本次运行专用的目录（如 `nk-plan-<随机串>`），记下它的绝对路径，本次所有研究员共用。需要保留的长报告写进各研究员的独占文件，只返回要点和路径；短结果直接返回，不强制造报告。要点不足以完成具体判断时，只读取相关报告片段；只有跨段核对确有必要才读全文。
 
-并行派出：
+只为未覆盖的规划问题派出以下研究员；已有证据足以回答时复用，并说明覆盖依据：
 
 * [agents/repo-research-analyst.md](agents/repo-research-analyst.md)，范围：**patterns**。传入规划上下文摘要、项目当前指令和报告路径 `<临时目录>/repo-research.md`，让它直接去看当前功能的写法和实现代码。上下文不足以确定范围时，允许一次针对根目录或工作区的探查。
 * [../../conventions/agents/learnings-researcher.md](../../conventions/agents/learnings-researcher.md)。传入规划上下文摘要、[../../conventions/solution-schema.md](../../conventions/solution-schema.md) 的绝对路径和 `<临时目录>/learnings.md`。
 
-**Agent 原生能力评估**（按需）：请求、上游文档或调研显示以下任一情况时，同时派出 [agents/agent-native-planning-strategist.md](agents/agent-native-planning-strategist.md)（报告 `<临时目录>/agent-native.md`）：
+**Agent 原生能力评估**（按需）：请求、上游文档或调研显示以下任一情况时，针对未覆盖问题派出 [agents/agent-native-planning-strategist.md](agents/agent-native-planning-strategist.md)（报告 `<临时目录>/agent-native.md`）：
 
 * 涉及 agent、助手、聊天、工作流自动化、MCP、插件、技能、工具注册、提示词或自主循环；
 * 代码库已有 Agent 能力面，本功能改变了用户可见的能力；
@@ -111,7 +113,7 @@ Standard 或 Deep，或用户流程的完整性仍不清楚时，派出 [agents/
 
 ## 1.6 关键做法未定时，做设计对比
 
-满足任一条件时，在定下关键技术决策和依赖它的单元之前，读 [design-alternatives.md](design-alternatives.md)：
+满足任一条件时，在定下关键技术决策和依赖它的单元之前，返回入口加载设计对比材料：
 
 * 用户要求比较几种设计；
 * Standard 或 Deep 的 Durable plan 在调研后仍有一个**后果重大的"怎么做"未定**：两种以上结构不同的机制都站得住，比较它们需要进一步展开而不只是判断现有材料，而且日后推翻代价高（其他工作会建立在它上面的数据形态、存储格式、接口或归属边界）。

@@ -74,8 +74,8 @@
     "scope-synthesis.md": {
       "source": "skills/conventions/scope-synthesis.md",
       "callers": [
-        "skills/nk-brainstorm/references/synthesis-summary.md",
-        "skills/nk-plan/references/synthesis-summary.md"
+        "skills/nk-brainstorm/SKILL.md",
+        "skills/nk-plan/SKILL.md"
       ]
     },
     "research-digest.md": {
@@ -99,11 +99,10 @@
       "source": "skills/conventions/subagent-results.md",
       "callers": [
         "skills/nk-ideate/references/grounding.md",
-        "skills/nk-plan/references/research.md",
-        "skills/nk-plan/references/deepening-workflow.md",
+        "skills/nk-plan/references/research-roles.md",
         "skills/nk-review/references/reviewer-prompt.md",
         "skills/nk-compound/references/capture.md",
-        "skills/nk-brainstorm/references/dialogue.md",
+        "skills/nk-brainstorm/references/evidence.md",
         "skills/nk-simplify/SKILL.md",
         "skills/nk-grill/SKILL.md",
         "skills/nk-debug/SKILL.md",
@@ -118,19 +117,35 @@
         "skills/nk-brainstorm/references/phase-0.md",
         "skills/nk-plan/references/phase-0.md"
       ]
-    },
-    "handoff.md": {
-      "reason": "独立交接：brainstorm 交出产品范围；plan 交出可实施方案。提交与产物规则仍引用现有共享约定。",
-      "paths": [
-        "skills/nk-brainstorm/references/handoff.md",
-        "skills/nk-plan/references/handoff.md"
+    }
+  },
+  "fragments": {
+    "planning-autonomy": {
+      "source": "skills/conventions/decision-autonomy.md",
+      "targets": [
+        "skills/nk-brainstorm/SKILL.md",
+        "skills/nk-plan/SKILL.md"
       ]
     },
-    "synthesis-summary.md": {
-      "reason": "阶段适配：共同方法及预算只在 scope-synthesis.md；本地仅持有调用时机、确认策略和写入位置。",
-      "paths": [
-        "skills/nk-brainstorm/references/synthesis-summary.md",
-        "skills/nk-plan/references/synthesis-summary.md"
+    "planning-settled": {
+      "source": "skills/conventions/settled-decisions.md",
+      "targets": [
+        "skills/nk-brainstorm/SKILL.md",
+        "skills/nk-plan/SKILL.md"
+      ]
+    },
+    "planning-terms": {
+      "source": "skills/conventions/concepts-vocabulary.md",
+      "targets": [
+        "skills/nk-brainstorm/SKILL.md",
+        "skills/nk-plan/SKILL.md"
+      ]
+    },
+    "planning-reading": {
+      "source": "skills/conventions/resource-loading.md",
+      "targets": [
+        "skills/nk-brainstorm/SKILL.md",
+        "skills/nk-plan/SKILL.md"
       ]
     }
   }
