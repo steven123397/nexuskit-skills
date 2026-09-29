@@ -9,7 +9,7 @@ topic: skill-deep-audit
 
 # 技能逐个重构、深读审计与微项目实跑
 
-**当前位置：U2。work、commit、handoff、debug、simplify、review 已交付；brainstorm / plan 联合重构本次落地，下一项为 nk-grill。全部实际行为仍待重写完成后由用户统一安排 U3 沙盒验证。**
+**当前位置：U2。前八项及 ideate / grill 联合重构已落地，下一项为 nk-compound。全部实际行为仍待重写完成后由用户统一安排 U3 沙盒验证。**
 
 **推进方式：逐技能深读、重构，并处理关联 Issue。** GitHub Issues 是唯一问题清单；本计划记录重构顺序与任务范围，不另设问题编号或复制 Issue 验收要求。问题详情、讨论和完成状态以对应 Issue 为准；只有取得所需证据并满足验收后才关闭。
 
@@ -27,10 +27,10 @@ topic: skill-deep-audit
 | 4 | `nk-debug` | 已按 CE 阶段结构改写并接入审查，本次交付；去除 nk-work 私有 reference 依赖，补齐仅诊断出口 | 无未关闭关联 Issue；真实效果纳入 U3 |
 | 5 | `nk-simplify` | 联合重构已落地：三视角只读分析、手动入口与嵌入范围复用 | 无未关闭关联 Issue；真实效果纳入 U3 |
 | 6 | `nk-review` | 联合重构已落地：风险编队与精简并行、独立复核、统一报告 | 无未关闭关联 Issue；真实效果纳入 U3 |
-| 7 | `nk-plan` | 联合重构已落地：输入承接、调研补缺、成文、深化与自检返回入口；真实效果待 U3 | 本节点文本处理已收口；跨技能 [#36](https://github.com/steven123397/nexuskit-skills/issues/36) 余项见 ideate |
-| 8 | `nk-brainstorm` | 联合重构已落地：对话与压力测试合并、证据集中、范围确认和交付归入口；真实效果待 U3 | 本节点文本处理已收口；跨技能 [#36](https://github.com/steven123397/nexuskit-skills/issues/36) 余项见 ideate |
-| 9 | `nk-grill` | 明确质疑范围、停止条件与返回原流程的接口 | [#29](https://github.com/steven123397/nexuskit-skills/issues/29) |
-| 10 | `nk-ideate` | 整理不同发想路径、研究材料及证据交接，保留已有有效修改 | [#36](https://github.com/steven123397/nexuskit-skills/issues/36) |
+| 7 | `nk-plan` | 联合重构已落地：输入承接、调研补缺、成文、深化与自检返回入口；真实效果待 U3 | 无未关闭关联 Issue；真实效果纳入 U3 |
+| 8 | `nk-brainstorm` | 联合重构已落地：对话与压力测试合并、证据集中、范围确认和交付归入口；真实效果待 U3 | 无未关闭关联 Issue；真实效果纳入 U3 |
+| 9 | `nk-grill` | 已明确用户主动严格对齐的定位，保留前沿轮次，补齐共识、暂停与授权边界 | 无未关闭关联 Issue；真实效果纳入 U3 |
+| 10 | `nk-ideate` | 主流程与交付归入口，条件材料返回；保留发想方法，修复续作授权与证据交接 | 无未关闭关联 Issue；真实效果纳入 U3 |
 | 11 | `nk-compound` | 区分沉淀与审计路径，收拢知识产物规则及提交边界 | [#15](https://github.com/steven123397/nexuskit-skills/issues/15) |
 | 12 | `nk-close` | 按收尾场景组织验收、知识维护与发布分支，复用已整理的公开入口 | [#16](https://github.com/steven123397/nexuskit-skills/issues/16)、[#18](https://github.com/steven123397/nexuskit-skills/issues/18) |
 | 13 | `nk-init` | 保持最小初始化，核对首次接入与后续维护的职责边界 | [#13](https://github.com/steven123397/nexuskit-skills/issues/13)、[#20](https://github.com/steven123397/nexuskit-skills/issues/20) |
@@ -54,6 +54,8 @@ topic: skill-deep-audit
 2026-09-29 收口：用户已关闭 [#12](https://github.com/steven123397/nexuskit-skills/issues/12)、[#24](https://github.com/steven123397/nexuskit-skills/issues/24)、[#25](https://github.com/steven123397/nexuskit-skills/issues/25)。核对当前实现后关闭 [#17](https://github.com/steven123397/nexuskit-skills/issues/17)、[#27](https://github.com/steven123397/nexuskit-skills/issues/27)、[#33](https://github.com/steven123397/nexuskit-skills/issues/33)、[#35](https://github.com/steven123397/nexuskit-skills/issues/35)、[#37](https://github.com/steven123397/nexuskit-skills/issues/37)、[#38](https://github.com/steven123397/nexuskit-skills/issues/38)、[#39](https://github.com/steven123397/nexuskit-skills/issues/39)；[#21](https://github.com/steven123397/nexuskit-skills/issues/21) 按不再计划关闭，沿用已采纳的执行材料组织范式，不新增 reference 总量硬阈值。
 
 关闭表示相应修改或设计决定已收口，不代表实际行为已验证；相关场景统一在 U3 测试。
+
+ideate / grill 联合整理收口：[#29](https://github.com/steven123397/nexuskit-skills/issues/29) 修正 README 的默认盘问与主动调用表述；[#36](https://github.com/steven123397/nexuskit-skills/issues/36) 补齐 ideate 明确续作与修订授权，两项按当前文本核对关闭，实际行为纳入 U3。
 
 ## 逐技能重构任务
 
@@ -98,7 +100,7 @@ topic: skill-deep-audit
 ## Implementation Units
 
 - **U1：沙盒准备。** 已完成骨架与远端配置；外部 nk-init 首次接入已核对。
-- **U2：逐技能重构与机械检查。** 按上表及“逐技能重构任务”推进，下一项为 nk-grill。每次核对当前技能和关联 Issue，修改后完成内容核对、来源同步与机械检查；不安排逐技能沙盒实跑。全部技能重写及入口统一完成后进入 U3。
+- **U2：逐技能重构与机械检查。** 按上表及“逐技能重构任务”推进，下一项为 nk-compound。每次核对当前技能和关联 Issue，修改后完成内容核对、来源同步与机械检查；不安排逐技能沙盒实跑。全部技能重写及入口统一完成后进入 U3。
 - **U3：统一沙盒实测与收口。** 确认沙盒加载全部重写后的已提交版本，由用户安排独立会话按真实开发场景测试；核对触发、读取路径、产物、验证证据和关联 Issue 验收。实测发现的问题修复后重跑受影响场景，满足验收再关闭 Issue。全部通过后汇总用户确认并收尾；必要长期结论进既有经验库，不再建立成果流水账。
 
 ## Verification Contract
@@ -137,5 +139,11 @@ topic: skill-deep-audit
 - 保持两个独立入口；主流程和条件加载归入口，阶段材料读完返回。四段必需短底线分别由原共享约定维护，并机械核对两个入口副本。共同综述直接引用共享源，成文落点留在各自材料。
 - 详细输入不升档、有效证据不重扫、明确续作与修订授权不重复确认、视觉表达继承偏好。相关旧文档仅作依据时不强制持久规划；当前明确修订只替换冲突部分。保留产品/技术探索及验证质量要求。
 - Plan 完成与后续菜单选择分开；图与草图效力统一，深化无发现不代表自检通过，非代码 work 交接走公开入口。
-- #12、#24、#25 的既有文本修复继续保留；本轮 Issue 处置见上方已关闭清单。#35 由消费端按最新意图承接解决，不要求 wait-what 承担规划职责。#36 仍保留 ideate 的无条件续作询问缺口，留待该节点重构。
+- #12、#24、#25 的既有文本修复继续保留；Issue 处置见上方已关闭清单。#35 由消费端按最新意图承接解决，不要求 wait-what 承担规划职责。#36 的 ideate 余项已在随后联合整理中处理。
 - #21 保留入口硬上限；以连续执行材料和常用路径负担判断拆分，原全仓 reference 总量硬阈值提案不再计划，不宣称已实现该检查。#2 的真实客户端语言实验保持原安排。所有实际测试仍在全部技能重构完成后统一进行。
+
+2026-09-29 ideate / grill 联合整理（用户确认后落实）：
+
+- ideate 保留已有 CE 方法与减重修订；入口持有路线、条件加载、阶段顺序、写入、完成和下一步，阶段材料执行后返回。非软件适配不另建流程，Issue 分析与材料提炼按需加载。
+- 续作和修订复用明确授权；仅讨论既有候选不重跑发想。正式记录保留关键论据与原始来源，向 brainstorm 传所选想法及相关证据，不仅传临时路径。交付独立于后续选择，不自动维护 current 或提交。
+- grill 是用户主动要求详细追问、严格对齐的小技能，可用于任何模糊设计、决定或想法；保持单文件，不嵌入其他技能自动流程。对齐后总结共识，暂停时披露未决项；不强制文档、菜单或返回原流程，共识不替代行动授权。

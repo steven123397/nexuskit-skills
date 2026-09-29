@@ -18,7 +18,7 @@
 | 维度 | Matt | CE | NexusKit |
 | :-- | :-- | :-- | :-- |
 | 上下文管理 | 一个任务一个新会话 | 主对话承包整份 plan，上下文膨胀 | 新会话 + `current.md` 入口 + 单个实施单元 |
-| 需求对齐 | `grill` 盘问繁琐 | ideate/brainstorm 节奏合适 | 采用 CE 方式，去掉 grill，Agent 自决可推断细节 |
+| 需求对齐 | `grill` 盘问繁琐 | ideate/brainstorm 节奏合适 | 采用 CE 方式，去掉默认强制盘问；保留用户主动调用的 `/nk-grill` 严格对齐 |
 | 产物管理 | walkthrough、ADR 等本地文件堆积 | plan、review 本地文件堆积 | 每类产物有明确终点，分支收尾时统一清理 |
 | 知识沉淀 | 术语即时维护，缺少经验库 | `solutions/` 经验库，术语只在 compound 时生长 | `solutions/`（含决策类型）+ 术语在规划中即时写入 |
 | 提交节奏 | 无约束 | 无约束 | 统一入口，按完整交付提交并携带现状 |
@@ -46,7 +46,7 @@
 | 在新仓库首次启用本体系 | `/nk-init` |
 | 想找改进方向 | `/nk-ideate` |
 | 有想法，要明确做什么、做到哪 | `/nk-brainstorm` |
-| 想被盘问，压力测试一个计划、决策或想法 | `/nk-grill` |
+| 想让 Agent 详细追问，严格对齐设计、决策或想法 | `/nk-grill` |
 | 需求明确，要设计怎么做 | `/nk-plan` |
 | 实现一个实施单元或 Issue | `/nk-work` |
 | 提交交付成果 | `/nk-commit` |

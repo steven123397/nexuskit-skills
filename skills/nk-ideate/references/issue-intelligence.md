@@ -1,12 +1,12 @@
 # Issue 分析（Phase 1，条件性）
 
-当 Phase 1 第 4 步适用时读本文件，即 Phase 0.2 识别出 Issue 分析意图时。[grounding.md](grounding.md) 定义四步顺序（扫描 → 降级或定范围 → 聚类 → 等待）；本文件定义每次调用的内容，以及范围问题如何构造。
+入口在仓库模式识别到 Issue 分析意图时加载本文件及分析角色。按扫描 → 降级或定范围 → 复用数据聚类执行，返回主题、覆盖统计或降级原因；后续生成由入口安排。
 
 这条线对任何可访问的追踪器都有效——GitHub、Linear 或 Jira。按能力探查（连接器/MCP、有文档的 API 或有文档的 CLI），不要假定某个特定程序存在。缺少某个程序或环境变量，不等于追踪器不可达。NexusKit 项目通常使用 GitHub Issues，首选 `gh`。
 
 ## a. 扫描调用
 
-读 [agents/issue-intelligence-analyst.md](agents/issue-intelligence-analyst.md)，派发一个通用子代理，以该提示、关注点、Phase 1 确定的 `<scratch-dir>`，以及"处于 **SCAN 模式**"的说明作为种子。
+使用入口加载的 [agents/issue-intelligence-analyst.md](agents/issue-intelligence-analyst.md)，以该提示、关注点、同一个 `<scratch-dir>` 及“处于 **SCAN 模式**”的说明派发通用子代理。
 
 它探查追踪器访问，做一次有界的抓取，把抓取的数据持久化到 `<scratch-dir>/issue-scan.json`，返回分布、信号数和歧义评估。它**不**聚类。
 
