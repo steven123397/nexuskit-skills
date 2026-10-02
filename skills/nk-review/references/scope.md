@@ -39,7 +39,9 @@ git ls-files --others --exclude-standard
 
 ### 附：PR 编号或 URL（可选路径）
 
-项目走 PR 流程时，PR 编号/URL 也可作为审查对象：用 `gh pr view <n> --json title,body,baseRefName,headRefName,files,reviews,comments` 与 `gh pr diff <n>` 只读取数，**不切换分支、不 checkout**。以 PR 的确切 base/head 提交和远端 diff 为被审对象；只有本地 HEAD 与 PR head 完全相同且涉及文件无工作区改动时才可用本地内容补证。其他情况下，且 reviewer 不得用工作区文件内容代替被审版本（用 `git show <ref>:<path>` 或只看 diff hunk）。已关闭/已合并的 PR 不审；明显的琐碎自动 PR（锁文件、版本号 chore）向用户确认后跳过。
+项目走 PR 流程时，PR 编号/URL 也可作为审查对象：用 `gh pr view <n> --repo <owner/repo> --json url,state,title,body,baseRefName,baseRefOid,headRefName,headRefOid,mergeCommit,mergedAt,files,reviews,comments` 与 `gh pr diff <n> --repo <owner/repo>` 只读取数，**不切换分支、不 checkout**。记录 PR 身份、确切 base/head SHA 和实际差异起点；取数期间 head 变化时重新定界，不混合不同快照。只有本地 HEAD 与被审快照完全相同且涉及文件无工作区改动时，才可用本地内容补证；否则用对应版本的文件或 diff，不能拿维护者 main 的内容代替。
+
+已关闭/已合并的 PR 不默认重审；用户或调用方明确要求合并后补审、针对性复核时，核实合并结果及请求范围，走常规或原审查路径，不能称为 pre-merge。PR head 与实际合入内容不同时，以请求指定的合并结果定界；无法取得对应内容则报告覆盖缺口。明显的琐碎自动 PR（锁文件、版本号 chore）向用户确认后跳过。
 
 ## 二、未跟踪文件
 

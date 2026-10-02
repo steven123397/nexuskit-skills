@@ -1,25 +1,24 @@
 # 当前状态
 
-- 所在分支：`main`；核对基点：`49de48e`（v0.2.0 首次发布）。
-- `v0.2.0` 正式版已发布，Codex/Kimi 清单均为 `0.2.0`；本次补充 ask-ljq 个性化交互及 README 入口文案，维护者授权将同名 tag 移至本次提交，GitHub Release 标题和正文保持原样。发布说明中“与 beta 一致”描述的是首次发布快照；当前差异以 Git 为准。
-- 本次五项机械检查及差异检查通过，已核对交互确认与正常选路边界；新增交互未做客户端实跑。原 U3 证据仍适用于此前覆盖的基本流程。
-- 发布准备：CI 增加版本 tag 与手动入口，Windows/Linux 均运行五项检查、回归测试与 Bash 模板语法；检查插件 SemVer/版本一致性、tag 与 release notes、英文描述残留和调用标志类型；固定文本 LF。
-- 合并前检查：主会话加一个只读专项代理，核对跨技能接口和累计交付；修复共享术语约定将初建误导向 refresh 的残留。依据与限制见 [验证记录](reviews/feat-skill-deep-audit.md)。
-- 验证：五项检查、35 项回归测试、Bash 模板语法和差异检查通过；PR #41 的 Windows/Linux CI 已通过。U3 在独立 notes CLI 沙盒会话中观察到 beta 快照的技能读取、需求规划、调试、实施、审查、提交和分支收尾；合并后的 10 项 CLI 测试通过。场景、提交与边界见 [验证记录](reviews/feat-skill-deep-audit.md)。
+- 所在分支：`main`；核对基点：`e361b45`（v0.2.0 当前 tag）。
+- 已发布版本仍为 `v0.2.0`，Codex/Kimi 清单均为 `0.2.0`。本轮为后续 `v0.2.x` 的本地改动，不移动 tag、不发布。
+- 外部 PR 流程已补齐：review 按仓库/PR 记录各轮快照；承接 Agent 在合并前确认审查与合并条件，只复核新增影响，不默认重复 pre-merge；已合并 PR 的 close 只确认状态、承接遗留与知识、清理维护者侧报告，不重评代码或自动补审。
+- 同步报告格式、生命周期、术语、README 与 ask-ljq。维护者已审阅确认；主会话核对整合差异，五项机械检查及差异检查通过。新增外部 PR 路线尚未客户端实跑。
+- 既有 U3 基本流程通过维护者验收；场景与覆盖边界见 [验证记录](reviews/feat-skill-deep-audit.md)，不外推为本轮新增路径的实跑证据。
 
 ## 接手依据与边界
 
 - [审计 Plan](plans/2026-09-27-1525-test-skill-deep-audit-plan.md) 的 U1/U2/U3 已收口，维护者确认基本使用与触发流程通过，本轮重构基本任务结束。Plan、验证记录作为正式版证据保留，历史待验证措辞以顶部收口结论为准；体系 RFC 仍保留。
 - 设计依据：[组织范式](solutions/architecture-decisions/2026-09-28-skill-execution-locality.md)、[技能来源](skill-sources.md) 与当前技能入口。已有长期资产覆盖本次设计理由，不为收尾重复建档。
-- review 常规路径含 simplify 与独立复核；close 只调度轻量 pre-merge，不承担产品修复。commit 持有 current 与提交规则，handoff 仅显式调用。
+- review 常规路径含 simplify 与独立复核；close 合并前使用轻量 pre-merge，已合并 PR 路径只收尾产物，不承担产品修复。commit 持有 current 与提交规则，handoff 仅显式调用。
 - #2 已按维护者统一英文策略关闭，取消中英 A/B 实验；不声称英文触发效果更优。#28、#32 已关闭。沙盒发现的审查编队成本与纯文本返回格式问题记在 [#42](https://github.com/steven123397/nexuskit-skills/issues/42)，作为后续质量增强，不阻断本次沙盒验收；未覆盖的技能与场景不记为实测通过。
 
 ## 下一步与版本路线
 
-1. 将本次补充提交推送至 main 并移动 `v0.2.0` tag，核对 CI 与远端指向；保留现有 Release 内容。
+1. 来源映射整改已完成核对，接续单独提交 `AGENTS.md` 与 `docs/skill-sources.md`；本轮仅获本地提交授权。
 2. 维护者在 paper30min 实际开发中使用 `v0.2.0`；内容、方法论及其他实际开发问题进入后续 `v0.2.x`，包括 #42。
 3. `v0.3.0` 仅有初步概念构想，暂不启动新一轮大迭代。
 
 ## 工作区未提交改动
 
-本次 ask-ljq、README、来源说明和 current 随提交入库；本地测试生成的 `tests/__pycache__/` 未跟踪缓存不纳入提交。不修改 paper30min 仓库。
+本次 PR 流程及 current 随提交入库；`AGENTS.md` 与 `docs/skill-sources.md` 的来源映射整改接续提交，含本轮 PR 流程的原创归属。本地 `tests/__pycache__/` 未跟踪缓存保留、不纳入提交。

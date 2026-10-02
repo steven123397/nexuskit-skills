@@ -1,15 +1,15 @@
 ---
 name: nk-close
-description: "User-invoked closeout of delivered branch or Plan work. Coordinate a focused pre-merge review, resolve artifact dispositions, preserve reusable knowledge, and commit the closeout. Explicit release-day requests add release checks and notes; do not automatically merge, push, or publish."
+description: "User-invoked closeout of branches, delivered Plans, or merged PR artifacts. Check evidence, preserve knowledge, and clean up through a closeout commit. Pre-merge review applies before integration; release checks require an explicit request. Do not automatically merge, push, or publish."
 disable-model-invocation: true
-argument-hint: "[分支或 Plan 范围 | 发布日扫尾]"
+argument-hint: "[分支或 Plan 范围 | 已合并 PR 编号或 URL | 发布日扫尾]"
 ---
 
 # /nk-close
 
-用户主动调用的分支交付确认与生命周期收尾入口。核对交付证据，调度轻量合并前审查，处置遗留，提炼后清理；不承担产品修复，不自动合并、推送或删除分支。其他技能可以建议收尾，不因最后一个单元完成自动启动。
+用户主动调用的交付与产物收尾入口。分支或 Plan 交付时调度轻量合并前审查；已合并 PR 只确认合并状态并收尾产物。随后处置遗留、提炼并清理。不修产品，不自动合并、推送或删除分支；其他技能可建议收尾，不自动启动。
 
-**完成条件**：本次范围与交付证据明确，合并前检查适用且无未处理阻断，遗留已有可追踪去向，知识缺口已处理，可删除产物及引用已清理，收尾变化由 nk-commit 同次入库。无变化可报告已收尾；用户要求只准备、不提交时停在可审阅状态，不能称为已入库。保留、延期和未执行动作如实报告。
+**完成条件**：本次范围与交付证据明确，所选路径的证据核对完成且无未处理阻断，遗留已有可追踪去向，知识缺口已处理，可删除产物及引用已清理，收尾变化由 nk-commit 同次入库。无变化可报告已收尾；用户要求只准备、不提交时停在可审阅状态，不能称为已入库。保留、延期和未执行动作如实报告。
 
 维护依据：[产物生命周期](../conventions/artifact-lifecycle.md)；该约定持有产物寿命与归属，本入口持有执行顺序。短底线源：[决策自主权](../conventions/decision-autonomy.md)、[读取复用](../conventions/resource-loading.md)。
 
@@ -27,6 +27,7 @@ argument-hint: "[分支或 Plan 范围 | 发布日扫尾]"
 
 - **分支收尾**：以实际合并目标与累计交付为范围，覆盖 Plan 单元、关联 Issue 和临时纳入的需求或修复；Plan 可能在开分支前已提交，不能只按新增文件认领。
 - **单分支项目**：明确一个已交付 Plan 及关联产物、实施起点；不把 main 上其他工作混入。
+- **已合并 PR 收尾**：按 closure 对应段落确认合并状态、认领报告，再进入第 3 步；不补跑第 2 步或质量复核。不要求报告属于原分支或补造 Plan；多个 PR 分别核实。
 - **明确发布日请求**：仅此时读 [release-day.md](references/release-day.md)，按其步骤执行后返回第 6 步；普通收尾不进入发布流程。
 
 正常收尾读 [closure.md](references/closure.md)，依次完成范围清单和证据预检。清点工作区与暂存区，保留外来或后续工作；不为收尾要求整仓干净。提交编号仅是线索，核对实际变更、Plan 验收、单元审查与验证证据。缺少必要交付条件时返回缺口，不能用建票替代验收。
