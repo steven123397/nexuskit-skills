@@ -17,6 +17,12 @@
 | decision tickets | 决策 tickets | wayfinder、ask-matt |
 | claim | 认领 | wayfinder |
 | blocked / unblocked | 被阻塞 / 依赖已满足 | wayfinder、implement-spec、to-tickets |
+| tracer bullet / vertical slice | 纵向切片 | to-tickets（STE-5 定稿，不译“曳光弹”） |
+| horizontal slice | 横向切片 | to-tickets |
+| wide refactor | 宽范围重构 | to-tickets |
+| expand–contract | 扩展–收缩 | to-tickets |
+| prefactor / prefactoring | 预重构 | to-tickets |
+| blast radius | 波及面 | to-tickets |
 | task graph | 任务图 | implement-spec、ask-matt |
 | context pointer | 上下文指针 | implement-spec、chief-of-staff |
 | integration branch | 集成分支 | implement-spec |
@@ -43,6 +49,15 @@
 | Testing Decisions | 测试决定 |
 | Out of Scope | 不在范围内 |
 | Further Notes | 补充说明 |
+
+## ticket 模板章节（nk-to-tickets，STE-5 定稿）
+
+| 原文 | 译法 |
+| --- | --- |
+| Parent | 所属 spec |
+| What to build | 交付什么 |
+| Acceptance criteria | 验收条件 |
+| Blocked by | 依赖（Linear 原生阻塞关系承载，正文不重复） |
 
 ## 固定短语
 

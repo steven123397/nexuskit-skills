@@ -60,6 +60,12 @@
 - [入口](../skills/engineering/nk-to-issue/SKILL.legacy.md) 的事实核实、已有实现与历史否决检查、已知与缺口表达：Matt `skills/engineering/triage/SKILL.md` 的 `Triage a specific issue or PR` 第 1、3 步、`Needs-info template`、`Resuming a previous session`。
 - 授权后在当前任务建票/更新、本地 backlog、失败去重与调用方接口：NK 原创；条目契约见 conventions。
 
+## nk-to-tickets
+
+- [入口](../skills/engineering/nk-to-tickets/SKILL.md) 的收集上下文、可选代码库探索与预重构、纵向切片规则、宽范围重构的扩展–收缩排序、与用户确认拆分、按依赖顺序创建并连原生阻塞、子 issue、前沿开工、避免路径与代码片段及原型例外：Matt `skills/engineering/to-tickets/SKILL.md`（`6fd9479`）的 `Process` 与模板，按原文结构迁移为中文。
+- 固定使用 Linear、沿用项目标签与状态（不沿用 ready-for-agent）、依赖与状态走原生字段不在正文重复、去掉本地文件 tracker 路径：NK 适配。ticket 模板按 STE-5 定稿：所属 spec、交付什么、验收条件；依赖走原生阻塞关系，正文不设该节。
+- 承接 wayfinder 的 map 作为输入引用：NK 适配。
+
 ## nk-wait-what
 
 - [入口](../skills/productivity/nk-wait-what/SKILL.legacy.md) 的重新解释、补上下文、简单语言与项目术语：Matt `skills/productivity/wait-what/SKILL.md` 正文。
