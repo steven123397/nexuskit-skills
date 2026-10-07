@@ -13,10 +13,14 @@
 - [nk-prototype](skills/engineering/nk-prototype/SKILL.md)：用可操作的一次性原型回答设计问题，记录结论与适用限制。
 - [nk-to-tickets](skills/engineering/nk-to-tickets/SKILL.md)：把 spec 或对话拆成带依赖的纵向切片 tickets，发布到 Linear。
 - [nk-implement](skills/engineering/nk-implement/SKILL.md)：完成单个 ticket 或任务：实施、验证、审查处理与提交。
+- [nk-odyssey](skills/engineering/nk-odyssey/SKILL.md)：接住已明确的 spec，在集成分支上协调并行实施与集成，交付整体验收。
 - [nk-tdd](skills/engineering/nk-tdd/SKILL.md)：测试纪律：好测试标准、反模式与数量控制；由实施与审查流程自动调用。
 - [nk-to-spec](skills/engineering/nk-to-spec/SKILL.md)：将已讨论的内容整理为 spec，发布到 Linear。
 - [nk-commit](skills/engineering/nk-commit/SKILL.md)：本地提交统一入口：核对范围、保护无关工作、执行必要检查并按约定写提交说明。
+- [nk-to-issue](skills/engineering/nk-to-issue/SKILL.md)：核实发现并记录为 GitHub Issue（bug/enhancement），查重与证据先行；记录不安排执行。
 - [nk-write](skills/productivity/nk-write/SKILL.md)：面向人的中文技术文本写作与润色：自然、准确、易读，事实一字不丢。
+- [nk-wait-what](skills/productivity/nk-wait-what/SKILL.md)：解释没讲清楚的部分：用平实语言和项目术语重述目标、结论、依据与待对齐项。
+- [nk-wizard](skills/productivity/nk-wizard/SKILL.md)：生成交互式 bash 向导，带人走完只有人能执行的手动流程（凭据、provisioning、cutover）。
 <!-- /installable-skills -->
 
 以上仅表示已有真实入口文件，不表示本轮整体已验收或发布。其他目录暂不暴露技能入口：已有旧稿保留为 `SKILL.legacy.md`，新技能只有目录占位。后续逐项讨论正文、审阅后再启用。
