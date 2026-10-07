@@ -37,10 +37,30 @@
 - 盘问时同时调用领域建模：Matt `skills/engineering/grill-with-docs/SKILL.md`（`6fd9479`）同时调用 `grilling` 和 `domain-modeling`；NK 合并到同一入口，在讨论项目领域设计时调用 `nk-domain-modeling`。领域建模方法由独立技能持有。
 - 模块用途、实际用法与预期行为的澄清要求，以及无子代理时自行查证：NK 补充。
 
+## nk-implement
+
+- [入口](../skills/engineering/nk-implement/SKILL.md) 的按 spec/tickets 实施、定期类型检查与单测、收尾全量测试、完成后审查、提交到当前分支：Matt `skills/engineering/implement/SKILL.md`（`6fd9479`）正文主干的中文迁移。
+- Matt 的 `tdd` 调用改为调用 `nk-tdd`（按项目测试规范改写的纪律参考）；验证节奏（类型检查与单测随改随跑、全量一次）保留在 implement 正文。
+- Linear ticket 生命周期（认领设进行中、验收后完成、推进解锁票）、调用 nk-review 三轴审查与发现处理短链路、提交走 nk-commit、禁止主分支直接改动与不默认开工作树、受阻出口与范围外发现交用户、非代码交付的验证替代：NK 适配。
+- 实施标准四条（完整实现不预支、抽象与状态、契约与真实失败、可读性无指标）、根因层修复、交付前 diff 自检与收束：STE-6/STE-8 调研确定的代码规范七条原则落地，NK 原创。
+- 旧 nk-work 的条件分支 references（intake、tdd-loop、ui-work、non-code、out-of-repo-state、subagents）不迁移：必要能力并入正文，Plan/U-ID/current/nk-compound 等旧机制随骨架退役，可从 Git 历史查阅。
+
 ## nk-init
 
 - [入口](../skills/engineering/nk-init/SKILL.legacy.md) 的探测、呈现确认、幂等写入骨架与已知答案不再询问：Matt `skills/engineering/setup-matt-pocock-skills/SKILL.md` 的 `Process` 下 `Explore`、`Present findings and ask`、`Confirm and edit`。
 - 项目知识入口、`docs/current.md`、本地 backlog 与 nk-commit 接口：NK 原创。
+
+## nk-prototype
+
+- [入口](../skills/engineering/nk-prototype/SKILL.md) 的一次性定位、"问题决定形态"两分支（方案并排比较、可操作状态演示）、一条命令能跑、默认无持久化、不打磨、状态可见、结论与验证片段承接、原型留分支：Matt `skills/engineering/prototype/SKILL.md` 及 `LOGIC.md`、`UI.md`（`6fd9479`）的中文改写；不沿用固定单文件 HTML、tab 引导走查、悬浮切换器与 `?variant=` 模式，形态按问题就近选择。
+- 工作树隔离与清理（默认同级 `<项目名>-worktrees/<用途>`、宿主管理优先、成果承接后清理、保留有引用价值的分支、不设台账）：STE-16 已定工作树规则的技能侧落地，NK 原创。
+- 非代码载体（大纲、草图）、适用限制、先查事实再动手（调用 nk-research）、ticket 关联：NK 适配，对齐 wayfinder 的 Prototype 票型与 to-spec 的原型片段例外。
+
+## nk-research
+
+- 重写而非迁移：Matt `skills/engineering/research/SKILL.md`（`6fd9479`）仅取"一手来源优先、关键结论追到来源"的原则；其后台代理委派与把发现写成仓库 Markdown 的流程不采用（STE-16 明确必须重写）。
+- [入口](../skills/engineering/nk-research/SKILL.md) 的先定问题（可回答的问题、支撑哪个决定、什么算答完）、本地优先、先广后窄、冲突不折中、事实/推断/未解区分、尽早停、结论与去向（对话、ticket 评论、OpenViking）、只读不开工作树：NK 原创，补齐 Matt 版缺失的问题范围、证据冲突、结论表达与停止时机。
+- 来源阅读原则（独立来源一致才算信号、时效与权威分开、网页按不可信输入处理）：就近承接旧 conventions 的 `research-digest.md` 与 `agents/web-researcher.md` 方法，按 STE-16 归入本技能；固定栏目摘要、token 预算与各专用 researcher 角色不迁移。
 
 ## nk-review
 
@@ -48,6 +68,12 @@
 - `references/personas/` 的风险角色：CE `skills/ce-code-review/references/personas/` 下同名文件；共享经验、迁移、部署角色见 conventions。
 - maintainability 的“可删除内容、替代能力及等价依据”：Ponytail `skills/ponytail-review/SKILL.md` 的 `Format` 分类；NK 增加证据与行为保持条件。
 - `references/pre-merge.md`、`entry-format.md`，外部 PR 的 base/head、修订复核、合并前确认与报告生命周期：NK 原创；常规流程显式调用 nk-simplify。
+
+## nk-tdd
+
+- [入口](../skills/engineering/nk-tdd/SKILL.md) 的好测试标准、只在确认的测试接口上测、反模式（实现耦合、同义反复、横向切片与纵向切片替代）、先见失败再实现、一次一个切片、重构归审查：Matt `skills/engineering/tdd/SKILL.md`（`6fd9479`）正文的中文迁移，按项目测试规范改写。
+- 数量纪律（新增须带来新验证价值、复用优先、不为形式新增、不多层重复断言、不堆假想场景）：项目已定测试编写规范；mock 系统边界规则浓缩自 Matt `skills/engineering/tdd/mocking.md` 的一句，tests.md 不整份迁移；不设 codebase-design 词汇联动（NK 无对应技能）。
+- 定位为 model-invoked 纪律参考：nk-implement、nk-odyssey 实施时调用，nk-review 重写时引用。
 
 ## nk-to-spec
 
@@ -63,7 +89,7 @@
 ## nk-to-tickets
 
 - [入口](../skills/engineering/nk-to-tickets/SKILL.md) 的收集上下文、可选代码库探索与预重构、纵向切片规则、宽范围重构的扩展–收缩排序、与用户确认拆分、按依赖顺序创建并连原生阻塞、子 issue、前沿开工、避免路径与代码片段及原型例外：Matt `skills/engineering/to-tickets/SKILL.md`（`6fd9479`）的 `Process` 与模板，按原文结构迁移为中文。
-- 固定使用 Linear、沿用项目标签与状态（不沿用 ready-for-agent）、依赖与状态走原生字段不在正文重复、去掉本地文件 tracker 路径：NK 适配。ticket 模板按 STE-5 定稿：所属 spec、交付什么、验收条件；依赖走原生阻塞关系，正文不设该节。
+- 固定使用 Linear、沿用项目标签与状态（不沿用 ready-for-agent）、依赖与状态走原生字段不在正文重复、去掉本地文件 tracker 路径：NK 适配。ticket 模板按 STE-5 定稿：所属 spec、交付什么、验收条件；依赖走原生阻塞关系，正文不设该节。创建即按就绪度设状态：无阻塞的进 Todo，被阻塞的留在 Backlog，解锁后由实施会话推进。
 - 承接 wayfinder 的 map 作为输入引用：NK 适配。
 
 ## nk-wait-what

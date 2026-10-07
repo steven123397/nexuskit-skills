@@ -65,6 +65,7 @@
 | --- | --- |
 | chart the map / work through the map | 建立 map / 处理 map |
 | plan, don't do | 规划而非执行 |
+| red → green（red before green） | 先见失败再实现 |
 | refer by name | 用名称引用 |
 | index, not a store | 索引，不存正文 |
 

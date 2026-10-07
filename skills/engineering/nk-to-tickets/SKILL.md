@@ -52,7 +52,7 @@ disable-model-invocation: true
 
 ### 5. 发布到 Linear
 
-按依赖顺序创建 tickets（被依赖的在前），再设置原生阻塞关系。来源是已有 issue 时，把每张 ticket 建成它的子 issue。使用项目已有的标签和状态，不在正文重复维护状态、优先级或依赖。不关闭、不修改父 issue。
+按依赖顺序创建 tickets（被依赖的在前），再设置原生阻塞关系。来源是已有 issue 时，把每张 ticket 建成它的子 issue。使用项目已有的标签和状态，不在正文重复维护状态、优先级或依赖；无阻塞的 ticket 创建为 Todo，被阻塞的留在 Backlog，解锁后由实施会话推进。不关闭、不修改父 issue。
 
 实施从**前沿**开始：所有依赖都已完成的 tickets。纯线性链条就是从上往下做。
 
