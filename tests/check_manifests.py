@@ -13,7 +13,16 @@ VERSION = re.compile(rf"{NUMBER}\.{NUMBER}\.{NUMBER}(?:-{IDENTIFIER}(?:\.{IDENTI
 def validate(root, release_tag=None):
     root = Path(root).resolve()
     problems = []
-    names = {p.parent.name for p in (root / "skills").glob("nk-*/SKILL.md")}
+    entries = list((root / "skills").rglob("SKILL.md"))
+    names = {p.parent.name for p in entries}
+    if len(names) != len(entries):
+        problems.append("inventory: duplicate skill names across groups")
+    for entry in entries:
+        parts = entry.relative_to(root).parts
+        if len(parts) != 4 or parts[1] not in {"engineering", "productivity"} or not parts[2].startswith("nk-"):
+            problems.append(f"inventory: unexpected skill location {entry.relative_to(root)}")
+        if (entry.parent / "SKILL.legacy.md").exists():
+            problems.append(f"inventory: remove legacy draft before enabling {entry.parent.name}")
     if not names:
         return ["inventory: no nk-* skills found"]
 
@@ -82,9 +91,14 @@ def validate(root, release_tag=None):
             if entry.get("name") != "nexuskit" or entry.get("source") != {"source": "local", "path": "./"}:
                 problems.append(f"{market_rel}: plugin identity/source differs from local manifest")
 
-    for rel in ["README.md", "skills/nk-ask-ljq/SKILL.md"]:
+    for rel in ["README.md"]:
         try:
-            inventory(rel, (root / rel).read_text(encoding="utf-8"), names)
+            text = (root / rel).read_text(encoding="utf-8")
+            start, end = "<!-- installable-skills -->", "<!-- /installable-skills -->"
+            if start not in text or end not in text:
+                problems.append(f"{rel}: missing installable skill section")
+            else:
+                inventory(rel, text.split(start, 1)[1].split(end, 1)[0], names)
         except OSError as exc:
             problems.append(f"{rel}: cannot read routing map: {exc}")
     return problems

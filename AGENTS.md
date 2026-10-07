@@ -1,28 +1,26 @@
 # AGENTS.md
 
-本仓库是 NexusKit（`nk-*`）技能体系的开发目录。技能与共享约定位于 [`skills/`](skills/)（`skills/nk-*` + `skills/conventions/`）。
+本仓库是 NexusKit 技能开发目录。技能位于 `skills/engineering/nk-*/` 和 `skills/productivity/nk-*/`，客户端通过插件或 skills CLI 消费安装快照，仓库不是实时加载源。
 
-**加载模型：本仓库是半成品工作区，不直接作为技能加载源。** 各客户端通过发布形态消费成品——Kimi Code 插件、Codex 插件、`npx skills add`（见 [`README.md`](README.md) 安装节）。开发期想让客户端立即试用未发布改动时，手动重装本地插件（`/plugins install D:\codex_project\nexuskit`）或在 `~/.agents/skills/` 建临时 junction（用 PowerShell `New-Item -ItemType Junction`；删除用 `[IO.Directory]::Delete()`，勿用 `Remove-Item -Recurse`）。
+## 工作入口
 
-## 维护者入口
+从 Linear 确认任务与已定范围，从 Git/PR 核对实际改动；需要背景、历史理由或经验时检索 OpenViking。术语见 [CONCEPTS.md](CONCEPTS.md)，重要设计见 [docs/decisions/](docs/decisions/)，来源对应见 [docs/skill-sources.md](docs/skill-sources.md)。
 
-- **[`docs/current.md`](docs/current.md)**：仓库当前状态、验证结果、下一步——新会话先读它。
-- **[`docs/solutions/`](docs/solutions/)**：经验与决策库（长期资产）；沉淀与审计规则见 `skills/conventions/solution-schema.md`。
-- 涉及设计取舍、非琐碎实现或排障时，按主题、模块或症状定向检索 `docs/solutions/`；已有适用结果直接复用，只精读相关条目。无匹配照常推进，不因此触发沉淀或审计。交接相关经验时带上来源路径、适用条件、关键约束及验证影响；存疑或已取代条目先核实现状。
-- **[`CONCEPTS.md`](CONCEPTS.md)**：领域术语表（分支收尾、容器中立认领、前沿轮次等体系术语的唯一真实来源）；维护规则见 `skills/conventions/concepts-vocabulary.md`。
-- **[`docs/skill-sources.md`](docs/skill-sources.md)**：各技能具体部分与上游技能、文件或章节的来源对应（维护者向；执行技能的 Agent 不需要读）。
-- **[`conventions/`](skills/conventions/)**：共享约定的维护源（提交节奏、产物生命周期、术语、plan 格式等）。一般按需引用；每次必需的短底线可按 nk-work 范式同步到入口，并校验副本一致性，不维护未经核对的改写副本。
-- **[技能组织范式](docs/solutions/architecture-decisions/2026-09-28-skill-execution-locality.md)**：以 nk-work 为例，说明主流程、完整执行材料、条件分支和共享维护源的边界；后续逐技能整理时参考。
-- **[`docs/ideation/nexuskit-framework-ideation.md`](docs/ideation/nexuskit-framework-ideation.md)**：体系设计 RFC（D1–D12 设计决定、历史阶段路线图）。
-- **[`README.md`](README.md)**：按场景选用技能的路由表。
-- **[设计对话转录](docs/case-studies/2026-09-25-design-dialogue-transcript.md)**：追溯立项取舍时按需查阅的历史材料，不是当前执行规则，不要求技能或新会话全文加载；当前规则以技能、共享约定与已采纳设计决定为准。
+旧 `docs/solutions/` 和历史计划、审查、讨论材料等待迁移，不作为当前执行规则，也不要求新会话通读。删除旧知识来源前，按 STE-13 验证新位置可读取和检索。不恢复 current 或重复交接文档。
 
-## 改动规则
+## 技能组织
 
-- 修改任何 `skills/nk-*/` 或 `skills/conventions/` 后，运行 `python tests/run_checks.py`，五项检查（链接、引用、字节上限、共享方法/调用关系/插件清单、frontmatter）必须全绿。检查器变更另跑 `python -m unittest discover -s tests -p "test_*.py"`；wizard 模板变更用 Bash 执行 `bash -n skills/nk-wizard/assets/template.sh`。首次运行先安装 `python -m pip install -r tests/requirements.txt`。CI 在 PR、main 推送及版本 tag 上覆盖 Windows/Linux，tag 检查版本号和 release notes。
-- **新增技能目录不建加载链接**：发布模型下各客户端消费的是安装快照（见头部加载模型），仓库内改动不直接影响线上；需要即时试用时按头部说明重装本地插件或建临时 junction。
-- 所有提交通过 [`nk-commit`](skills/nk-commit/SKILL.md)，提交节奏由该入口统一持有：一个经过验证的变化一次提交，提交前按需同步 current 并一起入库；中途状态默认暂留，显式现场保存按入口规则处理。
-- 新建或修改技能时核对 `docs/skill-sources.md`，仅在来源对应变化时更新：记录本技能哪一部分来自上游哪个技能、文件或章节，原创部分简短标明。不追加修改日期、Issue 处置、验证结果或重构流水账；技能的 `SKILL.md` 正文不写来源备注。
-- 技能 frontmatter 的 `description` 统一用英文，按当前职责说明适用场景、主要产物及必要的调用边界，不追加中文关键词；正文语言不受此规则影响。这是维护者选定的统一策略，不宣称英文触发效果已经实验验证。
+- `SKILL.md` 放完整主流程，模板、提示词、脚本等按实际需要就近放置。跨技能调用公开入口，不读取其他技能的私有文件，不恢复集中 conventions 或共享片段副本机制。
+- 待重写的旧入口保留为 `SKILL.legacy.md`，只供维护者对照，不是可执行技能。其旧链接按迁移前版本理解，缺失材料可在 Git 历史中查阅。新增技能以 `.gitkeep` 保留目录，不创建可安装的空壳。
+- 逐技能按新职责重写，再对照旧稿检查必要能力；完成一份后供维护者审阅。启用时移除旧稿或占位文件，更新 README 可安装入口和插件描述中的清单。init、ask-ljq 最后重写。
+- frontmatter 的 `description` 用英文；正文可用中文。修改来源对应时更新 skill-sources，说明具体部分来自何处，不记进度、日期或验证流水账。
 
-- **校验器适用范围**：frontmatter 使用 PyYAML SafeLoader 加重复键拒绝，核对 name/description 为非空字符串、name 与目录同名、description 无中文残留及调用标志为布尔值，不设置可选字段白名单。合法 YAML 注释不视为语法错误。外部 skill-creator 的 `quick_validate.py` 不支持本仓库全部字段，不应为通过它删除有效字段或修改外部安装文件。缺少 `yaml` 时按 tests/requirements.txt 安装依赖；机械检查不证明客户端字段支持或真实技能执行效果。
+## 修改与验证
+
+- 不直接修改或提交主分支。原检出目录正常切换工作分支，不建立额外主工作树。需要并行写入或原型隔离时才开工作树，默认放在仓库同级 `<项目名>-worktrees/<用途>`；优先沿用宿主管理方式，并明确绝对路径、分支与用途。
+- 保留其他会话的未提交工作。成果承接后及时清理闲置工作树，清理前核对活跃使用者、未提交及忽略文件，不删除原工作目录或其他任务资源。
+- 技能或基础检查修改后运行 `python tests/run_checks.py`；检查器修改另跑 `python -m unittest discover -s tests -p "test_*.py"`。首次安装依赖用 `python -m pip install -r tests/requirements.txt`。
+- wizard 模板修改后执行 `bash -n skills/productivity/nk-wizard/assets/template.sh`。CI 覆盖 Windows/Linux，版本 tag 还检查版本号和 release notes。
+- 检查覆盖链接、技能引用、大小、分发与 frontmatter；机械检查不证明真实客户端执行效果。使用仓库的 YAML 校验器，不为通过外部 skill-creator 校验器删掉合法字段。
+- 提交通过 nk-commit；迁移期间旧稿位于 [SKILL.legacy.md](skills/engineering/nk-commit/SKILL.legacy.md)，其中已经退役的 current、Plan、U-ID 等要求不适用。没有明确提交安排时保留可审阅改动，不把骨架搭建当成整轮技能完成。
+- 新建技能目录不创建加载链接。即时试用需手动重装本地插件；临时 junction 用 PowerShell 创建，删除 junction 用 `[IO.Directory]::Delete()`，不递归删除目标。
