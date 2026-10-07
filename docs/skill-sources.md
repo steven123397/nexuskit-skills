@@ -20,8 +20,8 @@
 
 ## nk-commit
 
-- [入口](../skills/engineering/nk-commit/SKILL.legacy.md) 的状态与风格检查、按逻辑变化提交、具名路径暂存、提交消息文件及提交后核对：CE `skills/ce-commit/SKILL.md` 的 `Context`、`Workflow`。
-- R1–R6 提交节奏、current 归属、验证与审查证据、amend 条件：NK 原创。
+- [入口](../skills/engineering/nk-commit/SKILL.md) 的范围与风格核对、按逻辑变化提交、具名路径暂存、提交消息文件、路径限定提交、命令逐条执行与提交后核对：CE `skills/ce-commit/SKILL.md` 的 `Context`、`Workflow`。
+- 提交单位（一个经过验证的变化）、未确认未共享不改写历史、必要证据核对、中文 Conventional Commits 说明格式、主分支停止并报告：NK 原创；current、U-ID、R1–R6 提交节奏与 handoff/收尾耦合随 STE-22 退役。
 - 中文提交文案的类型、动宾主题、动机与不兼容标记：原来源记录归于本地 `C:/Users/29617/.codex/skills/chinese-commit-conventions/SKILL.md`；该文件现已不存在，无法核对具体章节。
 
 ## nk-debug
@@ -89,8 +89,9 @@
 
 ## nk-to-issue
 
-- [入口](../skills/engineering/nk-to-issue/SKILL.legacy.md) 的事实核实、已有实现与历史否决检查、已知与缺口表达：Matt `skills/engineering/triage/SKILL.md` 的 `Triage a specific issue or PR` 第 1、3 步、`Needs-info template`、`Resuming a previous session`。
-- 授权后在当前任务建票/更新、本地 backlog、失败去重与调用方接口：NK 原创；条目契约见 conventions。
+- [入口](../skills/engineering/nk-to-issue/SKILL.md) 的事实核实、已有实现与历史否决检查、已知与缺口的表达：Matt `skills/engineering/triage/SKILL.md` 的 `Triage a specific issue or PR` 第 1、3 步、`Needs-info template`、`Resuming a previous session`。
+- 写作原则（持久性优于精确、行为而非步骤、可独立验证的完成定义、范围边界）与条目格式、`bug`/`enhancement` 标签约定：就近承接旧集中约定的 `issue-writing.md` GitHub 部分，按 STE-16 归入本技能；认领与关闭时机、wayfinder 标签例外随旧机制退役，不迁移。
+- 授权语义与写入目标核对、建票/更新分流、无远端降级与失败处理、纳入 Linear 时的最小关联边界：NK 原创。
 
 ## nk-to-tickets
 
@@ -100,8 +101,8 @@
 
 ## nk-wait-what
 
-- [入口](../skills/productivity/nk-wait-what/SKILL.legacy.md) 的重新解释、补上下文、简单语言与项目术语：Matt `skills/productivity/wait-what/SKILL.md` 正文。
-- 中文表达适配、`CONCEPTS.md`、不清楚处与待对齐项的汇报：NK 原创适配。
+- [入口](../skills/productivity/nk-wait-what/SKILL.md) 的重新解释、补上下文、简单语言与项目术语：Matt `skills/productivity/wait-what/SKILL.md` 正文；其 `GLOSSARY.md`/`GLOSSARY-MAP.md` 术语来源映射为 NK 的 `CONCEPTS.md`。
+- 中文表达适配、事实/推断/待决定的区分与待对齐项的汇报：NK 原创适配。
 
 ## nk-wayfinder
 
@@ -109,7 +110,13 @@
 - Linear 原生状态与依赖、认领时区分同账号会话、取消依赖后核对影响、通过 nk-grill 承接领域建模、模块实际用法澄清、接入 nk-to-spec / nk-to-tickets：NK 适配。
 - 独立问题可并行研究或同轮讨论，取消上游每会话只解决一张非研究票的限制；研究结果记录到 Linear，不固定开研究分支；探索以决策为产出，不保留上游 Notes 扩展为正式实施的选项：NK 已定职责调整。
 
+## nk-prose
+
+- [入口](../skills/productivity/nk-prose/SKILL.md) 的事实保真约束、润色/起草/检查三种用法、幂等润色、读者分档、句子标准与不动代码块等边界：CE `skills/ce-noslop/SKILL.md` 正文的中文改写；英文模式清单（`references/patterns.md`）与术语参考（`references/terminology.md`）不迁入。
+- 中文表达与排版（中英文与数字空格、全半角标点、术语保留与中英对照、欧化句式与机翻味规避）：本机 `C:/Users/29617/.codex/skills/chinese-documentation/SKILL.md` 要点收敛；API 文档与 README 长模板不迁入。
+- 套话与机械 User Story 的处理方向、面向 Agent 指令文档的排除边界：NK 原创。Matt `skills/productivity/writing-for-agents/SKILL.md` 是指令写作参考，不是本技能来源。
+
 ## nk-wizard
 
-- [入口](../skills/productivity/nk-wizard/SKILL.legacy.md) 的分阶段人工向导与 [Bash 模板](../skills/productivity/nk-wizard/assets/template.sh)：Matt `skills/engineering/wizard/SKILL.md` 与同目录 `template.sh`。
-- Git Bash 说明、跳过项不算全部完成、目的地与凭据边界、静态验证及提交接口：NK 原创适配。
+- [入口](../skills/productivity/nk-wizard/SKILL.md) 的分阶段人工向导与 [Bash 模板](../skills/productivity/nk-wizard/assets/template.sh)：Matt `skills/engineering/wizard/SKILL.md` 与同目录 `template.sh`；模板仅调整生成来源注释为 nk-wizard。
+- Git Bash 说明、跳过项不算全部完成、目的地与凭据边界、静态验证及提交接口：NK 原创适配；旧稿的集中知识库调用改为按用户决定记入 OpenViking。

@@ -22,5 +22,5 @@
 - 技能或基础检查修改后运行 `python tests/run_checks.py`；检查器修改另跑 `python -m unittest discover -s tests -p "test_*.py"`。首次安装依赖用 `python -m pip install -r tests/requirements.txt`。
 - wizard 模板修改后执行 `bash -n skills/productivity/nk-wizard/assets/template.sh`。CI 覆盖 Windows/Linux，版本 tag 还检查版本号和 release notes。
 - 检查覆盖链接、技能引用、大小、分发与 frontmatter；机械检查不证明真实客户端执行效果。使用仓库的 YAML 校验器，不为通过外部 skill-creator 校验器删掉合法字段。
-- 提交通过 nk-commit；迁移期间旧稿位于 [SKILL.legacy.md](skills/engineering/nk-commit/SKILL.legacy.md)，其中已经退役的 current、Plan、U-ID 等要求不适用。没有明确提交安排时保留可审阅改动，不把骨架搭建当成整轮技能完成。
+- 提交通过 nk-commit。没有明确提交安排时保留可审阅改动，不把骨架搭建当成整轮技能完成。
 - 新建技能目录不创建加载链接。即时试用需手动重装本地插件；临时 junction 用 PowerShell 创建，删除 junction 用 `[IO.Directory]::Delete()`，不递归删除目标。
