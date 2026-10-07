@@ -12,6 +12,7 @@
 | recommended answer | 推荐答案 | grilling |
 | shared understanding | 共同理解 | grilling |
 | sub-agent / subagent | 子代理 | grilling、wayfinder、implement-spec、code-review、chief-of-staff |
+| implementer / exploration / merger subagents | 实施子代理 / 探索子代理 / 合并子代理 | implement-spec |
 | destination | 目的地 | wayfinder、ask-matt |
 | fog / fog of war | 未成形的问题（特殊决定，见下） | wayfinder |
 | decision tickets | 决策 tickets | wayfinder、ask-matt |

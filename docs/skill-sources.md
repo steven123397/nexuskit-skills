@@ -50,6 +50,12 @@
 - [入口](../skills/engineering/nk-init/SKILL.legacy.md) 的探测、呈现确认、幂等写入骨架与已知答案不再询问：Matt `skills/engineering/setup-matt-pocock-skills/SKILL.md` 的 `Process` 下 `Explore`、`Present findings and ask`、`Confirm and edit`。
 - 项目知识入口、`docs/current.md`、本地 backlog 与 nk-commit 接口：NK 原创。
 
+## nk-odyssey
+
+- [入口](../skills/engineering/nk-odyssey/SKILL.md) 的任务图与前沿、上下文指针稀疏通信、实施子代理后台并行、流程主干（读图、可选探索子代理与仓库外记录、集成分支与 draft PR、子代理独立工作树并确认基点、合并子代理合入、前沿推进、验收、PR ready 或按 tracker 关票、清理工作树）：Matt `skills/engineering/implement-spec/SKILL.md`（`6fd9479`）正文的中文迁移。
+- 实施子代理按 nk-implement 纪律（含 nk-tdd、单票适用审查、nk-commit 提交）而非仅调用 tdd；整体验收交给 nk-spec-close（STE-17），不内置第二套验收方法，收尾审查由 spec-close 调用 nk-review；独立研究走 nk-research；解锁票推进 Todo；交付与 PR 收尾接 nk-pr：NK 适配。
+- 原名 implement-spec，更名 odyssey：NK 决定。
+
 ## nk-prototype
 
 - [入口](../skills/engineering/nk-prototype/SKILL.md) 的一次性定位、"问题决定形态"两分支（方案并排比较、可操作状态演示）、一条命令能跑、默认无持久化、不打磨、状态可见、结论与验证片段承接、原型留分支：Matt `skills/engineering/prototype/SKILL.md` 及 `LOGIC.md`、`UI.md`（`6fd9479`）的中文改写；不沿用固定单文件 HTML、tab 引导走查、悬浮切换器与 `?variant=` 模式，形态按问题就近选择。
