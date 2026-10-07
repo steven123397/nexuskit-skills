@@ -49,8 +49,8 @@
 
 ## nk-grill
 
-- [入口](../skills/nk-grill/SKILL.md) 的设计树、前沿轮次、推荐答案与 Agent 事实查证：Matt `skills/productivity/grilling/SKILL.md` 正文。
-- 显式调用、复用与局部重开已定决策、暂停与共识汇报、行动授权边界：NK 原创。
+- [入口](../skills/nk-grill/SKILL.md) 的设计树、前沿轮次、提问格式、推荐答案、Agent 事实查证与确认共同理解后再行动：Matt `skills/productivity/grilling/SKILL.md`（`6fd9479`）正文的中文迁移。
+- 模块用途、实际用法与预期行为的澄清要求，以及无子代理时自行查证：NK 补充。显式调用策略沿用 NK。
 
 ## nk-handoff
 
