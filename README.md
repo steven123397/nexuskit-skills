@@ -8,6 +8,7 @@
 
 <!-- installable-skills -->
 - [nk-grill](skills/engineering/nk-grill/SKILL.md)：追问设计和需求，达成共同理解。
+- [nk-wayfinder](skills/engineering/nk-wayfinder/SKILL.md)：在 Linear 中组织大型目标的待定问题，按依赖推进讨论与研究。
 - [nk-to-spec](skills/engineering/nk-to-spec/SKILL.md)：将已讨论的内容整理为 spec，发布到 Linear。
 <!-- /installable-skills -->
 

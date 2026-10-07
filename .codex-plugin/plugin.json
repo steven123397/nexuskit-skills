@@ -1,7 +1,7 @@
 {
   "name": "nexuskit",
   "version": "0.2.0",
-  "description": "NexusKit 开发分支：2 个 nk-* 技能入口，其余技能正在逐项重写；未发布版本。",
+  "description": "NexusKit 开发分支：3 个 nk-* 技能入口，其余技能正在逐项重写；未发布版本。",
   "author": {
     "name": "steven123397"
   },
@@ -20,7 +20,7 @@
   "interface": {
     "displayName": "NexusKit",
     "shortDescription": "轻量工程技能：澄清需求、组织实现与交付",
-    "longDescription": "NexusKit development checkout exposes 2 nk-* skills: nk-grill, nk-to-spec. Other skills are being rewritten and are not installable entries. This checkout is not a published release.",
+    "longDescription": "NexusKit development checkout exposes 3 nk-* skills: nk-grill, nk-wayfinder, nk-to-spec. Other skills are being rewritten and are not installable entries. This checkout is not a published release.",
     "developerName": "steven123397",
     "category": "Coding",
     "capabilities": [

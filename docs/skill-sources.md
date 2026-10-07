@@ -6,6 +6,7 @@
 
 - **CE**：`D:/codex_project/upstreams/compound-engineering-plugin/`。
 - **Matt**：`D:/codex_project/upstreams/matt-pocock-skills/`。
+- **Matt-zh**：`D:/codex_project/upstreams/mattpocock-skills-zh-CN/`，社区中文直译版，仅作句子级译法参考，不作来源依据。
 - **Ponytail**：`D:/codex_project/upstreams/ponytail/`。
 
 以上目录为维护者的本地只读克隆，未随 NK 分发；路径用于定位现有材料，不将当前上游 HEAD 当作当初采用的版本。归属和许可证见 [NOTICE](../NOTICE)。下文 NK 的 `references/`、`SKILL.md` 相对该节技能目录。
@@ -66,8 +67,9 @@
 
 ## nk-wayfinder
 
-- [入口](../skills/engineering/nk-wayfinder/SKILL.legacy.md)、`references/modes.md`、`ticket-types.md`、`fog-and-scope.md` 的 Map、票种、依赖、迷雾与逐票探索：Matt `skills/engineering/wayfinder/SKILL.md` 的 `The Map`、`Ticket Types`、`Fog of war`、`Invocation`。
-- `references/tracker-operations.md` 的 GitHub 分页、认领与失败处理，探索结果经 nk-plan 汇合：NK 原创适配。
+- [入口](../skills/engineering/nk-wayfinder/SKILL.md) 的规划定位、名称引用、索引与子 tickets、四种票型、依赖、未成形问题与范围区分、两种使用方式：Matt `skills/engineering/wayfinder/SKILL.md`（`6fd9479`）的 `Plan, don't do`、`Refer by name`、`The Map`、`Ticket Types`、`Fog of war`、`Out of scope`、`Invocation`。沿用结构，Map 保留英文 map（`wayfinder:map` 索引 issue，与 spec、ticket 同类），Destination、Frontier 译为目的地、前沿（前沿与 nk-grill 一致）；Fog of war 不直译比喻，表述为未成形的问题，对应章节 Not yet specified 译作“未成形”。通用术语译法见 [context.md](../context.md)。
+- Linear 原生状态与依赖、认领时区分同账号会话、取消依赖后核对影响、通过 nk-grill 承接领域建模、模块实际用法澄清、接入 nk-to-spec / nk-to-tickets：NK 适配。
+- 独立问题可并行研究或同轮讨论，取消上游每会话只解决一张非研究票的限制；研究结果记录到 Linear，不固定开研究分支；探索以决策为产出，不保留上游 Notes 扩展为正式实施的选项：NK 已定职责调整。
 
 ## nk-wizard
 
