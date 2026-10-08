@@ -6,4 +6,4 @@
 
 旧版曾让 `skills/conventions/` 带最小 SKILL.md 作为第 18 个可安装单元随套件分发，供各技能相对引用。集中 conventions 已随 STE-30 退役：技能就近持有材料，跨技能走公开入口，不再有该安装单元。已知环境问题：Kimi 的 GitHub URL 安装在 Windows 上最后一步临时目录 rename 可能 EPERM（Defender 对带 Mark-of-the-Web 文件的瞬态锁），与网络、清单无关，同一 URL 在 WSL 安装成功；兜底是本地路径安装或重试。
 
-初版 2026-09-26（原文在 Git 历史 `docs/solutions/architecture-decisions/2026-09-26-distribution-layout.md`），conventions 部分随骨架重写修订。设计依据：[STE-16](https://linear.app/steven-liang/issue/STE-16)、[STE-30](https://linear.app/steven-liang/issue/STE-30)。
+初版 2026-09-26（原文在 Git 历史 `docs/solutions/architecture-decisions/2026-09-26-distribution-layout.md`），conventions 部分随骨架重写修订。目录与加载边界见 [ADR-0002](0002-skill-layout.md)。设计依据：[STE-16](https://linear.app/steven-liang/issue/STE-16)、[STE-30](https://linear.app/steven-liang/issue/STE-30)。

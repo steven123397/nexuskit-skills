@@ -49,11 +49,11 @@ skills/
 
 - [AGENTS.md](AGENTS.md)：本仓库的开发和验证约定。
 - [CONCEPTS.md](CONCEPTS.md)：领域术语。
-- [docs/decisions/](docs/decisions/)：关键架构决定。
+- [docs/adr/](docs/adr/)：关键架构决定。
 - [技能来源](docs/skill-sources.md)：采用的上游材料。
 - [docs/releases/](docs/releases/)：版本说明。
 
-内部 spec、ticket 和进度在 Linear，外部反馈在 GitHub Issues，背景与经验在 OpenViking，代码与合入事实在 Git/PR。仓库不再维护实时状态文档。旧 solutions 与发想、讨论材料已按 STE-13 迁移（背景归 OpenViking，正式决定归 [docs/decisions/](docs/decisions/)），v0.2.0 发布证据保留在 docs/plans 与 docs/reviews。
+内部 spec、ticket 和进度在 Linear，外部反馈在 GitHub Issues，背景与经验在 OpenViking，代码与合入事实在 Git/PR。仓库不再维护实时状态文档。旧 solutions 与发想、讨论材料已按 STE-13 迁移（背景归 OpenViking，正式决定归 [docs/adr/](docs/adr/)），v0.2.0 发布证据保留在 docs/plans 与 docs/reviews。
 
 ## 安装
 

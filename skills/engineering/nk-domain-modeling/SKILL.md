@@ -1,6 +1,6 @@
 ---
 name: nk-domain-modeling
-description: "Build and sharpen a project's domain model: challenge terminology, stress-test concept boundaries with concrete scenarios, cross-check claims against code, and write resolved terms and key decisions down the moment they crystallise. Maintains CONCEPTS.md terms and docs/decisions/ ADRs. nk-grill invokes it during domain design discussions; also usable standalone to clarify terms or bootstrap a glossary. Reading the glossary for vocabulary is any skill's habit, not this one."
+description: "Build and sharpen a project's domain model: challenge terminology, stress-test concept boundaries with concrete scenarios, cross-check claims against code, and write resolved terms and key decisions down the moment they crystallise. Maintains CONCEPTS.md terms and docs/adr/ ADRs. nk-grill invokes it during domain design discussions; also usable standalone to clarify terms or bootstrap a glossary. Reading the glossary for vocabulary is any skill's habit, not this one."
 argument-hint: "[可选：要澄清的术语或概念；也可直接请求初建或维护术语表]"
 ---
 
@@ -11,7 +11,7 @@ argument-hint: "[可选：要澄清的术语或概念；也可直接请求初建
 ## 文件归属
 
 - 术语表：仓库根目录 `CONCEPTS.md`。
-- 关键决定（ADR）：`docs/decisions/`，一篇短文记录一个决定。
+- 关键决定（ADR）：`docs/adr/`，编号式文件名 `0000-{短名}.md`，一篇短文记录一个决定。
 - 两者惰性创建：文件不存在时，由第一个敲定的术语或决定创建，只写本次敲定的内容，不顺带初建全仓。项目工作流文档另有规定的从其规定。
 
 ## 讨论中的动作
@@ -59,4 +59,14 @@ argument-hint: "[可选：要澄清的术语或概念；也可直接请求初建
 
 任一不满足就跳过，不为了记录而记录。典型对象：整体架构形状、上下文之间的集成方式、带锁定的技术选型（数据库、消息总线、认证、部署目标）、边界与范围（明确的"不做"与"是"同样值得记）、偏离明显路径的刻意决定、代码里看不见的约束（合规要求、性能承诺）、非显而易见的已否决备选——否则半年后有人会再提一遍。
 
-格式：短标题加一两段——背景、决定、理由；确有价值时补否决的备选或后果。不填模板段落，价值在于记下"做过这个决定"和"为什么"；设计依据或关联票附链接。
+格式：短标题加一两段——背景、决定、理由，不填模板段落；价值在于记下“做过这个决定”和“为什么”：
+
+```markdown
+# {决定标题}
+
+{一两段：背景、决定了什么、为什么。}
+{可选：否决的备选或后果——确有价值才写。}
+{设计依据或关联票，附链接。}
+```
+
+**编号**：新建时扫 `docs/adr/` 取现有最大编号 +1，文件名 `0000-{短名}.md`、正文引用写作 ADR-0000；编号一经分配不重排。被新决定替代时，在旧决定末尾标注后继编号（superseded by ADR-0000），不删除原文。项目工作流文档另有编号规定的从其规定。

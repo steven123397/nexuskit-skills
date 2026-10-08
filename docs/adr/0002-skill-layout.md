@@ -12,4 +12,4 @@
 
 spec 与分支生命周期独立。spec 整体验收通过即可关闭；PR 负责分支交付收尾，复用有效验收。分支可没有 spec，但不直接修改主分支。
 
-设计依据：[STE-16](https://linear.app/steven-liang/issue/STE-16)。技能正文随对应实施票逐项完善。
+设计依据：[STE-16](https://linear.app/steven-liang/issue/STE-16)。技能正文随对应实施票逐项完善。分发形态与布局事实见 [ADR-0001](0001-distribution-layout.md)。

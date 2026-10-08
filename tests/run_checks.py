@@ -16,7 +16,7 @@ def skill_entries(root):
 def maintained_docs(root):
     docs = list(root.glob('*.md'))
     docs += list((root / 'docs').glob('*.md'))
-    docs += list((root / 'docs/decisions').rglob('*.md'))
+    docs += list((root / 'docs/adr').rglob('*.md'))
     for entry in skill_entries(root):
         docs += list(entry.parent.rglob('*.md'))
     return sorted(set(docs))
