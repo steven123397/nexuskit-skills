@@ -38,9 +38,11 @@
 
 ## nk-debug
 
-- [入口](../skills/engineering/nk-debug/SKILL.legacy.md)、`references/investigate.md`、`fix.md`、`investigation-techniques.md`、`defense-in-depth.md`：CE `skills/ce-debug/SKILL.md` 的 `Execution Flow` 及 `references/` 下同名文件；就近合入的反模式源于 `references/anti-patterns.md`。
-- `references/reproduction.md` 的反馈回路、收紧复现与最小化，以及调查中的可检验预测：Matt `skills/engineering/diagnosing-bugs/SKILL.md` 的 `Phase 1: Build a feedback loop`、`Phase 2: Reproduce + minimise`、`Phase 3: Hypothesise`、`Phase 4: Instrument`。
-- 仅诊断出口、修复授权承接、nk-review/nk-commit 接口：NK 原创。
+- [入口](../skills/engineering/nk-debug/SKILL.md) 的调查主线（分诊输入含 Issue 正文与评论、建立可重复观测、环境与在途改动核对、沿真实调用链回溯根因、可证伪假设与单变量探针、卡点自诊）与修复主线（测试归属五分流、先见失败再修复、原始场景回归、探针清理与交付证据）：CE `skills/ce-debug/SKILL.md` 的 `Execution Flow` 及 `references/investigate.md`、`fix.md` 压缩迁移；`references/investigate.md` 就近合入的反模式源于 CE `references/anti-patterns.md`。
+- 复现回路优先（先建对准本缺陷的通过/失败信号再谈理论、手段选择清单、收紧回路三问、偶发缺陷提高复现率、性能先建数值基线、无法复现如实说）：Matt `skills/engineering/diagnosing-bugs/SKILL.md`（`6fd9479`）Phase 1 的精神与清单中文压缩；旧 `references/reproduction.md` 的回路手段表与最小化并入正文。
+- 证实根因写进提交说明：Matt Phase 6 的 Cleanup 要求。
+- [调查技术](../skills/engineering/nk-debug/references/investigation-techniques.md)、[分层防御](../skills/engineering/nk-debug/references/defense-in-depth.md) 保留为按需 references，源自 CE 同名文件，措辞未改；`investigate.md`、`fix.md`、`reproduction.md` 的内容并入 SKILL.md 后删除。
+- 仅诊断出口与四种授权分流、修复推翻有意设计时的分歧出口、调用新版 nk-review（发现处理短链路）与 nk-commit（轻量提交）、回归测试纪律对照 nk-tdd、证据脱敏、范围外发现经 nk-to-issue 记录：NK 原创；旧稿的 current、nk-compound 沉淀、artifact-lifecycle/subagent-results 约定引用随 STE-24 退役，历史调查经验改检索 OpenViking。
 
 ## nk-grill
 
