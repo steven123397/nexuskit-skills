@@ -17,6 +17,7 @@
 - [nk-tdd](skills/engineering/nk-tdd/SKILL.md)：测试纪律：好测试标准、反模式与数量控制；由实施与审查流程自动调用。
 - [nk-codecraft](skills/engineering/nk-codecraft/SKILL.md)：代码纪律：七条规范融合深模块词汇与判据；由实施与审查流程自动调用。
 - [nk-to-spec](skills/engineering/nk-to-spec/SKILL.md)：将已讨论的内容整理为 spec，发布到 Linear。
+- [nk-review](skills/engineering/nk-review/SKILL.md)：三轴独立审查：需求符合性、实现正确性、简洁性与可维护性；返回发现不修复，未受影响的结论直接复用。
 - [nk-commit](skills/engineering/nk-commit/SKILL.md)：本地提交统一入口：核对范围、保护无关工作、执行必要检查并按约定写提交说明。
 - [nk-to-issue](skills/engineering/nk-to-issue/SKILL.md)：核实发现并记录为 GitHub Issue（bug/enhancement），查重与证据先行；记录不安排执行。
 - [nk-prose](skills/productivity/nk-prose/SKILL.md)：面向人的中文技术文本写作与润色：自然、准确、易读，事实一字不丢。

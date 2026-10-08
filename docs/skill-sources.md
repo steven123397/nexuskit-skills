@@ -76,10 +76,10 @@
 
 ## nk-review
 
-- [入口](../skills/engineering/nk-review/SKILL.legacy.md)、`references/scope.md`、`select-and-route.md`、`reviewer-prompt.md`、`validate.md` 的意图、范围、风险编队、叶子审查与独立复核：CE `skills/ce-code-review/references/intent-and-plan.md`、`scope.md`、`diff-scope.md`、`select-and-route.md`、`dispatch-reviewers.md`、`subagent-template.md`、`validator-batch-template.md`、`finish-review.md`。
-- `references/personas/` 的风险角色：CE `skills/ce-code-review/references/personas/` 下同名文件；共享经验、迁移、部署角色见 conventions。
-- maintainability 的“可删除内容、替代能力及等价依据”：Ponytail `skills/ponytail-review/SKILL.md` 的 `Format` 分类；NK 增加证据与行为保持条件。
-- `references/pre-merge.md`、`entry-format.md`，外部 PR 的 base/head、修订复核、合并前确认与报告生命周期：NK 原创；常规流程显式调用 nk-simplify。
+- [入口](../skills/engineering/nk-review/SKILL.md) 的轴间独立（一轴通过不抵消另一轴）、并行独立子代理、固定点求基线与按轴组织返回：Matt `skills/engineering/code-review/SKILL.md`（`6fd9479`）的双轴骨架按 STE-6 重新划分——Standards/Spec 两轴改为需求符合性、实现正确性、简洁性与可维护性三轴，职责重新分配，不是对旧轴的机械拆分；Matt 的 smell 基线清单不迁移，简洁性与测试判断由 `nk-codecraft`、`nk-tdd` 承载，reviewer 提示词只点名对照。
+- 分级复用（SHA 变化不等于结论失效、只补查受影响部分、进入下一阶段不自动重派三人）、按 ticket / spec 整合 / PR / 机械变更区分审查重点、自然语言返回与零发现简短说明、不设 validator 与递归编队、修复归调用方并由原审查者针对性复核、有效防御不因精简误删：STE-6 设计；GitHub #42 反映的旧编队成本（小改动 9 个子代理）与零发现 JSON 空字段契约由此处理，nk-simplify 串联随之取消。
+- 快照一致性（实际内容或指纹、分析期间不改被审内容）、未跟踪文件的纳入与排除、意图摘要与已有验证证据随任务给出、外部 PR 只读取数不 checkout：旧稿必要能力保留；CE 的风险编队（select-and-route、personas）、validator 复核、JSON 返回契约、`docs/reviews/` 审查台账与 pre-merge 独立路径随 STE-6/STE-12 退役，PR 场景并入“按范围定重点”。
+- 简洁性发现的真实收益与行为等价依据：Ponytail `skills/ponytail-review/SKILL.md` 的 `Format` 分类沿旧稿承接，限定于删减建议。
 
 ## nk-tdd
 

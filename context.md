@@ -93,7 +93,16 @@ spec、ticket、issue、PR、map（wayfinder 的 `wayfinder:map` 索引 issue）
 
 - [vinvcn/mattpocock-skills-zh-CN](https://github.com/vinvcn/mattpocock-skills-zh-CN)：Matt skills 的社区中文直译版（4.6k stars，按内容刷新同步上游，译文与 NK 采用的 `6fd9479` 期一致），本地克隆在 `D:/codex_project/upstreams/mattpocock-skills-zh-CN/`。其策略是保留英文术语的混排直译——fog、map、destination、frontier、design tree 全部不译——比 NK 的全中文本地化保守，只能作句子级参考，不作译法依据。可借鉴点：fog-or-ticket 测试译作“现在能不能把问题说清楚”，与本表判断标准一致；graduates 译作“升级”；共同理解、推荐答案与 nk-grill 既有译法相同。
 
+## CE 派生术语（nk-review）
+
+| 原文 | 译法 | 出处 |
+| --- | --- | --- |
+| reviewer | 保留英文 | ce-code-review（nk-review） |
+| finding | 发现 | ce-code-review（nk-review） |
+| baseline | 基线 | ce-code-review（nk-review） |
+| intent / intent summary | 意图摘要 | ce-code-review（nk-review） |
+
 ## 待定（重写对应技能时定稿）
 
 - writing-for-agents 的 leading word（暂记：主导词）。
-- CE 派生技能（nk-review、nk-debug、nk-commit 等）的通用术语，重写时并入本表。
+- nk-debug 等 CE 派生技能的其余通用术语，重写时继续并入上表。
