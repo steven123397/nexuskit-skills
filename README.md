@@ -19,6 +19,7 @@
 - [nk-to-spec](skills/engineering/nk-to-spec/SKILL.md)：将已讨论的内容整理为 spec，发布到 Linear。
 - [nk-review](skills/engineering/nk-review/SKILL.md)：三轴独立审查：需求符合性、实现正确性、简洁性与可维护性；返回发现不修复，未受影响的结论直接复用。
 - [nk-commit](skills/engineering/nk-commit/SKILL.md)：本地提交统一入口：核对范围、保护无关工作、执行必要检查并按约定写提交说明。
+- [nk-domain-modeling](skills/engineering/nk-domain-modeling/SKILL.md)：领域建模：澄清与锤炼术语、压测概念边界、把敲定的术语与关键决定落成简短文档。
 - [nk-to-issue](skills/engineering/nk-to-issue/SKILL.md)：核实发现并记录为 GitHub Issue（bug/enhancement），查重与证据先行；记录不安排执行。
 - [nk-prose](skills/productivity/nk-prose/SKILL.md)：面向人的中文技术文本写作与润色：自然、准确、易读，事实一字不丢。
 - [nk-wait-what](skills/productivity/nk-wait-what/SKILL.md)：解释没讲清楚的部分：用平实语言和项目术语重述目标、结论、依据与待对齐项。

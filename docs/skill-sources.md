@@ -30,6 +30,12 @@
 - 提交单位（一个经过验证的变化）、未确认未共享不改写历史、必要证据核对、中文 Conventional Commits 说明格式、主分支停止并报告：NK 原创；current、U-ID、R1–R6 提交节奏与 handoff/收尾耦合随 STE-22 退役。
 - 中文提交文案的类型、动宾主题、动机与不兼容标记：原来源记录归于本地 `C:/Users/29617/.codex/skills/chinese-commit-conventions/SKILL.md`；该文件现已不存在，无法核对具体章节。
 
+## nk-domain-modeling
+
+- [入口](../skills/engineering/nk-domain-modeling/SKILL.md) 的主动建模定位（改变模型才用、读词汇不归本技能）、惰性创建、讨论四动作（对照术语表质疑、锤炼模糊语言、具体场景压边界、与代码互证）、敲定即写不攒批、有主见的选词与 Avoid、只收领域专属概念、ADR 三条件（难以逆转、没上下文会惊讶、真实取舍）与短段落格式：Matt `skills/engineering/domain-modeling/SKILL.md` 及 `GLOSSARY-FORMAT.md`、`ADR-FORMAT.md`（`6fd9479`）正文的中文迁移与压缩；例句按原文方式译写。
+- 文件名按 NK 实践改为 `CONCEPTS.md` 与 `docs/decisions/`（不沿用 GLOSSARY.md、docs/adr/ 编号式与 GLOSSARY-MAP 多上下文机制）；“什么是合格 ADR 对象”的清单压缩自 Matt 的 What qualifies。
+- 词条可选的行为规则次段、五条维护规则（新增、完善、合并、净化、退役）、退役需正面业务证据（代码删除不算理由）、存量项目初建路径（读 schema、核心类型、主模型与顶层领域文档，不漫游不凑数）、术语表更新随对应交付提交：承接旧集中约定的 `concepts-vocabulary.md` 必要内容，按 STE-16 归入本技能；compound 增量捕获、close 收尾提炼等绑定旧流程的触发点不迁移。
+
 ## nk-debug
 
 - [入口](../skills/engineering/nk-debug/SKILL.legacy.md)、`references/investigate.md`、`fix.md`、`investigation-techniques.md`、`defense-in-depth.md`：CE `skills/ce-debug/SKILL.md` 的 `Execution Flow` 及 `references/` 下同名文件；就近合入的反模式源于 `references/anti-patterns.md`。
