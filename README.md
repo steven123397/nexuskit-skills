@@ -32,7 +32,7 @@
 - [nk-retro](skills/productivity/nk-retro/SKILL.md)：复盘 Agent 工作环境与协作：基于真实记录总结可行动改进；按请求写入 OpenViking 并验证。
 <!-- /installable-skills -->
 
-以上为全部 23 个技能的真实入口。整轮重写已完成正文与清单，尚未做真实客户端的整体验收与发布（见 STE-15）。
+以上为全部 23 个技能的真实入口。整轮重写与整合核对（STE-15）已完成：清单、路由、来源映射与本分支内容一致，仓库检查全数通过；真实客户端的安装验收与发布尚未进行，版本号与发布范围另行确定。
 
 ## 目录
 
@@ -80,6 +80,49 @@ codex plugin add nexuskit@nexuskit-skills
 ```
 
 清单见 [.codex-plugin/plugin.json](.codex-plugin/plugin.json)，市场入口见 [.agents/plugins/marketplace.json](.agents/plugins/marketplace.json)。
+
+### OpenCode
+
+OpenCode 从 `~/.config/opencode/skills`（全局）与项目 `.opencode/skills` 发现技能，并兼容读取 `~/.agents/skills`。用 skills CLI 指定 opencode 目标安装：
+
+```bash
+npx skills add steven123397/nexuskit-skills -g -a opencode
+```
+
+Windows 未开开发者模式时加 `--copy` 改用复制。也可以把本地检出的 `skills/` 目录直接注册进 `opencode.jsonc`（相对路径从 OpenCode 工作目录解析，建议绝对路径）：
+
+```jsonc
+{
+  "$schema": "https://opencode.ai/config.json",
+  "skills": ["D:/codex_project/nexuskit/skills"]
+}
+```
+
+嵌套的 `SKILL.md` 会全部发现，技能 ID 即所在目录名；与其他来源重复 ID 时显式 `skills` 条目优先级最高。
+
+### oh-my-pi (omp)
+
+omp 只发现技能根下**一层**的 `<技能>/SKILL.md`，不递归本仓库的 `skills/<组>/<技能>/` 分组布局。两种装法：
+
+用 skills CLI 安装为平铺目录（omp 默认读取 `~/.agents/skills`，无需额外配置）：
+
+```bash
+npx skills add steven123397/nexuskit-skills -g
+```
+
+Windows 未开开发者模式时加 `--copy` 改用复制。
+
+或把本地检出的两个分组目录注册为自定义技能目录（跟踪开发分支时用）：
+
+```yaml
+# ~/.omp/agent/config.yml
+skills:
+  customDirectories:
+    - D:/codex_project/nexuskit/skills/engineering
+    - D:/codex_project/nexuskit/skills/productivity
+```
+
+技能按 frontmatter 描述曝光给模型，也可用 `/skill:<名称>` 显式调用；`disable-model-invocation` 字段 omp 同样识别。
 
 ### skills CLI
 
