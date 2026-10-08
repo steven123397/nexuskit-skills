@@ -70,6 +70,13 @@
 - 实施子代理按 nk-implement 纪律（含 nk-tdd、单票适用审查、nk-commit 提交）而非仅调用 tdd；整体验收交给 nk-spec-close（STE-17），不内置第二套验收方法，收尾审查由 spec-close 调用 nk-review；独立研究走 nk-research；解锁票推进 Todo；交付与 PR 收尾接 nk-pr：NK 适配。
 - 原名 implement-spec，更名 odyssey：NK 决定。
 
+## nk-pr
+
+- [入口](../skills/engineering/nk-pr/SKILL.md) 的 PR 描述最小视图（伪代码、调用树、文件树或 diff 按话题选形）、验证证据前后对比、单向门（one-way door）与波及面：Matt `skills/engineering/pr/SKILL.md`（`6fd9479`，其源头为 Humanlayer show-me）的模板精华压缩；Matt 版是纯 PR body 写作模板，NK 将其并入分支交付全流程技能。
+- 描述写 diff 看不出来的东西、长度随决策成本伸缩（含三类画像写法）、残余不确定性如实写、项目 PR 模板与约定优先、关联 Issue 的关闭语义纪律（Fixes/Closes 与 Related 区分、不确定按不关闭处理）：旧 nk-close `references/pr-description.md` 的核心原则迁移；关闭语义与 Linear/GitHub 的分工对齐（spec 走 nk-spec-close、tickets 走各自实施，不因合并批量关闭）。
+- 分支交付全流程（draft PR 在第一份实际交付提交后创建、审查与验收结论复用、转 ready 与合并条件、满足检查不推导合并许可、授权合并、不强制等合并清理工作树、保留未交付内容）：STE-10/STE-14 设计，NK 原创；审查覆盖整个分支实际交付（含补充工作）对齐 nk-review 的 PR 范围重点与复用规则，spec 验收复用 nk-spec-close 结论。
+- 旧 nk-close 的 pre-merge 专线路径、release-day 发布流程、产物矩阵与收尾提交不迁移：发布单独处理（未建技能）、审查归 nk-review、验收归 nk-spec-close、经验归 OpenViking。
+
 ## nk-prototype
 
 - [入口](../skills/engineering/nk-prototype/SKILL.md) 的一次性定位、"问题决定形态"两分支（方案并排比较、可操作状态演示）、一条命令能跑、默认无持久化、不打磨、状态可见、结论与验证片段承接、原型留分支：Matt `skills/engineering/prototype/SKILL.md` 及 `LOGIC.md`、`UI.md`（`6fd9479`）的中文改写；不沿用固定单文件 HTML、tab 引导走查、悬浮切换器与 `?variant=` 模式，形态按问题就近选择。

@@ -15,6 +15,7 @@
 - [nk-implement](skills/engineering/nk-implement/SKILL.md)：完成单个 ticket 或任务：实施、验证、审查处理与提交。
 - [nk-odyssey](skills/engineering/nk-odyssey/SKILL.md)：接住已明确的 spec，在集成分支上协调并行实施与集成，交付整体验收。
 - [nk-spec-close](skills/engineering/nk-spec-close/SKILL.md)：spec 整体验收与关闭：走完整使用场景、查跨 ticket 衔接，通过即关票不等合并，并清理临时工作树。
+- [nk-pr](skills/engineering/nk-pr/SKILL.md)：分支交付收尾：draft PR 创建与更新、审查与验收结论复用、合并条件确认、授权合并与交付资源清理。
 - [nk-tdd](skills/engineering/nk-tdd/SKILL.md)：测试纪律：好测试标准、反模式与数量控制；由实施与审查流程自动调用。
 - [nk-codecraft](skills/engineering/nk-codecraft/SKILL.md)：代码纪律：七条规范融合深模块词汇与判据；由实施与审查流程自动调用。
 - [nk-to-spec](skills/engineering/nk-to-spec/SKILL.md)：将已讨论的内容整理为 spec，发布到 Linear。
