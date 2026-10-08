@@ -1,117 +1,137 @@
 # NexusKit (`nk-*`)
 
-> 面向 AI 编程 Agent 的个人工程技能体系。
-> 取 **Compound Engineering (EveryInc)** 的规划严谨性与知识沉淀，取 **Matt Pocock Skills** 的任务边界、测试先行与术语维护，按个人项目、多 Agent 协作的实际画像重新组织。
+面向 AI 编程 Agent 的个人工程技能工具箱，以 Matt Pocock 式简洁组织为基础。技能按实际需要调用，主流程直接写在入口中。
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Prefix: nk-](https://img.shields.io/badge/Prefix-nk--*-brightgreen.svg)](#)
+当前正式版仍为 [v0.2.0](docs/releases/v0.2.0.md)。本工作分支正在重写下一版；下面展示开发结构，不代表完整新版已经可用。
 
-当前正式版：[v0.2.0](docs/releases/v0.2.0.md)。本轮技能重构与 U3 沙盒验收已完成，基本使用和触发流程通过维护者验收；接下来在 paper30min 实际开发中使用，内容、方法论及其他问题在 v0.2.x 中逐步修复。v0.3.0 仅有初步构想，暂不启动新一轮大迭代。实测范围见 [验证记录](docs/reviews/feat-skill-deep-audit.md)。
+## 可安装入口
 
----
+<!-- installable-skills -->
+- [nk-grill](skills/engineering/nk-grill/SKILL.md)：追问设计和需求，达成共同理解。
+- [nk-wayfinder](skills/engineering/nk-wayfinder/SKILL.md)：在 Linear 中组织大型目标的待定问题，按依赖推进讨论与研究。
+- [nk-research](skills/engineering/nk-research/SKILL.md)：围绕明确的研究问题取证，形成有来源、能支撑取舍的结论。
+- [nk-prototype](skills/engineering/nk-prototype/SKILL.md)：用可操作的一次性原型回答设计问题，记录结论与适用限制。
+- [nk-to-tickets](skills/engineering/nk-to-tickets/SKILL.md)：把 spec 或对话拆成带依赖的纵向切片 tickets，发布到 Linear。
+- [nk-init](skills/engineering/nk-init/SKILL.md)：项目首次接入：探测现状、配置 Linear 与 GitHub 去向、幂等写入导航指针与工作流配置。
+- [nk-implement](skills/engineering/nk-implement/SKILL.md)：完成单个 ticket 或任务：实施、验证、审查处理与提交。
+- [nk-odyssey](skills/engineering/nk-odyssey/SKILL.md)：接住已明确的 spec，在集成分支上协调并行实施与集成，交付整体验收。
+- [nk-spec-close](skills/engineering/nk-spec-close/SKILL.md)：spec 整体验收与关闭：走完整使用场景、查跨 ticket 衔接，通过即关票不等合并，并清理临时工作树。
+- [nk-pr](skills/engineering/nk-pr/SKILL.md)：分支交付收尾：draft PR 创建与更新、审查与验收结论复用、合并条件确认、授权合并与交付资源清理。
+- [nk-tdd](skills/engineering/nk-tdd/SKILL.md)：测试纪律：好测试标准、反模式与数量控制；由实施与审查流程自动调用。
+- [nk-codecraft](skills/engineering/nk-codecraft/SKILL.md)：代码纪律：七条规范融合深模块词汇与判据；由实施与审查流程自动调用。
+- [nk-to-spec](skills/engineering/nk-to-spec/SKILL.md)：将已讨论的内容整理为 spec，发布到 Linear。
+- [nk-review](skills/engineering/nk-review/SKILL.md)：三轴独立审查：需求符合性、实现正确性、简洁性与可维护性；返回发现不修复，未受影响的结论直接复用。
+- [nk-debug](skills/engineering/nk-debug/SKILL.md)：诊断与修复：先建复现回路再追根因，仅诊断或授权修复都走通，修复后过审查轻量提交。
+- [nk-commit](skills/engineering/nk-commit/SKILL.md)：本地提交统一入口：核对范围、保护无关工作、执行必要检查并按约定写提交说明。
+- [nk-domain-modeling](skills/engineering/nk-domain-modeling/SKILL.md)：领域建模：澄清与锤炼术语、压测概念边界、把敲定的术语与关键决定落成简短文档。
+- [nk-to-issue](skills/engineering/nk-to-issue/SKILL.md)：核实发现并记录为 GitHub Issue（bug/enhancement），查重与证据先行；记录不安排执行。
+- [nk-prose](skills/productivity/nk-prose/SKILL.md)：面向人的中文技术文本写作与润色：自然、准确、易读，事实一字不丢。
+- [nk-wait-what](skills/productivity/nk-wait-what/SKILL.md)：解释没讲清楚的部分：用平实语言和项目术语重述目标、结论、依据与待对齐项。
+- [nk-wizard](skills/productivity/nk-wizard/SKILL.md)：生成交互式 bash 向导，带人走完只有人能执行的手动流程（凭据、provisioning、cutover）。
+- [nk-ask-ljq](skills/productivity/nk-ask-ljq/SKILL.md)：场景路由：说出卡在哪里，给一个首选入口与预期结果；不强制固定流程。
+- [nk-retro](skills/productivity/nk-retro/SKILL.md)：复盘 Agent 工作环境与协作：基于真实记录总结可行动改进；按请求写入 OpenViking 并验证。
+<!-- /installable-skills -->
 
-## 背景
+以上为全部 23 个技能的真实入口。整轮重写与整合核对（STE-15）已完成：清单、路由、来源映射与本分支内容一致，仓库检查全数通过；真实客户端的安装验收与发布尚未进行，版本号与发布范围另行确定。
 
-两套体系都在实战项目（paper-30min，私有仓库）中完整运行过：
+## 目录
 
-* **Matt Pocock Skills**（[mattpocock/skills](https://github.com/mattpocock/skills)，2026-08 本地备份）
-* **Compound Engineering**（[EveryInc/compound-engineering-plugin](https://github.com/EveryInc/compound-engineering-plugin)，v3.28.2）
+```text
+skills/
+  engineering/
+    nk-init/             nk-grill/            nk-wayfinder/
+    nk-domain-modeling/  nk-research/         nk-prototype/
+    nk-to-spec/          nk-to-tickets/       nk-implement/
+    nk-odyssey/          nk-review/           nk-spec-close/
+    nk-commit/           nk-pr/               nk-debug/
+    nk-to-issue/
+  productivity/
+    nk-retro/            nk-prose/            nk-wait-what/
+    nk-wizard/           nk-ask-ljq/
+```
 
-| 维度 | Matt | CE | NexusKit |
-| :-- | :-- | :-- | :-- |
-| 上下文管理 | 一个任务一个新会话 | 主对话承包整份 plan，上下文膨胀 | 新会话 + `current.md` 入口 + 单个实施单元 |
-| 需求对齐 | `grill` 盘问繁琐 | ideate/brainstorm 节奏合适 | 采用 CE 方式，去掉默认强制盘问；保留用户主动调用的 `/nk-grill` 严格对齐 |
-| 产物管理 | walkthrough、ADR 等本地文件堆积 | plan、review 本地文件堆积 | 每类产物有明确终点，分支收尾时统一清理 |
-| 知识沉淀 | 术语即时维护，缺少经验库 | `solutions/` 经验库，术语只在 compound 时生长 | `solutions/`（含决策类型）+ 术语在规划中即时写入 |
-| 提交节奏 | 无约束 | 无约束 | 统一入口，按完整交付提交并携带现状 |
+每个可用技能以 `SKILL.md` 为入口；模板、示例、审查提示词、脚本和资产按实际需要就近放置。没有集中式 conventions 运行依赖，跨技能使用公开技能名，不读取另一个技能的私有文件。
 
-完整设计见 [NexusKit 架构设计 RFC](docs/ideation/nexuskit-framework-ideation.md)。
+- [AGENTS.md](AGENTS.md)：本仓库的开发和验证约定。
+- [CONCEPTS.md](CONCEPTS.md)：领域术语。
+- [docs/adr/](docs/adr/)：关键架构决定。
+- [技能来源](docs/skill-sources.md)：采用的上游材料。
+- [docs/releases/](docs/releases/)：版本说明。
 
----
-
-## 核心约定
-
-1. **工具箱，不是流水线**：整套安装后，任意技能都可作为工作入口，按场景选取；这不表示支持单技能安装。
-2. **`docs/current.md` 是跨会话入口**：记录当前能力、验证结果、阻断项、下一步与所在分支。
-3. **产物有生命周期**：Plan 与审查记录在工作分支上演进，收尾时承接长期价值再清理已消费产物，其他活跃工作仍引用的材料保留；Issue 承载待办、缺陷与探针，也承载 wayfinder 的探索地图与决策 tickets。
-4. **知识双轨**：踩坑因果与决策理由进 `docs/solutions/`，领域术语进 `CONCEPTS.md`。
-5. **提交节奏**：所有提交统一经过 [nk-commit](skills/nk-commit/SKILL.md)，由它核对交付范围、证据并按需同步 current。work / debug 已调度提交，无需再补跑；显式保存未完成现场才调用 handoff。
-6. **项目流程归项目**：分支、发布、签名等项目特有约定写在项目自己的工作流文档中，技能读取而不内置。
-
----
-
-## 按场景选用
-
-| 场景 | 技能 |
-| :-- | :-- |
-| 一切从这里开始 → | `/nk-ask-ljq` |
-| 在新仓库首次启用本体系 | `/nk-init`（仅手动调用） |
-| 想找改进方向 | `/nk-ideate` |
-| 有想法，要明确做什么、做到哪 | `/nk-brainstorm` |
-| 想让 Agent 详细追问，严格对齐设计、决策或想法 | `/nk-grill`（仅手动调用） |
-| 需求明确，要设计怎么做 | `/nk-plan` |
-| 实现一个实施单元或 Issue | `/nk-work` |
-| 提交交付成果 | `/nk-commit` |
-| 显式保存未完成现场 | `/nk-handoff`（仅手动调用） |
-| 排查缺陷或异常 | `/nk-debug` |
-| 审查代码 | `/nk-review` |
-| 只检查累计成果能否一起交付 | `/nk-review pre-merge`（主会话为主，最多两个专项子代理） |
-| 手动分析代码精简机会 | `/nk-simplify` |
-| 沉淀经验、记录决策，或明确要求协作复盘 / 知识审计 | `/nk-compound` |
-| 分支收尾 | `/nk-close`（仅手动调用；含轻量合并前检查、提炼和清理） |
-| 外部 PR 已合并，收尾维护者侧审查记录 | `/nk-close 已合并 PR <URL>`（确认合并状态、提炼和清理，不重新评审） |
-| 目标巨大、未知太多，无法直接写 Plan | `/nk-wayfinder`（仅手动调用；探索后交给 nk-plan） |
-| 开发中冒出 bug 或新需求，在当前会话先记下来、不展开实施 | `/nk-to-issue` |
-| 引导人完成一系列手动操作 | `/nk-wizard`（仅手动调用） |
-| 没跟上 Agent 的解释，请它补上下文重讲 | `/nk-wait-what`（仅手动调用） |
-
-常见路线是：可选 ideate → brainstorm 的需求阶段 Plan → nk-plan 补全同一份 Plan → nk-work 逐单元交付 → 用户调用 nk-close。已有清楚请求或 Plan 可从中间进入；wayfinder 是替代探索路线，同样交给 nk-plan 形成标准 Plan。
-
-“按 Plan 实现 U2”交给 nk-work 即可：它调度验证、常规 review（含精简分析与独立复核）、问题处理及 nk-commit，不需要用户再串行调用这些技能。close 的 pre-merge 检查关注累计成果，收尾不自动合并或发布。详细选路见 [ask-ljq](skills/nk-ask-ljq/SKILL.md)。当前维护进度与未验证项见 [docs/current.md](docs/current.md)。
-
----
-
-## 命令书写约定
-
-面向不同客户端的通用 Git 探针逐条执行，观察结果后再决定下一条；不使用 shell 赋值、管道或 `&&` / `||` 拼接作为跨平台默认写法，`'@{u}'` 等 revision 参数须正确引用。明确标注 Bash / Git Bash 等运行环境的脚本和示例可以使用该 shell 语法，不直接复制到 PowerShell。本约定约束命令书写，不要求把明确的平台脚本改成多客户端变体。
+内部 spec、ticket 和进度在 Linear，外部反馈在 GitHub Issues，背景与经验在 OpenViking，代码与合入事实在 Git/PR。仓库不再维护实时状态文档。旧 solutions 与发想、讨论材料已按 STE-13 迁移（背景归 OpenViking，正式决定归 [docs/adr/](docs/adr/)），v0.2.0 发布证据保留在 docs/plans 与 docs/reviews。
 
 ## 安装
 
-正式支持整套安装，任意技能都可以作为工作入口。仓库布局：技能与共享约定都在 [`skills/`](skills/) 下（`skills/nk-*` + `skills/conventions/`；`conventions` 是共享约定与角色方法参考库，不是可执行技能，但必须以同名目录与 `nk-*` 平级安装，技能正文里的 `../conventions/` 引用才能解析）。
+正式版仍通过已有分发方式安装；重装当前开发分支只会发现上面列出的入口，不会恢复完整的 v0.2.0 工具箱。
 
-### Kimi Code 插件
+### Kimi Code
 
-```
+```text
 /plugins install https://github.com/steven123397/nexuskit-skills
 ```
 
-清单为 `.kimi-plugin/plugin.json`（`skills: "./skills/"`，整树随插件分发；与根目录 `kimi.plugin.json` 二选一，本仓库用目录形态）。安装后 `/reload` 或开新会话生效。
+清单见 [.kimi-plugin/plugin.json](.kimi-plugin/plugin.json)。
 
-### Codex 插件
-
-Codex 通过"市场"机制安装（清单在 [`.codex-plugin/plugin.json`](.codex-plugin/plugin.json)，仓库即单插件市场）：
-
-**Codex App**：侧边栏 **Plugins** → **Create** 旁的箭头 → **Add marketplace** → Source 填 `steven123397/nexuskit-skills`、Git ref 填 `main`、Sparse paths 留空 → Add marketplace → 搜索 **NexusKit** 安装 → 重启 Codex。
-
-**Codex CLI**：
+### Codex
 
 ```bash
 codex plugin marketplace add steven123397/nexuskit-skills
 codex plugin add nexuskit@nexuskit-skills
 ```
 
-装完重启 Codex。
+清单见 [.codex-plugin/plugin.json](.codex-plugin/plugin.json)，市场入口见 [.agents/plugins/marketplace.json](.agents/plugins/marketplace.json)。
 
-### npx（skills CLI）
+### OpenCode
 
+OpenCode 从 `~/.config/opencode/skills`（全局）与项目 `.opencode/skills` 发现技能，并兼容读取 `~/.agents/skills`。用 skills CLI 指定 opencode 目标安装：
+
+```bash
+npx skills add steven123397/nexuskit-skills -g -a opencode
 ```
+
+Windows 未开开发者模式时加 `--copy` 改用复制。也可以把本地检出的 `skills/` 目录直接注册进 `opencode.jsonc`（相对路径从 OpenCode 工作目录解析，建议绝对路径）：
+
+```jsonc
+{
+  "$schema": "https://opencode.ai/config.json",
+  "skills": ["D:/codex_project/nexuskit/skills"]
+}
+```
+
+嵌套的 `SKILL.md` 会全部发现，技能 ID 即所在目录名；与其他来源重复 ID 时显式 `skills` 条目优先级最高。
+
+### oh-my-pi (omp)
+
+omp 只发现技能根下**一层**的 `<技能>/SKILL.md`，不递归本仓库的 `skills/<组>/<技能>/` 分组布局。两种装法：
+
+用 skills CLI 安装为平铺目录（omp 默认读取 `~/.agents/skills`，无需额外配置）：
+
+```bash
+npx skills add steven123397/nexuskit-skills -g
+```
+
+Windows 未开开发者模式时加 `--copy` 改用复制。
+
+或把本地检出的两个分组目录注册为自定义技能目录（跟踪开发分支时用）：
+
+```yaml
+# ~/.omp/agent/config.yml
+skills:
+  customDirectories:
+    - D:/codex_project/nexuskit/skills/engineering
+    - D:/codex_project/nexuskit/skills/productivity
+```
+
+技能按 frontmatter 描述曝光给模型，也可用 `/skill:<名称>` 显式调用；`disable-model-invocation` 字段 omp 同样识别。
+
+### skills CLI
+
+```bash
 npx skills add steven123397/nexuskit-skills
 ```
 
-安装时选择整套技能（交互多选时全选，或 `--all`），并保留 `.agents/skills/conventions/` 与 `nk-*` 平级。`conventions/agents/` 中的共享角色方法随该目录安装，各技能只按需读取选中的文件。单选某个技能不属于本项目支持的安装形态；安装后仍可从任意技能开始工作。
-
----
+技能统一从 `skills/` 下发现；只有 `SKILL.md` 是入口，目录占位和旧稿不是技能。安装后的客户端使用安装快照，仓库改动不会自动更新已安装版本。
 
 ## 许可证
 
-[MIT](LICENSE)。本体系部分技能派生自 mattpocock/skills 与 EveryInc/compound-engineering-plugin（均 MIT），归属声明见 [NOTICE](NOTICE)。
+[MIT](LICENSE)。上游归属见 [NOTICE](NOTICE)。

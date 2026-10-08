@@ -1,7 +1,7 @@
 {
   "name": "nexuskit",
-  "version": "0.2.0",
-  "description": "面向 AI 编程 Agent 的个人工程技能体系：规划、实施、排错、审查、知识沉淀的 18 个 nk-* 技能与共享约定",
+  "version": "0.3.0-beta.1",
+  "description": "NexusKit 开发分支：23 个 nk-* 技能入口，全部主线技能已重写完成；未发布版本。",
   "author": {
     "name": "steven123397"
   },
@@ -19,8 +19,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "NexusKit",
-    "shortDescription": "Personal engineering skill system: plan, work, debug, review, compound",
-    "longDescription": "NexusKit is a toolbox of 18 nk-* skills: nk-ask-ljq, nk-init, nk-ideate, nk-brainstorm, nk-grill, nk-plan, nk-work, nk-commit, nk-handoff, nk-debug, nk-review, nk-simplify, nk-compound, nk-close, nk-wayfinder, nk-to-issue, nk-wizard, nk-wait-what. Choose any entry for your situation. Brainstorm or wayfinder feeds standard planning; work delivers one unit with verification, review and commit; close checks the combined delivery and handles artifacts. Shared conventions cover planning, knowledge, vocabulary and commit cadence.",
+    "shortDescription": "轻量工程技能：澄清需求、组织实现与交付",
+    "longDescription": "NexusKit development checkout exposes all 23 nk-* skills: nk-ask-ljq, nk-codecraft, nk-commit, nk-debug, nk-domain-modeling, nk-grill, nk-implement, nk-init, nk-odyssey, nk-pr, nk-prose, nk-prototype, nk-research, nk-retro, nk-review, nk-spec-close, nk-tdd, nk-to-issue, nk-to-spec, nk-to-tickets, nk-wait-what, nk-wayfinder, nk-wizard. The full rewrite is done; client-side acceptance and release are pending. This checkout is not a published release.",
     "developerName": "steven123397",
     "category": "Coding",
     "capabilities": [

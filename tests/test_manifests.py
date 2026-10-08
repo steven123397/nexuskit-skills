@@ -15,7 +15,7 @@ class ManifestChecks(unittest.TestCase):
         tmp = tempfile.TemporaryDirectory(prefix="nk-manifest-")
         self.addCleanup(tmp.cleanup)
         self.root = Path(tmp.name)
-        for source in (ROOT / "skills").glob("nk-*/SKILL.md"):
+        for source in (ROOT / "skills").rglob("SKILL.md"):
             target = self.root / source.relative_to(ROOT)
             target.parent.mkdir(parents=True)
             shutil.copy2(source, target)
@@ -64,7 +64,7 @@ class ManifestChecks(unittest.TestCase):
             path.write_text(original, encoding="utf-8")
 
     def test_new_disk_skill_requires_inventory_update(self):
-        path = self.root / "skills/nk-new/SKILL.md"
+        path = self.root / "skills/engineering/nk-new/SKILL.md"
         path.parent.mkdir()
         path.write_text("", encoding="utf-8")
         problems = validate(self.root)
@@ -73,7 +73,7 @@ class ManifestChecks(unittest.TestCase):
 
     def test_correct_count_but_incomplete_list(self):
         self.mutate(".codex-plugin/plugin.json", lambda d: d["interface"].update(
-            longDescription=d["interface"]["longDescription"].replace("nk-wizard, ", "")))
+            longDescription=d["interface"]["longDescription"].replace("nk-grill, ", "")))
         self.assertTrue(any("skill inventory differs" in p for p in validate(self.root)))
 
     def test_wrong_count_in_each_manifest(self):
@@ -94,10 +94,23 @@ class ManifestChecks(unittest.TestCase):
         self.assertTrue(any("identity/source" in p for p in problems))
 
     def test_unknown_or_missing_router_entry(self):
-        for rel in ["README.md", "skills/nk-ask-ljq/SKILL.md"]:
+        for rel in ["README.md"]:
             path = self.root / rel
-            path.write_text(path.read_text(encoding="utf-8").replace("nk-wizard", "nk-missing"), encoding="utf-8")
+            path.write_text(path.read_text(encoding="utf-8").replace("nk-grill", "nk-missing"), encoding="utf-8")
             self.assertTrue(any(rel in p and "skill inventory" in p for p in validate(self.root)))
+
+    def test_legacy_and_empty_slots_are_not_installable(self):
+        path = self.root / "skills/productivity/nk-draft"
+        path.mkdir(parents=True)
+        (path / "SKILL.legacy.md").write_text("Old workflow", encoding="utf-8")
+        (path / ".gitkeep").touch()
+        self.assertEqual([], validate(self.root))
+
+    def test_duplicate_name_in_another_group_is_rejected(self):
+        path = self.root / "skills/productivity/nk-grill/SKILL.md"
+        path.parent.mkdir(parents=True)
+        path.write_text("", encoding="utf-8")
+        self.assertTrue(any("duplicate skill names" in p for p in validate(self.root)))
 
 
 if __name__ == "__main__":

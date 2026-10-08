@@ -1,7 +1,7 @@
 {
   "name": "nexuskit",
-  "version": "0.2.0",
-  "description": "面向 AI 编程 Agent 的个人工程技能体系：规划、实施、排错、审查、知识沉淀的 18 个 nk-* 技能与共享约定",
+  "version": "0.3.0-beta.1",
+  "description": "NexusKit 开发分支：23 个 nk-* 技能入口，全部主线技能已重写完成；未发布版本。",
   "author": {
     "name": "steven123397"
   },
@@ -18,6 +18,6 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "NexusKit",
-    "shortDescription": "个人工程技能体系：规划、实施、排错、审查、知识沉淀"
+    "shortDescription": "轻量工程技能：澄清需求、组织实现与交付"
   }
 }

@@ -29,4 +29,4 @@ jobs:
       - run: python -m unittest discover -s tests -p "test_*.py"
       - name: Check wizard template syntax
         shell: bash
-        run: bash -n skills/nk-wizard/assets/template.sh
+        run: bash -n skills/productivity/nk-wizard/assets/template.sh
