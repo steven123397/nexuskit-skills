@@ -15,8 +15,10 @@
 
 ## nk-ask-ljq
 
-- [入口](../skills/productivity/nk-ask-ljq/SKILL.legacy.md) 的场景推荐、主线与独立工具地图：Matt `skills/engineering/ask-matt/SKILL.md` 的 `The main flow: idea → ship`、`On-ramps`、`Standalone`。
-- NK 技能路线、执行授权与外部 PR 指引、维护者个人留言：NK 原创。
+- [入口](../skills/productivity/nk-ask-ljq/SKILL.md) 的路由地图骨架（主线 idea → 交付 + 其他入口 + 独立工具表 + 词汇层 + 首次使用前置 init）、"先回答眼前的问题"（一个首选入口、理由、材料与预期结果；分叉才解释；推荐不等于调用、问路不产生授权）、主线各步的衔接语义：Matt `skills/engineering/ask-matt/SKILL.md`（`6fd9479`）的 `The main flow: idea → ship`、`On-ramps`、`Standalone` 结构中文重写。
+- 地图内容按 NK 最终 23 技能边界重画：主线为 grill → prototype/research → to-spec/to-tickets → implement/odyssey → spec-close/pr → retro；grill-with-docs/grill-me 合并为 nk-grill、ICA 与 teach、to-questionnaire 不收（已定决定）；词汇层为 nk-codecraft/nk-tdd/nk-domain-modeling；上下文来源改为信息归属原则（Linear/Git-PR/OpenViking/CONCEPTS+ADR），不迁移 Matt 的 smart zone 与 phase boundaries 理论。
+- 工具箱不是流水线、小改动不必先写 spec、问路不自动启动流程：沿旧稿定位。
+- 旧稿的 nk-ideate/brainstorm/plan/work/close/simplify/handoff/compound 路由、current.md 与 solutions 接续、外部 PR 维护者流程及"给一位朋友的小彩蛋"（2026-10-08 经用户决定移除）不迁移。
 
 ## nk-codecraft
 
@@ -33,6 +35,7 @@
 ## nk-domain-modeling
 
 - [入口](../skills/engineering/nk-domain-modeling/SKILL.md) 的主动建模定位（改变模型才用、读词汇不归本技能）、惰性创建、讨论四动作（对照术语表质疑、锤炼模糊语言、具体场景压边界、与代码互证）、敲定即写不攒批、有主见的选词与 Avoid、只收领域专属概念、ADR 三条件（难以逆转、没上下文会惊讶、真实取舍）、短段落格式及与词条格式呈现一致的可照抄模板块：Matt `skills/engineering/domain-modeling/SKILL.md` 及 `GLOSSARY-FORMAT.md`、`ADR-FORMAT.md`（`6fd9479`）正文的中文迁移与压缩；例句按原文方式译写。
+- 多上下文机制（根 `CONCEPTS-MAP.md` 列各域职责与域词汇表路径、域间关系按事件流与共享契约记录、域内 `CONCEPTS.md` 与域内 ADR、结构推断与“不清楚时问”、map 惰性创建）：Matt `GLOSSARY-FORMAT.md` 的 Single vs multi-context repos 节中文迁移（2026-10-08 经用户决定补上，因存在真实的多域项目），文件名按 NK 实践用 CONCEPTS 前缀。
 - 文件名按 NK 实践改为 `CONCEPTS.md`；ADR 沿 Matt 原式（2026-10-08 经用户决定）：目录 `docs/adr/`、文件名 `0000-{短名}.md`、新建取最大编号 +1、被替代时标注后继编号，存量两份决定按初版时间追编 0001、0002；不沿用 GLOSSARY.md 与 GLOSSARY-MAP 多上下文机制。“什么是合格 ADR 对象”的清单压缩自 Matt 的 What qualifies。
 - 词条可选的行为规则次段、五条维护规则（新增、完善、合并、净化、退役）、退役需正面业务证据（代码删除不算理由）、存量项目初建路径（读 schema、核心类型、主模型与顶层领域文档，不漫游不凑数）、术语表更新随对应交付提交：承接旧集中约定的 `concepts-vocabulary.md` 必要内容，按 STE-16 归入本技能；compound 增量捕获、close 收尾提炼等绑定旧流程的触发点不迁移。
 
@@ -61,8 +64,10 @@
 
 ## nk-init
 
-- [入口](../skills/engineering/nk-init/SKILL.legacy.md) 的探测、呈现确认、幂等写入骨架与已知答案不再询问：Matt `skills/engineering/setup-matt-pocock-skills/SKILL.md` 的 `Process` 下 `Explore`、`Present findings and ask`、`Confirm and edit`。
-- 项目知识入口、`docs/current.md`、本地 backlog 与 nk-commit 接口：NK 原创。
+- [入口](../skills/engineering/nk-init/SKILL.md) 的探测（读 git remote 与指令文件现状，不凭空发问）、展示并确认（逐项带推荐答案，探测已定的直接说明不提问）、选文件规则（`CLAUDE.md` 存在则编辑它、否则 `AGENTS.md`、都不存在问用户不代选；已有配置块就地更新不追加重复，不覆盖周边编辑）、幂等与重跑语义（只在更换去向时需要）：Matt `skills/engineering/setup-matt-pocock-skills/SKILL.md`（`6fd9479`）`Process` 下 `Explore`、`Present findings and ask`、`Confirm and edit`、`Write` 的中文迁移。
+- 配置对象按 NK 边界重定：Linear 团队与项目（to-spec/to-tickets/odyssey/spec-close 读取）、GitHub 外部问题去向（to-issue，无远端降级 docs/backlog.md）、导航指针指向 CONCEPTS.md 与 docs/adr/；不迁移 Matt 的 triage 标签体系（nk-to-issue 用 bug/enhancement）、issue-tracker 选项表与 GLOSSARY-MAP 多上下文（domain-modeling 已定单文件默认）。
+- 惰性创建（CONCEPTS.md 由第一个词条建、docs/adr/ 由第一个决定建、不预建空目录与 backlog）、初始化产物经 nk-commit 入库、收尾告知哪些技能读哪些配置：NK 适配。配置文件固定默认 `docs/agents/issue-tracker.md`（2026-10-08 经用户决定恢复固定布局，消费者 nk-to-spec / nk-to-tickets / nk-odyssey / nk-wayfinder 固定读取、项目已有约定时让位），nk-to-issue 的无远端降级位置同源。
+- 旧稿的 docs/current.md 创建、current-md/artifact-lifecycle/concepts-vocabulary 约定引用与"知识入口"体系随 STE-28 退役；Matt 的 triage 标签体系（to-issue 用 bug/enhancement，分诊队列随"外部 Issue 只记录"定位取消）与 issue-tracker 选项表（Linear+GitHub 已选型）不迁移；多域信号探测（workspace 清单、packages/*、多个域目录）与多上下文导航指针随 GLOSSARY-MAP 机制补回（2026-10-08），布局归 nk-domain-modeling 持有，init 只探测与指路；docs/agents/domain.md 不另建（消费规则由 nk-domain-modeling 持有，避免双源）。
 
 ## nk-odyssey
 

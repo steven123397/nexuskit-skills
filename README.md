@@ -12,6 +12,7 @@
 - [nk-research](skills/engineering/nk-research/SKILL.md)：围绕明确的研究问题取证，形成有来源、能支撑取舍的结论。
 - [nk-prototype](skills/engineering/nk-prototype/SKILL.md)：用可操作的一次性原型回答设计问题，记录结论与适用限制。
 - [nk-to-tickets](skills/engineering/nk-to-tickets/SKILL.md)：把 spec 或对话拆成带依赖的纵向切片 tickets，发布到 Linear。
+- [nk-init](skills/engineering/nk-init/SKILL.md)：项目首次接入：探测现状、配置 Linear 与 GitHub 去向、幂等写入导航指针与工作流配置。
 - [nk-implement](skills/engineering/nk-implement/SKILL.md)：完成单个 ticket 或任务：实施、验证、审查处理与提交。
 - [nk-odyssey](skills/engineering/nk-odyssey/SKILL.md)：接住已明确的 spec，在集成分支上协调并行实施与集成，交付整体验收。
 - [nk-spec-close](skills/engineering/nk-spec-close/SKILL.md)：spec 整体验收与关闭：走完整使用场景、查跨 ticket 衔接，通过即关票不等合并，并清理临时工作树。
@@ -27,10 +28,11 @@
 - [nk-prose](skills/productivity/nk-prose/SKILL.md)：面向人的中文技术文本写作与润色：自然、准确、易读，事实一字不丢。
 - [nk-wait-what](skills/productivity/nk-wait-what/SKILL.md)：解释没讲清楚的部分：用平实语言和项目术语重述目标、结论、依据与待对齐项。
 - [nk-wizard](skills/productivity/nk-wizard/SKILL.md)：生成交互式 bash 向导，带人走完只有人能执行的手动流程（凭据、provisioning、cutover）。
+- [nk-ask-ljq](skills/productivity/nk-ask-ljq/SKILL.md)：场景路由：说出卡在哪里，给一个首选入口与预期结果；不强制固定流程。
 - [nk-retro](skills/productivity/nk-retro/SKILL.md)：复盘 Agent 工作环境与协作：基于真实记录总结可行动改进；按请求写入 OpenViking 并验证。
 <!-- /installable-skills -->
 
-以上仅表示已有真实入口文件，不表示本轮整体已验收或发布。其他目录暂不暴露技能入口：已有旧稿保留为 `SKILL.legacy.md`，新技能只有目录占位。后续逐项讨论正文、审阅后再启用。
+以上为全部 23 个技能的真实入口。整轮重写已完成正文与清单，尚未做真实客户端的整体验收与发布（见 STE-15）。
 
 ## 目录
 

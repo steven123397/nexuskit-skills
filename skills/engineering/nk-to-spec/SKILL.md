@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 根据当前对话和对代码库的理解，产出一份 spec。不要重新访谈用户，只整理已经知道的内容。
 
-项目使用的 Linear 团队、项目和标签应已提供。如果缺少，先询问缺失的配置。
+先读 `docs/agents/issue-tracker.md`（`nk-init` 的产物）获取 Linear 团队、项目和标签。文件缺失或缺少项时，先询问。
 
 ## 流程
 

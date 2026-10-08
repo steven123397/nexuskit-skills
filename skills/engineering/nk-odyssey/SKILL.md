@@ -7,7 +7,7 @@ disable-model-invocation: true
 
 接住已明确的工作：spec 与它的 tickets 已经就绪，目标是把整份 spec 做到可交付状态。持续推进 tickets、协调并行实施、解决集成问题；单个 ticket 的实施纪律见 `nk-implement`，本技能负责长途调度。
 
-tickets 不是步骤清单，而是带阻塞关系的**任务图**：始终存在可以开工的**前沿**。项目的 Linear 团队与项目应已提供，缺少时先询问。
+tickets 不是步骤清单，而是带阻塞关系的**任务图**：始终存在可以开工的**前沿**。Linear 团队与项目从 `docs/agents/issue-tracker.md`（`nk-init` 的产物）读取，缺失时先询问。
 
 目标是在一条**集成分支**上完成整份 spec，按 Linear 的方式逐张关闭 tickets。
 

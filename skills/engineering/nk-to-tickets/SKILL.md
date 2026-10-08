@@ -7,7 +7,7 @@ disable-model-invocation: true
 
 把 spec 或当前对话拆成一组 **tickets**：每张是一个纵向切片，用 Linear 原生阻塞关系声明它依赖的其他 tickets。
 
-项目的 Linear 团队与项目应已提供，缺少时先询问。
+项目的 Linear 团队与项目从 `docs/agents/issue-tracker.md`（`nk-init` 的产物）读取，文件缺失或缺少项时先询问。
 
 ## 流程
 

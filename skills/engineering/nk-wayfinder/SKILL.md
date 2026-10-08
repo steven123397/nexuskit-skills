@@ -19,7 +19,7 @@ map 和 ticket 都有标题。给用户的说明和 map 中的索引用标题加
 
 ## map
 
-map 是 Linear 中的一张 issue，标记为 `wayfinder:map`；决策 tickets 是它的子 issue。项目的 Linear 团队与项目应已提供，缺少时先询问。标签沿用项目配置，以下 `wayfinder:*` 是默认命名。
+map 是 Linear 中的一张 issue，标记为 `wayfinder:map`；决策 tickets 是它的子 issue。Linear 团队与项目从 `docs/agents/issue-tracker.md`（`nk-init` 的产物）读取，缺失时先询问。标签沿用项目配置，以下 `wayfinder:*` 是默认命名。
 
 map 是**索引**：只放已定决策的一行摘要和 ticket 链接，详细答案留在 ticket 中。未完成的工作通过查询子 issue 获取。
 
