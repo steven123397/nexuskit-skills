@@ -24,6 +24,7 @@
 - [nk-prose](skills/productivity/nk-prose/SKILL.md)：面向人的中文技术文本写作与润色：自然、准确、易读，事实一字不丢。
 - [nk-wait-what](skills/productivity/nk-wait-what/SKILL.md)：解释没讲清楚的部分：用平实语言和项目术语重述目标、结论、依据与待对齐项。
 - [nk-wizard](skills/productivity/nk-wizard/SKILL.md)：生成交互式 bash 向导，带人走完只有人能执行的手动流程（凭据、provisioning、cutover）。
+- [nk-retro](skills/productivity/nk-retro/SKILL.md)：复盘 Agent 工作环境与协作：基于真实记录总结可行动改进；按请求写入 OpenViking 并验证。
 <!-- /installable-skills -->
 
 以上仅表示已有真实入口文件，不表示本轮整体已验收或发布。其他目录暂不暴露技能入口：已有旧稿保留为 `SKILL.legacy.md`，新技能只有目录占位。后续逐项讨论正文、审阅后再启用。
@@ -52,7 +53,7 @@ skills/
 - [技能来源](docs/skill-sources.md)：采用的上游材料。
 - [docs/releases/](docs/releases/)：版本说明。
 
-内部 spec、ticket 和进度在 Linear，外部反馈在 GitHub Issues，背景与经验在 OpenViking，代码与合入事实在 Git/PR。仓库不再维护实时状态文档。旧 solutions 及其他历史材料暂保留供迁移，不是新版执行规则。
+内部 spec、ticket 和进度在 Linear，外部反馈在 GitHub Issues，背景与经验在 OpenViking，代码与合入事实在 Git/PR。仓库不再维护实时状态文档。旧 solutions 与发想、讨论材料已按 STE-13 迁移（背景归 OpenViking，正式决定归 [docs/decisions/](docs/decisions/)），v0.2.0 发布证据保留在 docs/plans 与 docs/reviews。
 
 ## 安装
 

@@ -6,7 +6,7 @@
 
 从 Linear 确认任务与已定范围，从 Git/PR 核对实际改动；需要背景、历史理由或经验时检索 OpenViking。术语见 [CONCEPTS.md](CONCEPTS.md)，上游通用术语的统一译法见 [context.md](context.md)，重要设计见 [docs/decisions/](docs/decisions/)，来源对应见 [docs/skill-sources.md](docs/skill-sources.md)。
 
-旧 `docs/solutions/` 和历史计划、审查、讨论材料等待迁移，不作为当前执行规则，也不要求新会话通读。删除旧知识来源前，按 STE-13 验证新位置可读取和检索。不恢复 current 或重复交接文档。
+旧 `docs/solutions/` 与发想、讨论材料已按 STE-13 迁移：背景与经验归 OpenViking，正式决定归 `docs/decisions/`，v0.2.0 发布证据保留在 `docs/plans/` 与 `docs/reviews/`。不恢复 current 或重复交接文档。
 
 ## 技能组织
 

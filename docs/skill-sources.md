@@ -122,6 +122,13 @@
 - Linear 原生状态与依赖、认领时区分同账号会话、取消依赖后核对影响、通过 nk-grill 承接领域建模、模块实际用法澄清、接入 nk-to-spec / nk-to-tickets：NK 适配。
 - 独立问题可并行研究或同轮讨论，取消上游每会话只解决一张非研究票的限制；研究结果记录到 Linear，不固定开研究分支；探索以决策为产出，不保留上游 Notes 扩展为正式实施的选项：NK 已定职责调整。
 
+## nk-retro
+
+- [入口](../skills/productivity/nk-retro/SKILL.md) 的环境复盘定位（改进 Agent 工作环境而非重审代码）、读会话原始材料且默认当前会话、改进候选方向（导航、自动检查、编码标准、指令文件、工具经济、信息可达）、按严重度交付候选：Matt `skills/engineering/retro/SKILL.md`（`6fd9479`）正文的中文迁移与压缩；其 Global AGENTS.md 与 No-ops 两类合并为"指令文件"一类，Files 参考节压缩为 AGENTS.md 克制导航指针一句。
+- 机械违规交确定性检查、判断类才写文档规则、未接线的既有检查本身就是发现、无护栏仓库本身是发现：Matt 原文的规则迁移；CODING_STANDARDS.md 专指改为通用文档规则表述，审查侧承担标准（Implementation vs Review）压成一句指向 `nk-review`。
+- 接受用户指定会话/问题/经验为复盘对象、总结直接对话交付、按请求写入或修订 OpenViking 可写位置并读回验证、区分建议与已执行修改、不宣称操控自动提炼、不恢复 compound/solutions 流程：STE-7/STE-23 决定，NK 原创。
+- Matt 的 `writing-for-agents` 写作风格调用改为调用 `nk-prose`。
+
 ## nk-prose
 
 - [入口](../skills/productivity/nk-prose/SKILL.md) 的事实保真约束、润色/起草/检查三种用法、幂等润色、读者分档、句子标准与不动代码块等边界：CE `skills/ce-noslop/SKILL.md` 正文的中文改写；英文模式清单（`references/patterns.md`）与术语参考（`references/terminology.md`）不迁入。
