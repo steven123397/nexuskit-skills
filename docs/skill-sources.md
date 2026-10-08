@@ -89,6 +89,13 @@
 - 快照一致性（实际内容或指纹、分析期间不改被审内容）、未跟踪文件的纳入与排除、意图摘要与已有验证证据随任务给出、外部 PR 只读取数不 checkout：旧稿必要能力保留；CE 的风险编队（select-and-route、personas）、validator 复核、JSON 返回契约、`docs/reviews/` 审查台账与 pre-merge 独立路径随 STE-6/STE-12 退役，PR 场景并入“按范围定重点”。
 - 简洁性发现的真实收益与行为等价依据：Ponytail `skills/ponytail-review/SKILL.md` 的 `Format` 分类沿旧稿承接，限定于删减建议。
 
+## nk-spec-close
+
+- [入口](../skills/engineering/nk-spec-close/SKILL.md) 为 NK 原创，无上游对应技能：整体验收（沿 spec 的使用场景走完整用户流程、跨 ticket 衔接、遗漏与误解）、验收对象与测试决定取自 nk-to-spec 的 spec 模板、证据复用与受影响补查、验收通过即关闭 Linear spec 不等 PR 合并、不实施修复缺口交实施方（区分已满足/未满足/未验证）、验收结论随交付载体不建台账：STE-10/STE-16/STE-17 设计。
+- 整合范围的审查派发对齐 nk-review 的"spec 整合与整体交付"重点（跨 ticket 组合、累计影响、完整用户流程）与其复用规则；调用方约定（用户直接调用、nk-odyssey 整合完成后调用、PR 收尾按需补充）来自 STE-16 职责划分。
+- 临时工作树清理（git worktree list 查现状、成果已承接且无活跃使用者、宿主优先、不删原目录与在用分支、不建台账）：STE-16 工作树规则的本技能侧落地；PR 剩余交付资源清理归 nk-pr。
+- 旧 nk-close 的轻量合并前检查、遗留与知识沉淀（compound）、产物矩阵与收尾提交不迁移：PR 场景归 nk-pr 与 nk-review，经验归 OpenViking，产物生命周期约定已随骨架退役。
+
 ## nk-tdd
 
 - [入口](../skills/engineering/nk-tdd/SKILL.md) 的好测试标准、只在确认的测试接口上测、反模式（实现耦合、同义反复、横向切片与纵向切片替代）、先见失败再实现、一次一个切片、重构归审查：Matt `skills/engineering/tdd/SKILL.md`（`6fd9479`）正文的中文迁移，按项目测试规范改写。
