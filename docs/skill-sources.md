@@ -18,6 +18,12 @@
 - [入口](../skills/productivity/nk-ask-ljq/SKILL.legacy.md) 的场景推荐、主线与独立工具地图：Matt `skills/engineering/ask-matt/SKILL.md` 的 `The main flow: idea → ship`、`On-ramps`、`Standalone`。
 - NK 技能路线、执行授权与外部 PR 指引、维护者个人留言：NK 原创。
 
+## nk-codecraft
+
+- [入口](../skills/engineering/nk-codecraft/SKILL.md) 的受控词汇（模块、接口、实现、适配器、深度、接缝、杠杆、局部性与反词表）、删除测试、一适配器等于假想接缝、接口即测试面：Matt `skills/engineering/codebase-design/SKILL.md`（`6fd9479`）正文的中文迁移与压缩。
+- 七条纪律（完整实现不预支、先理解已有代码、抽象减负、契约与真实失败、可读性、行为验证、收束）：STE-6/STE-8 调研的代码规范七条；按用户决定与架构词汇融合为单一参考，不分开成两个技能。
+- 不迁移 DEEPENING.md 与 DESIGN-IT-TWICE.md（design-it-twice 属 improve-codebase-architecture 场景，该技能经用户决定不收，to-questionnaire 亦不收）；可测试性三则中与测试重叠的部分归 nk-tdd。定位为 model-invoked 纪律参考：nk-implement 实施时调用、nk-review 审查时对照、接口形状讨论时查阅。
+
 ## nk-commit
 
 - [入口](../skills/engineering/nk-commit/SKILL.md) 的范围与风格核对、按逻辑变化提交、具名路径暂存、提交消息文件、路径限定提交、命令逐条执行与提交后核对：CE `skills/ce-commit/SKILL.md` 的 `Context`、`Workflow`。
@@ -42,7 +48,7 @@
 - [入口](../skills/engineering/nk-implement/SKILL.md) 的按 spec/tickets 实施、定期类型检查与单测、收尾全量测试、完成后审查、提交到当前分支：Matt `skills/engineering/implement/SKILL.md`（`6fd9479`）正文主干的中文迁移。
 - Matt 的 `tdd` 调用改为调用 `nk-tdd`（按项目测试规范改写的纪律参考）；验证节奏（类型检查与单测随改随跑、全量一次）保留在 implement 正文。
 - Linear ticket 生命周期（认领设进行中、验收后完成、推进解锁票）、调用 nk-review 三轴审查与发现处理短链路、提交走 nk-commit、禁止主分支直接改动与不默认开工作树、受阻出口与范围外发现交用户、非代码交付的验证替代：NK 适配。
-- 实施标准四条（完整实现不预支、抽象与状态、契约与真实失败、可读性无指标）、根因层修复、交付前 diff 自检与收束：STE-6/STE-8 调研确定的代码规范七条原则落地，NK 原创。
+- 实施标准与根因层修复出自 STE-6/STE-8 代码规范七条，已与 Matt codebase-design 架构词汇融合为 nk-codecraft（STE-32），implement 调用该技能；交付前 diff 自检与收束保留在本技能流程。
 - 旧 nk-work 的条件分支 references（intake、tdd-loop、ui-work、non-code、out-of-repo-state、subagents）不迁移：必要能力并入正文，Plan/U-ID/current/nk-compound 等旧机制随骨架退役，可从 Git 历史查阅。
 
 ## nk-init

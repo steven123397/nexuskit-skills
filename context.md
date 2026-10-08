@@ -28,6 +28,13 @@
 | context pointer | 上下文指针 | implement-spec、chief-of-staff |
 | integration branch | 集成分支 | implement-spec |
 | session | 会话 | 各技能通用 |
+| module | 模块 | codebase-design（nk-codecraft） |
+| interface | 接口（含调用方须知的一切，不限于类型签名） | codebase-design |
+| implementation / adapter | 实现 / 适配器 | codebase-design |
+| depth / deep module | 深度 / 深模块 | codebase-design |
+| seam | 接缝 | codebase-design、tdd；to-spec 的“测试接口”即测试所选的接缝 |
+| leverage / locality | 杠杆 / 局部性 | codebase-design |
+| deletion test | 删除测试 | codebase-design |
 
 ## map 正文章节（nk-wayfinder）
 
