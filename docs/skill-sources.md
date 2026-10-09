@@ -68,12 +68,19 @@
 - 配置对象按 NK 边界重定：Linear 团队与项目（to-spec/to-tickets/odyssey/spec-close 读取）、GitHub 外部问题去向（to-issue，无远端降级 docs/backlog.md）、导航指针指向 CONCEPTS.md 与 docs/adr/；不迁移 Matt 的 triage 标签体系（nk-to-issue 用 bug/enhancement）、issue-tracker 选项表与 GLOSSARY-MAP 多上下文（domain-modeling 已定单文件默认）。
 - 惰性创建（CONCEPTS.md 由第一个词条建、docs/adr/ 由第一个决定建、不预建空目录与 backlog）、初始化产物经 nk-commit 入库、收尾告知哪些技能读哪些配置：NK 适配。配置文件固定默认 `docs/agents/issue-tracker.md`（2026-10-08 经用户决定恢复固定布局，消费者 nk-to-spec / nk-to-tickets / nk-odyssey / nk-wayfinder 固定读取、项目已有约定时让位），nk-to-issue 的无远端降级位置同源。
 - 旧稿的 docs/current.md 创建、current-md/artifact-lifecycle/concepts-vocabulary 约定引用与"知识入口"体系随 STE-28 退役；Matt 的 triage 标签体系（to-issue 用 bug/enhancement，分诊队列随"外部 Issue 只记录"定位取消）与 issue-tracker 选项表（Linear+GitHub 已选型）不迁移；多域信号探测（workspace 清单、packages/*、多个域目录）与多上下文导航指针随 GLOSSARY-MAP 机制补回（2026-10-08），布局归 nk-domain-modeling 持有，init 只探测与指路；docs/agents/domain.md 不另建（消费规则由 nk-domain-modeling 持有，避免双源）。
+- Orca 探测与接入（CLI 与 `orca-cli` 外挂技能探测、是否使用的询问、`.gitignore` 追加 `/.orca/`、指令文件简短声明）：NK 原创，依据 STE-33 的 Orca 调研（2026-10-09）；`orca-cli` 为唯一刚需外挂技能，不随本体系分发。
 
 ## nk-odyssey
 
 - [入口](../skills/engineering/nk-odyssey/SKILL.md) 的任务图与前沿、上下文指针稀疏通信、实施子代理后台并行、流程主干（读图、可选探索子代理与仓库外记录、集成分支与 draft PR、子代理独立工作树并确认基点、合并子代理合入、前沿推进、验收、PR ready 或按 tracker 关票、清理工作树）：Matt `skills/engineering/implement-spec/SKILL.md`（`6fd9479`）正文的中文迁移。
 - 实施子代理按 nk-implement 纪律（含 nk-tdd、单票适用审查、nk-commit 提交）而非仅调用 tdd；整体验收交给 nk-spec-close（STE-17），不内置第二套验收方法，收尾审查由 spec-close 调用 nk-review；独立研究走 nk-research；解锁票推进 Todo；交付与 PR 收尾接 nk-pr：NK 适配。
 - 原名 implement-spec，更名 odyssey：NK 决定。
+- 执行底座分流（开工前确认 Orca 声明与可用性、走 Orca 时工作树与实施/合并子代理创建改用 Orca 方式、探索与审查子代理仍走原生、两路径下票状态流转与验收不变）：NK 原创，依据 STE-33 的 Orca 调研（2026-10-09）。
+
+## nk-orca-guide
+
+- [入口](../skills/engineering/nk-orca-guide/SKILL.md) 全部内容为 NK 原创，依据两类材料：2026-10-09 本机实测（codex / kimi / opencode 三 agent 的派发、交互、读屏、完工确认与清理）；Orca 官方技能指南（stablyai/orca 仓库的 `skill-guides/orca-cli.md`、`skill-guides/orchestration/` 与 `skill-stubs/`，只取命令语义与差异事实，不迁移其协调协议）。
+- Orca 技能总表与"orchestration 不采用、多票调度归 nk-odyssey"的划分：STE-33 调研结论。
 
 ## nk-pr
 
@@ -100,6 +107,7 @@
 - 分级复用（SHA 变化不等于结论失效、只补查受影响部分、进入下一阶段不自动重派三人）、按 ticket / spec 整合 / PR / 机械变更区分审查重点、自然语言返回与零发现简短说明、不设 validator 与递归编队、修复归调用方并由原审查者针对性复核、有效防御不因精简误删：STE-6 设计；GitHub #42 反映的旧编队成本（小改动 9 个子代理）与零发现 JSON 空字段契约由此处理，nk-simplify 串联随之取消。
 - 快照一致性（实际内容或指纹、分析期间不改被审内容）、未跟踪文件的纳入与排除、意图摘要与已有验证证据随任务给出、外部 PR 只读取数不 checkout：旧稿必要能力保留；CE 的风险编队（select-and-route、personas）、validator 复核、JSON 返回契约、`docs/reviews/` 审查台账与 pre-merge 独立路径随 STE-6/STE-12 退役，PR 场景并入“按范围定重点”。
 - 简洁性发现的真实收益与行为等价依据：Ponytail `skills/ponytail-review/SKILL.md` 的 `Format` 分类沿旧稿承接，限定于删减建议。
+- reviewer 只读不占工作树、始终由主会话原生派发不走 Orca：NK 原创，依据 STE-33 调研（Orca 派发仅用于落工作树的实施类工作）。
 
 ## nk-spec-close
 

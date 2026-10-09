@@ -1,7 +1,7 @@
 {
   "name": "nexuskit",
   "version": "0.3.0-beta.1",
-  "description": "NexusKit 开发分支：23 个 nk-* 技能入口，全部主线技能已重写完成；未发布版本。",
+  "description": "NexusKit 开发分支：24 个 nk-* 技能入口，全部主线技能已重写完成；未发布版本。",
   "author": {
     "name": "steven123397"
   },
@@ -20,7 +20,7 @@
   "interface": {
     "displayName": "NexusKit",
     "shortDescription": "轻量工程技能：澄清需求、组织实现与交付",
-    "longDescription": "NexusKit development checkout exposes all 23 nk-* skills: nk-ask-ljq, nk-codecraft, nk-commit, nk-debug, nk-domain-modeling, nk-grill, nk-implement, nk-init, nk-odyssey, nk-pr, nk-prose, nk-prototype, nk-research, nk-retro, nk-review, nk-spec-close, nk-tdd, nk-to-issue, nk-to-spec, nk-to-tickets, nk-wait-what, nk-wayfinder, nk-wizard. The full rewrite is done; client-side acceptance and release are pending. This checkout is not a published release.",
+    "longDescription": "NexusKit development checkout exposes all 24 nk-* skills: nk-ask-ljq, nk-codecraft, nk-commit, nk-debug, nk-domain-modeling, nk-grill, nk-implement, nk-init, nk-odyssey, nk-orca-guide, nk-pr, nk-prose, nk-prototype, nk-research, nk-retro, nk-review, nk-spec-close, nk-tdd, nk-to-issue, nk-to-spec, nk-to-tickets, nk-wait-what, nk-wayfinder, nk-wizard. The full rewrite is done; client-side acceptance and release are pending. This checkout is not a published release.",
     "developerName": "steven123397",
     "category": "Coding",
     "capabilities": [
