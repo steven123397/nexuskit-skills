@@ -13,6 +13,7 @@
 - [nk-prototype](skills/engineering/nk-prototype/SKILL.md)：用可操作的一次性原型回答设计问题，记录结论与适用限制。
 - [nk-to-tickets](skills/engineering/nk-to-tickets/SKILL.md)：把 spec 或对话拆成带依赖的纵向切片 tickets，发布到 Linear。
 - [nk-init](skills/engineering/nk-init/SKILL.md)：项目首次接入：探测现状、配置 Linear 与 GitHub 去向、幂等写入导航指针与工作流配置。
+- [nk-orca-guide](skills/engineering/nk-orca-guide/SKILL.md)：Orca 执行底座操作指南：建工作树、派发与交互、完工确认与清理，附各 agent 差异速查。
 - [nk-implement](skills/engineering/nk-implement/SKILL.md)：完成单个 ticket 或任务：实施、验证、审查处理与提交。
 - [nk-odyssey](skills/engineering/nk-odyssey/SKILL.md)：接住已明确的 spec，在集成分支上协调并行实施与集成，交付整体验收。
 - [nk-spec-close](skills/engineering/nk-spec-close/SKILL.md)：spec 整体验收与关闭：走完整使用场景、查跨 ticket 衔接，通过即关票不等合并，并清理临时工作树。
@@ -32,7 +33,7 @@
 - [nk-retro](skills/productivity/nk-retro/SKILL.md)：复盘 Agent 工作环境与协作：基于真实记录总结可行动改进；按请求写入 OpenViking 并验证。
 <!-- /installable-skills -->
 
-以上为全部 23 个技能的真实入口。整轮重写与整合核对（STE-15）已完成：清单、路由、来源映射与本分支内容一致，仓库检查全数通过；真实客户端的安装验收与发布尚未进行，版本号与发布范围另行确定。
+以上为全部 24 个技能的真实入口。整轮重写与整合核对（STE-15）已完成：清单、路由、来源映射与本分支内容一致，仓库检查全数通过；真实客户端的安装验收与发布尚未进行，版本号与发布范围另行确定。
 
 ## 目录
 
@@ -40,11 +41,12 @@
 skills/
   engineering/
     nk-init/             nk-grill/            nk-wayfinder/
-    nk-domain-modeling/  nk-research/         nk-prototype/
-    nk-to-spec/          nk-to-tickets/       nk-implement/
-    nk-odyssey/          nk-review/           nk-spec-close/
-    nk-commit/           nk-pr/               nk-debug/
-    nk-to-issue/
+    nk-orca-guide/       nk-domain-modeling/  nk-research/
+    nk-prototype/        nk-to-spec/          nk-to-tickets/
+    nk-implement/        nk-odyssey/          nk-review/
+    nk-spec-close/       nk-commit/           nk-pr/
+    nk-debug/            nk-to-issue/         nk-codecraft/
+    nk-tdd/
   productivity/
     nk-retro/            nk-prose/            nk-wait-what/
     nk-wizard/           nk-ask-ljq/

@@ -14,6 +14,11 @@
 ### ticket 认领
 实施会话接手 ticket 的时刻即被认领：`nk-implement` 核对依赖已满足且无人接手后，把 assignee 设为本次负责人、状态从 Todo 推进到 In Progress；`nk-odyssey` 派实施子代理时同规则。认领后决定不做须退回：取消 assignee 并说明理由，状态退回 Todo。GitHub Issue 的记录不构成认领。
 
+## 执行与派发
+
+### 执行底座
+实施类工作的运行载体选择：落工作树的实施与合并子代理可走 Orca（工作树创建、派发、完工确认与清理见 `nk-orca-guide`），不落工作树的探索与审查子代理始终走原生；reviewer 只读不占工作树，不走 Orca。是否启用由项目指令文件声明（`nk-init` 写入），`nk-odyssey` 开工前按声明分流，两条路径下票状态流转与验收不变。
+
 ## 盘问
 
 ### 前沿轮次
