@@ -14,7 +14,7 @@ disable-model-invocation: true
 - `git remote -v` 与 `gh` 可用性：有无 GitHub 远端，决定外部问题记录走 GitHub Issues 还是降级 `docs/backlog.md`。
 - 根目录的 `AGENTS.md` / `CLAUDE.md`：哪个存在，是否已有技能配置块或指向 `CONCEPTS.md`、`docs/adr/` 的指引。
 - `CONCEPTS.md`（或 `CONCEPTS-MAP.md`）与 `docs/adr/` 是否已存在；多域信号（workspace 清单、有独立 `src/` 的 `packages/*`、多个自成体系的域目录）——存在时按多上下文组织；`docs/agents/issue-tracker.md` 是否已有配置记录（或导航块指向的替代位置）。
-- Orca 可用性：自身是否运行在 Orca 托管终端中（`ORCA_CLI_COMMAND`、`ORCA_PANE_KEY` 等环境变量），PATH 上是否有 `orca` CLI（`command -v orca`），外挂技能 `orca-cli` 是否可读。只探测，不安装。
+- Orca 可用性：自身是否运行在 Orca 托管终端中（`ORCA_PANE_KEY` 等环境变量），PATH 上是否有 `orca` CLI（POSIX `command -v orca`，PowerShell `Get-Command orca`），外挂技能 `orca-cli` 是否可读。只探测，不安装。
 
 ## 2. 展示并确认
 
@@ -38,4 +38,4 @@ disable-model-invocation: true
 
 初始化产物是本次交付物，提交走 `nk-commit`（配置文件与指令文件改动同次入库）。没有可交付改动则直接报告现状。
 
-收尾告知：哪些技能现在会读这些配置——`nk-to-spec` / `nk-to-tickets` / `nk-odyssey` / `nk-wayfinder` 读 Linear 配置，`nk-to-issue` 读 GitHub 去向，`nk-domain-modeling` 维护术语与 `docs/adr/`。之后可直接编辑这些文件；重跑本技能只在更换去向或从头再来时需要。可以从 `nk-ask-ljq`（场景路由）或直接描述任务开始。
+收尾告知：哪些技能现在会读这些配置——`nk-to-spec` / `nk-to-tickets` / `nk-odyssey` / `nk-wayfinder` 读 Linear 配置，确认使用 Orca 时 `nk-odyssey` 还会读指令文件里的使用声明（用法见 `nk-orca-guide`），`nk-to-issue` 读 GitHub 去向，`nk-domain-modeling` 维护术语与 `docs/adr/`。之后可直接编辑这些文件；重跑本技能只在更换去向或从头再来时需要。可以从 `nk-ask-ljq`（场景路由）或直接描述任务开始。

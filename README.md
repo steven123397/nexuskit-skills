@@ -45,7 +45,8 @@ skills/
     nk-prototype/        nk-to-spec/          nk-to-tickets/
     nk-implement/        nk-odyssey/          nk-review/
     nk-spec-close/       nk-commit/           nk-pr/
-    nk-debug/            nk-to-issue/
+    nk-debug/            nk-to-issue/         nk-codecraft/
+    nk-tdd/
   productivity/
     nk-retro/            nk-prose/            nk-wait-what/
     nk-wizard/           nk-ask-ljq/

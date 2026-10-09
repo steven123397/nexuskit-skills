@@ -10,11 +10,13 @@ Orca 是可选的执行底座：它托管工作树与 agent 终端，让派出�
 
 ## 解析 CLI
 
-按顺序解析一次，之后复用：
+按顺序解析一次，之后复用（与外挂技能 `orca-cli` 的解析规则一致）：
 
-1. 环境变量 `ORCA_CLI_COMMAND`（Orca 托管会话会注入）；
-2. PATH 上的 `orca`；
-3. 都不可用时明确报告缺少 Orca，不猜测其他路径。
+1. 环境变量 `ORCA_CLI_COMMAND`（WSL 托管会话注入，Windows 托管会话没有，直接走下一步）；
+2. Linux 非托管会话（无 `ORCA_*` 环境变量）用 `orca-ide`，不要裸跑 `orca`——那里它通常解析到 GNOME 屏幕阅读器（`/usr/bin/orca`）并开始朗读；
+3. 其余用 PATH 上的 `orca`。
+
+选定的可执行失败时报告原始错误并停，不回退换用其他可执行——可能悄悄指向另一份 Orca 构建。都不可用时明确报告缺少 Orca，不猜测其他路径。
 
 `ORCA` 在下文是这个可执行文件的占位符，运行前替换，不要照抄。命令默认加 `--json`。
 
@@ -24,7 +26,7 @@ Orca 是可选的执行底座：它托管工作树与 agent 终端，让派出�
 ORCA worktree create --name <任务名> --agent <codex|claude|kimi|opencode> --prompt "<任务简报>" --json
 ```
 
-- `--agent` 会把 agent 直接放进第一个终端，返回 `startupTerminal.handle`——之后只用这个 handle 寻址，不要再 `terminal create` 重复启动同一个 agent。
+- `--agent` 会把 agent 直接放进第一个终端，从返回 JSON 读 agent 句柄：当前运行时读 `result.agentTerminalHandle`，旧运行时只有 `result.startupTerminal.handle`，两者皆无（folder 型仓库）时用 `terminal list --worktree <选择器>` 找 agent 终端——之后只用这个 handle 寻址，不要再 `terminal create` 重复启动同一个 agent。
 - 默认基于仓库默认分支、以当前上下文为父；独立顶层工作加 `--no-parent`，不要把基线悄悄压在当前特性分支上。
 - 已有工作树（含手工 `git worktree add` 的）可直接挂 agent：`ORCA terminal create --worktree branch:<分支名> --command "<agent>"`。Orca 对工作树的感知不依赖谁来创建。
 - 派发即用，不等完工；完工确认见下节。
@@ -42,8 +44,8 @@ ORCA worktree create --name <任务名> --agent <codex|claude|kimi|opencode> --p
 
 派发时在 prompt 里写死完工标记，主代理醒后查标记而不是读屏幕散文：
 
-1. worker 完工前自翻卡片：`ORCA worktree set --worktree active --workspace-status in-review`；主代理用 `worktree show --json` 读回。
-2. 或走 Linear（装了 `orca-linear` 或者有linear mcp时）：worker 推票状态，主代理查票。`--current` 只在 Orca 终端内有效，普通 shell 里 cd 进去无效。
+1. worker 完工前自翻卡片：`ORCA worktree set --worktree active --workspace-status in-review`；主代理用 `worktree show --worktree <选择器> --json` 读回——选择器用 worker 的 `branch:` / `name:`，`active` 指向调用方自己的树。
+2. 或走 Linear（装了 `orca-linear` 或有 Linear MCP 时）：派发前 `ORCA worktree set --linear-issue <票号>` 绑定；worker 在自己树内推票状态——`--current` 按当前目录解析，普通 shell cd 进 Orca 管理的工作树同样有效；主代理不在 worker 树内，按票号查。
 3. 物证兜底：`git log` 确认 worker 分支上的提交真实存在。
 
 ## 删除与清理
@@ -53,6 +55,8 @@ ORCA worktree create --name <任务名> --agent <codex|claude|kimi|opencode> --p
 - 工作树默认落在 `<repo>/.orca/worktrees/`，项目应已在 `.gitignore` 忽略 `/.orca/`（nk-init 写入）。
 
 ## Agent 差异速查
+
+本表与「已知坑」为 2026-10-09 本机实测（orca 1.4.223）快照，Orca 升级后以 `orca-cli` 版本匹配指南复核，不作永久事实。
 
 | | codex | kimi | opencode |
 |---|---|---|---|
