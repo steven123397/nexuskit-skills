@@ -33,9 +33,11 @@ Wizard 默认是一次性产物：为单次运行而构建，保存到 scratch �
 
 ### 3. 编写 wizard (Author)
 
-把 [assets/template.sh](assets/template.sh) 复制到不覆盖现有工作的目标路径。用每个步骤一个 `stage` 替换示例 stage，按依赖顺序排列。使用 library helpers——`stage`、`say`/`step`、`open_url`、`ask`/`ask_secret`、`write_env`、`set_secret`/`set_var`、`pause`/`confirm`——并把 `TOTAL_STAGES` 设为你编写的 stage 数量。明确运行目录、ENV_FILE 与目标 GitHub 仓库，避免从错误目录写入。
+把 [assets/template.sh](assets/template.sh) 复制到不覆盖现有工作的目标路径。在 `run_wizard` 内用每个步骤一个 `stage` 替换示例 stage，按依赖顺序排列，保留文件末尾的调用与退出语句。使用 library helpers——`stage`、`say`/`step`、`open_url`、`ask`/`ask_secret`、`write_env`、`set_secret`/`set_var`、`pause`/`confirm`——并把 `TOTAL_STAGES` 设为你编写的 stage 数量。明确运行目录、ENV_FILE 与目标 GitHub 仓库，避免从错误目录写入。
 
 守住 template 设定的标准：在索取某个 URL 的值之前先打开它；对 secret 使用 `ask_secret`；只有目的地包含 `.env` 才使用 `write_env`；CI secret 与 public variable 分别使用 `set_secret` / `set_var`；在不可逆操作之前用 `confirm` 阻止未获确认的继续执行。每个 stage 聚焦一项任务。不要触碰标记之上的 library。
+
+`write_env` 按原始单行 `KEY=VALUE` 写入。值含空格、`#` 或引号等特殊字符时，按目标应用的 dotenv 规则处理并验证读取结果；不假定 `.env` 同时可供 Shell `source` 使用。
 
 ### 4. 验证与交付 (Verify and hand off)
 

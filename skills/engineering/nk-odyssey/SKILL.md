@@ -1,11 +1,13 @@
 ---
 name: nk-odyssey
-description: "Drive a scoped effort with ready tickets to deliverable state on one integration branch: work the task graph, coordinate parallel implementer subagents, resolve integration issues, then hand off to spec-level acceptance. Single-ticket work belongs to nk-implement."
+description: "Experimental. Drive a scoped effort with ready tickets to deliverable state on one integration branch: work the task graph, coordinate parallel implementer subagents, resolve integration issues, then hand off to spec-level acceptance. Single-ticket work belongs to nk-implement."
 argument-hint: "[spec 的 Linear URL 或编号]"
 disable-model-invocation: true
 ---
 
 接住已明确的工作：spec 与它的 tickets 已经就绪，目标是把整份 spec 做到可交付状态。持续推进 tickets、协调并行实施、解决集成问题；单个 ticket 的实施纪律见 `nk-implement`，本技能负责长途调度。
+
+**测试中**：多 agent 调度尚缺真实任务的完整验证，尤其是 Orca 与不同 agent 的组合。继续随套件分发，按实际使用反馈打磨流程。
 
 tickets 不是步骤清单，而是带阻塞关系的**任务图**：始终存在可以开工的**前沿**。Linear 团队与项目从 `docs/agents/issue-tracker.md`（`nk-init` 的产物）读取，缺失时先询问。
 

@@ -66,7 +66,7 @@
 
 - [入口](../skills/engineering/nk-init/SKILL.md) 的探测（读 git remote 与指令文件现状，不凭空发问）、展示并确认（逐项带推荐答案，探测已定的直接说明不提问）、选文件规则（`CLAUDE.md` 存在则编辑它、否则 `AGENTS.md`、都不存在问用户不代选；已有配置块就地更新不追加重复，不覆盖周边编辑）、幂等与重跑语义（只在更换去向时需要）：Matt `skills/engineering/setup-matt-pocock-skills/SKILL.md`（`6fd9479`）`Process` 下 `Explore`、`Present findings and ask`、`Confirm and edit`、`Write` 的中文迁移。
 - 配置对象按 NK 边界重定：Linear 团队与项目（to-spec/to-tickets/odyssey/spec-close 读取）、GitHub 外部问题去向（to-issue，无远端降级 docs/backlog.md）、导航指针指向 CONCEPTS.md 与 docs/adr/；不迁移 Matt 的 triage 标签体系（nk-to-issue 用 bug/enhancement）、issue-tracker 选项表与 GLOSSARY-MAP 多上下文（domain-modeling 已定单文件默认）。
-- 惰性创建（CONCEPTS.md 由第一个词条建、docs/adr/ 由第一个决定建、不预建空目录与 backlog）、初始化产物经 nk-commit 入库、收尾告知哪些技能读哪些配置：NK 适配。配置文件固定默认 `docs/agents/issue-tracker.md`（2026-10-08 经用户决定恢复固定布局，消费者 nk-to-spec / nk-to-tickets / nk-odyssey / nk-wayfinder 固定读取、项目已有约定时让位），nk-to-issue 的无远端降级位置同源。
+- 惰性创建（CONCEPTS.md 由第一个词条建、docs/adr/ 由第一个决定建、不预建空目录与 backlog）、初始化产物经 nk-commit 入库、收尾告知哪些技能读哪些配置：NK 适配。按用户决定，配置文件固定为 `docs/agents/issue-tracker.md`，消费者 nk-to-spec / nk-to-tickets / nk-odyssey / nk-wayfinder 固定读取，nk-to-issue 的无远端降级位置同源。
 - 旧稿的 docs/current.md 创建、current-md/artifact-lifecycle/concepts-vocabulary 约定引用与"知识入口"体系随 STE-28 退役；Matt 的 triage 标签体系（to-issue 用 bug/enhancement，分诊队列随"外部 Issue 只记录"定位取消）与 issue-tracker 选项表（Linear+GitHub 已选型）不迁移；多域信号探测（workspace 清单、packages/*、多个域目录）与多上下文导航指针随 GLOSSARY-MAP 机制补回（2026-10-08），布局归 nk-domain-modeling 持有，init 只探测与指路；docs/agents/domain.md 不另建（消费规则由 nk-domain-modeling 持有，避免双源）。
 - Orca 探测与接入（CLI 与 `orca-cli` 外挂技能探测、是否使用的询问、`.gitignore` 追加 `/.orca/`、指令文件简短声明）：NK 原创，依据 STE-33 的 Orca 调研（2026-10-09）；`orca-cli` 为唯一刚需外挂技能，不随本体系分发。
 
@@ -119,6 +119,7 @@
 ## nk-tdd
 
 - [入口](../skills/engineering/nk-tdd/SKILL.md) 的好测试标准、只在确认的测试接口上测、反模式（实现耦合、同义反复、横向切片与纵向切片替代）、先见失败再实现、一次一个切片、重构归审查：Matt `skills/engineering/tdd/SKILL.md`（`6fd9479`）正文的中文迁移，按项目测试规范改写。
+- 测试接口确认时说明各接口能发现与无法覆盖的问题：Matt `skills/engineering/tdd/SKILL.md`（`3f59913`）的接口取舍说明，融入“测试写在哪”。
 - 数量纪律（新增须带来新验证价值、复用优先、不为形式新增、不多层重复断言、不堆假想场景）：项目已定测试编写规范；mock 系统边界规则浓缩自 Matt `skills/engineering/tdd/mocking.md` 的一句，tests.md 不整份迁移；不设 codebase-design 词汇联动（NK 无对应技能）。
 - 定位为 model-invoked 纪律参考：nk-implement、nk-odyssey 实施时调用，nk-review 重写时引用。
 
@@ -166,5 +167,5 @@
 
 ## nk-wizard
 
-- [入口](../skills/productivity/nk-wizard/SKILL.md) 的分阶段人工向导与 [Bash 模板](../skills/productivity/nk-wizard/assets/template.sh)：Matt `skills/engineering/wizard/SKILL.md` 与同目录 `template.sh`；模板仅调整生成来源注释为 nk-wizard。
+- [入口](../skills/productivity/nk-wizard/SKILL.md) 的分阶段人工向导与 [Bash 模板](../skills/productivity/nk-wizard/assets/template.sh)：Matt `skills/engineering/wizard/SKILL.md` 与同目录 `template.sh`（`49dd158`）；模板采用其 Readline 输入、EOF 处理、文件权限与符号链接保留、浏览器提示、清屏回退及 `run_wizard` 包装，生成来源注释改为 nk-wizard，并保留 NK 的跳过项未完成提示。未采用上游引号编码与解码：Shell 拼接式单引号转义不兼容 dotenv 消费器，保留原始单行 KEY=VALUE 格式。
 - Git Bash 说明、跳过项不算全部完成、目的地与凭据边界、静态验证及提交接口：NK 原创适配；旧稿的集中知识库调用改为按用户决定记入 OpenViking。
