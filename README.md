@@ -1,8 +1,30 @@
-# NexusKit (`nk-*`)
+<h1 align="center">NexusKit</h1>
+
+<p align="center"><strong>面向 AI 编程 Agent 的个人工程技能工具箱</strong></p>
+<p align="center">从想法到交付，按需组合的 <code>nk-*</code> 技能。</p>
+
+<p align="center">
+  <a href="https://github.com/steven123397/nexuskit-skills/releases"><img src="https://img.shields.io/github/v/release/steven123397/nexuskit-skills?include_prereleases&amp;style=flat-square&amp;color=6366f1" alt="最新版本（含预发布）"></a>
+  <a href="https://github.com/steven123397/nexuskit-skills/actions/workflows/checks.yml"><img src="https://img.shields.io/github/actions/workflow/status/steven123397/nexuskit-skills/checks.yml?branch=main&amp;style=flat-square&amp;label=checks" alt="main 分支检查状态"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/steven123397/nexuskit-skills?style=flat-square&amp;color=0d9488" alt="MIT 许可证"></a>
+  <a href="https://github.com/steven123397/nexuskit-skills/stargazers"><img src="https://img.shields.io/github/stars/steven123397/nexuskit-skills?style=flat-square&amp;color=eab308" alt="GitHub Stars"></a>
+</p>
+
+<p align="center">
+  <a href="#安装">安装</a> ·
+  <a href="#可安装入口">技能一览</a> ·
+  <a href="skills/productivity/nk-ask-ljq/SKILL.md">如何选择技能</a> ·
+  <a href="https://github.com/steven123397/nexuskit-skills/releases">版本记录</a> ·
+  <a href="https://github.com/steven123397/nexuskit-skills/issues">问题反馈</a>
+</p>
+
+---
 
 面向 AI 编程 Agent 的个人工程技能工具箱，以 Matt Pocock 式简洁组织为基础。技能按实际需要调用，主流程直接写在入口中。
 
-当前正式版仍为 [v0.2.0](docs/releases/v0.2.0.md)。本工作分支正在重写下一版；下面展示开发结构，不代表完整新版已经可用。
+推荐搭配 Linear 和 Orca 使用：Linear 管理需求、任务与进度，Orca 管理工作树与 agent 派发。
+
+当前正式版为 [v0.3.0](docs/releases/v0.3.0.md)，包含 24 个技能，其中 `nk-odyssey` 仍在测试中。
 
 ## 可安装入口
 
@@ -15,7 +37,7 @@
 - [nk-init](skills/engineering/nk-init/SKILL.md)：项目首次接入：探测现状、配置 Linear 与 GitHub 去向、幂等写入导航指针与工作流配置。
 - [nk-orca-guide](skills/engineering/nk-orca-guide/SKILL.md)：Orca 执行底座操作指南：建工作树、派发与交互、完工确认与清理，附各 agent 差异速查。
 - [nk-implement](skills/engineering/nk-implement/SKILL.md)：完成单个 ticket 或任务：实施、验证、审查处理与提交。
-- [nk-odyssey](skills/engineering/nk-odyssey/SKILL.md)：接住已明确的 spec，在集成分支上协调并行实施与集成，交付整体验收。
+- [nk-odyssey](skills/engineering/nk-odyssey/SKILL.md)（测试中）：接住已明确的 spec，在集成分支上协调并行实施与集成，交付整体验收。多 agent 调度尚缺真实任务的完整验证，尤其是 Orca 与不同 agent 的组合；继续随套件分发，按实际使用反馈迭代。
 - [nk-spec-close](skills/engineering/nk-spec-close/SKILL.md)：spec 整体验收与关闭：走完整使用场景、查跨 ticket 衔接，通过即关票不等合并，并清理临时工作树。
 - [nk-pr](skills/engineering/nk-pr/SKILL.md)：分支交付收尾：draft PR 创建与更新、审查与验收结论复用、合并条件确认、授权合并与交付资源清理。
 - [nk-tdd](skills/engineering/nk-tdd/SKILL.md)：测试纪律：好测试标准、反模式与数量控制；由实施与审查流程自动调用。
@@ -33,7 +55,7 @@
 - [nk-retro](skills/productivity/nk-retro/SKILL.md)：复盘 Agent 工作环境与协作：基于真实记录总结可行动改进；按请求写入 OpenViking 并验证。
 <!-- /installable-skills -->
 
-以上为全部 24 个技能的真实入口。整轮重写与整合核对（STE-15）已完成：清单、路由、来源映射与本分支内容一致，仓库检查全数通过；真实客户端的安装验收与发布尚未进行，版本号与发布范围另行确定。
+以上为全部 24 个技能的真实入口。整轮重写与整合核对（STE-15）已完成。两个 beta 版本已用于日常开发，`nk-implement` 已有实际使用反馈；`nk-odyssey` 的多 agent 调度仍待完整实战验证。
 
 ## 目录
 
@@ -64,7 +86,7 @@ skills/
 
 ## 安装
 
-正式版仍通过已有分发方式安装；重装当前开发分支只会发现上面列出的入口，不会恢复完整的 v0.2.0 工具箱。
+以下方式均安装整套技能。升级自 v0.2.0 时，请使用上面的新版入口；旧入口已退役，迁移说明见 [v0.3.0 版本说明](docs/releases/v0.3.0.md)。
 
 ### Kimi Code
 
@@ -133,6 +155,10 @@ npx skills add steven123397/nexuskit-skills
 ```
 
 技能统一从 `skills/` 下发现；只有 `SKILL.md` 是入口，目录占位和旧稿不是技能。安装后的客户端使用安装快照，仓库改动不会自动更新已安装版本。
+
+## 鸣谢
+
+感谢 [Matt Pocock](https://github.com/mattpocock) 开源的 [Skills](https://github.com/mattpocock/skills)。NexusKit 的技能组织、需求讨论、任务拆分与测试纪律等借鉴了他的工作，并结合个人工程实践进行中文改写与调整。具体对应关系见 [技能来源](docs/skill-sources.md)，上游版权与许可证见 [NOTICE](NOTICE)。
 
 ## 许可证
 

@@ -13,7 +13,7 @@ disable-model-invocation: true
 
 - `git remote -v` 与 `gh` 可用性：有无 GitHub 远端，决定外部问题记录走 GitHub Issues 还是降级 `docs/backlog.md`。
 - 根目录的 `AGENTS.md` / `CLAUDE.md`：哪个存在，是否已有技能配置块或指向 `CONCEPTS.md`、`docs/adr/` 的指引。
-- `CONCEPTS.md`（或 `CONCEPTS-MAP.md`）与 `docs/adr/` 是否已存在；多域信号（workspace 清单、有独立 `src/` 的 `packages/*`、多个自成体系的域目录）——存在时按多上下文组织；`docs/agents/issue-tracker.md` 是否已有配置记录（或导航块指向的替代位置）。
+- `CONCEPTS.md`（或 `CONCEPTS-MAP.md`）与 `docs/adr/` 是否已存在；多域信号（workspace 清单、有独立 `src/` 的 `packages/*`、多个自成体系的域目录）——存在时按多上下文组织；`docs/agents/issue-tracker.md` 是否已有配置记录。
 - Orca 可用性：自身是否运行在 Orca 托管终端中（`ORCA_PANE_KEY` 等环境变量），PATH 上是否有 `orca` CLI（POSIX `command -v orca`，PowerShell `Get-Command orca`），外挂技能 `orca-cli` 是否可读。只探测，不安装。
 
 ## 2. 展示并确认
@@ -22,14 +22,14 @@ disable-model-invocation: true
 
 - **Linear 团队与项目**：spec 与 tickets 的去向，`nk-to-spec`、`nk-to-tickets`、`nk-odyssey` 都读它。这无法探测，需要用户提供团队名与项目名。
 - **外部问题记录**：有 GitHub 远端且 `gh` 可用时推荐 GitHub Issues（`nk-to-issue` 的目标）；无远端时降级 `docs/backlog.md` 并说明。
-- **配置落点**：默认写 `docs/agents/issue-tracker.md`——`nk-to-spec`、`nk-to-tickets`、`nk-odyssey`、`nk-wayfinder` 固定读它。项目已有自己的工作流文档时从其约定，导航指针指向实际位置。
+- **配置落点**：固定为 `docs/agents/issue-tracker.md`——`nk-to-spec`、`nk-to-tickets`、`nk-odyssey`、`nk-wayfinder` 都读取此路径，直接说明即可。
 - **是否使用 Orca**：CLI 与 `orca-cli` 技能都探测到时才提问，询问本项目开发是否用 Orca 管理工作树与 agent 派发；`orca-cli` 缺失但 CLI 可用时，提示用户用 `npx skills add stablyai/orca --skill orca-cli` 安装，再决定是否启用。CLI 都不可用时按不使用处理并说明，不提问。
 
 ## 3. 写入
 
 - **选文件**：`CLAUDE.md` 存在则编辑它，否则用 `AGENTS.md`；两者都不存在时问用户建哪个，不代选。已有配置块就地更新，不追加重复，不覆盖用户对周边内容的编辑。
-- **导航块**指向术语、关键决定与工作流配置——形如"术语见 `CONCEPTS.md`（多上下文项目指 `CONCEPTS-MAP.md`，布局机制归 `nk-domain-modeling`），关键决定见 `docs/adr/`，工作流配置见 `<配置落点>`"。保持克制的指针，不把细则堆进常驻上下文。
-- **配置文件** `docs/agents/issue-tracker.md`：记录 Linear 团队与项目、GitHub 仓库与降级路径，一段平实说明即可。项目约定了别的位置时写那里，导航块指过去。
+- **导航块**指向术语、关键决定与工作流配置——形如"术语见 `CONCEPTS.md`（多上下文项目指 `CONCEPTS-MAP.md`，布局机制归 `nk-domain-modeling`），关键决定见 `docs/adr/`，工作流配置见 `docs/agents/issue-tracker.md`"。保持克制的指针，不把细则堆进常驻上下文。
+- **配置文件** `docs/agents/issue-tracker.md`：记录 Linear 团队与项目、GitHub 仓库与降级路径，一段平实说明即可。
 - **Orca 接入**（仅当用户确认使用且探测齐备）：`.gitignore` 追加 `/.orca/`（已覆盖则跳过）；按选文件规则在指令文件中简短声明——本项目开发使用 Orca 管理工作树与 agent 派发，用法见 `nk-orca-guide`。声明保持一两句，不复述指南内容。
 - **惰性创建**：不预建 `CONCEPTS.md`（第一个合格词条创建，归 `nk-domain-modeling`）、不预建空的 `docs/adr/`（第一个决定创建）、不预建降级 `docs/backlog.md`（无远端且需要时才建）。git 不跟踪空目录，产物由使用产生。
 - 不生成状态文档或通用约定加载层；不迁移既有产物（历史材料迁移是单独工作）；不修改项目代码。

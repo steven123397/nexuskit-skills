@@ -1,7 +1,7 @@
 {
   "name": "nexuskit",
-  "version": "0.3.0-beta.2",
-  "description": "NexusKit 开发分支：24 个 nk-* 技能入口，全部主线技能已重写完成；未发布版本。",
+  "version": "0.3.0",
+  "description": "NexusKit：24 个 nk-* 技能，按需组合，覆盖需求澄清、实施、审查与交付；nk-odyssey 为测试中技能。",
   "author": {
     "name": "steven123397"
   },

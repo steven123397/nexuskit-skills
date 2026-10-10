@@ -22,7 +22,7 @@ disable-model-invocation: true
 1. **敲定要做什么** → `nk-grill`，设计树逐轮盘问直到共同理解；讨论项目领域设计时同时调用 `nk-domain-modeling` 维护术语与关键决定。已有清楚想法就跳过。
 2. **纸面上定不了的问题** → `nk-prototype` 用一次性原型回答（先要查事实走 `nk-research`）；明确的研究问题（选型、上游行为、外部事实）直接 `nk-research`。
 3. **写下来**：多会话的构建 → `nk-to-spec` 把讨论整理成 spec，`nk-to-tickets` 拆成带依赖的纵向切片。单个明确的小任务直接 `nk-implement`，不必先写 spec。
-4. **实施**：单张 ticket → `nk-implement`（代码纪律调 `nk-codecraft`，测试纪律调 `nk-tdd`，提交前三轴审查 `nk-review`，提交走 `nk-commit`）；整份 spec → `nk-odyssey`，在集成分支上并行派实施子代理。
+4. **实施**：单张 ticket → `nk-implement`（代码纪律调 `nk-codecraft`，测试纪律调 `nk-tdd`，提交前三轴审查 `nk-review`，提交走 `nk-commit`）；整份 spec → `nk-odyssey`，在集成分支上并行派实施子代理。`nk-odyssey` 仍在测试中，推荐时说明多 agent 调度尚缺真实任务的完整验证。
 5. **收口**：spec 整体验收 → `nk-spec-close`，通过即关票不等合并；分支交付 → `nk-pr`，draft PR、审查衔接、授权合并与清理。
 6. **复盘** → `nk-retro`，看 Agent 工作环境与协作的改进空间，按请求存入 OpenViking。
 
