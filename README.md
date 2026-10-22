@@ -22,7 +22,7 @@
 
 面向 AI 编程 Agent 的个人工程技能工具箱，以 Matt Pocock 式简洁组织为基础。技能按实际需要调用，主流程直接写在入口中。
 
-推荐搭配 Linear 和 Orca 使用：Linear 管理需求、任务与进度，Orca 管理工作树与 agent 派发。
+推荐搭配 Linear 使用：管理需求、任务与进度。
 
 当前正式版为 [v0.3.0](docs/releases/v0.3.0.md)，包含 24 个技能，其中 `nk-odyssey` 仍在测试中。
 
@@ -35,9 +35,8 @@
 - [nk-prototype](skills/engineering/nk-prototype/SKILL.md)：用可操作的一次性原型回答设计问题，记录结论与适用限制。
 - [nk-to-tickets](skills/engineering/nk-to-tickets/SKILL.md)：把 spec 或对话拆成带依赖的纵向切片 tickets，发布到 Linear。
 - [nk-init](skills/engineering/nk-init/SKILL.md)：项目首次接入：探测现状、配置 Linear 与 GitHub 去向、幂等写入导航指针与工作流配置。
-- [nk-orca-guide](skills/engineering/nk-orca-guide/SKILL.md)：Orca 执行底座操作指南：建工作树、派发与交互、完工确认与清理，附各 agent 差异速查。
 - [nk-implement](skills/engineering/nk-implement/SKILL.md)：完成单个 ticket 或任务：实施、验证、审查处理与提交。
-- [nk-odyssey](skills/engineering/nk-odyssey/SKILL.md)（测试中）：接住已明确的 spec，在集成分支上协调并行实施与集成，交付整体验收。多 agent 调度尚缺真实任务的完整验证，尤其是 Orca 与不同 agent 的组合；继续随套件分发，按实际使用反馈迭代。
+- [nk-odyssey](skills/engineering/nk-odyssey/SKILL.md)（测试中）：接住已明确的 spec，在集成分支上协调并行实施与集成，交付整体验收。多 agent 调度尚缺真实任务的完整验证；继续随套件分发，按实际使用反馈迭代。
 - [nk-spec-close](skills/engineering/nk-spec-close/SKILL.md)：spec 整体验收与关闭：走完整使用场景、查跨 ticket 衔接，通过即关票不等合并，并清理临时工作树。
 - [nk-pr](skills/engineering/nk-pr/SKILL.md)：分支交付收尾：draft PR 创建与更新、审查与验收结论复用、合并条件确认、授权合并与交付资源清理。
 - [nk-tdd](skills/engineering/nk-tdd/SKILL.md)：测试纪律：好测试标准、反模式与数量控制；由实施与审查流程自动调用。
@@ -55,7 +54,7 @@
 - [nk-retro](skills/productivity/nk-retro/SKILL.md)：复盘 Agent 工作环境与协作：基于真实记录总结可行动改进；按请求写入 OpenViking 并验证。
 <!-- /installable-skills -->
 
-以上为全部 24 个技能的真实入口。整轮重写与整合核对（STE-15）已完成。两个 beta 版本已用于日常开发，`nk-implement` 已有实际使用反馈；`nk-odyssey` 的多 agent 调度仍待完整实战验证。
+以上为全部 23 个技能的真实入口。整轮重写与整合核对（STE-15）已完成。两个 beta 版本已用于日常开发，`nk-implement` 已有实际使用反馈；`nk-odyssey` 的多 agent 调度仍待完整实战验证。
 
 ## 目录
 
@@ -63,12 +62,11 @@
 skills/
   engineering/
     nk-init/             nk-grill/            nk-wayfinder/
-    nk-orca-guide/       nk-domain-modeling/  nk-research/
-    nk-prototype/        nk-to-spec/          nk-to-tickets/
-    nk-implement/        nk-odyssey/          nk-review/
-    nk-spec-close/       nk-commit/           nk-pr/
-    nk-debug/            nk-to-issue/         nk-codecraft/
-    nk-tdd/
+    nk-domain-modeling/  nk-research/         nk-prototype/
+    nk-to-spec/          nk-to-tickets/       nk-implement/
+    nk-odyssey/          nk-review/           nk-spec-close/
+    nk-commit/           nk-pr/               nk-debug/
+    nk-to-issue/         nk-codecraft/        nk-tdd/
   productivity/
     nk-retro/            nk-prose/            nk-wait-what/
     nk-wizard/           nk-ask-ljq/
