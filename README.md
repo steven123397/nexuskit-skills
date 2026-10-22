@@ -24,7 +24,7 @@
 
 推荐搭配 Linear 使用：管理需求、任务与进度。
 
-当前正式版为 [v0.3.0](docs/releases/v0.3.0.md)，包含 24 个技能，其中 `nk-odyssey` 仍在测试中。
+当前正式版为 [v0.3.1](docs/releases/v0.3.1.md)，包含 23 个技能，其中 `nk-odyssey` 仍在测试中。
 
 ## 可安装入口
 
