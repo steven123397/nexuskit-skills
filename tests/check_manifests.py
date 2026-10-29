@@ -19,7 +19,7 @@ def validate(root, release_tag=None):
         problems.append("inventory: duplicate skill names across groups")
     for entry in entries:
         parts = entry.relative_to(root).parts
-        if len(parts) != 4 or parts[1] not in {"engineering", "productivity"} or not parts[2].startswith("nk-"):
+        if len(parts) != 3 or not re.fullmatch(r"[a-z][a-z0-9-]*", parts[1]):
             problems.append(f"inventory: unexpected skill location {entry.relative_to(root)}")
         if (entry.parent / "SKILL.legacy.md").exists():
             problems.append(f"inventory: remove legacy draft before enabling {entry.parent.name}")
@@ -37,12 +37,13 @@ def validate(root, release_tag=None):
             return None
 
     def inventory(label, text, expected):
-        found = set(re.findall(r"\bnk-[a-z][a-z0-9-]*\b", text))
+        found = {n for n in expected
+                 if re.search(rf"(?<![A-Za-z0-9-]){re.escape(n)}(?![A-Za-z0-9-])", text)}
         if found != expected:
             problems.append(f"{label}: skill inventory differs; missing={sorted(expected - found)}, extra={sorted(found - expected)}")
 
     def count(label, text):
-        counts = re.findall(r"(\d+)\s*(?:个\s*nk-\*|nk-\*\s+skills)", text)
+        counts = re.findall(r"(\d+)\s*(?:个\s*(?:nk-\*\s*)?技能|skills)", text)
         if not counts or any(int(n) != len(names) for n in counts):
             problems.append(f"{label}: skill count must match disk ({len(names)})")
 

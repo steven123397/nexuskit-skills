@@ -64,7 +64,7 @@ class ManifestChecks(unittest.TestCase):
             path.write_text(original, encoding="utf-8")
 
     def test_new_disk_skill_requires_inventory_update(self):
-        path = self.root / "skills/engineering/nk-new/SKILL.md"
+        path = self.root / "skills/nk-new/SKILL.md"
         path.parent.mkdir()
         path.write_text("", encoding="utf-8")
         problems = validate(self.root)
@@ -106,8 +106,8 @@ class ManifestChecks(unittest.TestCase):
         (path / ".gitkeep").touch()
         self.assertEqual([], validate(self.root))
 
-    def test_duplicate_name_in_another_group_is_rejected(self):
-        path = self.root / "skills/productivity/nk-grill/SKILL.md"
+    def test_duplicate_name_is_rejected(self):
+        path = self.root / "skills/nested/code-review-and-quality/SKILL.md"
         path.parent.mkdir(parents=True)
         path.write_text("", encoding="utf-8")
         self.assertTrue(any("duplicate skill names" in p for p in validate(self.root)))

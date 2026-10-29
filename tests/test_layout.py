@@ -37,6 +37,7 @@ class LayoutChecks(unittest.TestCase):
         self.entry.write_text('Call `nk-missing`.', encoding='utf-8')
         self.assertTrue(reference_problems(self.root))
         (self.entry.parent.parent / 'nk-missing').mkdir()
+        (self.entry.parent.parent / 'nk-missing' / '.gitkeep').touch()
         self.assertEqual([], reference_problems(self.root))
         self.entry.write_text('Read `../../conventions/rules.md`.', encoding='utf-8')
         self.assertTrue(reference_problems(self.root))
