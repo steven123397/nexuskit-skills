@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "nexuskit-skills",
+  "description": "NexusKit 技能市场：osmani 中文核心 + nk 扩展层",
+  "owner": {
+    "name": "steven123397",
+    "url": "https://github.com/steven123397"
+  },
+  "plugins": [
+    {
+      "name": "nexuskit",
+      "source": "./",
+      "description": "以 addyosmani/agent-skills 简体中文版为核心的 24 个技能，覆盖 spec 到 ship 的完整开发生命周期。",
+      "homepage": "https://github.com/steven123397/nexuskit-skills",
+      "license": "MIT"
+    }
+  ]
+}
