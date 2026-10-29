@@ -1,5 +1,7 @@
 # CONCEPTS.md — NexusKit 领域术语表
 
+> v0.4.0 提示：本表描述的是 nk 旧技能体系（已封存于 `archive/v0.3.x-nk-skills` 分支）的术语；随提回裁定（见计划文档 E 表）逐项更新或退役。vendored 核心技能的术语译法以 `.upstream/addyosmani-agent-skills-zh/TRANSLATION-GLOSSARY.md` 为准。
+
 ## 收尾与发布
 
 ### 分支收尾
