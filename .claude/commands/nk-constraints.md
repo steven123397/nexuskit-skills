@@ -2,7 +2,7 @@
 description: 定义并执行本项目质量标准 — 访谈、合理默认值、CONSTRAINTS.md
 ---
 
-调用 agent-skills:constraint-driven-development skill。
+调用 constraint-driven-development skill。
 
 $ARGUMENTS
 
@@ -27,6 +27,6 @@ $ARGUMENTS
 7. **验证。** 对当前分支运行这些 constraints。如果某项失败而用户不同意，现在就修 constraint，而不是留下一个人们会学着无视的门禁。
 
 子命令：
-- `/constraints check` — 对当前分支运行现有 constraints 并报告
-- `/constraints guard` — 在 diff 中检查被弱化的标准：调低的阈值、被跳过或删除的 tests、新增的 suppression 注释、未完成的 stubs、新增的 exceptions
-- `/constraints ratchet` — 把今天的测量值记录为不得下降的 floor
+- `/nk-constraints check` — 对当前分支运行现有 constraints 并报告
+- `/nk-constraints guard` — 在 diff 中检查被弱化的标准：调低的阈值、被跳过或删除的 tests、新增的 suppression 注释、未完成的 stubs、新增的 exceptions
+- `/nk-constraints ratchet` — 把今天的测量值记录为不得下降的 floor

@@ -2,7 +2,7 @@
 description: 将工作拆解为带 acceptance criteria 和 dependency ordering 的小型可验证 tasks
 ---
 
-调用 agent-skills:planning-and-task-breakdown skill。
+调用 planning-and-task-breakdown skill。
 
 阅读现有 spec（SPEC.md 或等效文件）以及相关 codebase 部分。然后：
 

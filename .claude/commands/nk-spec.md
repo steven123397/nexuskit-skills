@@ -2,7 +2,7 @@
 description: 启动 spec-driven development — 写代码前先编写结构化 specification
 ---
 
-调用 agent-skills:spec-driven-development skill。
+调用 spec-driven-development skill。
 
 先理解用户想构建什么。围绕以下内容提出 clarifying questions：
 1. Objective 和 target users

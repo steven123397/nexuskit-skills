@@ -2,7 +2,7 @@
 description: 执行五轴 code review — correctness、readability、architecture、security、performance
 ---
 
-调用 agent-skills:code-review-and-quality skill。
+调用 code-review-and-quality skill。
 
 围绕全部五个轴 review 当前变更（staged 或 recent commits）：
 

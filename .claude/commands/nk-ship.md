@@ -2,9 +2,9 @@
 description: 通过并行 fan-out 到 specialist personas 运行发布前 checklist，然后综合 go/no-go decision
 ---
 
-调用 agent-skills:shipping-and-launch skill。
+调用 shipping-and-launch skill。
 
-`/ship` 是一个 **fan-out orchestrator**。它会针对当前变更并行运行三个 specialist personas，然后将它们的报告合并为一个带 rollback plan 的 go/no-go decision。Personas 独立运行，没有共享状态，也没有顺序依赖；这正是此处并行执行安全且有用的原因。
+`/nk-ship` 是一个 **fan-out orchestrator**。它会针对当前变更并行运行三个 specialist personas，然后将它们的报告合并为一个带 rollback plan 的 go/no-go decision。Personas 独立运行，没有共享状态，也没有顺序依赖；这正是此处并行执行安全且有用的原因。
 
 ## Phase A — Parallel fan-out
 
@@ -23,7 +23,7 @@ description: 通过并行 fan-out 到 specialist personas 运行发布前 checkl
 - 每个 subagent 都有自己的 context window，并且只向这个 main session 返回自己的 report。
 - 如果你需要 teammates 互相对话，而不只是回传报告，请使用 Claude Code Agent Teams，并将这些 personas 引用为 teammate types（见 `references/orchestration-patterns.md`）。
 
-**Persona resolution。** 如果你在 `.claude/agents/` 或 `~/.claude/agents/` 中定义了自己的 `code-reviewer`、`security-auditor` 或 `test-engineer`，它们会优先于此 plugin 的版本；`/ship` 会自动采用你的自定义内容。这是有意设计的：plugin subagents 位于 Claude Code scope priority table 的底部，因此 user-level definitions 会按设计优先。
+**Persona resolution。** 如果你在 `.claude/agents/` 或 `~/.claude/agents/` 中定义了自己的 `code-reviewer`、`security-auditor` 或 `test-engineer`，它们会优先于此 plugin 的版本；`/nk-ship` 会自动采用你的自定义内容。这是有意设计的：plugin subagents 位于 Claude Code scope priority table 的底部，因此 user-level definitions 会按设计优先。
 
 ## Phase B — Merge in main context
 
@@ -69,4 +69,4 @@ description: 通过并行 fan-out 到 specialist personas 运行发布前 checkl
 2. Personas 不互相调用。Main agent 在 Phase B 中合并。
 3. 任何 GO decision 之前都必须有 rollback plan。
 4. 如果任何 persona 返回 Critical finding，默认 verdict 是 NO-GO，除非用户明确接受风险。
-5. **只有当以下条件全部成立时，才跳过 fan-out：** 变更触及 2 个或更少文件，diff 少于 50 行，并且不触及 auth、payments、data access 或 config/env。否则默认执行 fan-out。`/ship` 面向即将进入生产的变更；当 blast radius 非平凡时，即使 diff 看起来很小，也要运行 parallel review。
+5. **只有当以下条件全部成立时，才跳过 fan-out：** 变更触及 2 个或更少文件，diff 少于 50 行，并且不触及 auth、payments、data access 或 config/env。否则默认执行 fan-out。`/nk-ship` 面向即将进入生产的变更；当 blast radius 非平凡时，即使 diff 看起来很小，也要运行 parallel review。
