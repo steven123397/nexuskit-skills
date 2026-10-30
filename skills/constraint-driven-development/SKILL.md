@@ -24,7 +24,7 @@ Spec-driven development 说清楚要构建什么。Test-driven development 证�
 - Agent 在产出没人逐行阅读的体量
 - CI 有检查，但没人说得清哪些会阻塞合并、哪些只是摆设
 - 覆盖率、性能或无障碍性的数字在每个 PR 上被争论，而不是被一次性决定
-- 你正准备运行 `/build auto` 或任何自主循环，而它和 main 之间唯一的屏障是一套 agent 自己写的测试
+- 你正准备运行 `/nk-build auto` 或任何自主循环，而它和 main 之间唯一的屏障是一套 agent 自己写的测试
 
 **何时不要使用：**
 
@@ -137,7 +137,7 @@ number and no command in this column is an aspiration, not a constraint.
 | W1 | `no-explicit-any` | `src/legacy/**` | Rewrite tracked in ENG-441 | @addy | 2026-11-01 |
 ```
 
-然后在 `AGENTS.md` 和 `CLAUDE.md` 各加一行：`Read CONSTRAINTS.md before writing code. Do not weaken it to make a change pass.`
+然后在项目的 agent 规则文件（`AGENTS.md` / `CLAUDE.md`）里加一行：`Read CONSTRAINTS.md before writing code. Do not weaken it to make a change pass.`
 
 ### Step 4: 为每个维度安装它需要的东西
 
@@ -151,8 +151,8 @@ number and no command in this column is an aspiration, not a constraint.
 | 覆盖率 (JS) | 你的 test runner | 已内置 | `vitest run --coverage`（或 `jest --coverage`） | 变更行的覆盖率 |
 | 覆盖率 (Python) | pytest-cov | `pip install pytest-cov` | `pytest --cov --cov-report=lcov` | 同上 |
 | Security: 代码 | Semgrep | `pipx install semgrep` | `semgrep scan --config p/default --config p/owasp-top-ten` | 任何 high finding |
-| Security: secrets | gitleaks | `brew install gitleaks` | `gitleaks detect --redact --no-banner` | 任何 finding |
-| Security: 依赖 | osv-scanner | `brew install osv-scanner` | `osv-scanner scan source -r .` | high 及以上 |
+| Security: secrets | gitleaks | `brew install gitleaks`（macOS）/ `scoop install gitleaks`（Windows） | `gitleaks detect --redact --no-banner` | 任何 finding |
+| Security: 依赖 | osv-scanner | `brew install osv-scanner`（macOS）/ `scoop install osv-scanner`（Windows） | `osv-scanner scan source -r .` | high 及以上 |
 | 性能: 页面 | Lighthouse | `npm i -D lighthouse` | `lighthouse $URL --output=json --quiet` | LCP、CLS、performance score |
 | 性能: bundle | size-limit | `npm i -D size-limit` | `size-limit --json` | 每个 entry 的字节预算 |
 | 无障碍性 | axe-core | `npm i -D @axe-core/cli` | `axe $URL --tags wcag2a,wcag2aa,wcag21aa` | critical 或 serious 为零 |
@@ -189,10 +189,10 @@ number and no command in this column is an aspiration, not a constraint.
 
 | 阶段 | 命令 | 运行什么 | 预算 |
 |-------|---------|-----------|--------|
-| BUILD | `/build` | 类型、lint、secrets、floor | 5 秒内，只查变更文件 |
-| VERIFY | `/test` | 相关测试、变更行的覆盖率 | 90 秒内 |
-| REVIEW | `/review` | 全部，外加下面的 guards | 以分钟计 |
-| SHIP | `/ship` | 方向检查，不许回退 | CI |
+| BUILD | `/nk-build` | 类型、lint、secrets、floor | 5 秒内，只查变更文件 |
+| VERIFY | `/nk-test` | 相关测试、变更行的覆盖率 | 90 秒内 |
+| REVIEW | `/nk-review` | 全部，外加下面的 guards | 以分钟计 |
+| SHIP | `/nk-ship` | 方向检查，不许回退 | CI |
 
 两条让这件事保持在可忍受范围内的规则：
 

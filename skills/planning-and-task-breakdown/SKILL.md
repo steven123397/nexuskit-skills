@@ -78,7 +78,7 @@ Task 4: User can view task list (query + API + UI for list view)
 
 ### 步骤 4：编写任务
 
-每个任务都遵循这个结构，无论它落在 markdown 任务列表里，还是作为外部 tracker 中的一个条目（见 Output Files）：
+每个任务都遵循这个结构，无论它落在 markdown 任务列表里，还是作为外部 tracker 中的一个条目（见「输出文件」一节）：
 
 ```markdown
 ## Task [N]: [Short descriptive title]
@@ -158,7 +158,7 @@ Task 4: User can view task list (query + API + UI for list view)
 
 Task list target 是记录任务和检查点的位置。它的定义只出现一次，就在这里；这个 skill 中的其他所有引用都以此为准。
 
-- **默认：位于 `tasks/todo.md` 的 checklist 风格 markdown 文件。** 这是 `/build` 命令和其他下游工具期望的约定。除非项目另有说明，否则使用它。
+- **默认：位于 `tasks/todo.md` 的 checklist 风格 markdown 文件。** 这是 `/nk-build` 命令和其他下游工具期望的约定。除非项目另有说明，否则使用它。
 - **外部 tracker：** 如果项目的 agent 规则（`CLAUDE.md`、`AGENTS.md` 等）或用户指定了 issue tracker（例如 GitHub Issues、Jira、Linear、`bd`/beads），就为每个任务创建一个 tracker item，而不是写 `tasks/todo.md`。把步骤 4 的结构映射到 tracker 的字段：验收标准和验证步骤放进 item 正文，依赖通过 tracker 的链接机制（`bd dep add`、“blocked by” 等）。步骤 5 的检查点也记录为 tracker items；如果 tracker 没有自然的对应物，就记录为计划文档中的 checklist。
 
 使用外部 tracker 时，在 `tasks/plan.md` 中注明（例如 “Tasks tracked in Linear project FOO”），让下游步骤和未来的会话知道去哪里查找；并把计划文档的 Task List 章节保留为 tracker item ID 或链接的有序索引，而不是重复的 checklist。

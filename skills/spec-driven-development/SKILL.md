@@ -62,7 +62,7 @@ Build order: identity → billing, notifications → reporting
 
 **地图和其他阶段一样有门禁。** 在写任何模块 spec 之前，由人类评审模块边界、依赖方向和构建顺序。地图搞错的代价很高；评审十行则不然。
 
-**然后按模块递归。** 依依赖顺序为每个模块执行 Specify → Plan → Tasks → Implement。每个模块都有自己的 spec，范围限定在该模块的目标、边界和成功标准。把批准后的地图保存在项目根目录，各模块的 spec 与之放在一起，按模块 id 命名（`SPEC-identity.md`、`SPEC-billing.md`）。存在的索引是这张地图，而不是靠猜文件名。
+**然后按模块递归。** 依依赖顺序为每个模块执行 Specify → Plan → Tasks → Implement。每个模块都有自己的 spec，范围限定在该模块的目标、边界和成功标准。把批准后的地图保存在 `spec/` 目录（`spec/capability-map.md`），各模块的 spec 与之放在一起，按模块 id 命名（`spec/SPEC-identity.md`、`spec/SPEC-billing.md`）；单份 spec 仍用项目根目录的 `SPEC.md`。存在的索引是这张地图，而不是靠猜文件名。
 
 ### 阶段 1：Specify
 
@@ -181,7 +181,7 @@ REFRAMED SUCCESS CRITERIA:
 
 > 这些步骤背后的依赖图映射和垂直切片机制，遵循 `planning-and-task-breakdown`；它是权威来源。上面的要点只是轻量摘要；两者若出现分歧，以 `planning-and-task-breakdown` 为准。
 >
-> **输出约定：** 把计划保存到 `tasks/plan.md`，并把任务列表记录到 `planning-and-task-breakdown` 定义的 task list target（默认 `tasks/todo.md`；项目也可以指定外部 tracker）。如果 `tasks/` 不存在则创建。下游命令（`/build` 等）依赖这些默认值。
+> **输出约定：** 把计划保存到 `tasks/plan.md`，并把任务列表记录到 `planning-and-task-breakdown` 定义的 task list target（默认 `tasks/todo.md`；项目也可以指定外部 tracker）。如果 `tasks/` 不存在则创建。下游命令（`/nk-build` 等）依赖这些默认值。
 
 计划应该可评审：人类读完后应该能说“对，这是正确做法”或“不，修改 X”。
 
@@ -207,7 +207,7 @@ REFRAMED SUCCESS CRITERIA:
 
 ### 阶段 4：Implement
 
-一次执行一个任务，并遵循 `skills/incremental-implementation/SKILL.md`（`incremental-implementation`）和 `skills/test-driven-development/SKILL.md`（`test-driven-development`）。使用 `skills/context-engineering/SKILL.md`（`context-engineering`）在每一步加载正确的 spec 章节和源文件，而不是把整个 spec 都塞给 agent。
+一次执行一个任务，并遵循 `incremental-implementation` 和 `test-driven-development`。使用 `context-engineering` 在每一步加载正确的 spec 章节和源文件，而不是把整个 spec 都塞给 agent。
 
 ## 让 Spec 保持鲜活
 

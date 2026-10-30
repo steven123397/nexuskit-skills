@@ -27,14 +27,11 @@ description: 通过结构化的发散与收敛思考，把原始想法打磨成�
 
 这个 skill 主要是一段互动式对话。带着一个想法调用它，agent 会引导你完成整个过程。
 
-```bash
-# Optional: Initialize the ideas directory
-bash skills/idea-refine/scripts/idea-refine.sh
-```
+`docs/ideas/` 不存在时按需创建；若项目的 agent 规则文件（`AGENTS.md` / `CLAUDE.md`）声明了文档或记忆库的落点，遵循该约定。
 
 ## 输出
 
-最终输出是一份 markdown one-pager，在用户确认后保存到 `docs/ideas/[idea-name].md`，包含：
+最终输出是一份 markdown one-pager，在用户确认后保存到 `docs/ideas/[idea-name].md`（若项目的 agent 规则文件声明了落点，遵循该约定），包含：
 - Problem Statement
 - Recommended Direction
 - Key Assumptions
@@ -56,7 +53,7 @@ bash skills/idea-refine/scripts/idea-refine.sh
 
 ### 流程
 
-当用户带着一个想法（`$ARGUMENTS`）调用这个 skill 时，引导他们完成三个阶段。根据他们说的内容调整你的方式，这是一场对话，不是模板。
+当用户带着一个想法调用这个 skill 时，引导他们完成三个阶段。根据他们说的内容调整你的方式，这是一场对话，不是模板。
 
 #### 阶段 1：理解与扩展（发散）
 
@@ -142,7 +139,7 @@ bash skills/idea-refine/scripts/idea-refine.sh
 
 **“Not Doing” 列表可以说是最有价值的部分。** 聚焦意味着对好想法说不。把取舍显式写出来。
 
-询问用户是否想把它保存到 `docs/ideas/[idea-name].md`（或他们选择的位置）。只有在他们确认后才保存。
+询问用户是否想把它保存到 `docs/ideas/[idea-name].md`（或用户选择的位置；若项目的 agent 规则文件声明了落点，遵循该约定）。只有在他们确认后才保存。
 
 ### 需要避免的反模式
 
