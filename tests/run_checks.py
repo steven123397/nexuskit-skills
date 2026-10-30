@@ -82,6 +82,7 @@ def byte_problems(root):
 def main():
     from check_manifests import validate
     from check_frontmatter import validate_frontmatter
+    from check_artifacts import validate as validate_artifacts
     entries = skill_entries(ROOT)
     ref = os.environ.get('GITHUB_REF', '')
     tag = ref.removeprefix('refs/tags/') if ref.startswith('refs/tags/') else None
@@ -90,6 +91,7 @@ def main():
         'references': reference_problems(ROOT),
         'byte-budget': byte_problems(ROOT),
         'distribution': validate(ROOT, tag),
+        'artifact-paths': validate_artifacts(ROOT),
         'frontmatter': [f'{p.relative_to(ROOT)}: {error}' for p in entries
                         for error in validate_frontmatter(p.read_text(encoding='utf-8'), p.parent.name)],
     }

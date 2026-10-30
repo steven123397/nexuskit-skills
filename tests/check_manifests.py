@@ -89,6 +89,21 @@ def validate(root, release_tag=None):
             entry = plugins[0]
             if entry.get("name") != "nexuskit" or entry.get("source") != expected_source:
                 problems.append(f"{market_rel}: plugin identity/source differs from local manifest")
+            version = entry.get("version")
+            if not isinstance(version, str) or not VERSION.fullmatch(version):
+                problems.append(f"{market_rel}: plugin entry version must be valid SemVer")
+            elif versions and version != versions[0]:
+                problems.append(f"{market_rel}: plugin version {version} differs from {versions[0]}")
+
+    # Kimi 适配挂起（计划 C3）：只校验 manifest 自身格式，不要求与主体版本同步。
+    # 恢复适配时把它移出挂起处理并加入上面的版本一致性比较。
+    kimi_rel = ".kimi-plugin/plugin.json"
+    if (root / kimi_rel).is_file():
+        kimi = load(kimi_rel)
+        if kimi is not None:
+            kimi_version = kimi.get("version")
+            if not isinstance(kimi_version, str) or not VERSION.fullmatch(kimi_version):
+                problems.append(f"{kimi_rel}: version must be valid SemVer")
 
     for rel in ["README.md"]:
         try:
