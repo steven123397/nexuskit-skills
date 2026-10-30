@@ -58,6 +58,8 @@ def reference_problems(root):
     # Planned slots are public names; only SKILL.md entries are installable.
     names = {p.parent.name for p in skill_entries(root)}
     names |= {p.parent.name for p in (root / 'skills').rglob('.gitkeep')}
+    # Slash commands share the nk- prefix but are not skills.
+    names |= {p.stem for p in (root / '.claude/commands').glob('*.md')}
     for entry in skill_entries(root):
         for path in entry.parent.rglob('*.md'):
             text = path.read_text(encoding='utf-8')

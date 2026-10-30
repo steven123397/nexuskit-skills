@@ -41,3 +41,11 @@ class LayoutChecks(unittest.TestCase):
         self.assertEqual([], reference_problems(self.root))
         self.entry.write_text('Read `../../conventions/rules.md`.', encoding='utf-8')
         self.assertTrue(reference_problems(self.root))
+
+    def test_command_names_are_known(self):
+        self.entry.write_text('Run `/nk-build auto`.', encoding='utf-8')
+        self.assertTrue(reference_problems(self.root))
+        commands = self.root / '.claude/commands'
+        commands.mkdir(parents=True)
+        (commands / 'nk-build.md').write_text('---\ndescription: build\n---\n', encoding='utf-8')
+        self.assertEqual([], reference_problems(self.root))
