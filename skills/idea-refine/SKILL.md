@@ -1,9 +1,9 @@
 ---
 name: idea-refine
-description: 通过结构化的发散与收敛思考，把原始想法打磨成清晰、可执行的概念。用于想法还很模糊时、需要在承诺某个计划之前压力测试假设时，或想在收敛到一个方案之前先扩展选项时。触发短语为 "ideate"、"refine this idea" 或 "stress-test my plan"。
+description: Refines raw ideas into sharp, actionable concepts through structured divergent and convergent thinking. Use when an idea is still vague, when you need to stress-test assumptions before committing to a plan, or when you want to expand options before converging on one. Triggers on "ideate", "refine this idea", or "stress-test my plan".
 ---
 
-# 想法打磨
+# Idea Refine
 
 ## 概览
 
@@ -167,7 +167,7 @@ description: 通过结构化的发散与收敛思考，把原始想法打磨成�
 | “等开始构建之后再暴露假设” | 未经测试的假设是好想法的头号杀手。在承诺之前就把它们暴露出来。 |
 | “没有 Not Doing 列表的计划也没问题” | Not Doing 列表可以说是最有价值的部分。把取舍显式写出来。 |
 
-## 红旗
+## 危险信号
 
 - 生成 20+ 个浅层变体，而不是 5-8 个经过思考的变体
 - 跳过“这是为谁做的”这个问题

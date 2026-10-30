@@ -1,9 +1,9 @@
 ---
 name: code-simplification
-description: 为清晰度简化代码。用于在不改变行为的前提下重构代码以提升清晰度；用于代码能运行但比应有状态更难阅读、维护或扩展时；用于审查已累积不必要复杂度的代码时。
+description: Simplifies code for clarity. Use when refactoring code for clarity without changing behavior. Use when code works but is harder to read, maintain, or extend than it should be. Use when reviewing code that has accumulated unnecessary complexity.
 ---
 
-# 代码简化
+# Code Simplification
 
 > 灵感来自 [Claude Code Simplifier plugin](https://github.com/anthropics/claude-plugins-official/blob/main/plugins/code-simplifier/agents/code-simplifier.md)。这里改编为一个模型无关、流程驱动的 skill，供任何 AI coding agent 使用。
 

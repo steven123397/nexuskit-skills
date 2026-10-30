@@ -1,9 +1,9 @@
 ---
 name: browser-testing-with-devtools
-description: 在真实浏览器中测试。构建或调试任何在浏览器中运行的内容时使用。当你需要通过 Chrome DevTools MCP 检查 DOM、捕获 console 错误、分析网络请求、分析性能，或用真实运行时数据验证视觉输出时使用。需要已配置 chrome-devtools MCP server。
+description: Tests in real browsers via Chrome DevTools MCP. Use when building or debugging anything that runs in a browser. Use when you need to inspect the DOM, capture console errors, analyze network requests, profile performance, or verify visual output with real runtime data. Requires the chrome-devtools MCP server to be configured.
 ---
 
-# 使用 DevTools 进行浏览器测试
+# Browser Testing with DevTools
 
 ## 概览
 
@@ -276,9 +276,9 @@ LOG level:
    └── Verify ARIA live regions announce changes
 ```
 
-## 常见自我合理化
+## 常见合理化借口
 
-| 自我合理化 | 现实 |
+| 合理化借口 | 现实 |
 |---|---|
 | “在我的 mental model 里看起来是对的” | 运行时行为经常不同于代码暗示的样子。用真实浏览器状态验证。 |
 | “Console warnings 没关系” | Warnings 会变成 errors。干净 console 能及早捕捉 bug。 |

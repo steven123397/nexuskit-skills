@@ -1,9 +1,9 @@
 ---
 name: code-review-and-quality
-description: 执行多维度代码审查。用于合并任何变更之前；用于审查自己、其他 agent 或人类编写的代码；用于在代码进入主分支前从多个维度评估代码质量。用于被要求 review 一个 diff 或 pull request 时，即使 diff 被内联粘贴。
+description: Conducts multi-axis code review. Use before merging any change. Use when reviewing code written by yourself, another agent, or a human. Use when you need to assess code quality across multiple dimensions before it enters the main branch. Use when asked to review a diff or a pull request, even when the diff is pasted inline.
 ---
 
-# 代码审查和质量
+# Code Review and Quality
 
 ## 概览
 
@@ -301,7 +301,7 @@ DEAD CODE IDENTIFIED:
 
 对 `npm audit` 结果和供应链风险（typosquatting、被攻陷的维护者）的分级处置，遵循 `security-and-hardening` skill：本节覆盖的是升级*工作流*，那一节给出的是安全结论。
 
-## 审查 Checklist
+## 审查清单
 
 ```markdown
 ## Review: [PR/Change title]
@@ -353,9 +353,9 @@ DEAD CODE IDENTIFIED:
 - 详细的安全审查指南，见 `../../references/security-checklist.md`
 - 性能审查检查项，见 `../../references/performance-checklist.md`
 
-## 常见自我合理化
+## 常见合理化借口
 
-| 自我合理化 | 现实 |
+| 合理化借口 | 现实 |
 |---|---|
 | “能跑就够了” | 能跑但不可读、不安全或架构错误的代码，会积累复利式的技术债。 |
 | “我写的，所以我确定没问题” | 作者对自己的假设是盲的。每个变更都需要另一双眼睛。 |

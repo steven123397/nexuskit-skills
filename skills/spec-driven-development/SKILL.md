@@ -1,6 +1,6 @@
 ---
 name: spec-driven-development
-description: 编码前先创建 spec。用于开始新项目、功能或重大变更且还没有规格说明时。用于撰写带目标和范围的 PRD 或需求文档时，或需求不清晰、有歧义、只是一段模糊想法时。用于单个需求横跨多个可独立测试的能力、需要先拆解成模块能力地图再做规格说明时。
+description: Creates specs before coding. Use when starting a new project, feature, or significant change and no specification exists yet. Use when drafting a PRD or requirements document with objectives and scope, or when requirements are unclear, ambiguous, or only exist as a vague idea. Use when a single requirement spans several independently testable capabilities and needs decomposing into a capability map of modules before specifying.
 ---
 
 # Spec-Driven Development
@@ -230,7 +230,7 @@ spec 是一份活文档，不是一次性工件：
 | “这是一个大功能，拆开它是额外开销” | 如果验收标准能聚成可独立测试的组，单体 spec 会迫使每个下游任务都在完整契约上推理。十行的能力地图是更便宜的替代方案。 |
 | “我会在规划时再分解” | 规划是在一份 spec 内部切分任务。到那时超规格工件已经存在——模块边界和依赖方向必须在写 spec 之前决定，而不是之后。 |
 
-## 红旗
+## 危险信号
 
 - 在没有任何书面需求的情况下开始写代码
 - 在澄清“完成”意味着什么之前问“我是不是直接开始构建？”

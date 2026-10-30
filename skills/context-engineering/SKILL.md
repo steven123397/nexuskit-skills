@@ -1,11 +1,11 @@
 ---
 name: context-engineering
-description: 优化 agent 上下文设置。当开始新会话、agent 输出质量下降、在任务之间切换，或需要为项目配置规则文件和上下文时使用。
+description: Optimizes agent context setup. Use when starting a new session, when agent output quality degrades, when switching between tasks, or when you need to configure rules files and context for a project.
 ---
 
 # Context Engineering
 
-## 概述
+## 概览
 
 在正确的时间给 agent 提供正确的信息。上下文是影响 agent 输出质量的最大单一杠杆：太少，agent 会幻觉；太多，它会失去焦点。上下文工程就是有意识地策划 agent 看到什么、何时看到，以及内容如何组织。
 
@@ -39,7 +39,7 @@ description: 优化 agent 上下文设置。当开始新会话、agent 输出质
 
 创建一个跨会话持久存在的 rules 文件。这是你能提供的杠杆率最高的上下文。
 
-**CLAUDE.md**（用于 Claude Code）：
+**CLAUDE.md/AGENTS.md**：
 ```markdown
 # Project: [Name]
 
@@ -75,7 +75,7 @@ description: 优化 agent 上下文设置。当开始新会话、agent 输出质
 - `.cursorrules` 或 `.cursor/rules/*.md`（Cursor）
 - `.windsurfrules`（Windsurf）
 - `.github/copilot-instructions.md`（GitHub Copilot）
-- `AGENTS.md`（OpenAI Codex）
+- `AGENTS.md`（通用 agent 规则文件，Codex、Cursor 等使用）
 
 ### 第 2 层：Specs 与架构
 
@@ -118,7 +118,7 @@ description: 优化 agent 上下文设置。当开始新会话、agent 输出质
 - 当上下文变长时**总结进度**："到目前为止我们完成了 X、Y、Z，现在在做 W。"
 - **有意识地压缩**：如果工具支持，在关键工作开始前先 compact/summarize
 
-关于让这些补救手段变得不必要的主动纪律：先删什么、保护什么、何时开始，见下方的 **Context Budget Management**。
+关于让这些补救手段变得不必要的主动纪律：先删什么、保护什么、何时开始，见下方的「上下文预算管理」一节。
 
 ### 可重启的会话边界
 
@@ -325,7 +325,7 @@ PLAN:
 
 ## 常见合理化借口
 
-| 借口 | 现实 |
+| 合理化借口 | 现实 |
 |---|---|
 | "agent 应该自己能摸清约定" | 它不会读心术。写一个 rules 文件：十分钟的投入省下几个小时。 |
 | "出错了我再纠正它就是了" | 预防比纠正便宜。前置的上下文能防止漂移。 |

@@ -1,9 +1,9 @@
 ---
 name: ci-cd-and-automation
-description: 自动化 CI/CD pipeline 设置。用于设置或修改构建和部署 pipeline 时；用于需要自动化质量门禁、在 CI 中配置 test runners，或建立部署策略时。
+description: Automates CI/CD pipeline setup. Use when setting up or modifying build and deployment pipelines. Use when you need to automate quality gates, configure test runners in CI, or establish deployment strategies.
 ---
 
-# CI/CD 和自动化
+# CI/CD and Automation
 
 ## 概览
 

@@ -1,9 +1,9 @@
 ---
 name: security-and-hardening
-description: 加固代码以防漏洞。用于审计某个输入处理函数是否存在漏洞、处理用户输入、认证、数据存储或外部集成时，或用于检查登录流程是否安全、是否符合 OWASP Top Ten 时。用于构建任何接受不可信数据、管理用户会话或与第三方服务交互的功能时。用于审计依赖中的已知漏洞、分诊包管理器的 audit 结果，或评估新包的供应链风险时。当涉及个人数据或隐私合规（GDPR、CCPA）时也使用。
+description: Hardens code against vulnerabilities. Use when auditing an input handler for vulnerabilities, when handling user input, authentication, data storage, or external integrations, or when checking a login flow is safe against the OWASP Top Ten. Use when building any feature that accepts untrusted data, manages user sessions, or interacts with third-party services. Use when auditing dependencies for known vulnerabilities, triaging package-manager audit findings, or assessing supply-chain risk in a new package. Use when personal data or privacy compliance (GDPR, CCPA) is involved.
 ---
 
-# 安全和加固
+# Security and Hardening
 
 ## 概览
 
@@ -167,7 +167,7 @@ Secrets 来自环境变量。`.env.example` 带占位值提交；真实的 `.env
 
 ## 常见合理化借口
 
-| 自我合理化 | 现实 |
+| 合理化借口 | 现实 |
 |---|---|
 | "这是内部工具，security 不重要" | 内部工具也会被攻破。攻击者专挑最弱的环节。 |
 | "我们以后再加安全" | 事后补安全比一开始就构建难 10 倍。现在就加。 |

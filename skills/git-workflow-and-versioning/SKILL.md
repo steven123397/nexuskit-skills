@@ -1,9 +1,9 @@
 ---
 name: git-workflow-and-versioning
-description: 规范 git 工作流实践。用于进行任何代码变更时；用于提交、分支、解决冲突、把混乱 working tree 里未提交的工作拆成干净的 atomic commits、创建或审查 pull request（PR）、推送到远程，或需要组织多个并行工作流时。用于裁剪 release、选择语义化版本递增、打标签或编写 changelog 时。
+description: Structures git workflow practices. Use when making any code change. Use when committing, branching, resolving conflicts, splitting uncommitted work in a messy working tree into clean atomic commits, opening or reviewing a pull request (PR), pushing to a remote, or when you need to organize work across multiple parallel streams. Use when cutting a release, choosing a semantic version bump, tagging, or writing a changelog.
 ---
 
-# Git 工作流和版本管理
+# Git Workflow and Versioning
 
 ## 概览
 

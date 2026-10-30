@@ -1,9 +1,9 @@
 ---
 name: shipping-and-launch
-description: 准备生产发布。用于准备部署到生产环境，或询问发布前需要准备什么时；用于需要发布前检查清单、设置监控、规划分阶段发布，或需要回滚策略时。
+description: Prepares production launches. Use when preparing to deploy to production, or when asking what needs to be in place before shipping. Use when you need a pre-launch checklist, when setting up monitoring, when planning a staged rollout, or when you need a rollback strategy.
 ---
 
-# 发布和上线
+# Shipping and Launch
 
 ## 概览
 
@@ -282,7 +282,7 @@ Canary 期间的高 burn rate（消耗预算的速度快于基线节奏）是上
 - Redeploy previous version: < 5 minutes
 - Database rollback: < 15 minutes
 ```
-## 另请参阅
+## 另见
 
 - 关于每个变更在进入本清单前都要满足的项目级 Definition of Done，见 `../../references/definition-of-done.md`
 - 关于发布前安全检查，见 `../../references/security-checklist.md`

@@ -1,6 +1,6 @@
 ---
 name: planning-and-task-breakdown
-description: 将工作拆解为有序任务。用于已有 spec 或清晰需求，并需要拆解成可实现任务时。用于任务太大难以下手、需要估算范围，或存在并行工作机会时。
+description: Breaks work into ordered tasks. Use when you have a spec or clear requirements and need to break work into implementable tasks. Use when a task feels too large to start, when you need to estimate scope, or when parallel work is possible.
 ---
 
 # Planning and Task Breakdown
@@ -228,7 +228,7 @@ Task list target 是记录任务和检查点的位置。它的定义只出现一
 | “我可以全都记在脑子里” | 上下文窗口是有限的。书面计划能跨会话边界和压缩继续存在。 |
 | “旧的 `tasks/plan.md` 过时了，我直接替换掉” | 未勾选的任务可能正在另一个会话中构建。覆盖它们会摧毁只存在于那里的状态。停下来询问。 |
 
-## 红旗
+## 危险信号
 
 - 没有书面任务列表就开始实现
 - 未经询问就覆盖仍包含不同工作未勾选任务的 `tasks/plan.md` 或 `tasks/todo.md`

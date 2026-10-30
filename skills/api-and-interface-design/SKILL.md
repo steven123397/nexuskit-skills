@@ -1,9 +1,9 @@
 ---
 name: api-and-interface-design
-description: 指导稳定的 API 和接口设计。设计 API、模块边界或任何公共接口时使用。创建 REST 或 GraphQL endpoint、定义模块之间的类型契约，或建立前后端边界时使用。
+description: Guides stable API and interface design. Use when designing APIs, module boundaries, or any public interface. Use when creating REST or GraphQL endpoints, defining type contracts between modules, or establishing boundaries between frontend and backend.
 ---
 
-# API 与接口设计
+# API and Interface Design
 
 ## 概览
 
@@ -320,9 +320,9 @@ type UserId = string & { readonly __brand: 'UserId' };
 function getTask(id: TaskId): Promise<Task> { ... }
 ```
 
-## 常见自我合理化
+## 常见合理化借口
 
-| 自我合理化 | 现实 |
+| 合理化借口 | 现实 |
 |---|---|
 | “我们之后再写 API 文档” | 类型本身就是文档。先定义它们。 |
 | “现在还不需要分页” | 一旦有人有 100+ items，立刻就需要。从一开始就加上。 |

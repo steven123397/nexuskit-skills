@@ -1,9 +1,9 @@
 ---
 name: debugging-and-error-recovery
-description: 指导系统化根因调试。当测试失败、构建中断、昨天还能用的东西今天坏了、行为不符合预期，或遇到任何意外错误时使用。当你需要搞清楚是什么坏了、为什么坏时使用：用系统化的方法找到并修复根因，而不是靠猜测。
+description: Guides systematic root-cause debugging. Use when tests fail, builds break, something that worked yesterday broke, behavior doesn't match expectations, or you encounter any unexpected error. Use when you need to figure out what broke and why — a systematic approach to finding and fixing the root cause rather than guessing.
 ---
 
-# 调试与错误恢复
+# Debugging and Error Recovery
 
 ## 概览
 
@@ -259,9 +259,9 @@ function renderChart(data: ChartData[]) {
 - 带 request context 的 API error logging
 - 关键用户流程上的 performance metrics
 
-## 常见自我合理化
+## 常见合理化借口
 
-| 自我合理化 | 现实 |
+| 合理化借口 | 现实 |
 |---|---|
 | “我知道 bug 在哪，直接修就行” | 你可能 70% 的时候是对的，但另外 30% 会耗掉几个小时。先复现。 |
 | “失败的测试多半是错的” | 验证这个假设。如果测试真错了，就修测试，不要直接跳过。 |

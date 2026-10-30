@@ -1,9 +1,9 @@
 ---
 name: deprecation-and-migration
-description: 管理弃用和迁移。用于移除旧系统、API 或功能时；用于将用户从一种实现迁移到另一种实现时；用于在生产环境中迁移数据库 schema（例如重命名或删除列且不停机，即 expand/contract）时；用于判断应维护还是下线现有代码时。
+description: Manages deprecation and migration. Use when removing old systems, APIs, or features. Use when migrating users from one implementation to another. Use when migrating a database schema in production, such as renaming or dropping a column without downtime (expand/contract). Use when deciding whether to maintain or sunset existing code.
 ---
 
-# 弃用和迁移
+# Deprecation and Migration
 
 ## 概览
 

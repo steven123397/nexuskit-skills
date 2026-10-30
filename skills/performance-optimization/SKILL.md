@@ -1,9 +1,9 @@
 ---
 name: performance-optimization
-description: 优化应用的前端、后端、查询和数据库性能。当存在性能要求、怀疑出现性能回归、Core Web Vitals 或加载时间需要改进、需要修复 N+1 查询模式，或 profiling 暴露出瓶颈时使用。
+description: Optimizes application performance across frontend, backend, queries, and databases. Use when performance requirements exist, when you suspect performance regressions, when Core Web Vitals or load times need improvement, when N+1 query patterns need fixing, or when profiling reveals bottlenecks.
 ---
 
-# 性能优化
+# Performance Optimization
 
 ## 概览
 
@@ -203,14 +203,14 @@ npx bundlesize --config bundlesize.config.json
 npx lhci autorun
 ```
 
-## 另请参阅
+## 另见
 
 详细的性能 checklists、优化命令和 anti-pattern 参考见 `../../references/performance-checklist.md`。
 
 
 ## 常见合理化借口
 
-| 自我合理化 | 现实 |
+| 合理化借口 | 现实 |
 |---|---|
 | "我们以后再优化" | 性能债会利滚利。明显的 anti-pattern 现在就修，micro-optimizations 可以往后放。 |
 | "在我这台机器上很快" | 你的机器不是用户的机器。在有代表性的硬件和网络上做 profile。 |

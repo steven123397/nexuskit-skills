@@ -1,9 +1,9 @@
 ---
 name: documentation-and-adrs
-description: 记录决策和文档。用于需要记录架构决策（ADR）或某个设计选择背后的理由时；用于变更公开 API、发布功能，或需要记录未来工程师和 agent 理解代码库所需的上下文时。
+description: Records decisions and documentation. Use when you need to document an architecture decision (ADR) or the reasoning behind a design choice, when changing public APIs, shipping features, or when you need to record context that future engineers and agents will need to understand the codebase.
 ---
 
-# 文档和 ADR
+# Documentation and ADRs
 
 ## 概览
 

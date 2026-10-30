@@ -1,9 +1,9 @@
 ---
 name: constraint-driven-development
-description: 把一个项目的质量线确立为书面契约，并阻止 agent 悄悄降低它。通过访谈确定用户在意哪些维度，当用户心里没有数字时提供合理的默认阈值，把一切记录进 CONSTRAINTS.md，并盯住 diff 中质量线被削弱的迹象——新增的 @ts-ignore 或 eslint-disable 抑制注释、被跳过或删除的测试、被剥掉的断言、未实现的 stub、被调低的阈值。当没有任何质量线被写下来时使用；当用户说 "set up constraints" 或 "define our standards" 时；当用户希望把他们在意的维度——无障碍性、Web 性能、覆盖率——设置成被强制执行的约束时；当 agent 为了变绿不断静默检查或跳过测试时；当你需要一个覆盖率或性能阈值却不知道该选什么数字时；或者当 agent 写下的代码超出任何人会读的体量时。
+description: Establishes a project's quality bar as a written contract and stops agents quietly lowering it. Interviews the user on which dimensions matter, supplies sane default thresholds when they have no number in mind, records everything in CONSTRAINTS.md, and watches the diff for a weakened bar — new @ts-ignore or eslint-disable suppressions, skipped or deleted tests, assertions stripped out, unimplemented stubs, thresholds edited down. Use when no quality bar is written down, when the user says "set up constraints" or "define our standards", when the user wants dimensions they care about — accessibility, web performance, coverage — set up as enforced constraints, when an agent keeps silencing checks or skipping tests to get to green, when you need a coverage or performance threshold and don't know what number to pick, or when an agent writes more code than anyone will read.
 ---
 
-# 约束驱动开发
+# Constraint-Driven Development
 
 ## 概览
 
@@ -263,7 +263,7 @@ Agent 不会精心构造巧妙的漏洞。它们撞上一个红色检查，然�
 
 ## 常见合理化借口
 
-| 借口 | 现实 |
+| 合理化借口 | 现实 |
 |--------|---------|
 | "等代码稳定了我们再加约束" | 代码会围绕着它流动期间被允许的一切稳定下来 |
 | "测试就是我们的约束" | 你自己写的测试只能证明你和自己意见一致；它们对变更代码的覆盖率、依赖风险或 bundle 增长什么都没说 |

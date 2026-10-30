@@ -1,6 +1,6 @@
 ---
 name: test-driven-development
-description: 通过 red-green-refactor 循环用测试驱动开发。用于实现任何逻辑、修复任何 bug，或改变任何行为。用于需要证明代码能工作、收到 bug 报告，或即将修改现有功能时。用于被要求给一个函数加测试、修它的 bug 或改变其行为时，即使代码被内联粘贴且请求没提到测试。
+description: Drives development with tests using the red-green-refactor loop. Use when implementing any logic, fixing any bug, or changing any behavior. Use when you need to prove that code works, when a bug report arrives, or when you're about to modify existing functionality. Use when asked to add tests to a function, fix a bug in it or change its behavior, even when the code is pasted inline and the request does not mention tests.
 ---
 
 # Test-Driven Development
@@ -372,7 +372,7 @@ then verifies the test passes.
 | “这只是 prototype” | 原型会变成生产代码。从第一天开始的测试能防止“测试债务”危机。 |
 | “我再跑一次测试，额外确认一下” | 一次干净测试运行后，除非代码发生变化，否则重复同一命令没有意义。后续编辑后再运行，不要把它当安慰剂。 |
 
-## 红旗
+## 危险信号
 
 - 写代码却没有对应测试
 - 不去确认仓库实际使用什么命令，就直接拿默认测试命令（`npm test`）来用

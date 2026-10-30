@@ -1,11 +1,11 @@
 ---
 name: frontend-ui-engineering
-description: 构建生产级、可访问、响应式的面向用户 UI。当构建或修改界面和页面、创建组件、实现布局、满足 WCAG 可访问性要求、管理状态，或输出需要看起来和感觉上都是生产级而不是 AI 生成时使用。
+description: Builds production-quality, accessible, responsive user-facing UIs. Use when building or modifying interfaces and pages, creating components, implementing layouts, meeting WCAG accessibility requirements, managing state, or when the output needs to look and feel production-quality rather than AI-generated.
 ---
 
-# 前端 UI 工程
+# Frontend UI Engineering
 
-## 概述
+## 概览
 
 构建可访问、高性能、视觉打磨到位的生产级用户界面。目标是让 UI 看起来像由顶级公司里有设计意识的工程师构建的，而不是 AI 生成的。这意味着真正遵循设计系统、正确的可访问性、周到的交互模式，以及没有那种泛泛的 "AI aesthetic"。
 
@@ -309,7 +309,7 @@ function useToggleTask() {
 
 ## 常见合理化借口
 
-| 借口 | 现实 |
+| 合理化借口 | 现实 |
 |---|---|
 | "可访问性是锦上添花" | 在许多司法辖区它是法律要求，也是工程质量标准。 |
 | "我们以后再做成响应式的" | 事后补响应式设计的难度是从一开始就做好的 3 倍。 |
