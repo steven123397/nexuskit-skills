@@ -46,7 +46,7 @@ ASK BEFORE EVERY CHANGE:
 简化意味着让代码更符合代码库，而不是强加外部偏好。简化之前：
 
 ```
-1. Read CLAUDE.md / project conventions
+1. Read the project's agent rules file (CLAUDE.md / AGENTS.md) and conventions
 2. Study how neighboring code handles similar patterns
 3. Match the project's style for:
    - Import ordering and module system
@@ -325,7 +325,7 @@ function UserBadge({ user }: Props) {
 - [ ] Linter/formatter 通过（没有风格回归）
 - [ ] 每个简化都是可审查的增量变更
 - [ ] Diff 干净，没有混入无关变更
-- [ ] 简化后的代码遵循项目约定（已对照 CLAUDE.md 或等价文件检查）
+- [ ] 简化后的代码遵循项目约定（已对照 CLAUDE.md / AGENTS.md 等项目规则文件检查）
 - [ ] 没有移除或削弱错误处理
 - [ ] 没有留下死代码（未使用 import、不可达分支）
 - [ ] 队友或审查 agent 会认可该变更是净改进

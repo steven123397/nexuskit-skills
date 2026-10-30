@@ -199,14 +199,13 @@ Lighthouse Performance score: ≥ 90
 # Bundle size check
 npx bundlesize --config bundlesize.config.json
 
-# Lighthouse CI
-npx lhci autorun
+# Lighthouse CI。CLI 包是 @lhci/cli；npm 上无 scope 的 `lhci` 不是它。
+npx --package=@lhci/cli lhci autorun
 ```
 
 ## 另见
 
 详细的性能 checklists、优化命令和 anti-pattern 参考见 `../../references/performance-checklist.md`。
-
 
 ## 常见合理化借口
 

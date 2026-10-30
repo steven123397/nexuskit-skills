@@ -72,7 +72,7 @@ Cannot reproduce on demand:
     └── Document the conditions observed and revisit when it recurs
 ```
 
-对于测试失败（示例用 npm，请替换成本仓库自己的测试命令，参见 test-driven-development skill 中 Discover the Stack First 一节）：
+对于测试失败（示例用 npm，请替换成本仓库自己的测试命令，参见 test-driven-development skill 的「先发现技术栈」一节）：
 ```bash
 # Run the specific failing test
 npm test -- --grep "test name"

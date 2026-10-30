@@ -69,7 +69,7 @@ description: Hardens code against vulnerabilities. Use when auditing an input ha
 - **绝不把客户端校验当作安全边界**
 - **绝不为图省事而禁用安全 headers**
 - **绝不对用户提供的数据使用 `eval()` 或 `innerHTML`**
-- **绝不把 sessions 存放在客户端可访问的存储里**（用 localStorage 存 auth tokens）
+- **绝不把 sessions 存放在客户端可访问的存储里**（例如用 localStorage 存 auth tokens）
 - **绝不向用户暴露 stack traces** 或内部错误细节
 
 ## 加固控制
