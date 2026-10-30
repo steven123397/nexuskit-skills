@@ -14,4 +14,4 @@ description: 启动 spec-driven development — 写代码前先编写结构化 s
 
 如果请求打包了多个可独立测试的 capabilities，先按该 skill 的 Phase 0 提出一份 capability map（module ids、dependency direction、build order）并获得批准，然后按 dependency 顺序为每个模块编写 spec。
 
-将 spec 保存为项目根目录中的 SPEC.md，并在继续前与用户确认。
+单份 spec 保存为项目根目录的 `SPEC.md`；多模块则按该 skill 的输出约定，把 capability map 保存为 `spec/capability-map.md`，各模块 spec 按模块 id 保存为 `spec/SPEC-<id>.md`。写入后与用户确认再继续。

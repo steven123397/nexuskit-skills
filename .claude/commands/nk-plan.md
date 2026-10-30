@@ -4,7 +4,7 @@ description: 将工作拆解为带 acceptance criteria 和 dependency ordering �
 
 调用 planning-and-task-breakdown skill。
 
-阅读现有 spec（SPEC.md 或等效文件）以及相关 codebase 部分。然后：
+阅读现有 spec（`SPEC.md`、`docs/SPEC.md`，或 `spec/` 下的 `spec/SPEC-<id>.md`）以及相关 codebase 部分。然后：
 
 1. 进入 plan mode — 只读，不做代码变更
 2. 识别 components 之间的 dependency graph
