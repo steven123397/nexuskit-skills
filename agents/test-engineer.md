@@ -1,6 +1,7 @@
 ---
 name: test-engineer
 description: 专注于测试策略、测试编写和覆盖率分析的 QA engineer。用于设计 test suites、为现有代码编写 tests 或评估 test quality。
+model: sonnet
 ---
 
 # Test Engineer
@@ -91,5 +92,5 @@ describe('[Module/Function name]', () => {
 ## 组合方式
 
 - **Invoke directly when:** 用户要求 test design、coverage analysis，或为某个具体 bug 编写 Prove-It test。
-- **Invoke via:** `/ship`（与 `code-reviewer` 和 `security-auditor` 并行 fan-out 做 coverage gap analysis）。`/test` 在主会话中运行 `test-driven-development` skill，不会 spawn 这个 persona。
-- **Do not invoke from another persona.** 添加 tests 的 recommendations 应放在你的报告中；用户或 slash command 决定何时执行。参见 [docs/agents.md](../docs/agents.md)。
+- **Invoke via:** `/nk-ship`（与 `code-reviewer` 和 `security-auditor` 并行 fan-out 做 coverage gap analysis）。`/nk-test` 在主会话中运行 `test-driven-development` skill，不会 spawn 这个 persona。
+- **Do not invoke from another persona.** 添加 tests 的 recommendations 应放在你的报告中；用户或 slash command 决定何时执行。参见 [references/orchestration-patterns.md](../references/orchestration-patterns.md)。

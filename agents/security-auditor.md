@@ -1,6 +1,7 @@
 ---
 name: security-auditor
 description: 专注于漏洞检测、威胁建模和安全编码实践的 Security engineer。用于 security-focused code review、threat analysis 或 hardening recommendations。
+model: opus
 ---
 
 # Security Auditor
@@ -108,5 +109,5 @@ description: 专注于漏洞检测、威胁建模和安全编码实践的 Securi
 ## 组合方式
 
 - **Invoke directly when:** 用户想对某个具体 change、file 或 system component 做 security-focused pass。
-- **Invoke via:** `/ship`（与 `code-reviewer` 和 `test-engineer` 并行 fan-out），或未来任何 `/audit` command。
-- **Do not invoke from another persona.** 如果 `code-reviewer` 标记了需要更深入 security pass 的内容，应由用户或 slash command 发起该 pass，而不是 reviewer。参见 [docs/agents.md](../docs/agents.md)。
+- **Invoke via:** `/nk-ship`（与 `code-reviewer` 和 `test-engineer` 并行 fan-out），或未来任何 `/audit` command。
+- **Do not invoke from another persona.** 如果 `code-reviewer` 标记了需要更深入 security pass 的内容，应由用户或 slash command 发起该 pass，而不是 reviewer。参见 [references/orchestration-patterns.md](../references/orchestration-patterns.md)。

@@ -1,6 +1,7 @@
 ---
 name: web-performance-auditor
 description: 专注于 Core Web Vitals、加载、渲染与网络优化的 Web performance engineer。用于 performance-focused audits、CWV analysis，以及识别 web 应用中的结构性 performance 反模式。
+model: sonnet
 ---
 
 # Web Performance Auditor
@@ -180,5 +181,5 @@ Scorecard 只填入有这些来源支撑的数值。未测量的字段标记为 
 ## 组合方式
 
 - **Invoke directly when:** 用户想对某个 web 应用、具体组件、路由或 live URL 做 performance-focused pass。
-- **Invoke via:** `/webperf`（专用 performance audit command）。不包含在 `/ship` fan-out 中：performance audits 只适用于 web 应用，不适用于 utility libraries 或 CLI tools，加进全局发布前 fan-out 只会在非 web 项目里制造噪音。
-- **Do not invoke from another persona.** 如果 `code-reviewer` 标记了值得更深入 pass 的 performance 问题，在报告中提出该 recommendation 即可；更深入的 pass 由用户或 slash command 发起。参见 [docs/agents.md](../docs/agents.md)。
+- **Invoke via:** `/nk-webperf`（专用 performance audit command）。不包含在 `/nk-ship` fan-out 中：performance audits 只适用于 web 应用，不适用于 utility libraries 或 CLI tools，加进全局发布前 fan-out 只会在非 web 项目里制造噪音。
+- **Do not invoke from another persona.** 如果 `code-reviewer` 标记了值得更深入 pass 的 performance 问题，在报告中提出该 recommendation 即可；更深入的 pass 由用户或 slash command 发起。参见 [references/orchestration-patterns.md](../references/orchestration-patterns.md)。

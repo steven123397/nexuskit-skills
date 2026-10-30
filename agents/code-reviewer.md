@@ -1,6 +1,7 @@
 ---
 name: code-reviewer
 description: 资深 code reviewer，从 correctness、readability、architecture、security 和 performance 五个维度评估变更。用于合并前的 thorough code review。
+model: opus
 ---
 
 # Senior Code Reviewer
@@ -98,5 +99,5 @@ description: 资深 code reviewer，从 correctness、readability、architecture
 ## 组合方式
 
 - **Invoke directly when:** 用户要求 review 某个具体 change、file 或 PR。
-- **Invoke via:** `/ship`（与 `security-auditor` 和 `test-engineer` 并行 fan-out）。`/review` 在主会话中运行 `code-review-and-quality` skill，不会 spawn 这个 persona。
-- **Do not invoke from another persona.** 如果你发现自己想 delegate 给 `security-auditor` 或 `test-engineer`，请在报告中将其作为 recommendation 提出；orchestration 属于 slash commands，而不是 personas。参见 [docs/agents.md](../docs/agents.md)。
+- **Invoke via:** `/nk-ship`（与 `security-auditor` 和 `test-engineer` 并行 fan-out）。`/nk-review` 在主会话中运行 `code-review-and-quality` skill，不会 spawn 这个 persona。
+- **Do not invoke from another persona.** 如果你发现自己想 delegate 给 `security-auditor` 或 `test-engineer`，请在报告中将其作为 recommendation 提出；orchestration 属于 slash commands，而不是 personas。参见 [references/orchestration-patterns.md](../references/orchestration-patterns.md)。
