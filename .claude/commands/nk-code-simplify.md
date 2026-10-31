@@ -6,7 +6,7 @@ description: 简化代码以提升清晰度和可维护性 — 在不改变行�
 
 在精确保留行为的前提下，简化最近变更的代码（或指定 scope）：
 
-1. 阅读 CLAUDE.md 并学习项目约定
+1. 阅读 CLAUDE.md/AGENTS.md 并学习项目约定
 2. 识别目标代码 — 除非指定了更广 scope，否则默认为最近变更
 3. 修改前理解代码目的、callers、edge cases 和 test coverage
 4. 扫描 simplification opportunities：

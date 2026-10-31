@@ -22,7 +22,7 @@ $ARGUMENTS
 
 5. **按成本摆放每项检查。** Types、lint 和 secrets 放在 edit loop 里（秒级）。相关 tests 和 changed-line coverage 放在任务结束时（90 秒以内）。其余全部放在 review 或 CI 中。检查范围限定在 diff，而不是整个仓库。
 
-6. **让 agent 指向它。** 在 CLAUDE.md 中加一行，告诉 agents 阅读 CONSTRAINTS.md，且绝为了让某个变更通过而弱化它。
+6. **让 agent 指向它。** 在 CLAUDE.md/AGENTS.md 中加一行，告诉 agents 阅读 CONSTRAINTS.md，且绝为了让某个变更通过而弱化它。
 
 7. **验证。** 对当前分支运行这些 constraints。如果某项失败而用户不同意，现在就修 constraint，而不是留下一个人们会学着无视的门禁。
 

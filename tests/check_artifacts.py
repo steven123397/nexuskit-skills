@@ -20,6 +20,7 @@ GUARDED_FILES = [
     '.claude/commands/nk-spec.md',
     '.claude/commands/nk-plan.md',
     '.claude/commands/nk-build.md',
+    '.claude/commands/nk-init.md',
     'skills/spec-driven-development/SKILL.md',
     'skills/planning-and-task-breakdown/SKILL.md',
 ]
@@ -29,18 +30,22 @@ GUARDED_FILES = [
 REQUIRED_ARTIFACTS = {
     '.claude/commands/nk-spec.md': (
         ('SPEC.md', r'(?<![\w/])SPEC\.md\b'),
-        ('spec/capability-map.md', r'spec/capability-map\.md'),
-        ('spec/SPEC-<id>.md', r'spec/SPEC-(?:<id>|[A-Za-z0-9_-]+)\.md'),
     ),
     '.claude/commands/nk-plan.md': (
         ('SPEC.md', r'(?<![\w/])SPEC\.md\b'),
-        ('spec/SPEC-<id>.md', r'spec/SPEC-(?:<id>|[A-Za-z0-9_-]+)\.md'),
         ('tasks/plan.md', r'tasks/plan\.md'),
         ('tasks/todo.md', r'tasks/todo\.md'),
     ),
     '.claude/commands/nk-build.md': (
         ('SPEC.md', r'(?<![\w/])SPEC\.md\b'),
         ('docs/SPEC.md', r'docs/SPEC\.md'),
+        ('tasks/plan.md', r'tasks/plan\.md'),
+        ('tasks/todo.md', r'tasks/todo\.md'),
+    ),
+    '.claude/commands/nk-init.md': (
+        ('SPEC.md', r'(?<![\w/])SPEC\.md\b'),
+        ('spec/capability-map.md', r'spec/capability-map\.md'),
+        ('spec/SPEC-<id>.md', r'spec/SPEC-(?:<id>|[A-Za-z0-9_-]+)\.md'),
         ('tasks/plan.md', r'tasks/plan\.md'),
         ('tasks/todo.md', r'tasks/todo\.md'),
     ),

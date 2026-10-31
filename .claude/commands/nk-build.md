@@ -28,7 +28,7 @@ description: 增量实现任务 — build、test、verify、commit。加上 "aut
 
 当 spec 已存在、你想把 plan + build 合并为一次运行时使用。它去掉的是 task 之间的人工介入 —— 而**不是**验证。每个 task 仍然必须拿到通过的测试和自己的 commit。
 
-1. **要求有 spec。** 只在已知路径查找 spec：仓库根目录的 `SPEC.md`、`docs/SPEC.md`，或 `spec/` 下的文件。README 或随便某个文档**不**算数。如果都不存在，停止并告诉用户先运行 `/nk-spec` —— 不要凭空编造需求。
+1. 要求有 spec。只在已知路径查找 spec。README 或随便某个文档**不**算数。如果都不存在，停止并告诉用户先运行 `/nk-spec` — 不要凭空编造需求。
 2. **建立干净的 baseline。** 运行 `git status --porcelain`。如果存在预期 planning 产物（`SPEC.md`、`docs/SPEC.md`、`spec/*`、`tasks/plan.md`、`tasks/todo.md`）之外的未提交变更，停止并请用户 commit、stash 或确认如何处理。autonomous 的按 task 提交绝不能吸收无关的本地工作，否则干净回滚的保证就被破坏了。
 3. **如有需要先生成 plan。** 如果没有 `tasks/plan.md`，调用 planning-and-task-breakdown 生成一份。
 4. **单一检查点。** 展示完整 plan 并等待明确的肯定答复（例如 "approve"、"go"、"yes"）。将含糊的回应（"看起来合理"、"我猜行吧"）视为**未**批准。这是唯一的人工门禁 —— 批准后即自主运行。如果你生成了 `tasks/plan.md`，现在就把它作为一个单独的准备性 commit 提交，避免它混进第一个 task 的 commit。

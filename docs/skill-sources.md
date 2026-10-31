@@ -64,10 +64,9 @@
 
 ## nk-init
 
-- [入口](../skills/engineering/nk-init/SKILL.md) 的探测（读 git remote 与指令文件现状，不凭空发问）、展示并确认（逐项带推荐答案，探测已定的直接说明不提问）、选文件规则（`CLAUDE.md` 存在则编辑它、否则 `AGENTS.md`、都不存在问用户不代选；已有配置块就地更新不追加重复，不覆盖周边编辑）、幂等与重跑语义（只在更换去向时需要）：Matt `skills/engineering/setup-matt-pocock-skills/SKILL.md`（`6fd9479`）`Process` 下 `Explore`、`Present findings and ask`、`Confirm and edit`、`Write` 的中文迁移。
-- 配置对象按 NK 边界重定：Linear 团队与项目（to-spec/to-tickets/odyssey/spec-close 读取）、GitHub 外部问题去向（to-issue，无远端降级 docs/backlog.md）、导航指针指向 CONCEPTS.md 与 docs/adr/；不迁移 Matt 的 triage 标签体系（nk-to-issue 用 bug/enhancement）、issue-tracker 选项表与 GLOSSARY-MAP 多上下文（domain-modeling 已定单文件默认）。
-- 惰性创建（CONCEPTS.md 由第一个词条建、docs/adr/ 由第一个决定建、不预建空目录与 backlog）、初始化产物经 nk-commit 入库、收尾告知哪些技能读哪些配置：NK 适配。按用户决定，配置文件固定为 `docs/agents/issue-tracker.md`，消费者 nk-to-spec / nk-to-tickets / nk-odyssey / nk-wayfinder 固定读取，nk-to-issue 的无远端降级位置同源。
-- 旧稿的 docs/current.md 创建、current-md/artifact-lifecycle/concepts-vocabulary 约定引用与"知识入口"体系随 STE-28 退役；Matt 的 triage 标签体系（to-issue 用 bug/enhancement，分诊队列随"外部 Issue 只记录"定位取消）与 issue-tracker 选项表（Linear+GitHub 已选型）不迁移；多域信号探测（workspace 清单、packages/*、多个域目录）与多上下文导航指针随 GLOSSARY-MAP 机制补回（2026-10-08），布局归 nk-domain-modeling 持有，init 只探测与指路；docs/agents/domain.md 不另建（消费规则由 nk-domain-modeling 持有，避免双源）。
+- [入口](../.claude/commands/nk-init.md) 的探测（读远端、指令文件与产物现状，不凭空发问）、逐项确认（一次一项、推荐答案前置）、展示草稿后再写入、已有小节就地更新、幂等重跑：Matt `skills/engineering/setup-matt-pocock-skills/SKILL.md`（`6fd9479`）`Process` 下 `Explore`、`Present findings and ask`、`Confirm and edit`、`Write` 的中文迁移。
+- 配置对象按 NexusKit v0.4.0 重定：规则文件选择、idea/ADR 落点、spec 与 task 落点及外置工具、五个子智能体的模型与覆盖层级。不迁移 Matt 的 triage 标签体系、`docs/agents/` 独立配置文件与 GLOSSARY-MAP 多上下文。
+- 探测只用于给推荐，不代替用户决定；七项逐一确认，不因探测有结果而跳过；不预建目录，不提交：NK 适配。
 
 ## nk-odyssey
 
