@@ -17,3 +17,6 @@ __pycache__/
 # Agent local states
 *.local.yaml
 *.local.json
+
+# Local upstream reference copies (study material, not distributed)
+.upstream/

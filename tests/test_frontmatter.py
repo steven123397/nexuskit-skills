@@ -47,9 +47,8 @@ class FrontmatterChecks(unittest.TestCase):
     def test_directory_mismatch(self):
         self.assertTrue(self.check("name: nk-other\ndescription: example"))
 
-    def test_description_policy_does_not_restrict_body_language(self):
-        self.assertTrue(any("English-only" in p for p in self.check(
-            "name: nk-demo\ndescription: English with 中文 keywords")))
+    def test_description_allows_chinese(self):
+        self.assertEqual([], self.check("name: nk-demo\ndescription: 中文描述合法"))
         self.assertEqual([], validate_frontmatter(
             "---\nname: nk-demo\ndescription: Explain clearly.\n---\n中文正文\n", "nk-demo"))
 

@@ -1,0 +1,20 @@
+{
+  "name": "nexuskit",
+  "description": "NexusKit：以 addyosmani/agent-skills 简体中文版为核心的 25 个技能，覆盖 spec 到 ship 的完整开发生命周期；附 10 个 nk- 前缀命令与 5 个 agent。",
+  "version": "0.4.0-beta.1",
+  "author": {
+    "name": "steven123397"
+  },
+  "homepage": "https://github.com/steven123397/nexuskit-skills",
+  "repository": "https://github.com/steven123397/nexuskit-skills",
+  "license": "MIT",
+  "commands": ["./.claude/commands"],
+  "skills": "./skills",
+  "agents": [
+    "./agents/code-reviewer.md",
+    "./agents/doubt-challenger.md",
+    "./agents/security-auditor.md",
+    "./agents/test-engineer.md",
+    "./agents/web-performance-auditor.md"
+  ]
+}

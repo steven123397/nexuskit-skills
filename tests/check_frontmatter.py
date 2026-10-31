@@ -1,5 +1,8 @@
-"""Parse skill metadata safely without imposing a client-specific field allowlist."""
-import re
+"""Parse skill metadata safely without imposing a client-specific field allowlist.
+
+Description language is unrestricted since v0.4.0 (vendored zh skills keep
+Chinese descriptions; see docs/plans/2026-10-29-v0.4.0-osmani-vendor-plan.md).
+"""
 import yaml
 from yaml.constructor import ConstructorError
 from yaml.nodes import MappingNode
@@ -50,8 +53,6 @@ def validate_frontmatter(text, dirname):
             problems.append(f"frontmatter {field} must be a non-empty string")
     name = metadata.get("name")
     description = metadata.get("description")
-    if isinstance(description, str) and re.search(r"[\u3400-\u9fff]", description):
-        problems.append("description must follow the English-only repository policy (CJK text found)")
     if "disable-model-invocation" in metadata and not isinstance(metadata["disable-model-invocation"], bool):
         problems.append("disable-model-invocation must be a YAML boolean")
     if isinstance(name, str) and name.strip() and name != dirname:
