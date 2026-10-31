@@ -111,8 +111,9 @@ PROPOSED → ACCEPTED → (SUPERSEDED or DEPRECATED)
 counter += 1;
 
 // GOOD: Explains non-obvious intent
-// Rate limit uses a sliding window — reset counter at window boundary,
-// not on a fixed schedule, to prevent burst attacks at window edges
+// Rate limit uses a fixed window that opens on the first request after the
+// previous one expires, not on a clock schedule. Known gap: a client can spend
+// the full limit just before a reset and again just after (2x in a moment)
 if (now - windowStart > WINDOW_SIZE_MS) {
   counter = 0;
   windowStart = now;
@@ -251,7 +252,7 @@ How to contribute, coding standards, PR process.
 
 需要特别考虑 AI agent 的上下文：
 
-- **CLAUDE.md / rules files** — 记录项目约定，让 agent 遵循它们
+- **CLAUDE.md / AGENTS.md 等项目规则文件** — 记录项目约定，让 agent 遵循它们
 - **Spec files** — 保持 spec 更新，让 agent 构建正确的东西
 - **ADRs** — 帮助 agent 理解过去决策的原因（避免重复决策）
 - **Inline gotchas** — 防止 agent 掉入已知陷阱
@@ -293,5 +294,5 @@ How to contribute, coding standards, PR process.
 - [ ] API 函数有参数和返回类型文档
 - [ ] 已知陷阱在重要位置以内联方式记录
 - [ ] 没有保留注释掉的代码
-- [ ] Rules files（CLAUDE.md 等）是最新且准确的
+- [ ] 项目规则文件（CLAUDE.md / AGENTS.md 等）是最新且准确的
 - [ ] 文字改动保留了来源细节、决策取舍和限定语，且没有添加无支撑的保证

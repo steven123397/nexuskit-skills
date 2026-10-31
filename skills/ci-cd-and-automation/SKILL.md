@@ -184,7 +184,7 @@ Agent fixes → pushes → CI runs again
 **关键模式：**
 
 ```
-Lint failure → Agent runs `npm run lint --fix` and commits
+Lint failure → Agent runs `npm run lint -- --fix` and commits
 Type error  → Agent reads the error location and fixes the type
 Test failure → Agent follows debugging-and-error-recovery skill
 Build error → Agent checks config and dependencies
@@ -263,9 +263,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Rollback deployment
+        env:
+          VERSION: ${{ inputs.version }}
         run: |
-          # Deploy the specified previous version
-          npx vercel rollback ${{ inputs.version }}
+          # Deploy the specified previous version. Pass the input through env,
+          # never interpolate it into the script (shell injection).
+          npx vercel rollback "$VERSION"
 ```
 
 ## 环境管理
@@ -313,7 +316,7 @@ updates:
 ```
 Slow CI pipeline?
 ├── Cache dependencies
-│   └── Use actions/cache or setup-node cache option for node_modules
+│   └── Use the setup-node cache option (or actions/cache) for the package manager cache, not node_modules
 ├── Run jobs in parallel
 │   └── Split lint, typecheck, test, build into separate parallel jobs
 ├── Only run what changed
@@ -361,7 +364,7 @@ jobs:
 
 | 合理化借口 | 现实 |
 |---|---|
-| “CI 太慢了” | 优化 pipeline（见下面的 CI Optimization），不要跳过它。5 分钟 pipeline 可以避免数小时调试。 |
+| “CI 太慢了” | 优化 pipeline（见「CI 优化」一节），不要跳过它。5 分钟 pipeline 可以避免数小时调试。 |
 | “这个变更很小，跳过 CI” | 小变更也会破坏 build。反正 CI 对小变更通常很快。 |
 | “测试不稳定，重跑就行” | Flaky tests 会掩盖真实 bug 并浪费所有人的时间。修复 flakiness。 |
 | “以后再加 CI” | 没有 CI 的项目会累积 broken states。第一天就设置。 |
