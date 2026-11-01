@@ -73,3 +73,7 @@
 
 sync:
     remote: "git+ssh://git@github.com/steven123397/nexuskit-skills.git"
+agent:
+    profile: team-maintainer
+
+no-git-ops: false
