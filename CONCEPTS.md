@@ -24,4 +24,4 @@
 ## Retired
 
 - **降级路径**：旧版对单分支项目（在 main 上做 plan 级开发）的收尾兜底；新版禁止主分支直接改动（STE-16），该路径下线。
-- **容器中立认领**：旧版 Issue 被纳入 brainstorm/plan/work 任一容器即认领的机制；随三个入口退役，由 Linear ticket 认领替代。
+- **容器中立认领**：旧版 Issue 被纳入 brainstorm/plan/work 任一容器即认领的机制；随三个入口退役，由 tracker ticket 认领替代。

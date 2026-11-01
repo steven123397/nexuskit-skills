@@ -65,7 +65,7 @@
 | Parent | 所属 spec |
 | What to build | 交付什么 |
 | Acceptance criteria | 验收条件 |
-| Blocked by | 依赖（Linear 原生阻塞关系承载，正文不重复） |
+| Blocked by | 依赖（tracker 原生阻塞关系承载，正文不重复） |
 
 ## 固定短语
 
@@ -83,10 +83,10 @@ spec、ticket、issue、PR、map（wayfinder 的 `wayfinder:map` 索引 issue）
 
 ## 已定的特殊决定
 
-- **map 保留英文**：指 Linear 中标记 `wayfinder:map` 的索引 issue，与 spec、ticket、issue 同属跟踪器产物名；目的地、前沿仍译中文。
+- **map 保留英文**：指 tracker 中标记 `wayfinder:map` 的索引 issue，与 spec、ticket、issue 同属跟踪器产物名；目的地、前沿仍译中文。
 - **fog of war 不直译比喻**：迷雾一类词在中文里生硬。按概念直述为**未成形的问题**——能感觉到、但问题本身还没长成形、暂时无法准确表述的工作；判断标准是“现在能不能把问题说清楚”，与 ticket（说得清、还没答）相对。
 - **前沿**在 nk-grill（前提已确定、现在就能问的决策集合）与 nk-wayfinder（依赖已满足且未被接手的 open tickets）中同词同译；后续重写 implement-spec / to-tickets（nk-odyssey、nk-to-tickets）时沿用。
-- ready-for-agent 标签体系不沿用，NK 用 Linear 项目已有标签与状态。
+- ready-for-agent 标签体系不沿用，NK 用 tracker 已有标签与状态。
 - User Stories 换成“使用场景与预期行为”是模板替换，不按原文翻译。
 
 ## 参考译文
