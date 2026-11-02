@@ -4,7 +4,7 @@
 
 ## 上游与同步点
 
-- 技能主体：[addyosmani/agent-skills](https://github.com/addyosmani/agent-skills)，同步点 `aeac41d`（v0.6.13）。
+- 技能主体：[addyosmani/agent-skills](https://github.com/addyosmani/agent-skills)，同步点 `aeac41d`（v0.6.13）；另已回填 v0.6.14/0.6.15 的 security、constraints 与命令调用权限修正（见下）。
 - 简体中文译本：[vinvcn/addyosmani-agent-skills-zh](https://github.com/vinvcn/addyosmani-agent-skills-zh)，本地同步源 `.upstream/addyosmani-agent-skills-zh`（已 gitignore，不随包分发）。
 - 引入方式：vendor，小修小补；技能名、目录名与 H1 保持上游原样。逐技能的改动点见 [v0.4.0 计划](plans/2026-10-29-v0.4.0-osmani-vendor-plan.md) 的逐技能审阅表。
 - 归属与许可证见 [NOTICE](../NOTICE) 与 [LICENSE.upstream](../LICENSE.upstream)。
@@ -20,6 +20,12 @@
   - `doubt-driven-development`：跨模型复审段改为派发内置子智能体并按项目约定指定 `model`；DOUBT 步骤优先派发 `doubt-challenger`。
   - `idea-refine`：去掉命令专用的 `$ARGUMENTS` 占位；保存落点改为项目规则文件优先，默认 `docs/ideas/`。
   - `spec-driven-development`：多模块 spec 落点改为 `spec/`（`spec/capability-map.md` + `spec/SPEC-<id>.md`），与 `/nk-build` 的查找路径一致；阶段 4 的路径引用改为公开技能名。
+
+## 已回填的上游修正（v0.6.14 / v0.6.15）
+
+- `security-and-hardening`：暂存密钥检查改为 `git diff --cached -i -G'…' --name-only`，只列文件名、不回显值；ownership 检查前先返回 404；description 补 `session cookies`。同改动也落在 `references/security-checklist.md`。
+- `constraint-driven-development`：新增 `scripts/quality-gate.mjs`，让 Semgrep/axe 的 high/critical 发现真正使 CI 失败；同步 gitleaks `dir` 调用、`check:security`/`check:a11y` 映射，以及「用故意违规验证门禁」的验收项；`references/floor-guard.md` 识别表格单元格内的方向词。
+- `.claude/commands/nk-*.md`：与上游一致加 `disable-model-invocation: true`，命令仅用户可调用；`/nk-init` 原本即为此形态。
 
 ## Commands
 
