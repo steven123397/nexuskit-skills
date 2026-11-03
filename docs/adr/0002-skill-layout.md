@@ -8,8 +8,8 @@
 
 已取消的 brainstorm、ideate、plan、work、handoff、compound、close、simplify 入口以及集中 conventions 从技能树移除；原始材料可从 Git 历史查阅。旧 solutions 单独迁移，核对来源和目标可用性后再清理。
 
-仓库文档保存术语、关键决定、来源与必要说明。Linear 管内部需求和状态，GitHub Issues 管外部反馈，OpenViking 管背景和经验，Git/PR 管交付事实，不再维护实时状态文档。
+仓库文档保存术语、关键决定、来源与必要说明。beads 管内部需求和状态，GitHub Issues 管外部反馈，OpenViking 管背景和经验，Git/PR 管交付事实，不再维护实时状态文档。
 
 spec 与分支生命周期独立。spec 整体验收通过即可关闭；PR 负责分支交付收尾，复用有效验收。分支可没有 spec，但不直接修改主分支。
 
-设计依据：[STE-16](https://linear.app/steven-liang/issue/STE-16)。技能正文随对应实施票逐项完善。分发形态与布局事实见 [ADR-0001](0001-distribution-layout.md)。
+设计依据：STE-16（原 tracker 票号，仅作历史索引）。技能正文随对应实施票逐项完善。分发形态与布局事实见 [ADR-0001](0001-distribution-layout.md)。

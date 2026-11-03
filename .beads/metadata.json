@@ -1,0 +1,7 @@
+{
+  "database": "dolt",
+  "backend": "dolt",
+  "dolt_mode": "embedded",
+  "dolt_database": "nexuskit",
+  "project_id": "ef3ef8f3-10f7-4edb-929b-756664541e70"
+}

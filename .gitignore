@@ -20,3 +20,10 @@ __pycache__/
 
 # Local upstream reference copies (study material, not distributed)
 .upstream/
+
+# Beads / Dolt files (added by bd init)
+.dolt/
+*.db
+.beads-credential-key
+.beads/proxieddb/
+*.gate.lock*
