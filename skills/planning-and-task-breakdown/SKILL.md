@@ -159,7 +159,17 @@ Task 4: User can view task list (query + API + UI for list view)
 Task list target 是记录任务和检查点的位置。它的定义只出现一次，就在这里；这个 skill 中的其他所有引用都以此为准。
 
 - **默认：位于 `tasks/todo.md` 的 checklist 风格 markdown 文件。** 这是 `/nk-build` 命令和其他下游工具期望的约定。除非项目另有说明，否则使用它。
-- **外部 tracker：** 如果项目的 agent 规则（`CLAUDE.md`、`AGENTS.md` 等）或用户指定了 issue tracker（例如 GitHub Issues、Jira、Linear、`bd`/beads），就为每个任务创建一个 tracker item，而不是写 `tasks/todo.md`。把步骤 4 的结构映射到 tracker 的字段：验收标准和验证步骤放进 item 正文，依赖通过 tracker 的链接机制（`bd dep add`、“blocked by” 等）。步骤 5 的检查点也记录为 tracker items；如果 tracker 没有自然的对应物，就记录为计划文档中的 checklist。
+- **外部 tracker：** 如果项目的 agent 规则（`CLAUDE.md`、`AGENTS.md` 等）或用户指定了 issue tracker（例如 GitHub Issues、Jira、Linear、`bd`/beads），把每个任务建成 tracker item，而不是写 `tasks/todo.md`。把步骤 4 的结构映射到 tracker 的字段：验收标准和验证步骤放进 item 正文，依赖通过 tracker 的链接机制（`bd dep add`、“blocked by” 等）。
+
+  不要只建一排平铺的票。使用外部 tracker 时，图结构遵守以下五条：
+
+  - 一个 plan 一个 root epic；root 下只放 phase 和 program，不放执行任务
+  - phase 必须是 issue，`phase-N` label 只用于筛选
+  - checkpoint 是 phase 下的叶子 gate，用 `blocks` 连到本 phase 的任务，绝不当父节点
+  - 容器子票超过约 10 张就加 workstream 层
+  - 除 root epic 外每张票必须有父；review 挂在被审层级，finding 挂 review
+
+  完整层级模型、建图流程与建票前检查清单见 `../../references/issue-graph.md`。步骤 5 的检查点也建成 tracker item；如果 tracker 没有 gate 的自然对应物，就记录为计划文档中的 checklist。
 
 使用外部 tracker 时，在 `tasks/plan.md` 中注明（例如 “Tasks tracked in Linear project FOO”），让下游步骤和未来的会话知道去哪里查找；并把计划文档的 Task List 章节保留为 tracker item ID 或链接的有序索引，而不是重复的 checklist。
 
