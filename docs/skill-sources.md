@@ -4,7 +4,7 @@
 
 ## 上游与同步点
 
-- 技能主体：[addyosmani/agent-skills](https://github.com/addyosmani/agent-skills)，同步点 `aeac41d`（v0.6.13）；另已回填 v0.6.14/0.6.15 的 security、constraints 与命令调用权限修正（见下）。
+- 技能主体：[addyosmani/agent-skills](https://github.com/addyosmani/agent-skills)，同步点 `aeac41d`（v0.6.13）；另已回填 v0.6.14/0.6.15 的可翻译内容（见下；docs、evals、hooks、scripts 不在 vendor 范围）。
 - 简体中文译本：[vinvcn/addyosmani-agent-skills-zh](https://github.com/vinvcn/addyosmani-agent-skills-zh)，本地同步源 `.upstream/addyosmani-agent-skills-zh`（已 gitignore，不随包分发）。
 - 引入方式：vendor，小修小补；技能名、目录名与 H1 保持上游原样。逐技能的改动点见 [v0.4.0 计划](plans/2026-10-29-v0.4.0-osmani-vendor-plan.md) 的逐技能审阅表。
 - 归属与许可证见 [NOTICE](../NOTICE) 与 [LICENSE.upstream](../LICENSE.upstream)。
@@ -26,6 +26,7 @@
 - `security-and-hardening`：暂存密钥检查改为 `git diff --cached -i -G'…' --name-only`，只列文件名、不回显值；ownership 检查前先返回 404；description 补 `session cookies`。同改动也落在 `references/security-checklist.md`。
 - `constraint-driven-development`：新增 `scripts/quality-gate.mjs`，让 Semgrep/axe 的 high/critical 发现真正使 CI 失败；同步 gitleaks `dir` 调用、`check:security`/`check:a11y` 映射，以及「用故意违规验证门禁」的验收项；`references/floor-guard.md` 识别表格单元格内的方向词。
 - `.claude/commands/nk-*.md`：与上游一致加 `disable-model-invocation: true`，命令仅用户可调用；`/nk-init` 原本即为此形态。
+- 其余技能与 references：回填 0.6.14/0.6.15 的示例修正与触发词更新，涉及 `api-and-interface-design`、`browser-testing-with-devtools`、`code-simplification`、`context-engineering`、`debugging-and-error-recovery`、`deprecation-and-migration`、`documentation-and-adrs`、`doubt-driven-development`、`frontend-ui-engineering`、`git-workflow-and-versioning`、`shipping-and-launch`、`source-driven-development`、`spec-driven-development`、`test-driven-development`，以及 `references/` 下的 accessibility、performance、testing 三份清单。`ci-cd-and-automation` 与 `performance-optimization` 的对应修正此前已在发布批回填。
 
 ## Commands
 
