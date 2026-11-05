@@ -162,7 +162,7 @@ function getTaskService(userId: string): TaskService {
   if (featureFlags.isEnabled('new-task-service', { userId })) {
     return new NewTaskService();
   }
-  return new LegacyTaskService();
+  return new OldTaskService();
 }
 ```
 
