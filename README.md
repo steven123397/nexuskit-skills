@@ -22,7 +22,7 @@
 
 NexusKit 以 [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) 的简体中文版为技能主体，保留上游的技能名、目录与工作流，并在其上提供 10 个 `nk-` 前缀的入口命令和 5 个专用子智能体。技能按需调用，不强制走完整流水线。
 
-当前为 [v0.4.0-beta.2](docs/releases/v0.4.0-beta.2.md)（预发布）：技能主体完成 vendor 与逐技能审阅，命令层与项目接入命令已就位；本版回填上游 0.6.14/0.6.15 的安全与质量门禁修正。旧版 `nk-*` 技能已归档，是否提回待 beta 试用后裁定。
+当前为 [v0.4.0-beta.3](docs/releases/v0.4.0-beta.3.md)（预发布）：技能主体完成 vendor 与逐技能审阅，命令层与项目接入命令已就位；本版新增 issue tracker 的图结构规则，供多阶段 plan 落到 tracker 时使用。旧版 `nk-*` 技能已归档，是否提回待 beta 试用后裁定。
 
 ## 安装
 
