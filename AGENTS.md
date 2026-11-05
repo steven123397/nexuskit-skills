@@ -17,7 +17,7 @@
 
 ## 修改与验证
 
-- 不直接修改或提交主分支。原检出目录正常切换工作分支，不建立额外主工作树。需要并行写入或原型隔离时才开工作树，默认放在仓库同级 `<项目名>-worktrees/<用途>`；优先沿用宿主管理方式，并明确绝对路径、分支与用途。
+- 默认直接在主分支开发与提交，不再为每项工作新建分支；只有需要并行写入、原型隔离或高风险试验时才开分支或工作树。工作树默认放在仓库同级 `<项目名>-worktrees/<用途>`；优先沿用宿主管理方式，并明确绝对路径、分支与用途。发布仍走 PR 或版本 tag 的既有流程。
 - 保留其他会话的未提交工作。成果承接后及时清理闲置工作树，清理前核对活跃使用者、未提交及忽略文件，不删除原工作目录或其他任务资源。
 - 技能或基础检查修改后运行 `python tests/run_checks.py`；检查器修改另跑 `python -m unittest discover -s tests -p "test_*.py"`。首次安装依赖用 `python -m pip install -r tests/requirements.txt`。
 - nk-wizard 提回后，其模板修改执行 `bash -n skills/nk-wizard/assets/template.sh`。CI 覆盖 Windows/Linux，版本 tag 还检查版本号和 release notes。
