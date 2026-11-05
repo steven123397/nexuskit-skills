@@ -132,6 +132,8 @@ NOTICED BUT NOT TOUCHING:
 → Want me to create tasks for these?
 ```
 
+项目使用外部 tracker 时，这些新发现不要留在 root：属于当前 phase 的挂当前 phase 的 review，横切的挂对应 program epic。归属规则见 `../../references/issue-graph.md`。
+
 ### 规则 1：一次只做一件事
 
 每个增量只改变一件逻辑事情。不要混合关注点：

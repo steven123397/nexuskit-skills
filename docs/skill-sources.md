@@ -44,7 +44,7 @@
 
 ## References
 
-`references/` 下 7 份检查清单来自上游同路径，内容未改。技能按需引用；仓库级共享，不存在单技能安装断链。
+`references/` 下 7 份检查清单来自上游同路径，内容未改；`issue-graph.md` 为 NK 新增，汇总 beadazzled v0.1.0 的 issue 图盘点，上游没有对应文件。`planning-and-task-breakdown`、`code-review-and-quality`、`incremental-implementation` 各加一段指针引用它。技能按需引用；仓库级共享，不存在单技能安装断链。
 
 ## 未 vendor
 
