@@ -204,10 +204,6 @@ For each file changed:
 - Is there a before/after comparison?
 ```
 
-### 第 6 步：把发现落到 tracker
-
-项目使用外部 tracker 时，review 本身也是一张票，挂在被审的 phase 或 workstream 下；每条 finding 作为它的子票，不要直接挂到 checkpoint 或父 phase 上。一票是一个可执行批次，不是一条微发现：file:line 留在 review 报告里，确认后再建执行票。不修的 finding 要在 review issue 里记录理由和后续去向。图结构规则见 `../../references/issue-graph.md`。
-
 ## 多模型审查模式
 
 用不同的模型承担不同的审查视角：

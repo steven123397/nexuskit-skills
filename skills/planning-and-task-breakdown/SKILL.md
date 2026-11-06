@@ -119,8 +119,11 @@ Task 4: User can view task list (query + API + UI for list view)
 - [ ] All tests pass
 - [ ] Application builds without errors
 - [ ] Core user flow works end-to-end
+- [ ] `code-review-and-quality` skill run
 - [ ] Review with human before proceeding
 ```
+
+检查点自带一轮 agent 审查（就是上面那一项 `code-review-and-quality`）；人工评审叠加在它之上。
 
 ## 任务大小指南
 
@@ -159,17 +162,11 @@ Task 4: User can view task list (query + API + UI for list view)
 Task list target 是记录任务和检查点的位置。它的定义只出现一次，就在这里；这个 skill 中的其他所有引用都以此为准。
 
 - **默认：位于 `tasks/todo.md` 的 checklist 风格 markdown 文件。** 这是 `/nk-build` 命令和其他下游工具期望的约定。除非项目另有说明，否则使用它。
-- **外部 tracker：** 如果项目的 agent 规则（`CLAUDE.md`、`AGENTS.md` 等）或用户指定了 issue tracker（例如 GitHub Issues、Jira、Linear、`bd`/beads），把每个任务建成 tracker item，而不是写 `tasks/todo.md`。把步骤 4 的结构映射到 tracker 的字段：验收标准和验证步骤放进 item 正文，依赖通过 tracker 的链接机制（`bd dep add`、“blocked by” 等）。
+- **外部 tracker：** 如果项目的 agent 规则（`CLAUDE.md`、`AGENTS.md` 等）或用户指定了 issue tracker（例如 GitHub Issues、Jira、Linear、`bd`/beads），把每个任务建成 tracker item，而不是写 `tasks/todo.md`。
 
-  不要只建一排平铺的票。使用外部 tracker 时，图结构遵守以下五条：
+  步骤 4 的每一项都必须落进票里，一条都不能省：现状与证据（file:line、命令、输出）进描述，验收标准进正文或 tracker 的 acceptance 字段，验证命令写进验收，依赖建成 tracker 的 blocked-by 关系。只写「实现 X」、没有验收的票不算建完。
 
-  - 一个 plan 一个 root epic；root 下只放 phase 和 program，不放执行任务
-  - phase 必须是 issue，`phase-N` label 只用于筛选
-  - checkpoint 是 phase 下的叶子 gate，用 `blocks` 连到本 phase 的任务，绝不当父节点
-  - 容器子票超过约 10 张就加 workstream 层
-  - 除 root epic 外每张票必须有父；review 挂在被审层级，finding 挂 review
-
-  完整层级模型、建图流程与建票前检查清单见 `../../references/issue-graph.md`。步骤 5 的检查点也建成 tracker item；如果 tracker 没有 gate 的自然对应物，就记录为计划文档中的 checklist。
+  图结构：phase 建成顶层工作单元，标题带版本身份，任务挂在它下，**只允许一层嵌套**；没有 plan 的维护轮次，整轮就是一个工作单元。步骤 5 的检查点建成该 phase 的最后一张子票。完整规则见项目里的 `docs/agents/issue-tracker.md`（`/nk-init` 生成）；项目没有这份文件时，用本插件的 `references/issue-graph.md`。
 
 使用外部 tracker 时，在 `tasks/plan.md` 中注明（例如 “Tasks tracked in Linear project FOO”），让下游步骤和未来的会话知道去哪里查找；并把计划文档的 Task List 章节保留为 tracker item ID 或链接的有序索引，而不是重复的 checklist。
 

@@ -1,97 +1,97 @@
-# Issue Graph（issue 图结构）
+# Issue Graph
 
-一个 plan 落到 issue tracker 时，怎么建层级、怎么连边。以 beads 为基线（它的层级与关联最完整），Linear / GitHub Issues 按末尾的映射表使用。
+建 issue 图的规则。规则与 tracker 无关；beads 命令见文末。
 
-## 为什么需要规则
-
-没有约定时，图很常见地会变成这样：主 epic 直属几十张子票，层级深度只有两三层；phase 只用 label 表达；checkpoint 同时被当成门和容器；review 修复散落在多个不同挂载点；还有一批票没有父节点。图建得出来，但读不出计划。
-
-四个根因：用 label 表达阶段、容器与 gate 混用、review 没有固定挂载点、新发现的工作没有默认归属。
-
-## 层级模型
+## 形状
 
 ```text
-Root epic（一个 plan / 一个版本）
-├── Phase epic（阶段）
-│   ├── Workstream epic（可选；子票超过约 10 张时）
-│   │   └── Task（可执行切片）
-│   ├── Checkpoint task（gate，叶子）
-│   └── Review epic / task（挂在被审的层级）
-│       └── Finding / fix
-└── Program epic（跨 phase 的横切工作）
+v0.1.0 Phase 1 基础设施        ← 工作单元 = 一列
+├── task
+├── task
+└── checkpoint                 ← 最后一张，只有入边
+v0.1.0 Phase 2 编辑器
+└── ...
+v0.1.0 收口 (milestone)        ← 被各 phase 阻塞
 ```
 
-| 层级 | 类型 | 职责 |
+- 顶层是工作单元，**没有 root epic**；版本身份写在标题前缀 + label。
+- **只允许一层 parent-child。**
+- 没有 plan 的维护轮次，整轮就是一个工作单元，不建 phase 层。
+
+## 建图顺序
+
+1. 建工作单元：`v0.1.0 Phase 1 <name>`，label `v0.1.0` + `phase`。
+2. 建任务，挂到所属单元下。
+3. 只有真实验证动作才建 checkpoint（跑 e2e、量预算、对契约、跑一轮审查）；同单元的任务阻塞它。
+4. 有先后才加 `blocks`，且只在同层加。
+5. 顺序中发现的新工作先记录，不立即建执行票；确认真要做时再建，并连 provenance。
+
+## 边
+
+| 边 | 表达 | 方向 |
 |---|---|---|
-| Root epic | epic | 一个 plan 的整体目标与验收 |
-| Phase epic | epic | 一个阶段的容器，承载该阶段全部工作 |
-| Workstream epic | epic | 可选；阶段内按模块或职责再分一层 |
-| Task | task / bug / feature / chore | 可独立交付、可独立验证的切片 |
-| Checkpoint | task | 叶子 gate，用 `blocks` 依赖本 phase 全部工作流 |
-| Review | epic 或 task | 审查容器，挂在被审的 phase / workstream 下 |
-| Finding / fix | task / bug | review 的发现，挂在该 review 下 |
+| parent-child | 组成 | 子 → 父 |
+| blocks | 调度顺序 | 被阻塞者 → 阻塞者 |
+| provenance | 来源 | 新票 → 来源票 |
 
-## 规则
+只有 `blocks` 影响 ready。
 
-1. **一个 plan 一个 root epic。** root 下只放 phase epic 和 program epic，不放执行任务。
-2. **phase 必须是 issue，不能只是 label。** `phase-N` label 只用于筛选，不承担层级。
-3. **容器和 gate 分开。** phase 是容器；checkpoint 是 phase 下的叶子任务，用 `blocks` 依赖本 phase 的全部工作流，绝不当父节点。
-4. **容器子票上限约 10 张。** 超过就加 workstream 层，否则 phase 会变成新的 51 张。
-5. **review 是挂在被审层级的一等 issue。** phase 审查挂 phase 下，workstream 审查挂 workstream 下，横切审查挂对应 program epic。finding 是 review 的子票，不要直接挂 checkpoint 或 phase。
-6. **phase 关闭条件。** checkpoint 通过，且 review 的所有 finding 已关闭或明确 defer（写明理由）。review issue 的验收标准必须包含这一条。
-7. **除 root epic 外，每张票必须有父。** 不允许 root 级散票。新发现的工作默认挂当前 phase 的 review，或挂对应的 program epic。
-8. **parent-child 表达「组成」，blocks 表达「先后」。** 不要用父子关系表达顺序。典型顺序边：phase 内任务 → checkpoint → 下一 phase；review findings → phase 关闭。
-9. **横切工作单独建 program epic。** 视觉打磨、性能 / CI、发布收口、文档、专项简化等挂 root epic 下，不散成 root。
-10. **一票是一个可执行批次，不是一条 finding。** file:line 留在 review 报告里，确认后再建执行票。
-11. **按风险分档，一票只做一档：**
-    - **A 档：** 纯去重或降复杂度，不改行为、不改契约，可直接执行；
-    - **B 档：** 改行为或数据契约，先写 ADR、Ask-first，再执行；
-    - **C 档：** 低收益 backlog，不承诺本轮交付。
-12. **不静默丢 finding。** 不修的 finding 必须在 review issue 里记录理由和后续去向，遵守 CONSTRAINTS 的「不静默降级」。
+**允许**：phase → phase；同单元 task → task；同单元 task → checkpoint。
 
-## 命名与 label
+**禁止**：task ↔ phase 跨级；跨单元 task → task（上提成 phase → phase）；checkpoint 出边；`A→B→C` 已存在时再加 `A→C`。
 
-- `Phase N: <name>` + label `phase-N`
-- `Checkpoint N: <name>` + label `checkpoint`
-- `Review: Phase N <scope>` + label `review`
-- review finding + label `review-fix`
-- 横切容器：`Program: <name>`
+## checkpoint
 
-label 名称可按项目调整；层级不依赖 label。
+- 自带一轮 agent 审查（`code-review-and-quality` 技能）；PR 上人工与 bot 的意见算同一轮。
+- 只有入边。没有入边它就能被提前关掉，不算结束点。
+- 不许出边。它和单元的关系已由 parent-child 表达。
+- 不许强制关闭单元，否则顺序保证失效。
 
-## 建图流程
+## 审查
 
-1. 写 plan，建 root epic。
-2. 按阶段建 phase epic，每个 phase 建一张 checkpoint 叶子，连好 `blocks` 边。
-3. 评估子票数量：超过约 10 张就建 workstream epic。
-4. 建执行任务，全部挂到 workstream 或 phase 下；触发审查时在被审层级建 review issue，发现的问题作为 review 子票。
-5. checkpoint 通过且 finding 关闭或 defer 后关闭 phase epic；横切工作建 program epic，不属于当前 phase 的新发现挂 program，不留在 root。
+- 审查可以建票。一个单元做全量审查时，按范围拆成若干 review 票，挂本单元下，与任务同级。
+- finding 第一轮落在对话、review 票还是别处，不做规定。
+- 修 finding 的执行票不挂父，也不当别的票的子票；只连 provenance，默认连产生它的 checkpoint，或用户指定的票。
 
-## 建票前检查清单
+## 关闭
 
-- [ ] 这张票有父吗？（root epic 除外）
-- [ ] 它是容器还是叶子？容器是否 ≤10 张子票？
-- [ ] phase 是否已经是真实 issue，而不是只有 label？
-- [ ] checkpoint 是否被当成了父节点？（不应）
-- [ ] 如果是 review，是否挂在被审的层级？
-- [ ] finding 是否挂在 review 下，而不是 checkpoint 或 phase 下？
-- [ ] 顺序关系是否用 `blocks` 表达，而不是 parent-child？
-- [ ] 这张票是不是一个可执行批次，而不是一条微发现？
-- [ ] 是否只属于 A/B/C 中的一档？B 档是否已登记 ADR / Ask-first？
-- [ ] 不修的 finding 是否记录了理由？
+- 理由写：改了什么 / 怎么验的 / 证据（命令、输出、commit、测试名）。
+- task 关闭 = 验收满足 + 证据；单元关闭 = 子票全关 + findings 都有去向。
+- 不删票。纠正用 supersede / reparent。
 
-## 映射到其他 tracker
+## 命名
 
-| 概念 | beads | Linear | GitHub Issues |
+- 单元 `v0.1.0 Phase 1 <name>`，label `v0.1.0` + `phase`
+- 维护轮次 `v0.1.2 简化`，label `v0.1.2` + `simplify`
+- 收口 `v0.1.2 收口`，type `milestone`
+- label 是筛选维度，不承担结构：有了 phase 单元，就不要再给每张票打 `phase-3`
+
+## 换 tracker
+
+| 概念 | beads | Linear | GitHub |
 |---|---|---|---|
-| root / phase / workstream | epic | parent issue 或 Project | parent issue |
-| 组成关系 | parent-child | parent issue | sub-issue |
-| 先后关系 | `blocks` 依赖 | blocked-by 关系 | issue dependency（blocked by） |
-| 筛选 | label | label | label |
-| checkpoint gate | task + `blocks` | task + blocked-by | task + dependency |
+| 工作单元 | epic | project / parent issue | parent issue |
+| 组成 | parent-child | sub-issue | sub-issue |
+| 先后 | `blocks` | blocked-by | issue dependency |
+| 来源 | `discovered-from` | related + 正文注明 | 正文注明 + `from:x` label |
+| 收口 | milestone issue | milestone | milestone |
 
-层级较弱的 tracker 至少要保住两条：每张票有父，顺序用依赖而不是父子表达。
+最少要有：一层嵌套、blocked-by、label、来源可追溯。
 
-## 迁移
+## beads 速查
 
-已有图不批量重写。只给无父的 root 票和错挂的 review 票补父节点，新规则从下一个 plan 起严格执行。
+```bash
+bd create --title="v0.1.0 Phase 1 基础设施" --type=epic -l v0.1.0,phase
+bd create --title="..." --parent=<unit> --acceptance="..."
+bd dep add <被阻塞> <阻塞者>                      # blocks
+bd dep add <新票> <来源票> -t discovered-from     # provenance
+bd ready · bd dep cycles · bd lint
+```
+
+## 不要做
+
+- 不要给计划建 root epic。
+- 不要把 checkpoint 当父节点（容器），它只有入边。
+- 不要给修复执行票挂父，也不要让它当别的票的子票。
+- 不要为了让图看起来完整就给每张票都连边。
+- 不要为对齐规则重写历史图。

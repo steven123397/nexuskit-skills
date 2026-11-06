@@ -45,7 +45,7 @@
 
 ## References
 
-`references/` 下 7 份检查清单来自上游同路径，内容未改；`issue-graph.md` 为 NK 新增，汇总 beadazzled v0.1.0 的 issue 图盘点，上游没有对应文件。`planning-and-task-breakdown`、`code-review-and-quality`、`incremental-implementation` 各加一段指针引用它。技能按需引用；仓库级共享，不存在单技能安装断链。
+`references/` 下 7 份检查清单来自上游同路径，内容未改；`issue-graph.md` 为 NK 新增，给出 issue tracker 的建图规则（工作单元、三种边、checkpoint、审查与关闭），上游没有对应文件。它同时是模板与兜底：`/nk-init` 把全文写进项目的 `docs/agents/issue-tracker.md`，规则文件只留一行指针；`planning-and-task-breakdown` 优先按项目那份建图，项目没初始化时才用插件里这份。载体形式参考 Matt `setup-matt-pocock-skills` 的 `docs/agents/`。技能按需引用；仓库级共享，不存在单技能安装断链。
 
 ## 未 vendor
 

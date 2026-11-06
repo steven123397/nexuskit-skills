@@ -31,6 +31,7 @@
 - 决策记录：`docs/adr/`，编号递增，不删旧
 - 规格：`SPEC.md`；外部工具：无
 - task：beads，仓库内 `.beads/`（`bd init` 初始化），beads 为唯一来源；不再用 `tasks/plan.md` + `tasks/todo.md`
+- issue 图：`references/issue-graph.md`
 - 子智能体模型：派发时显式传 `model` —— code-reviewer、security-auditor 用 opus；doubt-challenger、test-engineer、web-performance-auditor 用 sonnet
 - 以上文件在第一次真正产出时创建，不预建空目录
 
