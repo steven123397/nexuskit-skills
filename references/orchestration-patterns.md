@@ -1,8 +1,8 @@
 # 编排模式
 
-本仓库认可的 agent 编排模式参考目录，以及需要避免的反模式。添加会协调多个 personas 的新 slash command 前，或引入一个“包装”现有 personas 的新 persona 前，请先阅读本文。
+本仓库认可的 agent 编排模式参考目录，以及需要避免的反模式。添加会协调多个 personas 的新 slash command 前，或引入一个“包装”现有 personas 的新 persona 前，请先阅读本目录。
 
-治理规则：**用户（或 slash command）是 orchestrator。Personas 不调用其他 personas。** Skills 是 persona 工作流中的强制步骤。
+治理规则：**用户（或 slash command）是 orchestrator。Personas 不调用其他 personas。** Skills 是 persona 工作流中的必经环节。
 
 ---
 
@@ -16,20 +16,20 @@
 user → code-reviewer → report → user
 ```
 
-**适用场景：** 工作是针对一个产物的单一视角，并且可以用一句话描述。
+**适用场景：** 任务只从单一视角审视单个产物，并且可以用一句话描述。
 
 **示例：**
 - "审查这个 PR" → `code-reviewer`
 - "查找 `auth.ts` 中的安全问题" → `security-auditor`
 - "checkout flow 缺少哪些测试？" → `test-engineer`
 
-**成本：** 一次往返。这是你始终应该拿来对比编排模式的基线。
+**成本：** 一次往返。评估任何编排模式时，都应以此作为对比基线。
 
 ---
 
 ### 2. 单 persona slash command
 
-一个 slash command 用项目 skills 包装单个 persona。让用户不必每次都重新解释工作流。
+用一个 slash command 把单个 persona 和项目 skills 封装起来，让用户不必每次都重新解释工作流。
 
 ```
 /review → code-reviewer (with code-review-and-quality skill) → report
@@ -59,17 +59,17 @@ user → code-reviewer → report → user
 - 子任务真正独立（没有共享可变状态，没有顺序依赖）
 - 每个 sub-agent 都能从自己的 context window 中受益
 - 合并步骤足够小，可以留在 main context 中完成
-- Wall-clock latency 很重要
+- 端到端等待耗时（wall-clock latency）很关键
 
 **本仓库示例：** `/ship`。
 
-**成本：** N 个并行 sub-agent contexts + 一个 merge turn。成本高于直接调用，但 wall-clock 更快，报告质量也更好，因为每个 sub-agent 都专注于自己的单一视角。
+**成本：** N 个并行 sub-agent contexts + 一个 merge turn。成本高于直接调用，但端到端等待时间更短，报告质量也更好，因为每个 sub-agent 都专注于自己的单一视角。
 
 **采用该模式前的验证清单：**
-- [ ] 我能否同时运行所有 sub-agents，且没有顺序问题？
+- [ ] 我能否同时运行所有 sub-agents，且没有顺序依赖问题？
 - [ ] 每个 persona 是否产生不同*类型*的发现，而不是从不同角度重复同一发现？
-- [ ] merge step 是否能放进 main agent 剩余的 context？
-- [ ] 用户等待时间是否足够长，使并行性真的有可感知收益？
+- [ ] 合并步骤是否能放进 main agent 剩余的 context？
+- [ ] 用户等待时间是否足够长，长到并行执行确实能带来可感知收益？
 
 如果任何答案是“否”，退回直接调用或单 persona command。
 
@@ -77,25 +77,25 @@ user → code-reviewer → report → user
 
 ### 4. 由用户驱动的顺序 slash command pipeline
 
-用户按定义好的顺序运行 slash commands，在步骤之间携带 context（或 commit history）。没有 orchestrator agent - 用户就是 orchestrator。
+用户按定义好的顺序运行 slash commands，在步骤之间携带 context（或 commit history）。没有 orchestrator agent —— 用户**就是** orchestrator。
 
 ```
 user runs:  /spec  →  /plan  →  /build  →  /test  →  /review  →  /ship
 ```
 
-**适用场景：** 工作流存在依赖（每一步都需要前一步的输出），并且步骤之间的人类判断有价值。
+**适用场景：** 工作流存在依赖（每一步都需要前一步的输出），并且步骤之间的人工判断有价值。
 
 **本仓库示例：** 完整的 DEFINE → PLAN → BUILD → VERIFY → REVIEW → SHIP 生命周期。
 
-**成本：** 每一步一个 sub-agent context。对编排层免费，因为没有 orchestrator agent。
+**成本：** 每一步一个 sub-agent context。编排层零额外开销，因为没有 orchestrator agent。
 
-**为什么不自动化：** LLM “lifecycle orchestrator” 会 (a) 因为必须为 hand-off 总结而丢失步骤间细节，(b) 跳过能及早发现方向错误的人类检查点，(c) 通过转述回合使 token 成本翻倍。
+**为什么不自动化：** LLM “lifecycle orchestrator” 会 (a) 因交接时必须做摘要而丢失步骤间的微妙细节，(b) 跳过能及早发现方向跑偏的人工检查点，(c) 通过转述回合使 token 成本翻倍。
 
 ---
 
 ### 5. 研究隔离（保留 context）
 
-当任务需要阅读大量材料，而这些材料不应污染 main context 时，spawn 一个 research sub-agent，只返回 digest。
+当任务需要阅读大量不应污染 main context 的材料时，启动一个 research sub-agent，只返回摘要（digest）。
 
 ```
 main agent → research sub-agent (reads 50 files) → digest → main agent continues
@@ -104,19 +104,19 @@ main agent → research sub-agent (reads 50 files) → digest → main agent con
 **适用场景：**
 - 主会话需要专注于下游任务
 - 调查结果远小于它消费的输入
-- main agent 在调查后保留思考空间会提升决策质量
+- 调查完成后，main agent 留有充足思考空间能提升决策质量
 
-**示例：** “在 monorepo 中找到这个 deprecated API 的每个 call site”，“总结这 30 个 ADRs 对 caching 的说明”。
+**示例：** “在 monorepo 中找到这个 deprecated API 的每个调用点”，“总结这 30 个 ADRs 对缓存的说明”。
 
 **成本：** 一个隔离的 sub-agent context。只要替代方案是把数百个文件加载进 main context，就值得使用。
 
-**在 Claude Code 中，使用内置 `Explore` subagent**，不要定义自定义 research persona。`Explore` 运行在 Haiku 上，被拒绝 write/edit tools，并且专为该模式构建。只有当 `Explore` 不适合时（例如你需要模型无法自行推断的领域专属 system prompt），才定义自定义 research subagent。
+**在 Claude Code 中，使用内置 `Explore` subagent**，不要定义自定义 research persona。`Explore` 运行在 Haiku 上，被禁用了 write/edit tools，并且专为该模式构建。只有当 `Explore` 不适合时（例如你需要模型无法自行推断的领域专属 system prompt），才定义自定义 research subagent。
 
 ---
 
 ## Claude Code 兼容性
 
-这个目录与 harness 无关，但大多数读者会在 Claude Code 上运行它。下面说明每种模式如何映射到 Claude Code 的 primitives，以及平台在哪些地方替我们强制执行规则。
+本目录本身不绑定特定宿主工具（harness），但大多数读者会在 Claude Code 中运行。下面说明每种模式如何映射到 Claude Code 的原语机制（primitives），以及平台在哪些地方替我们强制执行规则。
 
 ### Personas 存放位置
 
@@ -128,52 +128,52 @@ Claude Code 有两种并行 primitive。模式 3（并行 fan-out 后合并）�
 
 | | Subagents | Agent Teams |
 |--|-----------|-------------|
-| 协调方式 | Main agent fan out，sub-agents 只回报 | Teammates 互相发消息，共享 task list |
+| 协调方式 | Main agent 做 fan-out 派发，sub-agents 只向其汇报结果 | Teammates 互相发消息，共享 task list |
 | Context | 每个 subagent 自己的 context window | 每个 teammate 自己的 context window |
 | 何时使用 | 产生报告的独立任务 | 需要讨论的协作工作 |
-| 状态 | 稳定 | 实验性 - 需要 `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` |
-| 成本 | 较低 | 较高 - 每个 teammate 都是一个独立 Claude instance |
+| 状态 | 稳定 | 实验性 —— 需要 `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` |
+| 成本 | 较低 | 较高 —— 每个 teammate 都是一个独立 Claude instance |
 
-**本仓库中的 personas 可在两种模式下工作。** 作为 subagents spawn 时（例如由 `/ship` spawn），它们向 main session 报告 findings。作为 teammates spawn 时（`Spawn a teammate using the security-auditor agent type…`），它们可以直接挑战彼此的 findings。Persona definition 相同，只有 spawning context 不同。
+**本仓库中的 personas 可在两种模式下工作。** 作为 subagents 派发时（例如由 `/ship` 拉起），它们向 main session 汇报 findings。作为 teammates 拉起时（`Spawn a teammate using the security-auditor agent type…`），它们可以直接挑战彼此的 findings。Persona 定义相同，只有启动上下文（spawning context）不同。
 
-一个细节：persona 中的 `skills` 和 `mcpServers` frontmatter fields 在作为 subagent 运行时会被尊重，但**作为 teammate 运行时会被忽略** - teammates 会从你的 project 和 user settings 加载 skills 和 MCP servers，和普通 session 一样。如果某个 persona 依赖特定 skill 或 MCP server 已加载，请在 session level 配置，使它在两种模式下都可用。
+一个细节：persona 中的 `skills` 和 `mcpServers` frontmatter 字段在作为 subagent 运行时会生效，但**作为 teammate 运行时会被忽略** —— teammates 会像普通会话一样从你的项目和用户设置中加载 skills 和 MCP servers。如果某个 persona 依赖特定 skill 或 MCP server 已加载，请在会话级别（session level）配置，使其在两种模式下都可用。
 
 ### 平台强制执行的规则
 
-本目录中的两条规则不只是约定 - Claude Code 会强制执行它们：
+本目录中的两条规则不只是约定 —— Claude Code 会强制执行它们：
 
-- **"Subagents cannot spawn other subagents"**（来自 docs 的原文）。反模式 B（persona-calls-persona）和反模式 D（深层 persona trees）在 Claude Code 上从构造上就不可能存在。
-- **"No nested teams"** - teammates 不能 spawn 自己的 teams。同样的反模式在 team level 被阻止。
+- **"Subagents cannot spawn other subagents"**（来自官方文档的原文）。反模式 B（persona 调用 persona）和反模式 D（深层 persona trees）在 Claude Code 上从机制构造上就无法成立。
+- **"No nested teams"** —— teammates 不能 spawn 自己的 teams。同样的反模式在 team 层级也会被阻断。
 
-这意味着你可以采用本目录中的模式，而不用担心 contributors 意外构建这些反模式。它们只会加载失败。
+这意味着你可以放心采用本目录中的模式，而不必担心贡献者不小心写出这些反模式——一旦误写，根本加载不起来。
 
 ### 需要了解的内置 subagents
 
 定义自定义 subagent 前，检查这些是否已经覆盖对应角色：
 
-| Built-in | 用途 |
-|----------|---------|
-| `Explore` | 只读 codebase search 和 analysis。用于模式 5（研究隔离）。 |
-| `Plan` | plan mode 中的只读 research。 |
-| `general-purpose` | 需要 exploration 和 modification 的多步任务。 |
+| 内置 subagent | 用途 |
+|---|---|
+| `Explore` | 只读代码库检索与分析。用于模式 5（研究隔离）。 |
+| `Plan` | plan mode 中的只读调研。 |
+| `general-purpose` | 需要探索和修改的多步任务。 |
 
-不要重新定义这些。在它们之上叠加你的 specialist personas（code-reviewer、security-auditor、test-engineer）。
+不要重新定义这些内置角色。在它们之上叠加你的专业视角 personas（`code-reviewer`、`security-auditor`、`test-engineer`）。
 
 ### Plugin agents 的 frontmatter 限制
 
-Plugin subagents **不**支持 `hooks`、`mcpServers` 或 `permissionMode` frontmatter fields - 这些字段会被静默忽略。如果未来某个 persona 需要其中任一字段，用户必须把文件复制到 `.claude/agents/` 或 `~/.claude/agents/`。
+Plugin subagents **不**支持 `hooks`、`mcpServers` 或 `permissionMode` frontmatter 字段 —— 这些字段会被静默忽略。如果未来某个 persona 需要其中任一字段，用户必须把文件复制到 `.claude/agents/` 或 `~/.claude/agents/`。
 
 Plugin agents 中可用的字段包括：`name`、`description`、`tools`、`disallowedTools`、`model`、`maxTurns`、`skills`、`memory`、`background`、`effort`、`isolation`、`color`、`initialPrompt`。如果想优化成本，可以按 persona 使用 `model`（例如 Haiku 用于 `test-engineer` coverage scans，Sonnet 用于 `code-reviewer`，Opus 用于 `security-auditor`）。
 
 ### 并行 spawn 多个 subagents
 
-在 Claude Code 中，并行 fan-out（模式 3）需要在**同一个 assistant turn 中发出多个 Agent tool calls**。顺序回合会串行化执行。`/ship` 明确指出了这一点。任何新的 orchestrator command 也应如此。
+在 Claude Code 中，并行 fan-out（模式 3）需要在**同一个 assistant 回合（turn）中发出多个 Agent tool calls**。跨回合顺序调用会串行化执行。`/ship` 明确指出了这一点。任何新的编排命令（orchestrator command）也应如此。
 
 ---
 
-## 工作示例：用 Agent Teams 做竞争假设调试
+## 实战示例：用 Agent Teams 做竞争假设调试
 
-这个示例展示何时应该使用 **Agent Teams**，而不是 `/ship` 的 subagent fan-out。两种模式远看很像 - 都 spawn 相同的三个 personas - 但价值来源不同。
+这个示例展示何时应该使用 **Agent Teams**，而不是 `/ship` 的 subagent fan-out。两种模式表面上看很像 —— 都会启动同样的三个 personas —— 但各自发挥价值的方式完全不同。
 
 ### 场景
 
@@ -181,28 +181,28 @@ Plugin agents 中可用的字段包括：`name`、`description`、`tools`、`dis
 
 可能的根因（互斥，且都符合症状）：
 
-1. 新 payment-confirmation flow 中的 race condition
-2. 一个 auth check 偶尔落到慢速 synchronous network call
-3. 某个 query 缺少 index，随 cart size 扩大而变慢
-4. 某个 flaky third-party API，SDK 在 timeout 前静默 retry
+1. 新 payment-confirmation flow 中的竞态条件（race condition）
+2. 一个 auth check 偶尔回落到慢速同步网络调用
+3. 某个查询缺少索引，随购物车规模扩大而变慢
+4. 某个不稳定的第三方 API，SDK 在超时前静默重试
 
-单个 agent 会选择第一个看起来合理的理论，然后停止调查。`/ship` 风格的 subagent fan-out 会让每个 persona 独立报告 - 但它们的报告彼此不会相遇，因此无法排除错误理论。
+单个 agent 会选中第一个看起来合理的理论，然后停止调查。`/ship` 风格的 subagent fan-out 会让每个 persona 独立汇报 —— 但彼此无法互通结果，因此无法相互排除错误假设。
 
-这正是 Agent Teams docs 描述的场景：*“多个独立调查者主动尝试反驳彼此时，存活下来的理论更可能是真正的根因。”*
+这正是 Agent Teams 官方文档描述的场景：*“当多个独立调查者主动尝试反驳彼此时，经受住考验留存下来的理论更可能是真正的根因。”*
 
 ### 为什么这*不是* `/ship` 的工作
 
 | | `/ship` (subagents) | Agent Teams |
 |--|--------------------|-------------|
-| Sub-agents 看到 | 同一个 diff，不同 lens | 一个共享 task list，以及彼此的 messages |
-| 输出 | 三份独立报告 → 一个 merge | 对抗式 debate → 共识 root cause |
-| 适合场景 | 你想对已知 artifact 得到 verdict | 你想在多个 hypotheses 中*找到* artifact |
+| Sub-agents 看到 | 同一个 diff，不同视角 | 一个共享 task list，以及彼此的 messages |
+| 输出 | 三份独立报告 → 一次合并 | 对抗式辩论 → 共识根因 |
+| 适合场景 | 你想对已知产物下定论 | 你想在多个假设中*锁定*问题所在 |
 
-`/ship` 是 verdict；Agent Teams 是 investigation。
+`/ship` 负责下定论（verdict）；Agent Teams 负责排查定位（investigation）。
 
 ### 设置（每个环境一次）
 
-Agent Teams 是实验性的。在 `~/.claude/settings.json` 中：
+Agent Teams 处于实验阶段。在 `~/.claude/settings.json` 中：
 
 ```json
 {
@@ -212,7 +212,7 @@ Agent Teams 是实验性的。在 `~/.claude/settings.json` 中：
 }
 ```
 
-需要 Claude Code v2.1.32 或更高版本。本仓库中的 personas 会自动被拾取 - 不需要手写 team-config files。
+需要 Claude Code v2.1.32 或更高版本。本仓库中的 personas 会自动识别加载 —— 不需要手写 team-config 文件。
 
 ### 触发 prompt
 
@@ -237,43 +237,43 @@ theories. Update findings as consensus emerges. Only converge when
 two teammates agree they can disprove the others'.
 ```
 
-Lead 会引用现有 persona names spawn 三个 teammates。Persona body 会作为额外 instructions **追加** 到每个 teammate 的 system prompt（叠加在 lead 安装的 team-coordination instructions 之上）；上面的 trigger prompt 会成为它们的任务。
+Lead 会引用现有 persona 名称拉起三个 teammates。每个 persona 的正文会作为附加指令**追加**到对应 teammate 的 system prompt（位于 lead 下发的团队协作指令之上）；上面的触发 prompt 会成为它们的任务。
 
 ### 会发生什么
 
-1. 每个 teammate 在自己的 context window 中运行，从自己的 lens 探索 codebase。
+1. 每个 teammate 在自己的 context window 中运行，从各自视角探索 codebase。
 2. Teammates 使用 `message` 直接互相发送 findings。Lead 不需要中转。
-3. 共享 task list 显示谁在调查什么 - 可随时用 `Ctrl+T`（in-process mode）或 tmux pane（split mode）查看。
-4. 当 `code-reviewer` 发现一个本应顺序执行的 `Promise.all` 时，它会发消息给 `security-auditor`，确认 auth call 是否不是 race 的一部分。`security-auditor` 检查并回复 - 要么确认 race 是真正问题，要么提供反证。
-5. `test-engineer` 为领先理论提出一个聚焦的 integration test，team 用它在宣布共识前验证。
+3. 共享 task list 显示谁在调查什么 —— 可随时用 `Ctrl+T`（in-process mode）或 tmux pane（split mode）查看。
+4. 当 `code-reviewer` 发现一个本应顺序执行的 `Promise.all` 时，它会发消息给 `security-auditor`，确认 auth call 是否不属于该竞态。`security-auditor` 检查并回复 —— 要么确认竞态就是真正问题，要么提供反证。
+5. `test-engineer` 为当前最站得住脚的理论提出一个聚焦的集成测试，团队用它在宣布共识前先验证。
 6. Lead 综合收敛后的发现并呈现给你。
 
-你可以通过 `Shift+Down` 循环到任何 teammate 并输入内容来 interrupt - 这在重定向走错方向的 investigator 时很有用。
+你可以通过 `Shift+Down` 切换到任意 teammate 并输入内容来随时打断 —— 当某个调查方向走偏时，可以用这种方式及时纠偏。
 
 ### 何时清理
 
-当调查落到某个 root cause 后，告诉 lead：
+当调查锁定某个根因后，告诉 lead：
 
 ```
 Clean up the team
 ```
 
-始终通过 lead cleanup，而不是 teammate（根据 docs：teammates 缺少完整 team context，无法清理）。
+始终通过 lead 来清理（cleanup），而不是通过 teammate（按文档说明：teammates 缺少完整 team 上下文，无法执行清理）。
 
 ### 成本预期
 
-三个 Sonnet teammates 运行约 10-15 分钟调查，成本会明显高于由 `/ship` 以 subagents 方式 spawn 同样三个 personas。理由是*结论质量* - 在 production debugging 中，错误修复的代价很高，额外 tokens 很划算。对于常规 PR review，坚持使用 `/ship`。
+三个 Sonnet teammates 运行约 10–15 分钟调查，成本会明显高于由 `/ship` 以 subagents 方式启动同样三个 personas。理由是*结论质量* —— 在生产环境排障中，修错方向的代价高昂，多花的 tokens 很划算。对于常规 PR review，坚持使用 `/ship`。
 
 ### 这个场景中的反模式
 
-**不要**把它重建成 fan out subagents 的 `/debug` slash command。Subagents 不能互相发消息 - 你会失去让该模式成立的对抗式 debate。如果某个 workflow 反复出现，把上面的 trigger prompt 文档化为 snippet，而不是包装成误用 subagents 的 slash command。
+**不要**把它重建成 fan out subagents 的 `/debug` slash command。Subagents 不能互相发消息 —— 你会失去让该模式成立的对抗式辩论。如果某个工作流反复出现，把上面的触发 prompt 记录为可复用片段（snippet），而不是包装成误用 subagents 的 slash command。
 
 ### 什么时候*不*使用 Agent Teams
 
-- 对已知 diff 做 production-bound verdict → 使用 `/ship` (subagents)。
-- 对一个 artifact 做一个 specialist perspective → 直接调用 persona。
-- 顺序生命周期（spec → plan → build）→ 用户驱动的 slash commands（模式 4）。
-- 大量读取、只需小 digest 的 research → 内置 `Explore` subagent。
+- 对已知 diff 做上线前的放行判断（verdict） → 使用 `/ship` (subagents)。
+- 对一个产物做单个专精视角审视 → 直接调用 persona。
+- 顺序生命周期（spec → plan → build） → 用户驱动的 slash commands（模式 4）。
+- 大量读取、只需小摘要（digest）的调研 → 内置 `Explore` subagent。
 
 只有当 teammates **需要**互相挑战才能得出正确答案时，才使用 Agent Teams。
 
@@ -290,12 +290,12 @@ Clean up the team
 ```
 
 **失败原因：**
-- 纯 routing 层，没有领域价值
-- 增加两次 paraphrasing hops → 信息损失 + 约 2× token 成本
+- 纯路由层（routing），没有领域价值
+- 多出两次转述中转（paraphrasing hops） → 信息损失 + 约 2× token 成本
 - 用户已经知道自己想要 review；他们本可以直接调用 `/review`
-- 重复了 slash commands 和 `AGENTS.md` 中 intent mapping 已经做的工作
+- 重复了 slash commands 和 `AGENTS.md` 中意图映射（intent mapping）已经做过的工作
 
-**替代做法：** 添加或改进 slash commands。在 `AGENTS.md` 中记录 intent → command mapping。
+**替代做法：** 添加或改进 slash commands。在 `AGENTS.md` 中记录 intent → command 映射。
 
 ---
 
@@ -318,10 +318,10 @@ Clean up the team
 一个 agent 代表用户调用 `/spec`，再调用 `/plan`，再调用 `/build`，依此类推。
 
 **失败原因：**
-- 丢失能发现方向错误的人类检查点
-- 每次 hand-off 都会总结 context - 长 pipeline 中会累积 drift
-- Token 成本翻倍：每一步都有 orchestrator turn + sub-agent turn
-- 在最需要判断的节点移除了用户 agency
+- 丢失能及早发现方向跑偏的人工检查点
+- 每次 hand-off 都会摘要 context —— 长 pipeline 中会不断累积偏差（drift）
+- Token 成本翻倍：每一步都有 orchestrator 回合 + sub-agent 回合
+- 恰好在最需要判断的节点剥夺了用户主导权（agency）
 
 **替代做法：** 保持用户作为 orchestrator。在 `README.md` 中记录推荐顺序，让用户调用它。
 
@@ -332,11 +332,11 @@ Clean up the team
 `/ship` 调用一个 `pre-ship-coordinator`，后者调用 `quality-coordinator`，后者再调用 `code-reviewer`。
 
 **失败原因：**
-- 每一层都增加 latency 和 tokens，却没有决策价值
-- Debugging 会变成多层级调查
-- 叶子 personas 会因多次 summarization steps 丢失 context
+- 每一层都增加延迟和 token 消耗，却没有决策价值
+- 调试会变成多层级的调查追查
+- 末端的叶子 personas 会因多层摘要传递而丢失上下文
 
-**替代做法：** 将编排深度保持在最多 1 层（slash command → personas）。Merge 在 main agent 中发生。
+**替代做法：** 将编排深度控制在最多 1 层（slash command → personas）。合并在 main agent 中完成。
 
 ---
 
@@ -365,6 +365,6 @@ Is the work one perspective on one artifact?
 1. 你已经在真实工作中至少使用过该模式两次
 2. 你能指出本仓库中展示该模式的具体 artifact
 3. 你能解释为什么现有模式无法胜任
-4. 你能描述它的反模式阴影（人们会误构建什么）
+4. 你能描述它的反面误用情形（人们最容易把它错建成什么）
 
-过早添加目录条目会变成没人遵循的愿望式文档。
+过早收进目录的条目会变成没人遵守的一纸空谈（愿望式文档）。

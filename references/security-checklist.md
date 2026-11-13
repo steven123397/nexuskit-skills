@@ -25,7 +25,7 @@ Web 应用安全的快速参考。配合 `security-and-hardening` skill 使用�
 - [ ] 画出信任边界（requests、uploads、webhooks、第三方 APIs、LLM 输出，以及由你不控制的进程写入的本地值）
 - [ ] 点名资产（凭据、PII、支付数据、admin 操作、资金流转）
 - [ ] 对每条边界跑一遍 STRIDE（Spoofing 伪造、Tampering 篡改、Repudiation 否认、Info disclosure 信息泄露、DoS 拒绝服务、Elevation 提权）
-- [ ] 在 use cases 旁边写下 abuse cases（「我要是怎么滥用这个功能？」）
+- [ ] 在 use cases 旁边写下滥用场景 abuse cases（「我会怎么滥用这个功能？」）
 
 ## 提交前检查
 
@@ -67,7 +67,7 @@ Web 应用安全的快速参考。配合 `security-and-hardening` skill 使用�
 
 ### 破坏性路径操作
 
-针对由数据指定的目标做收敛。先解析，再判断  - 并且把解析结果当作候选，而不是当作授权：
+针对由输入数据指定的目标做约束收口。先解析，再判断 —— 并且把解析结果当作待审候选，而不是当作授权依据：
 
 ```typescript
 import { realpath, readFile } from 'node:fs/promises';
@@ -95,8 +95,8 @@ async function resolveDeletable(candidate: string, expectedOwner: string) {
 
 这段代码没有做到的事，也是复制这段 snippet 时必须一并说明的事：
 
-- **marker 只是自我声明。** 任何能在允许根目录内写入的东西，都能写 `.owner`。`expectedOwner` 必须来自已认证的状态；而且这个 marker 需要完整性保护（严格的 ownership，或 MAC），才能算作授权，否则它只是针对误推导目标的一道一致性检查。
-- **返回一个路径会留下 check/use 竞态。** 如果不可信进程可能在检查和调用之间替换某个祖先目录，就改用无跟随（no-follow）的 descriptor、在根目录之下语义内直接操作，或保证该层级在此期间不可变。
+- **marker 只是自我声明。** 任何能在允许根目录内写入的进程或代码，都能写 `.owner`。`expectedOwner` 必须取自已认证的状态；而且这个 marker 需要完整性保护（严格的文件属主权限，或 MAC 校验），才能算作授权，否则它只是针对误推导目标的一道一致性检查。
+- **返回一个路径会留下 check/use 竞态。** 如果不可信进程可能在检查和调用之间替换某个祖先目录，就改用不跟随符号链接（no-follow）的 descriptor、采用受限于根目录边界的操作语义（beneath-the-root semantics），或保证该目录层级在此期间不可变。
 
 ## 安全响应头
 
@@ -128,17 +128,17 @@ cors({ origin: '*' })  // Allows any origin
 ## 数据保护
 
 - [ ] API 响应中排除敏感字段（`passwordHash`、`resetToken` 等）
-- [ ] 不记录敏感数据（密码、tokens、完整 CC numbers）
+- [ ] 不记录敏感数据（密码、tokens、完整信用卡号）
 - [ ] PII 静态加密（如果法规要求）
 - [ ] 所有外部通信使用 HTTPS
 - [ ] 数据库备份已加密
-- [ ] 个人数据被分类、为明确声明的目的而收集，并做了最小化
+- [ ] 个人数据已分类，仅针对明确声明的目的收集，并贯彻最小化原则
 - [ ] 个人数据有保留期限和可用的删除路径（包括备份、缓存、索引）
-- [ ] 在需要时支持导出/删除（数据主体）请求；第三方共享有同意条款和数据处理协议
+- [ ] 在需要时支持导出/删除（数据主体）请求；向第三方共享需取得用户同意（consent）并签署数据处理协议（DPA）
 
 ## 依赖安全
 
-先找到**安装边界**。如果该包被父级的 `workspaces` 声明匹配到，就以那个 workspace root 为边界；否则以同时拥有其 manifest 和依赖图的最近项目根目录为边界。在这个边界上，交叉印证 `packageManager`（如果存在）、lockfile 和 CI 命令。一旦它们互相矛盾，或那里存在多个互相竞争的管理器 lockfile，就停下来。嵌套项目只有在其位于父 workspace 之外时才是独立的；独立子项目合理地可以使用不同的管理器。
+先找到**安装边界**。如果该包被父级的 `workspaces` 声明匹配到，就以那个 workspace root 为边界；否则以同时拥有其 manifest 和依赖图的最近项目根目录为边界。在这个边界上，交叉印证 `packageManager`（如果存在）、lockfile 和 CI 命令。一旦它们互相矛盾，或那里存在多个互相竞争的管理器 lockfile，就停下来。嵌套项目只有在其位于父 workspace 之外时才是独立的；独立子项目可以合理使用不同的包管理器。
 
 | 管理器/版本信号 | 冻结/不可变 CI 安装 | 已知漏洞审计 |
 |---|---|---|
@@ -151,9 +151,9 @@ cors({ origin: '*' })  // Allows any origin
 
 ### Install-Script 门禁
 
-绝不要通过「先照常安装、再去发现」的方式，在一个默认设置尚未核实的客户端上摸出依赖的生命周期脚本。
+绝不要在一个默认设置尚未核实的客户端上通过「先照常安装、再看会发生什么」的方式去试探依赖的生命周期脚本。
 
-1. 以禁用依赖脚本的方式 bootstrap，或采用有文档支持的默认拒绝（default-deny）策略加 fail-closed 强制执行。
+1. 以禁用依赖脚本的方式初始化（bootstrap），或采用有文档背书的默认拒绝（default-deny）策略加 fail-closed 强制执行。
 2. 批准之前，检查确切版本的包及其脚本源码。
 3. 在安装边界记录范围最窄的原生 allow/deny 策略，并提交到版本库。
 4. 用该策略跑一次干净的 frozen/immutable 安装，并验证必需的包仍能构建。
@@ -181,17 +181,17 @@ cors({ origin: '*' })  // Allows any origin
 - [ ] 强制审计自动修复（`npm audit fix --force` 或等价命令）绝不自动执行；修复的 diff 和 changelog 要经过审查
 - [ ] 在管理器支持的地方验证 registry 签名/provenance
 - [ ] 依赖生命周期脚本在首次执行前即被阻断，只通过所锁定管理器的原生策略批准
-- [ ] 新依赖审查其 ownership、维护状态、发布时长、provenance、传递依赖图和 typosquatting
+- [ ] 新依赖审查其维护者归属（ownership）、维护状态、发布时长、构建溯源（provenance）、传递依赖图和仿冒包名（typosquatting）风险
 
 ## AI / LLM 安全
 
 适用于任何调用 LLM 的功能（chatbots、摘要器、agents、RAG）：
 
-- [ ] 模型输出一律视为不可信  - 绝不进入 `eval`/SQL/shell/`innerHTML`/文件路径
+- [ ] 模型输出一律视为不可信 —— 绝不进入 `eval`/SQL/shell/`innerHTML`/文件路径
 - [ ] 假定存在 prompt injection；权限在代码里强制执行，而不是写死在 system prompt 里
 - [ ] secrets、跨租户数据和完整 system prompt 都不进入 context window
 - [ ] tool/agent 权限限定范围；破坏性或不可逆操作需要确认
-- [ ] 设置 token、rate 和 recursion/loop 上限（约束资源消耗）
+- [ ] 设置 token 用量、请求速率和递归/循环上限（约束资源消耗）
 
 ## 错误处理
 
@@ -238,5 +238,5 @@ res.status(500).json({
 | LLM06 | Excessive Agency | 限定 tool 权限范围；确认破坏性操作 |
 | LLM07 | System Prompt Leakage | 假定 system prompt 可能泄露；里面不放任何 secrets |
 | LLM08 | Vector and Embedding Weaknesses | RAG embeddings 按租户分区；索引前先验证文档 |
-| LLM09 | Misinformation | 回答附带引用作为依据；验证关键论断；保留 human in the loop |
+| LLM09 | Misinformation | 回答附带引用作为依据；验证关键论断；保留人工把关（human in the loop） |
 | LLM10 | Unbounded Consumption | 对 token、请求速率和 loop/recursion 深度设上限 |

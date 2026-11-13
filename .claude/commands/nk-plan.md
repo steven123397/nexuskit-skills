@@ -1,5 +1,5 @@
 ---
-description: 将工作拆解为带 acceptance criteria 和 dependency ordering 的小型可验证 tasks
+description: 将工作拆解为带验收标准（acceptance criteria）和依赖顺序的小型可验证任务
 disable-model-invocation: true
 ---
 
@@ -7,12 +7,12 @@ disable-model-invocation: true
 
 阅读现有 spec（SPEC.md 或等效文件）以及相关 codebase 部分。然后：
 
-1. 进入 plan mode — 只读，不做代码变更
-2. 识别 components 之间的 dependency graph
-3. 垂直切分工作（每个 task 是一条完整路径，而不是水平分层）
-4. 编写带 acceptance criteria 和 verification steps 的 tasks
-5. 在 phases 之间添加 checkpoints
-6. 将 plan 提交给人类 review
+1. 进入 plan mode —— 只读，不做代码变更
+2. 梳理组件（components）之间的依赖关系图（dependency graph）
+3. 垂直切分工作（每个 task 是一条完整路径，而不是按水平分层）
+4. 编写带验收标准（acceptance criteria）和验证步骤的 tasks
+5. 在各个 phases 之间添加检查点（checkpoints）
+6. 将 plan 提交给人工审阅（review）
 
 将 plan 保存到 tasks/plan.md，将 task list 保存到 tasks/todo.md。
 

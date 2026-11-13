@@ -1,6 +1,6 @@
 # 测试模式参考（JavaScript/TypeScript）
 
-JavaScript/TypeScript 测试模式的快速参考  - Jest、React Testing Library、Supertest 和 Playwright  - 用来演示 `test-driven-development` skill 中的通用原则。这些原则（Arrange-Act-Assert、命名、mock 纪律、反模式）适用于任何生态系统；此处展示的语法和工具是 JS/TS 专属的。换到其他技术栈时，遵循同样的原则，使用该仓库自己的测试框架和命令。
+JavaScript/TypeScript 测试模式的快速参考 —— Jest、React Testing Library、Supertest 和 Playwright —— 用来演示 `test-driven-development` skill 中的通用原则。这些原则（Arrange-Act-Assert、命名、mock 纪律、反模式）适用于任何生态系统；此处展示的语法和工具是 JS/TS 专属的。切换到其他技术栈时，遵循同样的原则，使用该仓库自己的测试框架和命令。
 
 ## 目录
 
@@ -233,4 +233,4 @@ test('user can create and complete a task', async ({ page }) => {
 | 跳过测试来通过 CI | 隐藏真实 bug | 修复或删除测试 |
 | 永久使用 `test.skip` | 死代码 | 移除或修复 |
 | 断言过宽 | 抓不到 regressions | 保持具体 |
-| 没有 async 错误处理 | 错误被吞，假通过 | 始终 `await` async tests |
+| 没有 async 错误处理 | 异常被静默吞掉，造成假通过 | 始终 `await` async 测试 |
