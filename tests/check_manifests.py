@@ -48,7 +48,7 @@ def validate(root, release_tag=None):
             problems.append(f"{label}: skill count must match disk ({len(names)})")
 
     # v0.4.0 起主体客户端为 Claude Code；Codex 安装方式废止（SKILL.md 体积超其读取上限），
-    # Kimi 适配挂起至收尾阶段（.kimi-plugin/ 保留在仓但暂不参与校验）。
+    # Kimi 适配已移除。
     versions = []
     for rel in [".claude-plugin/plugin.json"]:
         data = load(rel)
@@ -94,16 +94,6 @@ def validate(root, release_tag=None):
                 problems.append(f"{market_rel}: plugin entry version must be valid SemVer")
             elif versions and version != versions[0]:
                 problems.append(f"{market_rel}: plugin version {version} differs from {versions[0]}")
-
-    # Kimi 适配挂起（计划 C3）：只校验 manifest 自身格式，不要求与主体版本同步。
-    # 恢复适配时把它移出挂起处理并加入上面的版本一致性比较。
-    kimi_rel = ".kimi-plugin/plugin.json"
-    if (root / kimi_rel).is_file():
-        kimi = load(kimi_rel)
-        if kimi is not None:
-            kimi_version = kimi.get("version")
-            if not isinstance(kimi_version, str) or not VERSION.fullmatch(kimi_version):
-                problems.append(f"{kimi_rel}: version must be valid SemVer")
 
     for rel in ["README.md"]:
         try:

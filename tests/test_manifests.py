@@ -105,14 +105,6 @@ class ManifestChecks(unittest.TestCase):
                     lambda d: d["plugins"][0].pop("version"))
         self.assertTrue(any("version must be valid SemVer" in p for p in validate(self.root)))
 
-    def test_suspended_kimi_manifest_is_semver_only(self):
-        path = self.root / ".kimi-plugin/plugin.json"
-        path.parent.mkdir(parents=True)
-        path.write_text(json.dumps({"name": "nexuskit", "version": "0.3.1"}), encoding="utf-8")
-        self.assertFalse(any(".kimi-plugin" in p for p in validate(self.root)))
-        path.write_text(json.dumps({"name": "nexuskit", "version": "0.3"}), encoding="utf-8")
-        self.assertTrue(any("kimi" in p and "SemVer" in p for p in validate(self.root)))
-
     def test_unknown_or_missing_router_entry(self):
         for rel in ["README.md"]:
             path = self.root / rel

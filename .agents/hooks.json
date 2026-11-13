@@ -1,0 +1,11 @@
+{
+  "beads-prime": {
+    "SessionStart": [
+      {
+        "type": "command",
+        "command": "python ./hooks/beads-prime.py",
+        "timeout": 10
+      }
+    ]
+  }
+}
