@@ -7,23 +7,23 @@ description: Automates CI/CD pipeline setup. Use when setting up or modifying bu
 
 ## 概览
 
-自动化质量门禁，确保任何变更在进入生产环境前都通过测试、lint、类型检查和 build。CI/CD 是其他所有 skill 的执行机制，它能捕捉人类和 agents 漏掉的问题，并且对每一个变更都一致执行。
+把质量门禁自动化，确保任何变更在通过测试、lint、类型检查和 build 之前都无法进入生产环境。CI/CD 是落地其他所有 skill 纪律的强制执行机制——它能拦住人类和 agents 容易遗漏的问题，而且对每一次变更都会一视同仁地严格执行。
 
-**Shift Left:** 尽可能早地在 pipeline 中捕捉问题。Linting 中发现的 bug 只花几分钟；同一个 bug 到生产环境才发现就要花几小时。把检查前移：static analysis 在 tests 之前，tests 在 staging 之前，staging 在 production 之前。
+**质量左移（Shift Left）：** 尽可能在 pipeline 的更早阶段就把问题拦下来。在 lint 阶段揪出的 bug 只需几分钟就能修好；同一个 bug 放到生产环境才暴露，排查代价就是按小时算。把检查尽量往前挪：先做静态分析再跑测试，先过测试再上 staging，先验证 staging 再进 production。
 
-**Faster is Safer:** 更小批次、更频繁发布会降低风险，而不是增加风险。包含 3 个变更的部署比包含 30 个变更的部署更容易调试。频繁发布会建立对发布流程本身的信心。
+**小步快跑更安全（Faster is Safer）：** 缩小单次发布规模、提高发布频次反而是在降低风险，而不是推高风险。一次只带 3 个改动的部署，比塞了 30 个改动的部署好排查得多；频繁发布也会反过来建立起对发布流程本身的信心。
 
 ## 何时使用
 
-- 设置新项目的 CI pipeline
-- 添加或修改自动化检查
+- 为新项目搭建 CI pipeline
+- 新增或修改自动化检查项
 - 配置部署 pipelines
-- 当某个变更应触发自动化验证时
-- 调试 CI failures
+- 需要让某类变更自动触发校验流程时
+- 排查 CI 失败（failure）
 
 ## 质量门禁 Pipeline
 
-每个变更在合并前都经过这些门禁：
+每个变更在合并前都要经过以下门禁：
 
 ```
 Pull Request Opened
@@ -51,7 +51,7 @@ Pull Request Opened
   Ready for review
 ```
 
-**任何门禁都不能跳过。** 如果 lint 失败，就修 lint，不要禁用规则。如果测试失败，就修代码，不要跳过测试。
+**任何门禁都不能跳过。** 如果 lint 失败，就去修 lint，不要关掉规则；如果测试失败，就去修代码，不要跳过测试。
 
 ## GitHub Actions 配置
 
@@ -134,7 +134,7 @@ jobs:
           DATABASE_URL: postgresql://ci_user:${{ secrets.CI_DB_PASSWORD }}@localhost:5432/testdb
 ```
 
-> **Note:** 即使是仅供 CI 使用的测试数据库，也要用 GitHub Secrets 存放凭据，而不是硬编码值。这能建立良好习惯，并防止测试凭据在其他上下文中被意外复用。
+> **注意：** 即使是仅供 CI 使用的测试数据库，也必须用 GitHub Secrets 来存放凭据，不要硬编码在配置里。这不仅能养成好习惯，也能避免测试凭据在其他场景下被误复用。
 
 ### E2E Tests（端到端测试）
 
@@ -161,9 +161,9 @@ jobs:
           path: playwright-report/
 ```
 
-## 将 CI Failures 反馈给 Agents
+## 将 CI 失败结果反馈给 Agents
 
-CI 搭配 AI agents 的力量在于反馈闭环。当 CI 失败时：
+CI 搭配 AI agents 的威力在于形成反馈闭环。当 CI 失败时：
 
 ```
 CI fails
@@ -194,7 +194,7 @@ Build error → Agent checks config and dependencies
 
 ### Preview Deployments（预览部署）
 
-每个 PR 都获得一个 preview deployment，用于手动测试：
+每个 PR 都会获得一个 preview deployment（预览部署），便于人工测试验证：
 
 ```yaml
 # Deploy preview on PR (Vercel/Netlify/etc.)
@@ -209,12 +209,12 @@ deploy-preview:
 
 ### Feature Flags（功能开关）
 
-Feature flags 将部署和发布解耦。把未完成或有风险的功能部署在 flags 后面，这样你可以：
+Feature flags 将“部署（deploy）”与“发布（release）”解耦。把尚未完工或存在风险的功能藏在 flags 后面上线，这样你就能：
 
-- **发布代码但不启用。** 早合并到 main，准备好后再启用。
-- **无需重新部署即可回滚。** 禁用 flag，而不是 revert 代码。
-- **Canary 新功能。** 先对 1% 用户启用，再到 10%，再到 100%。
-- **运行 A/B tests。** 比较有无该功能时的行为。
+- **代码先上线但暂不启用。** 尽早合入 main，等条件成熟再开启。
+- **无需重新部署即可回滚。** 直接关掉 flag，而不是回滚代码再重新发布。
+- **灰度（Canary）放量新功能。** 先对 1% 用户启用，再到 10%，最后放量到 100%。
+- **开展 A/B tests。** 对比开启与关闭该功能时的真实表现。
 
 ```typescript
 // Simple feature flag pattern
@@ -224,7 +224,7 @@ if (featureFlags.isEnabled('new-checkout-flow', { userId })) {
 return renderLegacyCheckout();
 ```
 
-**Flag 生命周期：** Create → Enable for testing → Canary → Full rollout → Remove the flag and dead code。永久存在的 flags 会变成技术债，因此创建时就设置 cleanup date。
+**Flag 生命周期：** Create → Enable for testing → Canary → Full rollout → Remove the flag and dead code。长期留存的 flags 会演变成技术债，因此在创建之初就应该设定好清理日期（cleanup date）。
 
 ### 分阶段发布
 
@@ -281,7 +281,7 @@ CI secrets          → Stored in GitHub Secrets / vault
 Production secrets  → Stored in deployment platform / vault
 ```
 
-CI 永远不应拥有 production secrets。为 CI testing 使用单独的 secrets。
+CI 绝不应持有生产环境 secrets。务必为 CI 测试单独配置隔离的 secrets。
 
 ## CI 之外的自动化
 
@@ -300,14 +300,14 @@ updates:
 
 ### Build Cop 角色
 
-指定某个人负责保持 CI green。当 build 失败时，Build Cop 的职责是修复或回滚，而不是由造成失败的人负责。这可以防止 broken builds 在“别人会修”的假设下累积。
+指定专人负责维护 CI 绿灯状态。当构建失败时，由 Build Cop 负责修复或回滚，而不是被动等待引发故障的提交者来处理。这能避免所有人都指望“别人会去修”，从而让破损的构建状态不断累积。
 
-### PR Checks（PR 检查）
+### PR 检查（PR Checks）
 
-- **Required reviews:** 合并前至少 1 个 approval
-- **Required status checks:** 合并前 CI 必须通过
-- **Branch protection:** 禁止 force-pushes 到 main
-- **Auto-merge:** 如果所有检查通过且已批准，自动合并
+- **强制评审（Required reviews）：** 合并前至少需要 1 个 approval
+- **强制状态检查（Required status checks）：** 合并前 CI 必须全部通过
+- **分支保护（Branch protection）：** 禁止向 main 强推（force-push）
+- **自动合并（Auto-merge）：** 如果所有检查通过且审批完成，自动合并
 
 ## CI 优化
 
@@ -364,30 +364,30 @@ jobs:
 
 | 合理化借口 | 现实 |
 |---|---|
-| “CI 太慢了” | 优化 pipeline（见「CI 优化」一节），不要跳过它。5 分钟 pipeline 可以避免数小时调试。 |
-| “这个变更很小，跳过 CI” | 小变更也会破坏 build。反正 CI 对小变更通常很快。 |
-| “测试不稳定，重跑就行” | Flaky tests 会掩盖真实 bug 并浪费所有人的时间。修复 flakiness。 |
-| “以后再加 CI” | 没有 CI 的项目会累积 broken states。第一天就设置。 |
-| “手动测试就够了” | 手动测试无法扩展，也不可重复。能自动化的都自动化。 |
+| “CI 太慢了” | 去优化 pipeline（见「CI 优化」一节），不要跳过它。5 分钟的 pipeline 能帮你省下几小时的排障时间。 |
+| “这个变更很小，跳过 CI” | 小改动照样会把构建搞挂，而且小改动跑 CI 本来也很快。 |
+| “测试不稳定，重跑就行” | 不稳定的测试（flaky tests）会掩盖真实 bug，并持续浪费所有人的时间。必须从根源修掉这种不稳定性。 |
+| “以后再加 CI” | 没有 CI 兜底的项目迟早会积累大量破损状态。从第一天起就配好它。 |
+| “手动测试就够了” | 手动测试既不可扩展，也无法稳定复现。凡是能自动化的检查都应自动化。 |
 
 ## 危险信号
 
 - 项目中没有 CI pipeline
-- CI failures 被忽略或静音
-- 为了让 pipeline 通过，在 CI 中禁用测试
-- 没有 staging verification 就部署 production
-- 没有 rollback mechanism
-- Secrets 存放在代码或 CI config files 中（而不是 secrets manager）
-- CI 时间很长但没有优化投入
+- 对 CI 失败视而不见或直接静音屏蔽
+- 为了让 pipeline 变绿，直接在 CI 里禁用测试
+- 没在 staging 验证就直发 production
+- 没有回滚（rollback）机制
+- 把 secrets 直接写死在代码或 CI 配置文件中（而非存入 secrets manager）
+- CI 耗时很长却没有任何优化投入
 
 ## 验证
 
 设置或修改 CI 后：
 
-- [ ] 所有质量门禁都存在（lint、types、tests、build、audit）
-- [ ] Pipeline 在每个 PR 和 push to main 时运行
-- [ ] Failures 会阻塞合并（已配置 branch protection）
-- [ ] CI results 会反馈到开发循环
-- [ ] Secrets 存放在 secrets manager 中，而不是代码中
-- [ ] 部署有 rollback mechanism
-- [ ] 测试套件的 pipeline 在 10 分钟内运行完成
+- [ ] 所有质量门禁均已配置到位（lint、类型检查、测试、build、安全审计）
+- [ ] Pipeline 在每次发起 PR 及推送（push）到 main 时都会运行
+- [ ] 检查失败会阻塞合并（已配好 branch protection）
+- [ ] CI 结果能够闭环反馈回开发流程
+- [ ] Secrets 统一存放在 secrets manager 中，而非硬编码进代码
+- [ ] 部署流程配备了可靠的回滚（rollback）机制
+- [ ] 完整测试套件在 pipeline 中能在 10 分钟内跑完

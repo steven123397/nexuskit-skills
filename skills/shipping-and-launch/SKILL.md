@@ -7,15 +7,15 @@ description: Prepares production launches. Use when preparing to deploy to produ
 
 ## 概览
 
-带着信心发布。目标不只是部署，而是安全地部署：监控到位、回滚计划就绪，并且清楚知道成功是什么样子。每次上线都应该是可回滚、可观测、增量推进的。
+胸有成竹地发布上线。目标不只是把代码部署出去，而是安全地部署：监控配置到位、回滚计划准备就绪，并且明确知道“成功”是什么样子。每一次上线都应该是可回滚、可观测、渐进式推进的。
 
 ## 何时使用
 
 - 首次将功能部署到生产环境
 - 向用户发布重大变更
 - 迁移数据或基础设施
-- 开放 beta 或 early access 项目
-- 任何有风险的部署（也就是所有部署）
+- 开放 beta 或抢先体验（early access）项目
+- 任何存在风险的部署（也就是所有部署）
 
 ## 发布前检查清单
 
@@ -25,19 +25,19 @@ description: Prepares production launches. Use when preparing to deploy to produ
 - [ ] Build 成功且没有警告
 - [ ] Lint 和类型检查通过
 - [ ] 代码已 review 并获批准
-- [ ] 没有应在上线前解决的 TODO 注释
+- [ ] 没有残留应当在上线前解决的 TODO 注释
 - [ ] 生产代码中没有 `console.log` 调试语句
-- [ ] 错误处理覆盖预期失败模式
+- [ ] 错误处理覆盖了预期的失败模式
 
 ### 安全
 
 - [ ] 代码或版本控制中没有 secrets
-- [ ] 生态的依赖审计（`npm audit`、`pip-audit`、`cargo audit` 等）没有 critical 或 high 漏洞
-- [ ] 所有用户可访问 endpoint 都有输入校验
+- [ ] 对应技术栈的依赖安全审计（`npm audit`、`pip-audit`、`cargo audit` 等）没有 critical 或 high 级别漏洞
+- [ ] 所有面向用户的 endpoint 都有输入校验
 - [ ] 认证和授权检查已到位
-- [ ] 安全 header 已配置（CSP、HSTS 等）
+- [ ] 安全响应头（security headers）已配置（CSP、HSTS 等）
 - [ ] 认证 endpoint 已设置 rate limiting
-- [ ] CORS 配置为具体 origin（不是通配符）
+- [ ] CORS 已配置为具体允许的 origin（不使用通配符）
 
 ### 性能
 
@@ -54,29 +54,29 @@ description: Prepares production launches. Use when preparing to deploy to produ
 - [ ] 屏幕阅读器可以传达页面内容和结构
 - [ ] 颜色对比度满足 WCAG 2.1 AA（文本 4.5:1）
 - [ ] 模态框和动态内容的焦点管理正确
-- [ ] 错误消息具有描述性，并与表单字段关联
+- [ ] 错误提示信息具有描述性，并与表单字段关联
 - [ ] axe-core 或 Lighthouse 中没有可访问性警告
 
 ### 基础设施
 
 - [ ] 生产环境变量已设置
-- [ ] 数据库 migration 已应用（或准备好应用）
+- [ ] 数据库 migration 已应用（或已准备好随发布安全应用）
 - [ ] DNS 和 SSL 已配置
 - [ ] 静态资源 CDN 已配置
-- [ ] Logging 和 error reporting 已配置
-- [ ] Health check endpoint 存在且有响应
+- [ ] 日志记录（logging）和错误上报（error reporting）已配置
+- [ ] Health check endpoint 已存在且能正常响应
 
 ### 文档
 
-- [ ] README 已更新任何新的 setup 要求
-- [ ] API 文档为最新
-- [ ] 任何架构决策都有 ADR
+- [ ] README 已更新所有新增的环境配置要求
+- [ ] API 文档保持最新
+- [ ] 所有重大架构决策均已编写 ADR
 - [ ] Changelog 已更新
 - [ ] 面向用户的文档已更新（如适用）
 
 ## Feature Flag 策略
 
-通过 feature flags 发布，将部署和发布解耦：
+通过 feature flags 上线，将“部署”与“发布”解耦：
 
 ```typescript
 // Feature flag check
@@ -102,9 +102,9 @@ return null;
 ```
 
 **规则：**
-- 每个 feature flag 都有 owner 和到期日期
-- 全量发布后 2 周内清理 flags
-- 不要嵌套 feature flags（会产生指数级组合）
+- 每个 feature flag 都必须明确指定 owner 和过期清理日期
+- 全量发布后 2 周内清理掉 flags
+- 不要嵌套使用 feature flags（否则会产生指数级增长的组合）
 - 在 CI 中测试 flag 的两种状态（on 和 off）
 
 ## 分阶段发布
@@ -141,21 +141,21 @@ return null;
 
 ### 发布决策阈值
 
-用这些阈值判断每个阶段应该继续推进、暂停调查，还是回滚：
+用以下阈值判断每个阶段应该继续推进、暂停调查，还是回滚：
 
 | 指标 | 继续推进（green） | 暂停并调查（yellow） | 回滚（red） |
 |--------|-----------------|-------------------------------|-----------------|
-| Error rate | 基线 10% 以内 | 高于基线 10-100% | >2x baseline |
-| P95 latency | 基线 20% 以内 | 高于基线 20-50% | >50% above baseline |
-| Client JS errors | 没有新错误类型 | 新错误出现在 <0.1% 的 sessions 中 | 新错误出现在 >0.1% 的 sessions 中 |
-| Business metrics | 中性或正向 | 下降 <5%（可能是噪声） | 下降 >5% |
+| Error rate | 与基线偏差在 10% 以内 | 高于基线 10-100% | 超过基线 2 倍（>2x） |
+| P95 latency | 与基线偏差在 20% 以内 | 高于基线 20-50% | 高于基线 50% 以上 |
+| Client JS errors | 未出现新的错误类型 | 新错误出现在 <0.1% 的 sessions 中 | 新错误出现在 >0.1% 的 sessions 中 |
+| Business metrics | 持平或正向 | 下降 <5%（可能是正常波动噪声） | 下降 >5% |
 
 ### 何时回滚
 
 如果出现以下情况，立即回滚：
-- Error rate 增加到超过 2x baseline
-- P95 latency 增加超过 50%
-- 用户报告的问题激增
+- Error rate 增加到超过基线的 2 倍
+- P95 latency 上升超过 50%
+- 用户上报的问题激增
 - 检测到数据完整性问题
 - 发现安全漏洞
 
@@ -243,7 +243,7 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 ## Error Budget 发布门禁
 
-服务的 error budget（SLO 允许失败的请求或时间占比）决定现在发布是否安全。把它当作客观门禁，而不是谈判筹码：
+服务的 error budget（SLO 允许失败的请求或时间占比）决定现在发布是否安全。把它当作客观硬门禁，而不是讨价还价的筹码：
 
 ```
 Budget remaining > 20%  →  Ship normally; monitor closely
@@ -252,7 +252,7 @@ Budget exhausted        →  Freeze feature work; focus entirely on reliability
 Budget resets           →  Resume normal pace; bake in the fix that recovered it
 ```
 
-Canary 期间的高 burn rate（消耗预算的速度快于基线节奏）是上面发布决策阈值表中的**暂停**信号：按 error rate 升高同等处理。
+Canary 期间的高 burn rate（消耗预算的速度快于基线节奏）是上文发布决策阈值表中的**暂停（Hold）**信号：应按 error rate 升高的同等标准处理。
 
 ## 回滚策略
 
@@ -284,31 +284,31 @@ Canary 期间的高 burn rate（消耗预算的速度快于基线节奏）是上
 ```
 ## 另见
 
-- 关于每个变更在进入本清单前都要满足的项目级 Definition of Done，见 `../../references/definition-of-done.md`
+- 关于每笔变更在进入本清单前都要满足的项目级 Definition of Done，见 `../../references/definition-of-done.md`
 - 关于发布前安全检查，见 `../../references/security-checklist.md`
 - 关于发布前性能检查清单，见 `../../references/performance-checklist.md`
 - 关于上线前可访问性验证，见 `../../references/accessibility-checklist.md`
-- 关于告警规则和与 SLO 绑定的阈值，见 `observability-and-instrumentation`
+- 关于告警规则及与 SLO 绑定的阈值，见 `observability-and-instrumentation`
 
 ## 常见合理化借口
 
 | 合理化借口 | 现实 |
 |---|---|
-| “它在 staging 能用，production 也会能用” | Production 有不同的数据、流量模式和边界情况。部署后要监控。 |
-| “这个不需要 feature flags” | 每个功能都受益于 kill switch。即使“简单”变更也可能破坏东西。 |
-| “监控是额外负担” | 没有监控意味着你会从用户投诉而不是 dashboard 中发现问题。 |
-| “以后再加监控” | 上线前就添加。看不见的东西无法调试。 |
-| “回滚就是承认失败” | 回滚是负责任的工程实践。发布坏功能才是失败。 |
+| “它在 staging 能用，production 也会能用” | Production 有截然不同的数据、流量模式和边界情况。部署后必须监控。 |
+| “这个不需要 feature flags” | 每个功能都受益于应急开关（kill switch）。即使“简单”变更也可能搞出故障。 |
+| “监控是额外负担” | 没有监控，就意味着你会从用户投诉而不是 dashboard 中发现问题。 |
+| “以后再加监控” | 上线前就添加。你看不见的东西出了事根本没法调试。 |
+| “回滚就是承认失败” | 回滚是负责任的工程实践。把坏功能留在生产环境才是失败。 |
 | “Error rate 看起来正常，继续发” | 要看 burn rate，不要只看当前 error rate。消耗预算快于基线就是暂停信号，即使各项单独阈值都是 green。 |
 
 ## 危险信号
 
-- 没有回滚计划就部署
-- 生产环境没有监控或 error reporting
-- Big-bang releases（一次性全部发布，没有 staging）
+- 没有回滚计划就直接部署
+- 生产环境没有监控或错误上报
+- 一次性全量发布（Big-bang releases，不经 staging 验证直接全量上线）
 - Feature flags 没有到期时间或 owner
-- 部署后第一个小时无人监控
-- 生产环境配置靠记忆完成，而不是靠代码
+- 部署后第一个小时无人盯防监控
+- 生产环境配置靠人脑记忆维护，而不是靠代码管理
 - “周五下午了，发吧”
 - Error budget 已耗尽，但功能开发照常推进
 
@@ -316,21 +316,21 @@ Canary 期间的高 burn rate（消耗预算的速度快于基线节奏）是上
 
 部署前：
 
-- [ ] 发布前检查清单已完成（所有部分为 green）
-- [ ] Feature flag 已配置（如适用）
-- [ ] 回滚计划已记录
-- [ ] Monitoring dashboards 已设置
+- [ ] 发布前检查清单已完成（所有分项均为 green）
+- [ ] Feature flag 已配置妥当（如适用）
+- [ ] 回滚计划已书面记录
+- [ ] 监控 dashboards 已搭建就绪
 - [ ] 团队已收到部署通知
 
 部署后：
 
 - [ ] Health check 返回 200
 - [ ] Error rate 正常
-- [ ] Latency 正常
-- [ ] 关键用户流程可用
-- [ ] Logs 正常流入
-- [ ] 回滚已测试，或已验证可随时执行
+- [ ] 响应延迟正常
+- [ ] 关键用户流程端到端可用
+- [ ] 日志正常采集流入
+- [ ] 回滚已实测，或已验证可随时执行
 
 对每个已发布的服务：
 
-- [ ] Error budget 策略已就位：明确预算跌破 20% 以及耗尽时分别该采取什么行动
+- [ ] Error budget 策略已就位：明确预算跌破 20% 以及彻底耗尽时分别该采取什么行动
