@@ -4,13 +4,13 @@
 
 ## 工作入口
 
-任务跟踪已由 Linear 切换到 beads（仓库内 `.beads/`，见下方「项目约定」），存量票尚未迁入。迁移完成前，v0.4.0 的任务与进度仍以 [docs/plans/2026-10-29-v0.4.0-osmani-vendor-plan.md](docs/plans/2026-10-29-v0.4.0-osmani-vendor-plan.md) 的工作表为准，从 Git/PR 核对实际改动；需要背景、历史理由或经验时检索 OpenViking。术语见 [CONCEPTS.md](CONCEPTS.md)，上游通用术语的统一译法见 [context.md](context.md)，重要设计见 [docs/adr/](docs/adr/)，来源对应见 [docs/skill-sources.md](docs/skill-sources.md)。
+任务跟踪已由 Linear 切换到 beads（仓库内 `.beads/`，见下方「项目约定」），存量票尚未迁入。迁移完成前，v0.4.0 的任务与进度仍以 [docs/plans/2026-10-29-v0.4.0-osmani-vendor-plan.md](docs/plans/2026-10-29-v0.4.0-osmani-vendor-plan.md) 的工作表为准，从 Git/PR 核对实际改动；需要背景、历史理由或经验时检索 OpenViking。术语与翻译词汇表见 [docs/glossary.md](docs/glossary.md)，重要设计见 [docs/adr/](docs/adr/)，来源对应见 [docs/skill-sources.md](docs/skill-sources.md)。
 
 旧 `docs/solutions/` 与发想、讨论材料已按 STE-13 迁移：背景与经验归 OpenViking，正式决定归 `docs/adr/`，发布证据保留在 `docs/plans/` 与 `docs/releases/`；更早的审查记录已删除，Git 历史可查。不恢复 current 或重复交接文档。
 
 ## 技能组织
 
-- 上游技能以 vendor 方式引入并保持可同步：改动走小修小补，改动点记录于计划文档的逐技能审阅表；不做大型重写，不与上游无谓分叉。同步源为 `.upstream/addyosmani-agent-skills-zh`（本地克隆，已 gitignore），它自身跟踪上游 addyosmani/agent-skills。
+- 上游技能以 vendor 方式引入并保持可同步：改动走小修小补，改动点记录于计划文档的逐技能审阅表；不做大型重写，不与上游无谓分叉。上游英文同步源为 `.upstream/addyosmani-agent-skills`（跟踪 addyosmani/agent-skills，已 gitignore）；早期简体中文基底来自 `.upstream/addyosmani-agent-skills-zh`，后续版本跟进与术语统一以 [docs/glossary.md](docs/glossary.md) 为准。
 - `SKILL.md` 放完整主流程，模板、提示词、脚本等按实际需要就近放置。跨技能调用公开入口，不读取其他技能的私有文件。仓库级共享检查清单位于 `references/`（整包分发，不存在单技能安装断链问题）。
 - nk 旧技能不设 legacy 副本：整体封存于 `archive/v0.3.x-nk-skills` 分支，提回时逐个裁定（提回 / 不提回 / 并入），结果记录于计划文档的提回裁定表。新增技能以 `.gitkeep` 保留目录，不创建可安装的空壳。
 - frontmatter 的 `description` 采用上游英文原文（作者按触发率调校过，译文属二次加工）；正文可用中文。修改来源对应时更新 skill-sources，说明具体部分来自何处，不记进度、日期或验证流水账。

@@ -155,7 +155,7 @@ agents/            5 个子智能体
 references/        仓库级共享检查清单
 .claude-plugin/    Claude Code 插件与市场清单
 tests/             链接、引用、分发、frontmatter、artifact 路径检查
-docs/              ADR、计划、版本说明与来源映射
+docs/              ADR、计划、版本说明、来源映射与词汇表
 ```
 
 本仓库是插件市场源与开发目录，不是客户端实时加载源。客户端消费的是安装快照；仓库改动不会自动更新已安装版本。

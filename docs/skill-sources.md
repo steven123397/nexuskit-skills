@@ -5,7 +5,7 @@
 ## 上游与同步点
 
 - 技能主体：[addyosmani/agent-skills](https://github.com/addyosmani/agent-skills)，同步点 `aeac41d`（v0.6.13）；另已回填 v0.6.14/0.6.15 及后续 `301b02b`（PR #736）的可翻译内容（见下；docs、evals、hooks、scripts 不在 vendor 范围）。
-- 简体中文译本：[vinvcn/addyosmani-agent-skills-zh](https://github.com/vinvcn/addyosmani-agent-skills-zh)，本地同步源 `.upstream/addyosmani-agent-skills-zh`（已 gitignore，不随包分发）。
+- 早期简体中文译本：[vinvcn/addyosmani-agent-skills-zh](https://github.com/vinvcn/addyosmani-agent-skills-zh)（本地副本 `.upstream/addyosmani-agent-skills-zh`，已停更；已 gitignore，不随包分发）。现以 `.upstream/addyosmani-agent-skills` 直接对照英文上游，术语与翻译规范见 [glossary.md](glossary.md)。
 - 引入方式：vendor，小修小补；技能名、目录名与 H1 保持上游原样。逐技能的改动点见 [v0.4.0 计划](plans/2026-10-29-v0.4.0-osmani-vendor-plan.md) 的逐技能审阅表。
 - 归属与许可证见 [NOTICE](../NOTICE) 与 [LICENSE.upstream](../LICENSE.upstream)。
 
@@ -14,7 +14,7 @@
 25 个技能位于 `skills/<name>/SKILL.md`，与上游同名同路径。来源按以下几类记录：
 
 - **正文原样**：`using-agent-skills`、`api-and-interface-design`、`browser-testing-with-devtools`、`code-review-and-quality`、`frontend-ui-engineering`、`git-workflow-and-versioning`、`interview-me`、`observability-and-instrumentation`、`shipping-and-launch`、`test-driven-development`。这些技能只随统一项调整标题与 description。
-- **统一项（适用于全部 25 个）**：H1 用上游英文标题；frontmatter `description` 用上游英文原文（作者按触发率调校过）；「Red Flags」统一为「危险信号」；合理化表列头与部分小节标题按上游术语表统一。具体范围见计划的 D3–D6。
+- **统一项（适用于全部 25 个）**：H1 用上游英文标题；frontmatter `description` 用上游英文原文（作者按触发率调校过）；「Red Flags」统一为「危险信号」；合理化表列头与部分小节标题按本仓术语标准统一（现已收敛至 [glossary.md](glossary.md)）。具体范围见计划的 D3–D6。
 - **正文小修**：`ci-cd-and-automation`、`code-simplification`、`constraint-driven-development`、`context-engineering`、`debugging-and-error-recovery`、`deprecation-and-migration`、`documentation-and-adrs`、`incremental-implementation`、`performance-optimization`、`planning-and-task-breakdown`、`security-and-hardening`、`source-driven-development`、`spec-driven-development`。改动包括回填上游后续修正、修正交叉引用、把规则文件表述统一为 `CLAUDE.md`/`AGENTS.md`，以及命令名 nk 化。
 - **NK 改写**：
   - `doubt-driven-development`：跨模型复审段改为派发内置子智能体并按项目约定指定 `model`；DOUBT 步骤优先派发 `doubt-challenger`。
