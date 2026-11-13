@@ -7,7 +7,7 @@ description: Discovers and invokes agent skills. Use when starting a session, or
 
 ## 概览
 
-Agent Skills 是一组按开发阶段组织的工程工作流 skills。每个 skill 都编码了资深工程师会遵循的特定流程。这个 meta-skill 帮助你为当前任务发现并应用正确的 skill。
+Agent Skills 是一组按开发阶段组织的工程工作流 skills。每个 skill 都沉淀了资深工程师遵循的特定流程。这个 meta-skill 帮助你为当前任务发现并选用合适的 skill。
 
 ## Skill 发现
 
@@ -81,7 +81,7 @@ ASSUMPTIONS I'M MAKING:
 - 提出替代方案
 - 如果人类在掌握完整信息后仍决定覆盖你的建议，接受该决定
 
-逢迎是一种失败模式。“Of course!” 之后实现一个坏主意，对任何人都没有帮助。诚实的技术分歧比虚假的认同更有价值。
+逢迎是一种失效模式。满口答应“没问题！”然后把糟糕方案写进代码，对任何人都没有好处。诚实的技术分歧比虚假的认同更有价值。
 
 ### 4. 强制保持简单
 
@@ -92,7 +92,7 @@ ASSUMPTIONS I'M MAKING:
 - 这些抽象值得它们带来的复杂度吗？
 - staff engineer 看了会不会说“为什么不直接……”？
 
-如果你写了 1000 行，而 100 行就足够，那就是失败。优先选择无聊、明显的方案。聪明技巧很昂贵。
+如果 100 行就能搞定而你写了 1000 行，那就是失败。优先选择朴素、直观的方案；耍小聪明的代价很高。
 
 ### 5. 保持范围纪律
 
@@ -105,7 +105,7 @@ ASSUMPTIONS I'M MAKING:
 - 未经明确批准删除看似未使用的代码
 - 因为“看起来有用”而添加 spec 之外的功能
 
-你的工作是外科手术式的精确，不是主动翻新。
+你的职责是精准的微创改动，而不是擅自翻新。
 
 ### 6. 验证，不要假设
 
@@ -113,20 +113,20 @@ ASSUMPTIONS I'M MAKING:
 
 每个 skill 内部的验证是局部检查。而适用于*每一个*变更的项目级标准，无论当前激活的是哪个 skill，都是 Definition of Done（完成定义）：测试通过、无回归、行为已在运行时验证、文档已更新。参见 `../../references/definition-of-done.md`。它是对每个任务验收标准的补充，而不是替代。
 
-## 需要避免的失败模式
+## 需要避免的失效模式
 
-这些细微错误看起来像是在提高效率，但会制造问题：
+这些看似省事的做法，实际上只会埋雷：
 
-1. 未经检查就做出错误假设
-2. 没有管理自己的困惑，在迷失时硬往前冲
-3. 没有暴露你注意到的不一致
-4. 对非显而易见的决策没有呈现权衡
-5. 对明显有问题的方案逢迎（“Of course!”）
+1. 未经确认就做出错误假设
+2. 遇到困惑不处理，自己都没搞清楚就硬往下做
+3. 发现前后不一致却没有提出来
+4. 非显而易见的决策没有列出权衡
+5. 对明显有问题的方案一味顺从（“没问题！”）
 6. 把代码和 API 过度复杂化
-7. 修改与任务无关的代码或注释
-8. 删除你没有完全理解的东西
-9. 因为“很明显”而在没有 spec 的情况下构建
-10. 因为“看起来对”而跳过验证
+7. 修改与当前任务无关的代码或注释
+8. 删除自己没有完全理解的代码或注释
+9. 因为“很明显”就跳过 spec 直接开写
+10. 因为“看起来没问题”而跳过验证
 
 ## Skill 规则
 
@@ -173,7 +173,7 @@ ASSUMPTIONS I'M MAKING:
 | 计划 | planning-and-task-breakdown | 拆解为小而可验证的任务 |
 | 构建 | incremental-implementation | 薄的垂直切片，每次扩展前先测试 |
 | 构建 | source-driven-development | 实现前先对照官方文档验证 |
-| 构建 | doubt-driven-development | 用对抗式 fresh-context 审查每个非平凡决策 |
+| 构建 | doubt-driven-development | 用独立的新上下文（fresh-context）对关键决策做对抗式审查 |
 | 构建 | context-engineering | 在正确时间加载正确上下文 |
 | 构建 | frontend-ui-engineering | 具备可访问性的生产级 UI |
 | 构建 | api-and-interface-design | 有清晰契约的稳定接口 |
@@ -183,7 +183,7 @@ ASSUMPTIONS I'M MAKING:
 | 评审 | code-review-and-quality | 基于五个维度和质量门禁进行评审 |
 | 评审 | code-simplification | 在保持行为不变的前提下减少不必要的复杂度 |
 | 评审 | security-and-hardening | OWASP 防护、输入验证、最小权限 |
-| 评审 | performance-optimization | 先测量，只优化重要内容 |
+| 评审 | performance-optimization | 先测量，只优化真正关键的瓶颈 |
 | 发布 | git-workflow-and-versioning | 原子提交、干净历史 |
 | 发布 | ci-cd-and-automation | 每次变更都运行自动化质量门禁 |
 | 发布 | deprecation-and-migration | 移除旧系统并安全地迁移用户 |
