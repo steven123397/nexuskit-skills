@@ -32,12 +32,12 @@ user → code-reviewer → report → user
 用一个 slash command 把单个 persona 和项目 skills 封装起来，让用户不必每次都重新解释工作流。
 
 ```
-/review → code-reviewer (with code-review-and-quality skill) → report
+/nk-review → code-reviewer (with code-review-and-quality skill) → report
 ```
 
 **适用场景：** 同一个单 persona 调用会以相同设置反复发生。
 
-**本仓库示例：** `/review`、`/test`、`/code-simplify`。
+**本仓库示例：** `/nk-review`、`/nk-test`、`/nk-code-simplify`。
 
 **成本：** 与直接调用相同。slash command 只是保存好的 prompt。
 
@@ -51,7 +51,7 @@ user → code-reviewer → report → user
 
 ```
                     ┌─→ code-reviewer    ─┐
-/ship → fan out  ───┼─→ security-auditor ─┤→ merge → go/no-go + rollback
+/nk-ship → fan out  ───┼─→ security-auditor ─┤→ merge → go/no-go + rollback
                     └─→ test-engineer    ─┘
 ```
 
@@ -61,7 +61,7 @@ user → code-reviewer → report → user
 - 合并步骤足够小，可以留在 main context 中完成
 - 端到端等待耗时（wall-clock latency）很关键
 
-**本仓库示例：** `/ship`。
+**本仓库示例：** `/nk-ship`。
 
 **成本：** N 个并行 sub-agent contexts + 一个 merge turn。成本高于直接调用，但端到端等待时间更短，报告质量也更好，因为每个 sub-agent 都专注于自己的单一视角。
 
@@ -80,7 +80,7 @@ user → code-reviewer → report → user
 用户按定义好的顺序运行 slash commands，在步骤之间携带 context（或 commit history）。没有 orchestrator agent —— 用户**就是** orchestrator。
 
 ```
-user runs:  /spec  →  /plan  →  /build  →  /test  →  /review  →  /ship
+user runs:  /nk-spec  →  /nk-plan  →  /nk-build  →  /nk-test  →  /nk-review  →  /nk-ship
 ```
 
 **适用场景：** 工作流存在依赖（每一步都需要前一步的输出），并且步骤之间的人工判断有价值。
@@ -134,7 +134,7 @@ Claude Code 有两种并行 primitive。模式 3（并行 fan-out 后合并）�
 | 状态 | 稳定 | 实验性 —— 需要 `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` |
 | 成本 | 较低 | 较高 —— 每个 teammate 都是一个独立 Claude instance |
 
-**本仓库中的 personas 可在两种模式下工作。** 作为 subagents 派发时（例如由 `/ship` 拉起），它们向 main session 汇报 findings。作为 teammates 拉起时（`Spawn a teammate using the security-auditor agent type…`），它们可以直接挑战彼此的 findings。Persona 定义相同，只有启动上下文（spawning context）不同。
+**本仓库中的 personas 可在两种模式下工作。** 作为 subagents 派发时（例如由 `/nk-ship` 拉起），它们向 main session 汇报 findings。作为 teammates 拉起时（`Spawn a teammate using the security-auditor agent type…`），它们可以直接挑战彼此的 findings。Persona 定义相同，只有启动上下文（spawning context）不同。
 
 一个细节：persona 中的 `skills` 和 `mcpServers` frontmatter 字段在作为 subagent 运行时会生效，但**作为 teammate 运行时会被忽略** —— teammates 会像普通会话一样从你的项目和用户设置中加载 skills 和 MCP servers。如果某个 persona 依赖特定 skill 或 MCP server 已加载，请在会话级别（session level）配置，使其在两种模式下都可用。
 
@@ -167,13 +167,13 @@ Plugin agents 中可用的字段包括：`name`、`description`、`tools`、`dis
 
 ### 并行 spawn 多个 subagents
 
-在 Claude Code 中，并行 fan-out（模式 3）需要在**同一个 assistant 回合（turn）中发出多个 Agent tool calls**。跨回合顺序调用会串行化执行。`/ship` 明确指出了这一点。任何新的编排命令（orchestrator command）也应如此。
+在 Claude Code 中，并行 fan-out（模式 3）需要在**同一个 assistant 回合（turn）中发出多个 Agent tool calls**。跨回合顺序调用会串行化执行。`/nk-ship` 明确指出了这一点。任何新的编排命令（orchestrator command）也应如此。
 
 ---
 
 ## 实战示例：用 Agent Teams 做竞争假设调试
 
-这个示例展示何时应该使用 **Agent Teams**，而不是 `/ship` 的 subagent fan-out。两种模式表面上看很像 —— 都会启动同样的三个 personas —— 但各自发挥价值的方式完全不同。
+这个示例展示何时应该使用 **Agent Teams**，而不是 `/nk-ship` 的 subagent fan-out。两种模式表面上看很像 —— 都会启动同样的三个 personas —— 但各自发挥价值的方式完全不同。
 
 ### 场景
 
@@ -186,19 +186,19 @@ Plugin agents 中可用的字段包括：`name`、`description`、`tools`、`dis
 3. 某个查询缺少索引，随购物车规模扩大而变慢
 4. 某个不稳定的第三方 API，SDK 在超时前静默重试
 
-单个 agent 会选中第一个看起来合理的理论，然后停止调查。`/ship` 风格的 subagent fan-out 会让每个 persona 独立汇报 —— 但彼此无法互通结果，因此无法相互排除错误假设。
+单个 agent 会选中第一个看起来合理的理论，然后停止调查。`/nk-ship` 风格的 subagent fan-out 会让每个 persona 独立汇报 —— 但彼此无法互通结果，因此无法相互排除错误假设。
 
 这正是 Agent Teams 官方文档描述的场景：*“当多个独立调查者主动尝试反驳彼此时，经受住考验留存下来的理论更可能是真正的根因。”*
 
-### 为什么这*不是* `/ship` 的工作
+### 为什么这*不是* `/nk-ship` 的工作
 
-| | `/ship` (subagents) | Agent Teams |
+| | `/nk-ship` (subagents) | Agent Teams |
 |--|--------------------|-------------|
 | Sub-agents 看到 | 同一个 diff，不同视角 | 一个共享 task list，以及彼此的 messages |
 | 输出 | 三份独立报告 → 一次合并 | 对抗式辩论 → 共识根因 |
 | 适合场景 | 你想对已知产物下定论 | 你想在多个假设中*锁定*问题所在 |
 
-`/ship` 负责下定论（verdict）；Agent Teams 负责排查定位（investigation）。
+`/nk-ship` 负责下定论（verdict）；Agent Teams 负责排查定位（investigation）。
 
 ### 设置（每个环境一次）
 
@@ -262,7 +262,7 @@ Clean up the team
 
 ### 成本预期
 
-三个 Sonnet teammates 运行约 10–15 分钟调查，成本会明显高于由 `/ship` 以 subagents 方式启动同样三个 personas。理由是*结论质量* —— 在生产环境排障中，修错方向的代价高昂，多花的 tokens 很划算。对于常规 PR review，坚持使用 `/ship`。
+三个 Sonnet teammates 运行约 10–15 分钟调查，成本会明显高于由 `/nk-ship` 以 subagents 方式启动同样三个 personas。理由是*结论质量* —— 在生产环境排障中，修错方向的代价高昂，多花的 tokens 很划算。对于常规 PR review，坚持使用 `/nk-ship`。
 
 ### 这个场景中的反模式
 
@@ -270,7 +270,7 @@ Clean up the team
 
 ### 什么时候*不*使用 Agent Teams
 
-- 对已知 diff 做上线前的放行判断（verdict） → 使用 `/ship` (subagents)。
+- 对已知 diff 做上线前的放行判断（verdict） → 使用 `/nk-ship` (subagents)。
 - 对一个产物做单个专精视角审视 → 直接调用 persona。
 - 顺序生命周期（spec → plan → build） → 用户驱动的 slash commands（模式 4）。
 - 大量读取、只需小摘要（digest）的调研 → 内置 `Explore` subagent。
@@ -292,7 +292,7 @@ Clean up the team
 **失败原因：**
 - 纯路由层（routing），没有领域价值
 - 多出两次转述中转（paraphrasing hops） → 信息损失 + 约 2× token 成本
-- 用户已经知道自己想要 review；他们本可以直接调用 `/review`
+- 用户已经知道自己想要 review；他们本可以直接调用 `/nk-review`
 - 重复了 slash commands 和 `AGENTS.md` 中意图映射（intent mapping）已经做过的工作
 
 **替代做法：** 添加或改进 slash commands。在 `AGENTS.md` 中记录 intent → command 映射。
@@ -315,7 +315,7 @@ Clean up the team
 
 ### C. 会转述的顺序 orchestrator
 
-一个 agent 代表用户调用 `/spec`，再调用 `/plan`，再调用 `/build`，依此类推。
+一个 agent 代表用户调用 `/nk-spec`，再调用 `/nk-plan`，再调用 `/nk-build`，依此类推。
 
 **失败原因：**
 - 丢失能及早发现方向跑偏的人工检查点
@@ -329,7 +329,7 @@ Clean up the team
 
 ### D. 深层 persona trees
 
-`/ship` 调用一个 `pre-ship-coordinator`，后者调用 `quality-coordinator`，后者再调用 `code-reviewer`。
+`/nk-ship` 调用一个 `pre-ship-coordinator`，后者调用 `quality-coordinator`，后者再调用 `code-reviewer`。
 
 **失败原因：**
 - 每一层都增加延迟和 token 消耗，却没有决策价值

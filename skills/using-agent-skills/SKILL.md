@@ -173,7 +173,7 @@ ASSUMPTIONS I'M MAKING:
 | 计划 | planning-and-task-breakdown | 拆解为小而可验证的任务 |
 | 构建 | incremental-implementation | 薄的垂直切片，每次扩展前先测试 |
 | 构建 | source-driven-development | 实现前先对照官方文档验证 |
-| 构建 | doubt-driven-development | 用独立的新上下文（fresh-context）对关键决策做对抗式审查 |
+| 构建 | doubt-driven-development | 用独立的新上下文（fresh-context）对每个非平凡决策做对抗式审查 |
 | 构建 | context-engineering | 在正确时间加载正确上下文 |
 | 构建 | frontend-ui-engineering | 具备可访问性的生产级 UI |
 | 构建 | api-and-interface-design | 有清晰契约的稳定接口 |

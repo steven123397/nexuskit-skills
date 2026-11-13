@@ -68,9 +68,9 @@ description: Prepares production launches. Use when preparing to deploy to produ
 
 ### 文档
 
-- [ ] README 已更新所有新增的环境配置要求
+- [ ] README 已更新所有新增的 setup 要求
 - [ ] API 文档保持最新
-- [ ] 所有重大架构决策均已编写 ADR
+- [ ] 所有架构决策均已编写 ADR
 - [ ] Changelog 已更新
 - [ ] 面向用户的文档已更新（如适用）
 

@@ -12,7 +12,7 @@ description: Optimizes agent context setup. Use when starting a new session, whe
 ## 何时使用
 
 - 开始新的编码会话
-- Agent 输出质量明显下滑（套错代码模式、凭空捏造 API、无视项目约定）
+- Agent 输出质量正在下降（套错代码模式、凭空捏造 API、无视项目约定）
 - 在代码库的不同部分之间切换
 - 为新项目配置 AI 辅助开发
 - Agent 没有遵循项目约定

@@ -1,7 +1,7 @@
 """Parse skill metadata safely without imposing a client-specific field allowlist.
 
 Description language is unrestricted since v0.4.0 (vendored zh skills keep
-Chinese descriptions; see docs/plans/2026-10-29-v0.4.0-osmani-vendor-plan.md).
+Chinese descriptions; see docs/skill-sources.md).
 """
 import yaml
 from yaml.constructor import ConstructorError

@@ -6,16 +6,16 @@
 
 - 技能主体：[addyosmani/agent-skills](https://github.com/addyosmani/agent-skills)，同步点 `aeac41d`（v0.6.13）；另已回填 v0.6.14/0.6.15 及后续 `301b02b`（PR #736）的可翻译内容（见下；docs、evals、hooks、scripts 不在 vendor 范围）。
 - 早期简体中文译本：[vinvcn/addyosmani-agent-skills-zh](https://github.com/vinvcn/addyosmani-agent-skills-zh)（本地副本 `.upstream/addyosmani-agent-skills-zh`，已停更；已 gitignore，不随包分发）。现以 `.upstream/addyosmani-agent-skills` 直接对照英文上游，术语与翻译规范见 [glossary.md](glossary.md)。
-- 引入方式：vendor，小修小补；技能名、目录名与 H1 保持上游原样。逐技能的改动点见 [v0.4.0 计划](plans/2026-10-29-v0.4.0-osmani-vendor-plan.md) 的逐技能审阅表。
+- 引入方式：vendor，小修小补；技能名、目录名与 H1 保持上游原样。逐技能的本地改动按本文件的来源分类与说明记录，历史审阅过程可从 Git 历史核对。
 - 归属与许可证见 [NOTICE](../NOTICE) 与 [LICENSE.upstream](../LICENSE.upstream)。
 
 ## Skills
 
 25 个技能位于 `skills/<name>/SKILL.md`，与上游同名同路径。来源按以下几类记录：
 
-- **正文原样**：`using-agent-skills`、`api-and-interface-design`、`browser-testing-with-devtools`、`code-review-and-quality`、`frontend-ui-engineering`、`git-workflow-and-versioning`、`interview-me`、`observability-and-instrumentation`、`shipping-and-launch`、`test-driven-development`。这些技能只随统一项调整标题与 description。
-- **统一项（适用于全部 25 个）**：H1 用上游英文标题；frontmatter `description` 用上游英文原文（作者按触发率调校过）；「Red Flags」统一为「危险信号」；合理化表列头与部分小节标题按本仓术语标准统一（现已收敛至 [glossary.md](glossary.md)）。具体范围见计划的 D3–D6。
-- **正文小修**：`ci-cd-and-automation`、`code-simplification`、`constraint-driven-development`、`context-engineering`、`debugging-and-error-recovery`、`deprecation-and-migration`、`documentation-and-adrs`、`incremental-implementation`、`performance-optimization`、`planning-and-task-breakdown`、`security-and-hardening`、`source-driven-development`、`spec-driven-development`。改动包括回填上游后续修正、修正交叉引用、把规则文件表述统一为 `CLAUDE.md`/`AGENTS.md`，以及命令名 nk 化。
+- **无额外行为改写**：`using-agent-skills`、`api-and-interface-design`、`browser-testing-with-devtools`、`frontend-ui-engineering`、`git-workflow-and-versioning`、`interview-me`、`observability-and-instrumentation`、`shipping-and-launch`、`test-driven-development`。除统一项与中文精修外，这些技能未引入额外的 NexusKit 行为改写。
+- **统一项（适用于全部 25 个）**：H1 用上游英文标题；frontmatter `description` 用上游英文原文（作者按触发率调校过）；「Red Flags」统一为「危险信号」；合理化表列头与部分小节标题按本仓术语标准统一（现已收敛至 [glossary.md](glossary.md)）。2026-11-13 的六批中文精修适用于全部技能，不在各分类中重复记录。
+- **正文小修**：`ci-cd-and-automation`、`code-review-and-quality`、`code-simplification`、`constraint-driven-development`、`context-engineering`、`debugging-and-error-recovery`、`deprecation-and-migration`、`documentation-and-adrs`、`incremental-implementation`、`performance-optimization`、`planning-and-task-breakdown`、`security-and-hardening`、`source-driven-development`、`spec-driven-development`。改动包括回填上游后续修正、修正交叉引用、把规则文件表述统一为 `CLAUDE.md`/`AGENTS.md`，以及命令名 nk 化。
 - **NK 改写**：
   - `doubt-driven-development`：跨模型复审段改为派发内置子智能体并按项目约定指定 `model`；DOUBT 步骤优先派发 `doubt-challenger`。
   - `idea-refine`：去掉命令专用的 `$ARGUMENTS` 占位；保存落点改为项目规则文件优先，默认 `docs/ideas/`。
@@ -31,7 +31,7 @@
 
 ## Commands
 
-`.claude/commands/` 下的 9 个上游命令来自同版本 `.claude/commands/*.md`，改动只有：
+`.claude/commands/` 下的 9 个上游命令来自同版本 `.claude/commands/*.md`，结构性改动包括：
 
 - 移除 `agent-skills:` 前缀，改指本包技能名。
 - slash 名加 `nk-` 前缀，正文中的自称与交叉引用同步。
@@ -46,8 +46,8 @@
 
 ## References
 
-`references/` 下 7 份检查清单来自上游同路径，内容未改；`issue-graph.md` 为 NK 新增，给出 issue tracker 的建图规则（工作单元、三种边、checkpoint、审查与关闭），上游没有对应文件。它同时是模板与兜底：`/nk-init` 把全文写进项目的 `docs/agents/issue-tracker.md`，规则文件只留一行指针；`planning-and-task-breakdown` 优先按项目那份建图，项目没初始化时才用插件里这份。载体形式参考 Matt `setup-matt-pocock-skills` 的 `docs/agents/`。技能按需引用；仓库级共享，不存在单技能安装断链。
+`references/` 下 7 份检查清单以英文上游同路径为基底，经过中文精修、上游修正回填与本仓命令名适配；`issue-graph.md` 为 NK 新增，给出 issue tracker 的建图规则（工作单元、三种边、checkpoint、审查与关闭），上游没有对应文件。它同时是模板与兜底：`/nk-init` 把全文写进项目的 `docs/agents/issue-tracker.md`，规则文件只留一行指针；`planning-and-task-breakdown` 优先按项目那份建图，项目没初始化时才用插件里这份。载体形式参考 Matt `setup-matt-pocock-skills` 的 `docs/agents/`。技能按需引用；仓库级共享，不存在单技能安装断链。
 
 ## 未 vendor
 
-上游的 `hooks/`、`scripts/`、`evals/`、`docs/`、`commands/*.toml`、`.gemini/`、`.opencode/`、`.codex-plugin/` 不在 Claude Code 插件的运行面内，未引入。取舍见计划的 D9。
+上游的 `hooks/`、`scripts/`、`evals/`、`docs/`、`commands/*.toml`、`.gemini/`、`.opencode/`、`.codex-plugin/` 不在 Claude Code 插件的运行面内，未引入。取舍以本文件、v0.4.0 发布说明与 Git 历史为准。

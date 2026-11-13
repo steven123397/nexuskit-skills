@@ -7,7 +7,7 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 NK_BYTE_LIMIT = 8000  # nk-* 自写技能：Codex 客户端的 SKILL.md 读取上限（Codex 暂停期间保留约束）
-VENDOR_BYTE_LIMIT = 25000  # vendored 上游技能：同步保真优先于体积（v0.4.0 政策，见 docs/plans/2026-10-29-v0.4.0-osmani-vendor-plan.md）
+VENDOR_BYTE_LIMIT = 25000  # vendored 上游技能：同步保真优先于体积（v0.4.0 政策，见 docs/skill-sources.md）
 
 
 def skill_entries(root):

@@ -22,7 +22,7 @@
 
 NexusKit 以 [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) 的简体中文版为技能主体，保留上游的技能名、目录与工作流，并在其上提供 10 个 `nk-` 前缀的入口命令和 5 个专用子智能体。技能按需调用，不强制走完整流水线。
 
-当前为 [v0.4.0-beta.3](docs/releases/v0.4.0-beta.3.md)（预发布）：技能主体完成 vendor 与逐技能审阅，命令层与项目接入命令已就位；本版新增 issue tracker 的图结构规则，供多阶段 plan 落到 tracker 时使用。旧版 `nk-*` 技能已归档，是否提回待 beta 试用后裁定。
+当前为 [v0.4.0](docs/releases/v0.4.0.md)：25 个技能已完成逐技能审阅与全面中文精修，命令层、项目接入和 issue tracker 规则均已就位。旧版 `nk-*` 技能已归档；尚未提回的能力不随本版分发，后续按真实项目需求裁定。
 
 ## 安装
 
@@ -120,7 +120,7 @@ npx skills add steven123397/nexuskit-skills
 - [shipping-and-launch](skills/shipping-and-launch/SKILL.md)：发布前 checklist、feature flag 生命周期、灰度与回滚。
 <!-- /installable-skills -->
 
-以上为全部 25 个技能。逐技能的本地改动点见 [v0.4.0 计划](docs/plans/2026-10-29-v0.4.0-osmani-vendor-plan.md) 的审阅表；来源对应见 [技能来源](docs/skill-sources.md)。
+以上为全部 25 个技能。技能来源与逐技能本地改动见 [技能来源](docs/skill-sources.md)；历史审阅过程可从 Git 历史核对。
 
 ## 子智能体
 
@@ -155,7 +155,7 @@ agents/            5 个子智能体
 references/        仓库级共享检查清单
 .claude-plugin/    Claude Code 插件与市场清单
 tests/             链接、引用、分发、frontmatter、artifact 路径检查
-docs/              ADR、计划、版本说明、来源映射与词汇表
+docs/              ADR、版本说明、来源映射与词汇表
 ```
 
 本仓库是插件市场源与开发目录，不是客户端实时加载源。客户端消费的是安装快照；仓库改动不会自动更新已安装版本。
