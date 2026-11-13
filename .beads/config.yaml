@@ -121,7 +121,8 @@
 # - github.token    → use GITHUB_TOKEN env var instead
 
 sync:
-    # remote: "git+ssh://git@github.com/steven123397/nexuskit-skills.git"
+    remote: "git+https://github.com/steven123397/nexuskit-skills.git"
+# remote: "git+ssh://git@github.com/steven123397/nexuskit-skills.git"
 agent:
     profile: team-maintainer
 no-git-ops: false
