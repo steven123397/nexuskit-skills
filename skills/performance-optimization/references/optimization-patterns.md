@@ -61,7 +61,7 @@ CREATE INDEX idx_tasks_owner_created ON tasks (owner_id, created_at DESC);
 
 | 情形 | 原因 |
 |---|---|
-| 低选择性，查询占主导的值（一个 95% 都是 `active` 的 `status` 列，且过滤条件就是 `active`） | 顺序扫描确实更便宜，planner 会忽略索引。反过来，过滤罕见值时结论相反，此时 partial index 非常合适 |
+| 低选择性，查询占比极高的主流值（一个 95% 都是 `active` 的 `status` 列，且过滤条件就是 `active`） | 顺序扫描确实更便宜，planner 会忽略索引。反过来，过滤罕见值时结论相反，此时 partial index 非常合适 |
 | 前导通配符（`LIKE '%term'`） | B-tree 没有前缀就无法 seek；需要 trigram 或 full-text |
 | 列上有函数（`WHERE lower(email) = ?`） | 普通列索引不可用；改为对该表达式建索引 |
 | 写多的表 | 每个索引都是对每次 `INSERT`/`UPDATE` 的抽税；要测写入成本，不能只看读取收益 |
@@ -70,7 +70,7 @@ CREATE INDEX idx_tasks_owner_created ON tasks (owner_id, created_at DESC);
 
 ## 连接池耗尽
 
-Signature 很有辨识度：**所有** endpoints 同时变慢，慢的时间花在等连接而不是执行上，数据库则报告大量空闲 sessions。
+特征很有辨识度：**所有** endpoints 同时变慢，慢的时间花在等连接而不是执行上，数据库则报告大量空闲 sessions。
 
 ```typescript
 // BAD: a pool per request or per module — under serverless this multiplies
@@ -235,7 +235,7 @@ app.use('/static', express.static('public', {
 res.set('Cache-Control', 'public, max-age=300'); // 5 minutes
 ```
 
-**Key 的设计决定正确性。** 每个会改变响应的输入都要进 key：tenant、locale、permissions、feature flags。一个省略了查看者的 key，就是 A 用户的数据被发给 B 用户的方式 —— 而这种事故往往是以"性能提升"的姿态上线的。
+**Key 的设计决定正确性。** 每个会改变响应的输入都要进 key：tenant、locale、permissions、feature flags。一个漏掉当前请求者（viewer）身份的 key，就会把 A 用户的数据错发给 B 用户 —— 而这类事故往往还是打着"性能优化"的旗号上线的。
 
 **选一种 invalidation 策略，不要三种都上：**
 
@@ -247,4 +247,4 @@ res.set('Cache-Control', 'public, max-age=300'); // 5 minutes
 
 **防住 stampede。** 一个热点 key 过期，所有并发请求一起 miss，origin 瞬间承受全部负载 —— 这就是缓存从"防事故"变成"造事故"的方式。在单个请求重算的同时继续提供 stale 数据（`stale-while-revalidate`），或把并发 miss 合并到一个 in-flight promise 后面，让 N 个等待者只触发一次重算。
 
-**不要缓存：** 任何 staleness 会构成 correctness bug 的东西（余额、permissions、结账时的库存），或者放在一个不能标识用户的 key 下的按用户数据。请求合并、写入策略、negative caching 和 cache checklist 见 `../../../references/performance-checklist.md#缓存策略`。
+**不要缓存：** 任何一旦过期就会引发 correctness bug 的数据（余额、permissions、结账时的库存），或者把本该按用户隔离的数据放进一个无法区分用户的 key 里。请求合并、写入策略、negative caching 和 cache checklist 见 `../../../references/performance-checklist.md#缓存策略`。

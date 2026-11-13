@@ -126,14 +126,14 @@ What is slow?
 
 - **N+1 查询。** 每行一次查询是最常见的后端瓶颈。在同一个查询里取回关联（join/include），而不是在循环里取。[模式](references/optimization-patterns.md#n1-查询后端)
 - **无界数据获取。** 每个列表 endpoint 都用 limit 加稳定的 order 做分页。[模式](references/optimization-patterns.md#无界数据获取)
-- **无视自身索引的查询。** "加个索引"是猜测；`EXPLAIN ANALYZE` 才是测量。在你预期有索引的地方出现 `Seq Scan`、估算 `rows=` 差了一个数量级、scan 上方有 `Sort` 节点 —— 各对应一种不同的修法；`rows=` 估算不准说明统计信息过期，该做的是运行 `ANALYZE` 而不是加索引。按查询的形状建索引（等值列在前，范围或排序列在后）。普通索引对低选择性主导值上的查询（罕见值才适合 partial index）、前导通配符（需要 trigram 或 full-text）或施加在列上的函数（给表达式建索引，如 `WHERE lower(email) = ?`）都无能为力，而且每个索引都会对每次写入抽税。之后重跑执行计划；没改变计划的索引就该 revert。[模式](references/optimization-patterns.md#无视自身索引的查询)
+- **无视自身索引的查询。** "加个索引"是猜测；`EXPLAIN ANALYZE` 才是测量。在你预期有索引的地方出现 `Seq Scan`、估算 `rows=` 差了一个数量级、scan 上方有 `Sort` 节点 —— 各对应一种不同的修法；`rows=` 估算不准说明统计信息过期，该做的是运行 `ANALYZE` 而不是加索引。按查询的形状建索引（等值列在前，范围或排序列在后）。普通索引对低选择性列上占比极高的主流值查询（查询罕见值时才适合建 partial index）、前导通配符（需要 trigram 或 full-text）或施加在列上的函数（给表达式建索引，如 `WHERE lower(email) = ?`）都无能为力，而且每个索引都会对每次写入抽税。之后重跑执行计划；没改变计划的索引就该 revert。[模式](references/optimization-patterns.md#无视自身索引的查询)
 - **连接池耗尽。** 特征：*所有* endpoint 同时变慢，时间花在等连接而不是执行上，数据库显示大量空闲 sessions。每个进程一个 pool，按 `instances × max` 不超过数据库连接上限来定大小。更大不等于更快；它只是把队列挪到数据库那边 —— 那里更难看见。当实例数量无上限（serverless、autoscaling）时，通过代理复用连接（pgbouncer、RDS Proxy），而不是调高 `max`。[模式](references/optimization-patterns.md#连接池耗尽)
-- **缺少缓存。** 缓存那些产出昂贵、且读取频率远高于变化的东西；缓存一个本来就快的查询，只换来一跳网络和一个 staleness bug，别的什么都没有。有意识地选择层级（进程内、共享、CDN）。每个会改变响应的输入都要进 key（tenant、locale、permissions、feature flags）：一个省略了查看者的 key，就是 A 用户的数据被发给 B 用户的方式。选一种 invalidation 策略（TTL、基于事件或 tag、版本化 keys），并明确说出可接受的 staleness 窗口。给热点 key 防 stampede：在单个请求重算的同时继续提供 stale 数据，或把并发 miss 合并到一个 in-flight promise 后面。绝不缓存必须新鲜的东西（余额、permissions、结账时的库存）。[模式](references/optimization-patterns.md#缺少缓存后端)；请求合并、写入策略和 negative caching 见 `../../references/performance-checklist.md`。
+- **缺少缓存。** 缓存那些产出昂贵、且读取频率远高于变化的东西；缓存一个本来就快的查询，只换来一跳网络和一个 staleness bug，别的什么都没有。有意识地选择层级（进程内、共享、CDN）。每个会改变响应的输入都要进 key（tenant、locale、permissions、feature flags）：一个漏掉当前请求者（viewer）身份的 key，就会把 A 用户的数据错发给 B 用户。选一种 invalidation 策略（TTL、基于事件或 tag、版本化 keys），并明确说出可接受的 staleness 窗口。给热点 key 防 stampede：在单个请求重算的同时继续提供 stale 数据，或把并发 miss 合并到一个 in-flight promise 后面。绝不缓存必须新鲜的东西（余额、permissions、结账时的库存）。[模式](references/optimization-patterns.md#缺少缓存后端)；请求合并、写入策略和 negative caching 见 `../../references/performance-checklist.md`。
 
 **Frontend**
 
 - **缺少图片优化。** 每张图片都声明 `width` 和 `height`（CLS）。LCP 图片用 `fetchpriority="high"`、通过 `<picture>` 使用现代格式（AVIF、WebP）、用 `srcset`/`sizes` 做分辨率切换；首屏外的图片用 `loading="lazy"` 和 `decoding="async"`。[模式](references/optimization-patterns.md#缺少图片优化前端)
-- **不必要的 re-render。** 在渲染过程中创建的对象或函数每次都是新引用，会让每个接收它的子组件 re-render。把常量提升；`React.memo` 和 `useMemo` 只留给 profile 显示真正昂贵的工作，因为滥用本身就是成本。[模式](references/optimization-patterns.md#不必要的-re-renderreact)
+- **不必要的 re-render。** 在渲染过程中创建的对象或函数每次都是新引用，会让每个接收它的子组件 re-render。把常量提升；`React.memo` 和 `useMemo` 只留给 profile 显示真正昂贵的工作，因为滥用本身也会带来性能开销。[模式](references/optimization-patterns.md#不必要的-re-renderreact)
 - **bundle 体积过大。** 现代 bundler 会自行对 ESM 命名导入做 tree-shaking；真正的收益来自路由级 code splitting 和把重型、很少使用的功能懒加载到 `Suspense` 之后。改导入风格之前先 profile。[模式](references/optimization-patterns.md#bundle-体积过大)
 
 ### 步骤 4: 验证（保留或回退）
@@ -153,15 +153,15 @@ What is slow?
 | 越过阈值，测试全绿 | **保留。** 提交时在 message 里写上前后数字。 |
 | 在噪声内（无可测变化） | **Revert。** |
 | 更差 | **Revert。** |
-| 有改善，但有测试变红 | **Revert。** 这是穿了胜利外衣的回归。 |
+| 有改善，但有测试变红 | **Revert。** 这不过是披着"性能提升"外衣的功能回归。 |
 
-**"中性"是 revert，不是 keep。** 这是团队最常跳过的一步：代码已经写好了，扔掉感觉浪费，于是它未经测量就落了地，codebase 就这样积攒下一堆从未换来任何东西的复杂度。你保留的代码，你要维护一辈子。让它值回票价。
+**"中性"是 revert，不是 keep。** 这是团队最常跳过的一步：代码已经写好了，扔掉感觉浪费，于是它未经测量就落了地，codebase 就这样积攒下一堆从未换来任何收益的复杂度。你保留的代码，你要维护一辈子。让它值回票价。
 
-**正确性为指标把关。** 测试套件保持全绿，*并且*数字有变化。一个靠砍掉产品必需的工作来"赢"的"优化"（跳过一次 validation、缓存了必须新鲜的东西、删掉一个其实是承重的 `await`）是回归，不是胜利。
+**正确性为指标把关。** 测试套件保持全绿，*并且*数字有变化。一个靠砍掉产品必需的工作来"赢"的"优化"（跳过一次 validation、缓存了必须新鲜的东西、删掉一个实际上支撑着关键时序（load-bearing）的 `await`）是回归，不是胜利。
 
 #### 记录每一次尝试，包括被 revert 的
 
-被 revert 的工作在 git history 里不留痕迹，而这正是同一个死点子下季度又被试一遍的原因。保留一份简短的台账，让被丢弃的点子继续被丢弃：
+被 revert 的工作在 git history 里不留痕迹，而这正是同一个失败过的想法下季度又被试一遍的原因。保留一份简短的台账，让被丢弃的方案不再被翻出来：
 
 | 点子 | Baseline → 结果 | 结论 | 原因 |
 |---|---|---|
@@ -178,7 +178,7 @@ What is slow?
 当界面面向用户时，用两层互补的守卫：
 
 - **Synthetic CI gate：** 用性能 budget 在 merge 前捕获可复现的回归。对噪声较大的测量做重复采样，或比较中位数/趋势，避免正常的 run-to-run 方差把 gate 变成一个 flaky check。
-- **Field monitoring：** 对 RUM 数据中有意义的 p75 移动发出告警。用带归因的 `web-vitals` 数据定位原因；把 CrUX 的滚动窗口当作确认信号，而不是即时告警。
+- **Field monitoring：** 对 RUM 数据中 p75 出现显著波动或退化发出告警。用带归因的 `web-vitals` 数据定位原因；把 CrUX 的滚动窗口当作确认信号，而不是即时告警。
 
 当任一守卫触发时，回到 Step 1，在提出下一个修复之前重新建立 baseline。
 
@@ -217,7 +217,7 @@ npx --package=@lhci/cli lhci autorun
 | "用户注意不到 100ms" | 研究表明 100ms 的延迟就影响转化率。用户比你想象的更敏感。 |
 | "框架会处理性能" | 框架能防住一些问题，但修不了 N+1 查询或过大的 bundle。 |
 | "查询慢，加个索引" | 先看执行计划。索引可能早就存在且用不上，而且每个索引会永远对写入抽税。 |
-| "缓存它就行了" | 缓存一个本来就便宜的调用什么都换不来，还多一个 staleness bug。只缓存既昂贵、*又*被反复重读远超写入的东西。 |
+| "缓存它就行了" | 缓存一个本来就便宜的调用什么都换不来，还多一个 staleness bug。只缓存生成代价高、*且*读取频率远高于写入频率的数据。 |
 | "连接池不够就调大点" | 比数据库服务能力还大的 pool 只是把队列挪到更隐蔽的地方。去找是谁占着连接。 |
 | "效果不大，但也没什么坏处" | 中性的变更就该 revert。你会永远为它付维护费，却什么也没换回来。 |
 | "代码都写好了，不如留着" | 沉没成本。测量不在乎这个变更当时写了多久。 |
@@ -229,7 +229,7 @@ npx --package=@lhci/cli lhci autorun
 - 数据获取中出现 N+1 查询模式
 - 没有前后查询计划佐证就加索引
 - cache key 漏掉了响应依赖的某个输入（tenant、locale、viewer）
-- 缓存没有声明的 staleness 窗口，也没有 invalidation 策略
+- 缓存没有明确声明可容忍的 staleness 窗口，也没有 invalidation 策略
 - 因连接耗尽而调大 connection pool，却没有去找谁占着连接
 - 列表 endpoints 没有分页
 - 图片没有 dimensions、lazy loading 或响应式尺寸
@@ -249,7 +249,7 @@ npx --package=@lhci/cli lhci autorun
 - [ ] 结果用与 baseline 相同的方式重新测量（同样的命令、同样的条件）
 - [ ] 提升超过了 run-to-run 方差，而不只是均值
 - [ ] 没有跑赢 baseline 的变更被 revert，而不是当作"中性"保留
-- [ ] 每次尝试都有记录，保留和 revert 的一概记录，死点子不会被重跑
+- [ ] 每次尝试都有记录，保留和 revert 的一概记录，失败过的方案不会被重跑
 - [ ] 具体瓶颈已被识别并处理
 - [ ] Core Web Vitals 处于 "Good" 阈值内
 - [ ] bundle size 没有显著增长
