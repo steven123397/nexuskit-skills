@@ -20,9 +20,9 @@
 
 ---
 
-NexusKit 以 [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) 的简体中文版为技能主体，保留上游的技能名、目录与工作流，并在其上提供 10 个 `nk-` 前缀的入口命令和 5 个专用子智能体。技能按需调用，不强制走完整流水线。
+NexusKit 以 [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) 的简体中文版为技能主体，保留上游的技能名、目录与工作流，并在其上提供 11 个 `nk-` 前缀的入口命令和 6 个专用子智能体。技能按需调用，不强制走完整流水线。
 
-当前为 [v0.4.0](docs/releases/v0.4.0.md)：25 个技能已完成逐技能审阅与全面中文精修，命令层、项目接入和 issue tracker 规则均已就位。旧版 `nk-*` 技能已归档；尚未提回的能力不随本版分发，后续按真实项目需求裁定。
+当前以 [v0.4.0](docs/releases/v0.4.0.md) 为正式基线并已跟进上游至 v0.6.17：26 个技能均已完成简体中文精修，命令层、项目接入和 issue tracker 规则均已就位。旧版 `nk-*` 技能已归档；尚未提回的能力不随本版分发，后续按真实项目需求裁定。
 
 ## 安装
 
@@ -35,7 +35,7 @@ NexusKit 以 [addyosmani/agent-skills](https://github.com/addyosmani/agent-skill
 /plugin install nexuskit@nexuskit-skills
 ```
 
-安装后获得 25 个技能、10 个 `nk-` 命令和 5 个子智能体。清单见 [.claude-plugin/plugin.json](.claude-plugin/plugin.json)。
+安装后获得 26 个技能、11 个 `nk-` 命令和 6 个子智能体。清单见 [.claude-plugin/plugin.json](.claude-plugin/plugin.json)。
 
 本地开发或试用未发布改动：
 
@@ -67,6 +67,7 @@ npx skills add steven123397/nexuskit-skills
 | `/nk-constraints` | 定义并执行项目质量标准，写入 CONSTRAINTS.md |
 | `/nk-review` | 五轴代码审查：正确性、可读性、架构、安全、性能 |
 | `/nk-webperf` | 通过 web-performance-auditor 运行 Web 性能审计 |
+| `/nk-a11y` | 通过 accessibility-auditor 运行 WCAG 2.2 AA 无障碍审计 |
 | `/nk-code-simplify` | 行为不变的前提下简化代码 |
 | `/nk-ship` | 发布前并行派发 specialist personas，汇总 go/no-go |
 
@@ -109,6 +110,7 @@ npx skills add steven123397/nexuskit-skills
 - [code-simplification](skills/code-simplification/SKILL.md)：在行为不变的前提下降低复杂度。
 - [security-and-hardening](skills/security-and-hardening/SKILL.md)：OWASP Top 10、认证、密钥管理、依赖审计与三层边界。
 - [performance-optimization](skills/performance-optimization/SKILL.md)：先测量再优化：Core Web Vitals、profiling、bundle 分析。
+- [accessibility-engineering](skills/accessibility-engineering/SKILL.md)：对现有界面执行 WCAG 2.2 AA 无障碍审计并修复发现的违规项。
 
 **Ship — 有信心地发布**
 
@@ -120,7 +122,7 @@ npx skills add steven123397/nexuskit-skills
 - [shipping-and-launch](skills/shipping-and-launch/SKILL.md)：发布前 checklist、feature flag 生命周期、灰度与回滚。
 <!-- /installable-skills -->
 
-以上为全部 25 个技能。技能来源与逐技能本地改动见 [技能来源](docs/skill-sources.md)；历史审阅过程可从 Git 历史核对。
+以上为全部 26 个技能。技能来源与逐技能本地改动见 [技能来源](docs/skill-sources.md)；历史审阅过程可从 Git 历史核对。
 
 ## 子智能体
 
@@ -130,6 +132,7 @@ npx skills add steven123397/nexuskit-skills
 | [security-auditor](agents/security-auditor.md) | 漏洞检测、威胁建模与 OWASP assessment |
 | [test-engineer](agents/test-engineer.md) | 测试策略、覆盖率分析与 Prove-It pattern |
 | [web-performance-auditor](agents/web-performance-auditor.md) | Core Web Vitals 审计，Quick/Deep 模式 |
+| [accessibility-auditor](agents/accessibility-auditor.md) | WCAG 2.2 AA 无障碍审计，Quick/Deep 模式 |
 | [doubt-challenger](agents/doubt-challenger.md) | 对抗式证伪复审，只读检查假设与失败模式 |
 
 模型选择由 `/nk-init` 在项目接入时确认；默认不改文件，派发时显式传 `model`。
@@ -149,9 +152,9 @@ npx skills add steven123397/nexuskit-skills
 ## 仓库结构
 
 ```text
-skills/            25 个技能，平铺目录
-.claude/commands/  10 个 nk- 前缀命令
-agents/            5 个子智能体
+skills/            26 个技能，平铺目录
+.claude/commands/  11 个 nk- 前缀命令
+agents/            6 个子智能体
 references/        仓库级共享检查清单
 .claude-plugin/    Claude Code 插件与市场清单
 tests/             链接、引用、分发、frontmatter、artifact 路径检查

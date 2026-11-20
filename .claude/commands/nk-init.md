@@ -19,7 +19,7 @@ disable-model-invocation: true
 - **规则文件**：根目录 `AGENTS.md`、`CLAUDE.md` 是否存在；是否已有「项目约定」小节或等价内容。
 - **现有产物**：`docs/ideas/`、`docs/adr/`、`SPEC.md`、`docs/SPEC.md`、`spec/`、`tasks/plan.md`、`tasks/todo.md` 各自是否存在。
 - **外置工具信号**：MCP 工具表或 `.mcp.json` 中是否出现 Linear 等 tracker；`openspec/` 目录或配置；`bd`/beads 配置；`git remote -v` 与 `gh --version`。
-- **模型覆盖**：项目 `.claude/agents/` 或用户 `~/.claude/agents/` 是否已有五个 agent 的同名定义。
+- **模型覆盖**：项目 `.claude/agents/` 或用户 `~/.claude/agents/` 是否已有六个 agent 的同名定义。
 - **多模块信号**：`pnpm-workspace.yaml`、`package.json` 的 `workspaces`、多个 `packages/*/src`。
 
 用两行汇报发现：一行已有产物，一行将采用的推荐值。
@@ -46,11 +46,11 @@ disable-model-invocation: true
 推荐 `tasks/plan.md` + `tasks/todo.md`，plan 格式遵循 planning-and-task-breakdown。问是否使用 GitHub Issues、Linear、beads 等外置 tracker（默认否）。选外置时记录工具与项目/工作区；同样只保留一份来源。并按 `docs/agents/` 的约定写一份项目内的 `docs/agents/issue-tracker.md`：工具、位置，加上完整的建图规则。规则文件里只留一行指向它——指针指向项目内文件，插件升级或换版本都不会断。
 
 **F. 子智能体模型**
-推荐 `code-reviewer`、`security-auditor` 用 opus；`doubt-challenger`、`test-engineer`、`web-performance-auditor` 用 sonnet。
+推荐 `code-reviewer`、`security-auditor` 用 opus；`accessibility-auditor`、`doubt-challenger`、`test-engineer`、`web-performance-auditor` 用 sonnet。
 
 **G. 模型覆盖写在哪**
 - 推荐：不改任何文件；把模型选择写进「项目约定」，以后派发子智能体时显式传 `model`。优先级最高，插件更新时提示词不会被冻结。
-- 项目级覆盖：把五个 agent 的完整定义复制到 `.claude/agents/` 并改 `model`，从此提示词随项目冻结。
+- 项目级覆盖：把六个 agent 的完整定义复制到 `.claude/agents/` 并改 `model`，从此提示词随项目冻结。
 - 用户级覆盖：同上，写到 `~/.claude/agents/`，影响该用户的所有项目。
 
 用户回答"我不知道"时，按推荐值继续，并说明后续可以改。
@@ -68,7 +68,7 @@ disable-model-invocation: true
 - 决策记录：`docs/adr/`，编号递增，不删旧
 - 规格：`SPEC.md`；多模块用 `spec/SPEC-<id>.md` + `spec/capability-map.md`；外部工具：无
 - task：`tasks/plan.md` + `tasks/todo.md`，格式遵循 planning-and-task-breakdown；外部工具：无
-- 子智能体模型：派发时显式传 `model` —— code-reviewer、security-auditor 用 opus；doubt-challenger、test-engineer、web-performance-auditor 用 sonnet
+- 子智能体模型：派发时显式传 `model` —— code-reviewer、security-auditor 用 opus；accessibility-auditor、doubt-challenger、test-engineer、web-performance-auditor 用 sonnet
 - 以上文件在第一次真正产出时创建，不预建空目录
 ```
 
@@ -105,7 +105,7 @@ disable-model-invocation: true
 - `/nk-plan` 与 `planning-and-task-breakdown` 按 task 位置和外部 tracker 拆分
 - 建票图规则在项目内的 `docs/agents/issue-tracker.md`，规则文件里只留一行指针；agent 建票时按它执行
 - `/nk-build` 按规格位置查找 spec
-- `/nk-ship`、`/nk-review`、`/nk-test` 等派发子智能体时按模型行传参
+- `/nk-ship`、`/nk-review`、`/nk-test`、`/nk-webperf`、`/nk-a11y` 等派发子智能体时按模型行传参
 
 提醒用户审阅 `git diff` 后自行提交。
 

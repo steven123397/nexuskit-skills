@@ -1,6 +1,6 @@
 # 无障碍检查清单
 
-WCAG 2.1 AA 合规的快速参考。配合 `frontend-ui-engineering` skill 使用。
+WCAG 2.2 AA 合规的快速参考。构建界面时配合 `frontend-ui-engineering` skill 使用，审计与修复时配合 `accessibility-engineering` skill 使用。
 
 ## 目录
 
@@ -49,7 +49,7 @@ WCAG 2.1 AA 合规的快速参考。配合 `frontend-ui-engineering` skill 使�
 - [ ] 声明页面语言（`<html lang="en">`）
 - [ ] 页面有描述性的 `<title>`
 - [ ] 链接能从周围文本中区分出来（不能只靠颜色）
-- [ ] 移动端触控目标 ≥ 44x44px
+- [ ] 触控目标满足 24×24 CSS px（SC 2.5.8，AA），含其间距与例外规则；44×44 CSS px 为增强级 AAA 目标（SC 2.5.5）
 - [ ] 提供有意义的空状态（而非空白屏幕）
 
 ## 常见 HTML 模式
@@ -123,9 +123,9 @@ WCAG 2.1 AA 合规的快速参考。配合 `frontend-ui-engineering` skill 使�
 ## 测试工具
 
 ```bash
-# Automated audit
-npx --package=@axe-core/cli axe http://localhost:3000
-npx pa11y             # CLI accessibility checker
+# Automated audit (versions pinned for repeatable browser-driver behavior)
+npx --yes @axe-core/cli@4.13.0 http://localhost:3000 --exit
+npx --yes pa11y@9.1.1 http://localhost:3000
 
 # In browser
 # Chrome DevTools → Lighthouse → Accessibility

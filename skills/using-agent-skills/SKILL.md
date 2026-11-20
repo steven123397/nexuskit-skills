@@ -33,7 +33,8 @@ Task arrives
     ├── Reviewing code? ───────────────→ code-review-and-quality
     │   ├── Too complex? ─────────────→ code-simplification
     │   ├── Security concerns? ───────→ security-and-hardening
-    │   └── Performance concerns? ────→ performance-optimization
+    │   ├── Performance concerns? ────→ performance-optimization
+    │   └── Accessibility concerns? ──→ accessibility-engineering
     ├── Committing/branching? ─────────→ git-workflow-and-versioning
     ├── CI/CD pipeline work? ──────────→ ci-cd-and-automation
     ├── Deprecating/migrating? ────────→ deprecation-and-migration
@@ -184,6 +185,7 @@ ASSUMPTIONS I'M MAKING:
 | 评审 | code-simplification | 在保持行为不变的前提下减少不必要的复杂度 |
 | 评审 | security-and-hardening | OWASP 防护、输入验证、最小权限 |
 | 评审 | performance-optimization | 先测量，只优化真正关键的瓶颈 |
+| 评审 | accessibility-engineering | 对现有界面执行 WCAG 2.2 AA 无障碍审计并修复违规项 |
 | 发布 | git-workflow-and-versioning | 原子提交、干净历史 |
 | 发布 | ci-cd-and-automation | 每次变更都运行自动化质量门禁 |
 | 发布 | deprecation-and-migration | 移除旧系统并安全地迁移用户 |

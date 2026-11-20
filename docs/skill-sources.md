@@ -4,44 +4,48 @@
 
 ## 上游与同步点
 
-- 技能主体：[addyosmani/agent-skills](https://github.com/addyosmani/agent-skills)，同步点 `aeac41d`（v0.6.13）；另已回填 v0.6.14/0.6.15 及后续 `301b02b`（PR #736）的可翻译内容（见下；docs、evals、hooks、scripts 不在 vendor 范围）。
+- 技能主体：[addyosmani/agent-skills](https://github.com/addyosmani/agent-skills)，同步点 `8c99fa3`（v0.6.17）；基于 v0.6.13 基底持续回填 v0.6.14–v0.6.17 的可翻译内容（见下；docs、evals、hooks、仓库级 scripts 不在 vendor 范围）。
 - 早期简体中文译本：[vinvcn/addyosmani-agent-skills-zh](https://github.com/vinvcn/addyosmani-agent-skills-zh)（本地副本 `.upstream/addyosmani-agent-skills-zh`，已停更；已 gitignore，不随包分发）。现以 `.upstream/addyosmani-agent-skills` 直接对照英文上游，术语与翻译规范见 [glossary.md](glossary.md)。
 - 引入方式：vendor，小修小补；技能名、目录名与 H1 保持上游原样。逐技能的本地改动按本文件的来源分类与说明记录，历史审阅过程可从 Git 历史核对。
 - 归属与许可证见 [NOTICE](../NOTICE) 与 [LICENSE.upstream](../LICENSE.upstream)。
 
 ## Skills
 
-25 个技能位于 `skills/<name>/SKILL.md`，与上游同名同路径。来源按以下几类记录：
+26 个技能位于 `skills/<name>/SKILL.md`，与上游同名同路径。来源按以下几类记录：
 
-- **无额外行为改写**：`using-agent-skills`、`api-and-interface-design`、`browser-testing-with-devtools`、`frontend-ui-engineering`、`git-workflow-and-versioning`、`interview-me`、`observability-and-instrumentation`、`shipping-and-launch`、`test-driven-development`。除统一项与中文精修外，这些技能未引入额外的 NexusKit 行为改写。
-- **统一项（适用于全部 25 个）**：H1 用上游英文标题；frontmatter `description` 用上游英文原文（作者按触发率调校过）；「Red Flags」统一为「危险信号」；合理化表列头与部分小节标题按本仓术语标准统一（现已收敛至 [glossary.md](glossary.md)）。2026-11-13 的六批中文精修适用于全部技能，不在各分类中重复记录。
+- **无额外行为改写**：`using-agent-skills`、`accessibility-engineering`、`api-and-interface-design`、`browser-testing-with-devtools`、`frontend-ui-engineering`、`git-workflow-and-versioning`、`interview-me`、`observability-and-instrumentation`、`shipping-and-launch`、`test-driven-development`。除统一项、跨技能引用改用公开技能名与中文精修外，这些技能未引入额外的 NexusKit 行为改写（`accessibility-engineering` 附带上游原样脚本 `scripts/audit-a11y.sh`）。
+- **统一项（适用于全部 26 个）**：H1 用上游英文标题；frontmatter `description` 用上游英文原文（作者按触发率调校过）；「Red Flags」统一为「危险信号」；合理化表列头与部分小节标题按本仓术语标准统一（现已收敛至 [glossary.md](glossary.md)）。
 - **正文小修**：`ci-cd-and-automation`、`code-review-and-quality`、`code-simplification`、`constraint-driven-development`、`context-engineering`、`debugging-and-error-recovery`、`deprecation-and-migration`、`documentation-and-adrs`、`incremental-implementation`、`performance-optimization`、`planning-and-task-breakdown`、`security-and-hardening`、`source-driven-development`、`spec-driven-development`。改动包括回填上游后续修正、修正交叉引用、把规则文件表述统一为 `CLAUDE.md`/`AGENTS.md`，以及命令名 nk 化。
 - **NK 改写**：
   - `doubt-driven-development`：跨模型复审段改为派发内置子智能体并按项目约定指定 `model`；DOUBT 步骤优先派发 `doubt-challenger`。
   - `idea-refine`：去掉命令专用的 `$ARGUMENTS` 占位；保存落点改为项目规则文件优先，默认 `docs/ideas/`。
-  - `spec-driven-development`：多模块 spec 落点改为 `spec/`（`spec/capability-map.md` + `spec/SPEC-<id>.md`），与 `/nk-build` 的查找路径一致；阶段 4 的路径引用改为公开技能名。
+  - `spec-driven-development`：阶段 4 的路径引用改为公开技能名（多模块 `spec/capability-map.md` + `spec/SPEC-<id>.md` 落点已于上游 v0.6.17 PR #797 趋同）。
 
-## 已回填的上游修正（v0.6.14 – `301b02b`）
+## 已回填的上游修正（v0.6.14 – v0.6.17 / `8c99fa3`）
 
-- `code-review-and-quality`（`301b02b` / PR #736）：第 4 步补充报告发现前先对照可达调用方、守卫条件与测试核实并剔除误报、区分原有缺陷与新引入回归、接受零发现作为有效结果。
-- `security-and-hardening`：暂存密钥检查改为 `git diff --cached -i -G'…' --name-only`，只列文件名、不回显值；ownership 检查前先返回 404；description 补 `session cookies`。同改动也落在 `references/security-checklist.md`。
-- `constraint-driven-development`：新增 `scripts/quality-gate.mjs`，让 Semgrep/axe 的 high/critical 发现真正使 CI 失败；同步 gitleaks `dir` 调用、`check:security`/`check:a11y` 映射，以及「用故意违规验证门禁」的验收项；`references/floor-guard.md` 识别表格单元格内的方向词。
-- `.claude/commands/nk-*.md`：与上游一致加 `disable-model-invocation: true`，命令仅用户可调用；`/nk-init` 原本即为此形态。
-- 其余技能与 references：回填 0.6.14/0.6.15 的示例修正与触发词更新，涉及 `api-and-interface-design`、`browser-testing-with-devtools`、`code-simplification`、`context-engineering`、`debugging-and-error-recovery`、`deprecation-and-migration`、`documentation-and-adrs`、`doubt-driven-development`、`frontend-ui-engineering`、`git-workflow-and-versioning`、`shipping-and-launch`、`source-driven-development`、`spec-driven-development`、`test-driven-development`，以及 `references/` 下的 accessibility、performance、testing 三份清单。`ci-cd-and-automation` 与 `performance-optimization` 的对应修正此前已在发布批回填。
+- `accessibility-engineering` 套件（v0.6.17 / PR #261）：引入 `skills/accessibility-engineering/SKILL.md` 及 `scripts/audit-a11y.sh`、`agents/accessibility-auditor.md`（补 `model: sonnet`）、`.claude/commands/nk-a11y.md`；同步更新 `using-agent-skills` 路由与 `references/accessibility-checklist.md`（升级至 WCAG 2.2 AA、SC 2.5.8 触控目标 24×24 CSS px 及固定版本的 `@axe-core/cli@4.13.0`、`pa11y@9.1.1`）。
+- Spec 演进与 Delta Spec（v0.6.16 / PR #383、v0.6.17 / PR #797）：`spec-driven-development` 新增版本标题 `— V[N]`、`Out of Scope (Deferred)` 与根级 delta spec（`SPEC-<change>.md` + `Status:` 生命周期）；`planning-and-task-breakdown` 模板补 `Source spec:`；`/nk-spec` 分流新建与 delta spec；`/nk-build` 优先识别未实现的 `SPEC-<change>.md`，并针对外部 tracker（如 beads）精简了 `tasks/plan.md` 段落。
+- `documentation-and-adrs`（v0.6.16 / PR #514）：`description` 补充漂移触发词；新增「文档漂移（Documentation Drift）」小节（git 祖先判断、无法判定时报 `"can't tell"`、变更日志只追加不改写）。
+- `security-and-hardening` 与 `references/security-checklist.md`（v0.6.14–0.6.16 / PR #785, #787）：暂存密钥检查改为 `git diff --cached -i -G'…' --name-only`；ownership 检查前先返回 404；OWASP Top 10 升级至 2025 版编号并注明年份；`hardening-patterns.md` 补充 `SESSION_SECRET` 启动校验。
+- `code-review-and-quality`（PR #736、v0.6.16 #763、v0.6.17 #795）：第 4 步核实发现并接受零发现；第 5 步补充自跑测试前核对工作区干净且位于待审 ref；`description` 覆盖内联 diff 触发。
+- `frontend-ui-engineering`（v0.6.16 / PR #732）：新增「使用项目现有工具验证」约束与 WAI-ARIA APG 模式引用。
+- `constraint-driven-development`（v0.6.15 #694、v0.6.16 #786）：新增 `scripts/quality-gate.mjs`、gitleaks `dir` 与 `check:security`/`check:a11y`；架构门禁命令由 `depcruise --validate src` 修正为 `depcruise src`；`references/floor-guard.md` 识别表格单元格内方向词。
+- `ci-cd-and-automation`（v0.6.17 / PR #799）：Vercel 回滚 workflow 补 `VERCEL_TOKEN` 与 `--token "$VERCEL_TOKEN" --yes`。
+- 其余技能与命令：`debugging-and-error-recovery`、`test-driven-development` 同步 v0.6.16 路由 `description`；`.claude/commands/nk-*.md` 全部配置 `disable-model-invocation: true`；其余 v0.6.14/0.6.15 示例修正与 `references/` 更新均已回填。
 
 ## Commands
 
-`.claude/commands/` 下的 9 个上游命令来自同版本 `.claude/commands/*.md`，结构性改动包括：
+`.claude/commands/` 下的 10 个上游命令来自同版本 `.claude/commands/*.md`，结构性改动包括：
 
 - 移除 `agent-skills:` 前缀，改指本包技能名。
-- slash 名加 `nk-` 前缀，正文中的自称与交叉引用同步。
-- `/nk-ship` 的 subagent 派发说明按 Claude Code 的 Agent tool 与 scope 规则调整；`/nk-webperf` 保留上游 Claude Code 形态的输入说明。
+- slash 名加 `nk-` 前缀（含新增 `/nk-a11y`），正文中的自称与交叉引用同步。
+- `/nk-ship` 的 subagent 派发说明按 Claude Code 的 Agent tool 与 scope 规则调整；`/nk-webperf` 与 `/nk-a11y` 保留上游 Claude Code 形态的 Quick/Deep 输入说明；`/nk-build` 步骤 3 针对外部 tracker（如 beads）做了精简适配。
 
 `/nk-init` 为 NK 扩展：[入口](../.claude/commands/nk-init.md) 的探测、逐项确认、草稿确认与幂等写入骨架参考 Matt `skills/engineering/setup-matt-pocock-skills/SKILL.md` 的 `Explore`、`Present findings and ask`、`Confirm and edit`、`Write`；七项配置对象（规则文件、idea/ADR/spec/task 落点、外置工具、子智能体模型与覆盖层级）为 NK 设计。
 
 ## Agents
 
-- `code-reviewer`、`security-auditor`、`test-engineer`、`web-performance-auditor`：来自上游 `agents/` 同名文件，补 `model` 字段，并按 nk 命令名调整引用。
+- `accessibility-auditor`、`code-reviewer`、`security-auditor`、`test-engineer`、`web-performance-auditor`：来自上游 `agents/` 同名文件，补 `model` 字段，并按 nk 命令名与 `references/orchestration-patterns.md` 调整引用。
 - `doubt-challenger`：NK 新增，对抗式证伪子智能体，工具限只读，默认 `model: sonnet`。
 
 ## References

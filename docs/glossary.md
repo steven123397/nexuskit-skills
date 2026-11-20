@@ -2,7 +2,7 @@
 
 维护者向参考文档：**执行技能的 Agent 不需要读取本文件**。
 
-v0.4.0 起，原 `CONCEPTS.md`（v0.3.x 领域术语）与 `context.md`（Matt Pocock / CE 译法表）合并收敛为本文件。由于早期简体中文上游 `vinvcn/addyosmani-agent-skills-zh` 已长期停更，后续版本跟进直接以 `.upstream/addyosmani-agent-skills`（跟踪英文上游 [`addyosmani/agent-skills`](https://github.com/addyosmani/agent-skills)）为准；同期增量与校对中遇到的新术语与译法统一收口至此，保持 25 个技能、`references/`、`agents/` 与 `.claude/commands/` 前后一致。
+v0.4.0 起，原 `CONCEPTS.md`（v0.3.x 领域术语）与 `context.md`（Matt Pocock / CE 译法表）合并收敛为本文件。由于早期简体中文上游 `vinvcn/addyosmani-agent-skills-zh` 已长期停更，后续版本跟进直接以 `.upstream/addyosmani-agent-skills`（跟踪英文上游 [`addyosmani/agent-skills`](https://github.com/addyosmani/agent-skills)）为准；同期增量与校对中遇到的新术语与译法统一收口至此，保持 26 个技能、`references/`、`agents/` 与 `.claude/commands/` 前后一致。
 
 ---
 
@@ -11,11 +11,11 @@ v0.4.0 起，原 `CONCEPTS.md`（v0.3.x 领域术语）与 `context.md`（Matt P
 1. **自然中英混排，禁止杂糅英文语法**：中文程序员日常交流高频使用的专业英文词汇可直接保留英文（如 `skill`、`agent`、`spec`、`plan`、`task`、`PR`、`diff`、`commit`、`endpoint`、`API`、`harness`、`fallback`、`no-op`、`lockfile`、`semver`、`codemods` 等），但不把英文动词屈折、分词或生硬词序塞进中文句式（避免“来 exploiting”、“一个 failing 的测试”等写法）。
 2. **关键或首次概念括注**：需要中文语义定锚、或仅看英文易产生歧义的术语，采用「中文（English）」形式首次说明（如 `边界情况（edge cases）`、`灰度（Canary）`、`应急开关（kill switch）`、`增量兼容（additive）`）；同文后续出现直接沿用其中一种并保持一致性，不必句句重复括号。
 3. **保留英文不变的位点**：
-   - 25 个上游技能的目录名、公开技能名、H1 标题（例如 `# Code Review and Quality`）与 frontmatter `description` 原文（`description` 按触发率调校过，不译）。
-   - 给 Agent 读取或机器匹配的模板结构标题与状态值（例如 `Objective`、`Tech Stack`、`Task List`、`Problem Statement`、`ARTIFACT` / `CONTRACT`、`Status: PROPOSED | ACCEPTED`、`Review: [PR/Change title]`、`GO | NO-GO`）。
-   - 工具名、CLI 参数、协议/标准缩写与固定名称（如 `OWASP Top 10`、`STRIDE`、`WCAG 2.1 AA`、`Core Web Vitals` / `LCP` / `INP` / `CLS` / `TTFB` / `LoAF`、`RED` / `USE`、`SLO`、`PII`、`IDOR`、`SSRF`、`Semgrep`、`gitleaks`、`osv-scanner`、`axe-core`、`Lighthouse`）。
+   - 26 个上游技能的目录名、公开技能名、H1 标题（例如 `# Code Review and Quality`）与 frontmatter `description` 原文（`description` 按触发率调校过，不译）。
+   - 给 Agent 读取或机器匹配的模板结构标题与状态值（例如 `Objective`、`Tech Stack`、`Task List`、`Problem Statement`、`ARTIFACT` / `CONTRACT`、`Status: PROPOSED | ACCEPTED`、`Status: proposed | implemented`、`Out of Scope (Deferred)`、`Source spec:`、`Review: [PR/Change title]`、`GO | NO-GO`）。
+   - 工具名、CLI 参数、协议/标准缩写与固定名称（如 `OWASP Top 10:2025`、`STRIDE`、`WCAG 2.2 AA`、`WAI-ARIA APG`、`Core Web Vitals` / `LCP` / `INP` / `CLS` / `TTFB` / `LoAF`、`RED` / `USE`、`SLO`、`PII`、`IDOR`、`SSRF`、`Semgrep`、`gitleaks`、`osv-scanner`、`axe-core`、`pa11y`、`Lighthouse`）。
 4. **NexusKit 本地化规则**：
-   - 上游 slash 命令名统一加 `nk-` 前缀：`/spec` → `/nk-spec`、`/plan` → `/nk-plan`、`/build` → `/nk-build`、`/test` → `/nk-test`、`/review` → `/nk-review`、`/ship` → `/nk-ship`、`/constraints` → `/nk-constraints`、`/code-simplify` → `/nk-code-simplify`、`/webperf` → `/nk-webperf`；移除 `agent-skills:` 命名空间前缀。
+   - 上游 slash 命令名统一加 `nk-` 前缀：`/spec` → `/nk-spec`、`/plan` → `/nk-plan`、`/build` → `/nk-build`、`/test` → `/nk-test`、`/review` → `/nk-review`、`/ship` → `/nk-ship`、`/constraints` → `/nk-constraints`、`/code-simplify` → `/nk-code-simplify`、`/webperf` → `/nk-webperf`、`/a11y` → `/nk-a11y`；移除 `agent-skills:` 命名空间前缀。
    - 宿主规则文件统一表述为「项目的 agent 规则文件（`CLAUDE.md` / `AGENTS.md`）」或「`CLAUDE.md` / `AGENTS.md`」，不单独写死为单一客户端（明确讨论 Claude Code 平台特性的段落除外）。
    - 跨技能引用使用公开技能名（如 `` `code-review-and-quality` ``），不跨技能引用私有路径；共享检查清单位于 `../../references/*.md`。
 5. **标点、格式与文风**：
@@ -27,21 +27,21 @@ v0.4.0 起，原 `CONCEPTS.md`（v0.3.x 领域术语）与 `context.md`（Matt P
 
 ## 二、标准化结构标题与列头
 
-### 1. 25 技能通用结构
+### 1. 26 技能通用结构
 
 | 英文原文 | NexusKit 统一写法 | 备注 |
 |---|---|---|
-| H1 技能标题 | 保留英文原题 | 25/25 技能 H1 与英文上游逐字一致 |
+| H1 技能标题 | 保留英文原题 | 26/26 技能 H1 与英文上游逐字一致 |
 | `description` (SKILL.md frontmatter) | 保留英文原文 | `agents/*.md` 与 `.claude/commands/*.md` 则用简体中文 |
-| `Overview` | `## 概览` | 25/25 技能统一（规划模板代码块内 `## Overview` 例外，属输出格式原文） |
-| `When to Use` | `## 何时使用` | 24/25 技能统一（`using-agent-skills` 无此节） |
+| `Overview` | `## 概览` | 26/26 技能统一（规划模板代码块内 `## Overview` 例外，属输出格式原文） |
+| `When to Use` | `## 何时使用` | 25/26 技能统一（`using-agent-skills` 无此节） |
 | `When NOT to Use` | `**何时不使用：**` | 部分既有译文写作 `何时不要使用：`，新改写优先统一用 `何时不使用：` |
 | `Core Principles` | `## 核心原则` | |
 | `Workflow` | `## 流程` | |
-| `Common Rationalizations` | `## 常见合理化借口` | 24/25 技能统一 |
-| `\| Rationalization \| Reality \|` | `\| 合理化借口 \| 现实 \|` | 24/25 技能合理化表列头完全统一 |
-| `Red Flags` | `## 危险信号` | 24/25 技能统一；**禁止译作「红旗」** |
-| `Verification` | `## 验证` | 24/25 技能统一（测试计划模板子节 `### Verification` 保留英文） |
+| `Common Rationalizations` | `## 常见合理化借口` | 25/26 技能统一 |
+| `\| Rationalization \| Reality \|` | `\| 合理化借口 \| 现实 \|` | 25/26 技能合理化表列头完全统一 |
+| `Red Flags` | `## 危险信号` | 25/26 技能统一；**禁止译作「红旗」** |
+| `Verification` | `## 验证` | 25/26 技能统一（测试计划模板子节 `### Verification` 保留英文） |
 | `See Also` | `## 另见` | |
 | `Interaction with Other Skills` | `## 与其他 skill 的关系` | |
 | `Dead Code Hygiene` | `## 死代码清理` | `code-review-and-quality`（不用「死代码卫生」） |
@@ -52,7 +52,7 @@ v0.4.0 起，原 `CONCEPTS.md`（v0.3.x 领域术语）与 `context.md`（Matt P
 |---|---|---|
 | `Stage 0` – `Stage 4` | `### 阶段 N：...` | `spec-driven-development`、`idea-refine/examples.md` |
 | `Step N` | 既有文件并存三种：`### 步骤 N：...`（`planning`、`tdd`、`performance`、`code-simplification`、`deprecation`）、`### 第 N 步：...`（`code-review`、`debugging`、`source-driven`）、`### Step N: ...`（`interview-me`、`constraint`、`doubt-driven`） | 校对既有文件时顺应其内部编号风格，不跨文件强改；修改标题文字时须同步检查同文件的 `#anchor` 链接（可通过 `python tests/run_checks.py` 验证） |
-| `agents/*.md` 收尾 | `## 输出格式`、`## 规则`、`## 组合方式` | 五个子智能体对齐一致（`doubt-challenger` 无输出模板与组合方式，只含 `输入`、`审查重点`、`规则`） |
+| `agents/*.md` 收尾 | `## 输出格式`、`## 规则`、`## 组合方式` | 六个子智能体对齐一致（`doubt-challenger` 无输出模板与组合方式，只含 `输入`、`审查重点`、`规则`） |
 
 ---
 
@@ -86,6 +86,7 @@ v0.4.0 起，原 `CONCEPTS.md`（v0.3.x 领域术语）与 `context.md`（Matt P
 | 英文原词 | NexusKit 译法 / 处理 | 说明与避坑 |
 |---|---|---|
 | `spec` / `specification` | 保留 `spec`（产物实体）；泛指可作 `specification` / `规格` | |
+| `delta spec` | 首次可作 `增量 spec（delta spec）`，后续保留 `delta spec` | 已上线 `SPEC.md` 的后续变更规格（`SPEC-<change>.md`） |
 | `capability map` | 保留 `capability map` | 多模块拆分索引文件 `spec/capability-map.md` |
 | `plan` / `task` | 保留 `plan` / `task`（通用语境亦可作「计划 / 任务」） | |
 | `acceptance criteria` | `验收标准（acceptance criteria）` | |
@@ -170,7 +171,7 @@ v0.4.0 起，原 `CONCEPTS.md`（v0.3.x 领域术语）与 `context.md`（Matt P
 
 ### 1. 命令与插件入口
 
-- **10 个 `nk-` 命令**（全部配置 `disable-model-invocation: true`，仅用户显式调用）：`/nk-init`（NexusKit 自研项目接入入口）以及 9 个上游派生入口 `/nk-spec`、`/nk-plan`、`/nk-build`、`/nk-test`、`/nk-constraints`、`/nk-review`、`/nk-webperf`、`/nk-code-simplify`、`/nk-ship`。
+- **11 个 `nk-` 命令**（全部配置 `disable-model-invocation: true`，仅用户显式调用）：`/nk-init`（NexusKit 自研项目接入入口）以及 10 个上游派生入口 `/nk-spec`、`/nk-plan`、`/nk-build`、`/nk-test`、`/nk-constraints`、`/nk-review`、`/nk-webperf`、`/nk-a11y`、`/nk-code-simplify`、`/nk-ship`。
 - **仓库不是实时加载源**：Claude Code 等客户端读取的是安装快照；校验清单与路径一致性通过 `python tests/run_checks.py`（6 项检查：`link-integrity`、`references`、`byte-budget`、`distribution`、`artifact-paths`、`frontmatter`）守护。
 
 ### 2. 项目接入与「项目约定」（`/nk-init`）
@@ -180,14 +181,14 @@ v0.4.0 起，原 `CONCEPTS.md`（v0.3.x 领域术语）与 `context.md`（Matt P
 1. 规则文件落点（`AGENTS.md` / `CLAUDE.md`）
 2. `idea` 落点（默认 `docs/ideas/`，一想法一文件）
 3. 决策记录位置（默认 `docs/adr/`，连续编号，不删旧）
-4. `spec` 落点与外部工具（默认单份 `SPEC.md`，兼容 `docs/SPEC.md`；多模块 `spec/capability-map.md` + `spec/SPEC-<id>.md`；外部工具或本地单源，不双写）
+4. `spec` 落点与外部工具（默认单份 `SPEC.md`，兼容 `docs/SPEC.md` 与根级 delta spec `SPEC-<change>.md`；多模块 `spec/capability-map.md` + `spec/SPEC-<id>.md`；外部工具或本地单源，不双写）
 5. `task` 落点与外部 tracker（默认 `tasks/plan.md` + `tasks/todo.md`；或选用 beads / Linear / GitHub Issues 之一作唯一来源，并写入项目内 `docs/agents/issue-tracker.md`）
-6. 五个子智能体默认模型（`code-reviewer`、`security-auditor` 用 `opus`；`doubt-challenger`、`test-engineer`、`web-performance-auditor` 用 `sonnet`）
+6. 六个子智能体默认模型（`code-reviewer`、`security-auditor` 用 `opus`；`accessibility-auditor`、`doubt-challenger`、`test-engineer`、`web-performance-auditor` 用 `sonnet`）
 7. 模型覆盖层级（推荐在规则文件中约定由调用方显式传 `model`，避免复制文件冻结提示词）
 
 ### 3. 子智能体与编排边界
 
-- **五个内置子智能体**：4 个上游派生专业视角（`code-reviewer`、`security-auditor`、`test-engineer`、`web-performance-auditor`）+ 1 个 NK 新增（`doubt-challenger`，对抗式证伪者，工具限只读）。
+- **六个内置子智能体**：5 个上游派生专业视角（`accessibility-auditor`、`code-reviewer`、`security-auditor`、`test-engineer`、`web-performance-auditor`）+ 1 个 NK 新增（`doubt-challenger`，对抗式证伪者，工具限只读）。
 - **对抗式证伪（`doubt-challenger`）**：在 `CONTRACT` 下挑战 `ARTIFACT`，**只输出问题**（含位置、原文证据、失败理由、`blocking / non-blocking` 严重度），不输出“整体不错”等验证式总结；彻底核查无误时明确回答未发现问题，不凑数。
 - **单层编排治理规则**（`references/orchestration-patterns.md`）：**用户或 slash command 是 orchestrator，persona 不调用其他 persona**；需要多方互相反驳定因时用 Agent Teams，常规并行业务审计用 `/nk-ship` 的同回合并行 fan-out。
 
