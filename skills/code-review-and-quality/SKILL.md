@@ -1,6 +1,6 @@
 ---
 name: code-review-and-quality
-description: Conducts multi-axis code review. Use before merging any change. Use when reviewing code written by yourself, another agent, or a human. Use when you need to assess code quality across multiple dimensions before it enters the main branch. Use when asked to review a diff or a pull request, even when the diff is pasted inline.
+description: Conducts multi-axis code review. Use before merging any change. Use when reviewing code written by yourself, another agent, or a human. Use when you need to assess code quality across multiple dimensions before it enters the main branch. Use when asked to review a diff or a pull request, even when the diff is pasted inline and the review looks quick to do from reading it.
 ---
 
 # Code Review and Quality
@@ -205,6 +205,8 @@ For each file changed:
 - Are there screenshots for UI changes?
 - Is there a before/after comparison?
 ```
+
+在你自己运行测试或探针之前，先确认当前工作区干净且位于待审 ref 上（`git status --short` 为空且 `git rev-parse HEAD` 与 PR head 一致），并在审查报告中注明该 ref。工作区可能残留其他会话的未提交改动，基于它跑出的证据未必代表本次变更本身的代码。
 
 ## 多模型审查模式
 

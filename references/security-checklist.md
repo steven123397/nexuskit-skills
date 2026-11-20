@@ -211,18 +211,20 @@ res.status(500).json({
 
 ## OWASP Top 10 快速参考
 
+编号遵循 [OWASP Top 10:2025](https://owasp.org/Top10/2025/)。引用条目时请带上年份（如 `A06:2025`），因为 2021 版中有多个相同类别的编号与此不同。
+
 | # | 漏洞 | 预防 |
 |---|---|---|
-| 1 | Broken Access Control | 每个端点做 auth checks，验证 ownership |
-| 2 | Cryptographic Failures | HTTPS、强哈希、代码中无 secrets |
-| 3 | Injection | 参数化查询、输入验证 |
-| 4 | Insecure Design | Threat modeling、spec-driven development |
-| 5 | Security Misconfiguration | Security headers、最小权限、audit deps |
-| 6 | Vulnerable Components | 使用生态自带的依赖审计（`npm audit`、`pip-audit` 等），保持 deps 更新，最小化 deps |
-| 7 | Auth Failures | 强密码、rate limiting、session management |
-| 8 | Data Integrity Failures | 验证更新/依赖，signed artifacts |
-| 9 | Logging Failures | 记录安全事件，不记录 secrets |
-| 10 | SSRF | 验证/allowlist URLs，限制 outbound requests |
+| A01 | Broken Access Control（现包含 SSRF） | 每个端点做 auth checks，验证 ownership；对服务端请求 URL 做校验/allowlist，限制 outbound requests |
+| A02 | Security Misconfiguration | Security headers、最小权限、安全默认值 |
+| A03 | Software Supply Chain Failures | 使用生态自带的依赖审计（`npm audit`、`pip-audit` 等），保持 deps 更新、最小化 deps，审查新包与 install scripts |
+| A04 | Cryptographic Failures | HTTPS、强哈希、代码中无 secrets |
+| A05 | Injection | 参数化查询、输入验证 |
+| A06 | Insecure Design | Threat modeling、spec-driven development |
+| A07 | Authentication Failures | 强密码、rate limiting、session management |
+| A08 | Software or Data Integrity Failures | 验证更新、signed artifacts、不反序列化不可信数据 |
+| A09 | Security Logging and Alerting Failures | 记录安全事件并配置告警，不记录 secrets |
+| A10 | Mishandling of Exceptional Conditions | Fail closed、处理每条错误路径、返回通用错误响应体 |
 
 ## OWASP LLM Top 10 快速参考
 

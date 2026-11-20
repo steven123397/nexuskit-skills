@@ -6,7 +6,7 @@
 
 ## OWASP Top 10 防护模式
 
-这些是防护模式，不是排名。2021 年的排序见 `../../../references/security-checklist.md#owasp-top-10-快速参考` 中的速查表。
+这些是防护模式，不是排名。2025 年的排序见 `../../../references/security-checklist.md#owasp-top-10-快速参考` 中的速查表。
 
 ### 注入
 
@@ -32,8 +32,10 @@ const hashedPassword = await hash(plaintext, SALT_ROUNDS);
 const isValid = await compare(plaintext, hashedPassword);
 
 // Session management
+const SESSION_SECRET = process.env.SESSION_SECRET;  // From environment, not code
+if (!SESSION_SECRET) throw new Error('SESSION_SECRET not configured');
 app.use(session({
-  secret: process.env.SESSION_SECRET,  // From environment, not code
+  secret: SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: {

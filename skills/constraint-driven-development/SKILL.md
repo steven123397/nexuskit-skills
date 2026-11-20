@@ -156,7 +156,7 @@ number and no command in this column is an aspiration, not a constraint.
 | 性能: 页面 | Lighthouse | `npm i -D lighthouse` | `lighthouse $URL --output=json --quiet` | LCP、CLS、performance score |
 | 性能: bundle | size-limit | `npm i -D size-limit` | `size-limit --json` | 每个 entry 的字节预算 |
 | 无障碍性 | axe-core | `npm i -D @axe-core/cli` | `npm run check:a11y`（见下） | critical 或 serious 为零 |
-| 架构 | dependency-cruiser | `npm i -D dependency-cruiser` | `depcruise --validate src` | 任何违规 |
+| 架构 | dependency-cruiser | `npm i -D dependency-cruiser` | `depcruise src` | 任何违规 |
 | 断言质量 | Stryker | `npm i -D @stryker-mutator/core` | `stryker run --mutate <changed files>` | mutation score |
 
 跳过下面五件事，它们会反咬你一口：

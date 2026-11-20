@@ -37,7 +37,7 @@ description: Hardens code against vulnerabilities. Use when auditing an input ha
 
 4. **在每个 use case 旁边写下 abuse case。** 对每个功能问自己："我会怎么滥用它？" 然后把那答案变成你的第一个测试。
 
-如果你说不出某个功能的 trust boundaries，你就还没准备好保护它。这就是 OWASP 的 **A04: Insecure Design** —— 大多数 breaches 始于设计，而不是代码。
+如果你说不出某个功能的 trust boundaries，你就还没准备好保护它。这就是 OWASP 的 **A06:2025 Insecure Design** —— 大多数 breaches 始于设计，而不是代码。
 
 ## 三层边界系统
 
@@ -80,7 +80,7 @@ description: Hardens code against vulnerabilities. Use when auditing an input ha
 
 - 参数化每一个查询。绝不要用输入字符串拼出 SQL、NoSQL 或 shell 命令。
 - 通过框架的自动转义对输出编码。如果原始 HTML 不可避免，先用一个 allowlist sanitizer 做清洗。
-- 对每一个请求检查 **authorization**，而不只是 authentication：已认证用户必须拥有（或被允许访问）那个具体资源（A01，IDOR）。
+- 对每一个请求检查 **authorization**，而不只是 authentication：已认证用户必须拥有（或被允许访问）那个具体资源（A01:2025，IDOR）。
 
 模式：[注入](references/hardening-patterns.md#注入)、[XSS](references/hardening-patterns.md#跨站脚本攻击xss)、[访问控制](references/hardening-patterns.md#访问控制失效)。
 
@@ -135,7 +135,7 @@ Secrets 来自环境变量。`.env.example` 带占位值提交；真实的 `.env
 1. **找到 installation boundary 和 manager。** 使用拥有 lockfile 的 workspace 根目录；只有在独立嵌套项目位于该 workspace 之外时才使用它。交叉验证 `packageManager`（存在时）、lockfile 和 CI；出现分歧或互相竞争的 lockfiles 时停下。固定 manager 版本。
 2. **在首次执行前阻断依赖脚本。** 以禁用脚本的方式 bootstrap，或采用书面成文的 fail-closed 策略；检查待执行脚本的源码，只批准最低限度必需的包，提交这个策略，然后用一次干净的 frozen/immutable install 验证。绝不无差别批准。
 3. **每次发布前，用原生 audit 针对已提交的 lockfile 跑一遍。** 按 **可达性**（runtime、build、test、deploy 路径）和修复可得性分诊 critical/high。绝不自动应用强制修复（`npm audit fix --force` 或等价命令），因为强制修复可能越过声明的依赖范围；先预览、阅读 changelogs，并逐一测试产生的升级。每一次推迟都要记录原因和复查日期。
-4. **Audit 只能匹配已知 advisories。** 它抓不到新出现的恶意包或 typosquatting 包（`cross-env` 对比 `crossenv`）。把新依赖、lockfile diff 和 script-policy 变更放在一起 review：ownership、维护状况、发布时长、provenance、传递依赖图。在支持的地方验证 registry 签名（`npm audit signatures`、`pnpm audit signatures`），并把"缺失"当作需要调查的信号，而不是被攻破的自动证明（A06，LLM03）。
+4. **Audit 只能匹配已知 advisories。** 它抓不到新出现的恶意包或 typosquatting 包（`cross-env` 对比 `crossenv`）。把新依赖、lockfile diff 和 script-policy 变更放在一起 review：ownership、维护状况、发布时长、provenance、传递依赖图。在支持的地方验证 registry 签名（`npm audit signatures`、`pnpm audit signatures`），并把"缺失"当作需要调查的信号，而不是被攻破的自动证明（A03:2025，LLM03）。
 
 分诊决策树：[依赖审计分诊](references/hardening-patterns.md#依赖审计分诊)。Manager 对照矩阵和 install-script 门禁：`../../references/security-checklist.md`。
 

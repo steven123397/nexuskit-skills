@@ -1,6 +1,6 @@
 ---
 name: documentation-and-adrs
-description: Records decisions and documentation. Use when you need to document an architecture decision (ADR) or the reasoning behind a design choice, when changing public APIs, shipping features, or when you need to record context that future engineers and agents will need to understand the codebase.
+description: Records decisions and documentation, and detects when documentation has drifted from the code it describes. Use when you need to document an architecture decision (ADR) or the reasoning behind a design choice, when changing public APIs, shipping features, when docs may be stale or out of sync with the code they describe, when working out which module docs are still accurate, or when setting up a check so docs cannot silently go out of date again.
 ---
 
 # Documentation and ADRs
@@ -265,6 +265,23 @@ How to contribute, coding standards, PR process.
 2. 用读者真正需要的具体信息，替换掉套话式开场白、宣传腔形容词和重复的总结。不要为了填补缺乏依据的说法，而凭空编造示例或给出更满的保证；同时保留必要的技术性重复，以及项目既有的术语。
 3. 把改后的文档与原文及其来源做对比。恢复任何不小心丢失的限定语或注意事项，验证命令和代码示例仍能按文档所述工作，并如实解释任何未解决的事实存疑，而不是用文字润色把它粉饰掩盖过去。
 
+## 文档漂移（Documentation Drift）
+
+写就时准确的文档，在代码继续演进后表面上依然显得言之凿凿。当某份文档可能已经过时，应根据版本控制历史来判断，而不是看文档写得有多笃定：
+
+```bash
+code=$(git log -1 --format=%H -- src/rate-limiter.js)
+doc=$(git log -1 --format=%H -- docs/rate-limiter.md)
+if [ "$code" = "$doc" ]; then echo "current: changed together"
+elif git merge-base --is-ancestor "$doc" "$code"; then echo "stale: code changed after the doc"
+elif git merge-base --is-ancestor "$code" "$doc"; then echo "current: doc changed after the code"
+else echo "can't tell"; fi
+```
+
+无法确定提交先后顺序的历史（分叉分支、rebase、浅克隆）一律判定为 `"can't tell"`。如实说明即可，绝不要把它报告为最新（current）。
+
+修正带有变更日志（change log）的文档时，应追加一条带日期的新记录并说明修改原因。绝不要改写或合并早期条目：git 保存了旧文本，但变更日志是唯一记录修改理由的地方。
+
 ## 常见合理化借口
 
 | 合理化借口 | 现实 |
@@ -274,6 +291,7 @@ How to contribute, coding standards, PR process.
 | “没人读文档” | Agent 会读，未来的工程师会读，三个月后的你自己也会读。 |
 | “ADR 是额外负担” | 一份花 10 分钟写完的 ADR，能避免半年后团队围绕同一决策争论两小时。 |
 | “注释会过时” | 解释 *why* 的注释是稳定的；复述 *what* 的注释才会过时，所以只写前者。 |
+| “顺手把变更日志也整理一下” | Git 保存了旧文本，但变更日志保存着修改理由。改写它既销毁了唯一的理由记录，又没留住任何东西。 |
 
 ## 危险信号
 
@@ -284,6 +302,8 @@ How to contribute, coding standards, PR process.
 - TODO 注释已经滞留数周无人处理
 - 有重大架构选择的项目中却没有 ADR
 - 文档只是复述代码本身，而不是解释设计意图
+- 变更日志被改写，而不是采用追加方式更新
+- 在无法确定文档与代码的提交先后顺序时，仍把文档标为最新（current）
 
 ## 验证
 
@@ -296,3 +316,5 @@ How to contribute, coding standards, PR process.
 - [ ] 代码中不再保留被注释掉的代码
 - [ ] 项目规则文件（CLAUDE.md / AGENTS.md 等）保持最新且准确
 - [ ] 文字修改保留了来源细节、决策取舍与限定条件，且没有添加缺乏依据的保证
+- [ ] 变更日志采用追加更新，而非改写历史条目
+- [ ] 无法判断文档是否过时时如实报告为 `"can't tell"`，而不是标为最新

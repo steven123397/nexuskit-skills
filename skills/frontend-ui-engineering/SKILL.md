@@ -17,6 +17,10 @@ description: Builds production-quality, accessible, responsive user-facing UIs. 
 - 添加交互或状态管理
 - 修复视觉或 UX 问题
 
+## 使用项目现有工具验证
+
+运行项目自带的测试、类型检查或 lint 命令。不要为了验证改动而额外安装框架、test runner 或类型检查器；如果项目没有这些工具，就对照[验证](#验证)清单人工走查代码，并明确说明哪些检查无法运行。
+
 ## 组件架构
 
 ### 文件结构
@@ -177,6 +181,8 @@ small → Secondary/helper text
 
 每个组件都必须达到这些标准：
 
+对于菜单（menu）、弹窗（dialog）、标签页（tabs）、列表框（listbox）和组合框（combobox），严格遵循 [WAI-ARIA APG 模式](https://www.w3.org/WAI/ARIA/apg/patterns/)。
+
 ### 键盘导航
 
 ```tsx
@@ -328,7 +334,7 @@ function useToggleTask() {
 
 ## 验证
 
-构建完 UI 后：
+构建完 UI 后，先用项目自带的工具检查能跑的项目，其余项对照以下清单人工走查。不要为了验证而新增依赖或安装工具链；无法运行的检查须明确说明。
 
 - [ ] 组件渲染时 console 无报错
 - [ ] 所有可交互元素都支持键盘访问（用 Tab 键遍历页面）
