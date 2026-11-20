@@ -96,9 +96,10 @@ class ManifestChecks(unittest.TestCase):
         self.assertTrue(any("identity/source" in p for p in problems))
 
     def test_marketplace_version_must_match_plugin(self):
+        version = json.loads((self.root / ".claude-plugin/plugin.json").read_text(encoding="utf-8"))["version"]
         self.mutate(".claude-plugin/marketplace.json",
                     lambda d: d["plugins"][0].update(version="0.3.1"))
-        self.assertTrue(any("differs from 0.4.0" in p for p in validate(self.root)))
+        self.assertTrue(any(f"differs from {version}" in p for p in validate(self.root)))
 
     def test_marketplace_version_is_required(self):
         self.mutate(".agents/plugins/marketplace.json",
