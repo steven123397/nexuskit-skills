@@ -13,7 +13,7 @@
 
 26 个技能位于 `skills/<name>/SKILL.md`，与上游同名同路径。来源按以下几类记录：
 
-- **无额外行为改写**：`using-agent-skills`、`accessibility-engineering`、`api-and-interface-design`、`browser-testing-with-devtools`、`frontend-ui-engineering`、`git-workflow-and-versioning`、`interview-me`、`observability-and-instrumentation`、`shipping-and-launch`、`test-driven-development`。除统一项、跨技能引用改用公开技能名与中文精修外，这些技能未引入额外的 NexusKit 行为改写（`accessibility-engineering` 附带上游原样脚本 `scripts/audit-a11y.sh`）。
+- **无额外行为改写**：`using-agent-skills`、`accessibility-engineering`、`api-and-interface-design`、`browser-testing-with-devtools`、`frontend-ui-engineering`、`git-workflow-and-versioning`、`interview-me`、`observability-and-instrumentation`、`shipping-and-launch`、`test-driven-development`。除统一项、跨技能引用改用公开技能名与中文精修外，这些技能未引入额外的 NexusKit 行为改写（`accessibility-engineering` 附带 `scripts/audit-a11y.sh`，其 Windows 路径传参小修见下）。
 - **统一项（适用于全部 26 个）**：H1 用上游英文标题；frontmatter `description` 用上游英文原文（作者按触发率调校过）；「Red Flags」统一为「危险信号」；合理化表列头与部分小节标题按本仓术语标准统一（现已收敛至 [glossary.md](glossary.md)）。
 - **正文小修**：`ci-cd-and-automation`、`code-review-and-quality`、`code-simplification`、`constraint-driven-development`、`context-engineering`、`debugging-and-error-recovery`、`deprecation-and-migration`、`documentation-and-adrs`、`incremental-implementation`、`performance-optimization`、`planning-and-task-breakdown`、`security-and-hardening`、`source-driven-development`、`spec-driven-development`。改动包括回填上游后续修正、修正交叉引用、把规则文件表述统一为 `CLAUDE.md`/`AGENTS.md`，以及命令名 nk 化。
 - **NK 改写**：
@@ -23,8 +23,8 @@
 
 ## 已回填的上游修正（v0.6.14 – v0.6.17 / `8c99fa3`）
 
-- `accessibility-engineering` 套件（v0.6.17 / PR #261）：引入 `skills/accessibility-engineering/SKILL.md` 及 `scripts/audit-a11y.sh`、`agents/accessibility-auditor.md`（补 `model: sonnet`）、`.claude/commands/nk-a11y.md`；同步更新 `using-agent-skills` 路由与 `references/accessibility-checklist.md`（升级至 WCAG 2.2 AA、SC 2.5.8 触控目标 24×24 CSS px 及固定版本的 `@axe-core/cli@4.13.0`、`pa11y@9.1.1`）。
-- Spec 演进与 Delta Spec（v0.6.16 / PR #383、v0.6.17 / PR #797）：`spec-driven-development` 新增版本标题 `— V[N]`、`Out of Scope (Deferred)` 与根级 delta spec（`SPEC-<change>.md` + `Status:` 生命周期）；`planning-and-task-breakdown` 模板补 `Source spec:`；`/nk-spec` 分流新建与 delta spec；`/nk-build` 优先识别未实现的 `SPEC-<change>.md`，并针对外部 tracker（如 beads）精简了 `tasks/plan.md` 段落。
+- `accessibility-engineering` 套件（v0.6.17 / PR #261）：引入 `skills/accessibility-engineering/SKILL.md` 及 `scripts/audit-a11y.sh`、`agents/accessibility-auditor.md`（补 `model: sonnet`）、`.claude/commands/nk-a11y.md`；同步更新 `using-agent-skills` 路由与 `references/accessibility-checklist.md`（升级至 WCAG 2.2 AA、SC 2.5.8 触控目标 24×24 CSS px 及固定版本的 `@axe-core/cli@4.13.0`、`pa11y@9.1.1`）。审计脚本仅在 Node 合并与文本输出阶段改为通过 argv 传路径，避免 Windows Git Bash 对 POSIX 临时路径的解析差异，其余逻辑保持上游。
+- Spec 演进与 Delta Spec（v0.6.16 / PR #383、v0.6.17 / PR #797）：`spec-driven-development` 新增版本标题 `— V[N]`、`Out of Scope (Deferred)` 与根级 delta spec（`SPEC-<change>.md` + `Status:` 生命周期）；`planning-and-task-breakdown` 模板补 `Source spec:`；`/nk-spec` 分流新建与 delta spec；`/nk-build` 优先识别未实现的 `SPEC-<change>.md`。文件计划保留上游的 `Source spec:` 失配门禁；NK 适配则让外部 tracker（如 beads）按多 phase 布局记录并校验该字段，不保留 `tasks/plan.md` 镜像。
 - `documentation-and-adrs`（v0.6.16 / PR #514）：`description` 补充漂移触发词；新增「文档漂移（Documentation Drift）」小节（git 祖先判断、无法判定时报 `"can't tell"`、变更日志只追加不改写）。
 - `security-and-hardening` 与 `references/security-checklist.md`（v0.6.14–0.6.16 / PR #785, #787）：暂存密钥检查改为 `git diff --cached -i -G'…' --name-only`；ownership 检查前先返回 404；OWASP Top 10 升级至 2025 版编号并注明年份；`hardening-patterns.md` 补充 `SESSION_SECRET` 启动校验。
 - `code-review-and-quality`（PR #736、v0.6.16 #763、v0.6.17 #795）：第 4 步核实发现并接受零发现；第 5 步补充自跑测试前核对工作区干净且位于待审 ref；`description` 覆盖内联 diff 触发。
@@ -39,7 +39,7 @@
 
 - 移除 `agent-skills:` 前缀，改指本包技能名。
 - slash 名加 `nk-` 前缀（含新增 `/nk-a11y`），正文中的自称与交叉引用同步。
-- `/nk-ship` 的 subagent 派发说明按 Claude Code 的 Agent tool 与 scope 规则调整；`/nk-webperf` 与 `/nk-a11y` 保留上游 Claude Code 形态的 Quick/Deep 输入说明；`/nk-build` 步骤 3 针对外部 tracker（如 beads）做了精简适配。
+- `/nk-ship` 的 subagent 派发说明按 Claude Code 的 Agent tool 与 scope 规则调整；`/nk-webperf` 与 `/nk-a11y` 保留上游 Claude Code 形态的 Quick/Deep 输入说明；`/nk-plan` 与 `planning-and-task-breakdown` 按多 phase 布局把外部 tracker 的 `Source spec:`、计划正文和有序任务索引写入顶层工作单元，`/nk-build` 步骤 3 复用前校验，均不写 `tasks/plan.md` 镜像。
 
 `/nk-init` 为 NK 扩展：[入口](../.claude/commands/nk-init.md) 的探测、逐项确认、草稿确认与幂等写入骨架参考 Matt `skills/engineering/setup-matt-pocock-skills/SKILL.md` 的 `Explore`、`Present findings and ask`、`Confirm and edit`、`Write`；七项配置对象（规则文件、idea/ADR/spec/task 落点、外置工具、子智能体模型与覆盖层级）为 NK 设计。
 
@@ -50,7 +50,7 @@
 
 ## References
 
-`references/` 下 7 份检查清单以英文上游同路径为基底，经过中文精修、上游修正回填与本仓命令名适配；`issue-graph.md` 为 NK 新增，给出 issue tracker 的建图规则（工作单元、三种边、checkpoint、审查与关闭），上游没有对应文件。它同时是模板与兜底：`/nk-init` 把全文写进项目的 `docs/agents/issue-tracker.md`，规则文件只留一行指针；`planning-and-task-breakdown` 优先按项目那份建图，项目没初始化时才用插件里这份。载体形式参考 Matt `setup-matt-pocock-skills` 的 `docs/agents/`。技能按需引用；仓库级共享，不存在单技能安装断链。
+`references/` 下 7 份检查清单以英文上游同路径为基底，经过中文精修、上游修正回填与本仓命令名适配；`issue-graph.md` 为 NK 新增，给出 issue tracker 的建图规则（工作单元、`Source spec:` 溯源、三种边、checkpoint、审查与关闭），上游没有对应文件。它同时是模板与兜底：`/nk-init` 把全文写进项目的 `docs/agents/issue-tracker.md`，规则文件只留一行指针；`planning-and-task-breakdown` 优先按项目那份建图，项目没初始化时才用插件里这份。载体形式参考 Matt `setup-matt-pocock-skills` 的 `docs/agents/`。技能按需引用；仓库级共享，不存在单技能安装断链。
 
 ## 未 vendor
 
