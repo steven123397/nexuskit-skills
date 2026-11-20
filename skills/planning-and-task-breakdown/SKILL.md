@@ -175,6 +175,8 @@ Task list target 是记录任务和检查点的位置。它的定义只出现一
 ```markdown
 # Implementation Plan: [Feature/Project Name]
 
+Source spec: [path to the spec this plan was generated from, e.g. SPEC.md or SPEC-<change>.md; omit if no spec]
+
 ## Overview
 [One paragraph summary of what we're building]
 

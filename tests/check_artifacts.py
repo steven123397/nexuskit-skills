@@ -3,11 +3,13 @@ from pathlib import Path
 import re
 
 # Canonical artifact paths shared by /nk-spec, /nk-plan, /nk-build and the
-# skills they invoke. Module specs are named by id, so they are matched as a
-# pattern rather than a fixed filename. To change the convention, update this
-# list and every guarded file in the same change.
+# skills they invoke. Root-level delta specs use SPEC-<change>.md, while
+# module specs live under spec/SPEC-<id>.md, so both are matched as patterns.
+# To change the convention, update this list and every guarded file in the
+# same change.
 ARTIFACT_ALLOWLIST = (
     r'SPEC\.md',
+    r'SPEC-(?:<change(?:-slug)?>|[A-Za-z0-9_-]+)\.md',
     r'docs/SPEC\.md',
     r'spec/SPEC-(?:<id>|[A-Za-z0-9_-]+)\.md',
     r'spec/capability-map\.md',

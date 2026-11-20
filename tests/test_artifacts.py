@@ -31,6 +31,14 @@ class ArtifactChecks(unittest.TestCase):
         path.write_text(path.read_text(encoding="utf-8") + " Spec.md", encoding="utf-8")
         self.assertTrue(any("unapproved artifact path Spec.md" in p for p in validate(self.root)))
 
+    def test_root_delta_spec_is_allowed_but_nested_delta_is_rejected(self):
+        path = self.root / ".claude/commands/nk-spec.md"
+        base = path.read_text(encoding="utf-8")
+        path.write_text(base + " SPEC-<change>.md SPEC-<change-slug>.md SPEC-postgres-migration.md", encoding="utf-8")
+        self.assertEqual([], validate(self.root))
+        path.write_text(base + " docs/SPEC-postgres-migration.md", encoding="utf-8")
+        self.assertTrue(any("unapproved artifact path docs/SPEC-postgres-migration.md" in p for p in validate(self.root)))
+
     def test_required_artifact_must_stay_named(self):
         path = self.root / ".claude/commands/nk-build.md"
         path.write_text(path.read_text(encoding="utf-8").replace("tasks/todo.md", ""), encoding="utf-8")

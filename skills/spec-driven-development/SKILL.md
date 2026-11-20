@@ -1,6 +1,6 @@
 ---
 name: spec-driven-development
-description: Creates specs before coding. Use when starting a new project, feature, or significant change and no specification exists yet. Use when drafting a PRD or requirements document with objectives and scope, or when requirements are unclear, ambiguous, or only exist as a vague idea. Use when a single requirement spans several independently testable capabilities and needs decomposing into a capability map of modules before specifying.
+description: Creates specs before coding. Use when starting a new project, feature, or significant change and no specification exists yet. Use when drafting a PRD or requirements document with objectives and scope, or when requirements are unclear, ambiguous, or only exist as a vague idea. Use when a single requirement spans several independently testable capabilities and needs decomposing into a capability map of modules before specifying. Use when evolving a shipped spec — scoping a V1, deferring ideas to a V2 backlog, or writing a follow-up spec for a change to an existing feature.
 ---
 
 # Spec-Driven Development
@@ -115,7 +115,7 @@ ASSUMPTIONS I'M MAKING:
 **Spec 模板：**
 
 ```markdown
-# Spec: [Project/Feature Name]
+# Spec: [Project/Feature Name] — V[N]
 
 ## Objective
 [What we're building and why. User stories or acceptance criteria.]
@@ -142,6 +142,9 @@ ASSUMPTIONS I'M MAKING:
 
 ## Success Criteria
 [How we'll know this is done — specific, testable conditions]
+
+## Out of Scope (Deferred)
+[Ideas explicitly excluded from this version — the V2 backlog. One line each: what, and why it's deferred.]
 
 ## Open Questions
 [Anything unresolved that needs human input]
@@ -218,6 +221,45 @@ spec 是一份活文档，不是一次性工件：
 - **提交 spec**：spec 应该和代码一起进入版本控制。
 - **在 PR 中引用 spec**：链接回每个 PR 实现的 spec 章节。
 
+## Spec 演进：V1 范围界定与后续变更
+
+一份 spec 只描述当前这一个版本的工作。新冒出来的想法和上线后的变更需求，不该直接塞进当前 spec——它们应该排在后面等待下一轮。
+
+### 明确界定每个版本的范围
+
+在 spec 标题里标明它对应的版本（例如 `# Spec: Invoice Pipeline — V1`）。每当一份已上线的增量 spec（delta spec）合入主 spec 后，就递增版本号——这样标题始终能明确说明这份 spec 描述的是系统的哪个版本，也让“这是 V2 的想法”成为客观判断，而不是开发到一半时拍脑袋的决定。
+
+在 Specify 阶段，本版本不纳入的想法统一收进 **Out of Scope (Deferred)**——记下来，不丢掉。这让 V1 的范围边界真正可执行：实现期间，凡是不在需求列表里的内容都不做，哪怕它就写在同一个文件的 Deferred 列表里。开发途中冒出新点子，直接记到 Deferred 列表里继续当前工作；范围调整发生在版本之间，而不是版本开发过程中。
+
+### 后续变更单写一份 delta spec
+
+一旦某份 spec 已经上线，新需求——例如切换存储引擎、把人工步骤替换成 OCR、或者把某个延后的 V2 条目提上日程——应该单写一份小巧的 delta spec，而不是直接手动改写已上线的原 spec。Delta spec 只写发生变化的部分：
+
+```markdown
+# Spec Delta: [Change Name]
+
+Status: proposed
+
+## Objective
+[The change and why. Which deferred item or new requirement this implements.]
+
+## Current Behavior
+[What exists today — link the relevant section of the original spec.]
+
+## New Behavior
+[What will be true after the change.]
+
+## Success Criteria
+[Specific, testable conditions — including what must NOT change.]
+
+## Boundaries
+[Only deltas from the original spec's boundaries; everything else inherits.]
+```
+
+将它保存在原 spec 同级目录（例如与 `SPEC.md` 同级的 `SPEC-postgres-migration.md`），走同一套门控流程：人工评审，再进入 Plan、Tasks、Implement。下游命令都认这个约定——`/nk-build auto` 会把根目录的 `SPEC-<change>.md` 识别为后续变更的 spec，并在建立干净 baseline 时将其视作合法的规划产物。每份 delta spec 只承载一个变更，这样每一轮 plan/build 循环都足够小、易于审查。
+
+变更上线后，把最终结果合回原 spec（见「让 Spec 保持鲜活」），让原 spec 始终作为系统现状的唯一事实来源，并把 delta spec 的 `Status:` 行改为 `Status: implemented`。原 spec 永远描述系统当前是什么样，delta spec 描述的是状态跃迁。
+
 ## 常见合理化借口
 
 | 合理化借口 | 现实 |
@@ -227,6 +269,8 @@ spec 是一份活文档，不是一次性工件：
 | “spec 会拖慢我们” | 15 分钟 spec 可以避免数小时返工。15 分钟的 waterfall 胜过 15 小时的调试。 |
 | “需求反正会变” | 这正是 spec 是活文档的原因。过时的 spec 仍然好过没有 spec。 |
 | “用户知道自己想要什么” | 即使清晰请求也有隐含假设。spec 会暴露这些假设。 |
+| “这个想法挺好，我顺手加进当前 spec 吧” | 开发中途膨胀范围，正是 V1 延期的根源。把它放进 Out of Scope (Deferred)——既留档了，又不会撑大当前周期。 |
+| “这个功能已经有 spec 了，我直接在上面改吧” | 已上线的 spec 描述的是现有系统。Delta spec 让这次变更可以独立评审；原 spec 要等变更上线后再合入更新，而不是事前改写。 |
 | “这是一个大功能，拆开它是额外开销” | 只要验收标准能聚合成可独立测试的模块组，写成一份单体 spec 就会迫使每个下游任务都得背着整份完整契约做推理。相比之下，十行的能力地图是成本低得多的替代方案。 |
 | “我会在规划时再分解” | 规划阶段做的是在单个 spec 内部拆分任务。真到那一步，那份体量过大的单体产物早就写出来了——模块边界与依赖方向必须在写 spec 之前定好，而不是之后再补救。 |
 
@@ -237,6 +281,8 @@ spec 是一份活文档，不是一次性工件：
 - 实现任何 spec 或任务列表中未提及的功能
 - 在没有记录的情况下做出架构决策
 - 因为“要构建什么很明显”而跳过 spec
+- 实现中途把新想法直接写进当前 spec，导致 V1 需求不断膨胀
+- 因为“这个功能已经有 spec 了”，修改已上线功能时不再为这次变更编写 spec
 - 写完 spec 后，在同一回合就开始做计划或写代码
 - 一份 spec 的需求横跨多个可独立测试的能力
 - 因为没有事先批准能力地图，模块边界或构建顺序在实现期间被隐式决定
@@ -245,11 +291,13 @@ spec 是一份活文档，不是一次性工件：
 
 进入实现前，确认：
 
-- [ ] spec 覆盖全部六个核心区域
+- [ ] spec 覆盖全部六个核心区域（完整 spec 如此；delta spec 只覆盖变更涉及的区域——至少包含 objective、success criteria 和 boundary deltas，其余继承自原 spec）
 - [ ] 人类已评审并批准 spec
 - [ ] 回合在保存 spec 后即结束；批准发生在后续某个回合
 - [ ] 成功标准具体且可测试
 - [ ] Boundaries（Always/Ask First/Never）已定义
 - [ ] spec 已保存到仓库中的文件
+- [ ] 从本版本砍掉的想法已记录在 Out of Scope (Deferred) 下，既没有悄悄丢掉，也没有悄悄塞进实现
+- [ ] 如果这是对已上线 spec 的变更，已编写引用原 spec 的 delta spec，而非直接重写原 spec
 - [ ] 如果单次需求包含多个可独立测试的能力，已在写任何模块 spec 之前取得能力地图（模块 id、依赖方向、构建顺序）的批准
 - [ ] 每份模块 spec 都能追溯到已批准地图中的某个模块 id
