@@ -131,9 +131,11 @@ RESULT_EOF
 if [ -f "$TEMP_DIR/axe-report.json" ]; then
   node -e "
     const fs = require('fs');
-    const result = JSON.parse(fs.readFileSync('$TEMP_DIR/result.json', 'utf8'));
+    const resultPath = process.argv[1];
+    const reportPath = process.argv[2];
+    const result = JSON.parse(fs.readFileSync(resultPath, 'utf8'));
     try {
-      const axe = JSON.parse(fs.readFileSync('$TEMP_DIR/axe-report.json', 'utf8'));
+      const axe = JSON.parse(fs.readFileSync(reportPath, 'utf8'));
       // @axe-core/cli saves an array with one result per URL, and no results wrapper.
       for (const run of (Array.isArray(axe) ? axe : [axe])) {
         const violations = run.violations || [];
@@ -160,22 +162,24 @@ if [ -f "$TEMP_DIR/axe-report.json" ]; then
     } catch (e) {
       // An empty report is covered by the guard above; a non-empty one that does
       // not parse is a tool failure, not a clean result.
-      if (fs.statSync('$TEMP_DIR/axe-report.json').size > 0) {
+      if (fs.statSync(reportPath).size > 0) {
         console.error('$SCRIPT_NAME: axe-report.json is not valid JSON: ' + e.message);
         process.exit(1);
       }
     }
-    fs.writeFileSync('$TEMP_DIR/result.json', JSON.stringify(result, null, 2));
-  "
+    fs.writeFileSync(resultPath, JSON.stringify(result, null, 2));
+  " "$TEMP_DIR/result.json" "$TEMP_DIR/axe-report.json"
 fi
 
 # Parse pa11y results
 if [ -f "$TEMP_DIR/pa11y-report.json" ]; then
   node -e "
     const fs = require('fs');
-    const result = JSON.parse(fs.readFileSync('$TEMP_DIR/result.json', 'utf8'));
+    const resultPath = process.argv[1];
+    const reportPath = process.argv[2];
+    const result = JSON.parse(fs.readFileSync(resultPath, 'utf8'));
     try {
-      const pa11y = JSON.parse(fs.readFileSync('$TEMP_DIR/pa11y-report.json', 'utf8'));
+      const pa11y = JSON.parse(fs.readFileSync(reportPath, 'utf8'));
       const issues = Array.isArray(pa11y) ? pa11y : (pa11y.issues || []);
       result.summary.violations += issues.length;
       for (const issue of issues) {
@@ -196,20 +200,21 @@ if [ -f "$TEMP_DIR/pa11y-report.json" ]; then
       }
     } catch (e) {
       // Same as the axe block: an empty report is covered by the guard above.
-      if (fs.statSync('$TEMP_DIR/pa11y-report.json').size > 0) {
+      if (fs.statSync(reportPath).size > 0) {
         console.error('$SCRIPT_NAME: pa11y-report.json is not valid JSON: ' + e.message);
         process.exit(1);
       }
     }
-    fs.writeFileSync('$TEMP_DIR/result.json', JSON.stringify(result, null, 2));
-  "
+    fs.writeFileSync(resultPath, JSON.stringify(result, null, 2));
+  " "$TEMP_DIR/result.json" "$TEMP_DIR/pa11y-report.json"
 fi
 
 if [ "$FORMAT" = "--json" ]; then
   cat "$RESULT_FILE"
 else
   node -e "
-    const r = JSON.parse(require('fs').readFileSync('$RESULT_FILE', 'utf8'));
+    const resultPath = process.argv[1];
+    const r = JSON.parse(require('fs').readFileSync(resultPath, 'utf8'));
     console.log('Accessibility Audit Results');
     console.log('===========================');
     console.log('Tools:');
@@ -229,5 +234,5 @@ else
       if (v.selector) console.log('  → ' + v.selector);
       console.log('');
     }
-  "
+  " "$RESULT_FILE"
 fi
