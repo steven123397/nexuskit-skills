@@ -14,6 +14,6 @@ disable-model-invocation: true
 5. 在各个 phases 之间添加检查点（checkpoints）
 6. 将 plan 提交给人工审阅（review）
 
-将 plan 保存到 tasks/plan.md，将 task list 保存到 tasks/todo.md。
+默认将 plan 保存到 `tasks/plan.md`，将 task list 保存到 `tasks/todo.md`。使用外部 tracker 时，按该 skill 的多 phase 布局在顶层工作单元记录 `Source spec:`、计划正文与有序任务索引，不创建 `tasks/plan.md` 或 `tasks/todo.md` 镜像。
 
 如果 tasks/plan.md 或 tasks/todo.md 已经存在，且其中带有针对另一项工作的未完成 tasks，停止并在写入前询问 — 绝不静默覆盖一份未完成的 plan。

@@ -184,7 +184,7 @@ REFRAMED SUCCESS CRITERIA:
 
 > 这些步骤背后的依赖图映射和垂直切片机制，遵循 `planning-and-task-breakdown`；它是权威来源。上面的要点只是轻量摘要；两者若出现分歧，以 `planning-and-task-breakdown` 为准。
 >
-> **输出约定：** 把计划保存到 `tasks/plan.md`，并把任务列表记录到 `planning-and-task-breakdown` 定义的 task list target（默认 `tasks/todo.md`；项目也可以指定外部 tracker）。如果 `tasks/` 不存在则创建。下游命令（`/nk-build` 等）依赖这些默认值。
+> **输出约定：** 默认把计划保存到 `tasks/plan.md`，并把任务列表记录到 `planning-and-task-breakdown` 定义的 task list target（默认 `tasks/todo.md`）；使用外部 tracker 时，按该 skill 的多 phase 布局写入顶层工作单元，不创建 Markdown 镜像。只有使用 `tasks/` 时才创建该目录。下游命令（`/nk-build` 等）依赖这些约定。
 
 计划应该可评审：人类读完后应该能说“对，这是正确做法”或“不，修改 X”。
 

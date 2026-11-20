@@ -17,10 +17,12 @@ v0.1.0 收口 (milestone)        ← 被各 phase 阻塞
 - 顶层是工作单元，**没有 root epic**；版本身份写在标题前缀 + label。
 - **只允许一层 parent-child。**
 - 没有 plan 的维护轮次，整轮就是一个工作单元，不建 phase 层。
+- 由 spec 生成的每个 phase 顶层工作单元都在正文记录 `Source spec: <path>`，供 `/nk-build auto` 复用前校验。
+- 完整计划正文与跨 phase 有序任务索引放在第一个 phase 工作单元；其余单元只放本 phase 的计划切片与任务索引，不创建 `tasks/plan.md` 或 `tasks/todo.md` 镜像。
 
 ## 建图顺序
 
-1. 建工作单元：`v0.1.0 Phase 1 <name>`，label `v0.1.0` + `phase`。
+1. 建工作单元：`v0.1.0 Phase 1 <name>`，label `v0.1.0` + `phase1`；子票同样带所属 `phaseN`。
 2. 建任务，挂到所属单元下。
 3. 只有真实验证动作才建 checkpoint（跑 e2e、量预算、对契约、跑一轮审查）；同单元的任务阻塞它。
 4. 有先后才加 `blocks`，且只在同层加。
@@ -61,10 +63,10 @@ v0.1.0 收口 (milestone)        ← 被各 phase 阻塞
 
 ## 命名
 
-- 单元 `v0.1.0 Phase 1 <name>`，label `v0.1.0` + `phase`
+- 单元 `v0.1.0 Phase 1 <name>`，label `v0.1.0` + `phase1`（子票带同一 `phaseN`）
 - 维护轮次 `v0.1.2 简化`，label `v0.1.2` + `simplify`
 - 收口 `v0.1.2 收口`，type `milestone`
-- label 是筛选维度，不承担结构：有了 phase 单元，就不要再给每张票打 `phase-3`
+- label 是筛选维度，不承担结构：每张票带所属 `phaseN`（如 `phase2`），便于跨父子层级按 phase 筛选；结构仍由 parent-child 表达。跨 phase 横切杂务（质量基线、依赖处置等）不打 phase 标签
 
 ## 换 tracker
 
@@ -81,8 +83,8 @@ v0.1.0 收口 (milestone)        ← 被各 phase 阻塞
 ## beads 速查
 
 ```bash
-bd create --title="v0.1.0 Phase 1 基础设施" --type=epic -l v0.1.0,phase
-bd create --title="..." --parent=<unit> --acceptance="..."
+bd create --title="v0.1.0 Phase 1 基础设施" --type=epic -l v0.1.0,phase1
+bd create --title="..." --parent=<unit> --acceptance="..." -l v0.1.0,phase1
 bd dep add <被阻塞> <阻塞者>                      # blocks
 bd dep add <新票> <来源票> -t discovered-from     # provenance
 bd ready · bd dep cycles · bd lint

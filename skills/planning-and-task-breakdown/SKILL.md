@@ -30,7 +30,7 @@ description: Breaks work into ordered tasks. Use when you have a spec or clear r
 - 映射组件之间的依赖
 - 记录风险和未知项
 
-**规划期间不要写代码。** 输出是一份保存到 `tasks/plan.md` 的计划文档，以及记录在 task list target 中的任务列表（见「输出文件」一节；默认 `tasks/todo.md`），而不是实现。
+**规划期间不要写代码。** 输出是一份计划文档（默认保存到 `tasks/plan.md`；使用外部 tracker 时写入顶层工作单元），以及记录在 task list target 中的任务列表（见「输出文件」一节；默认 `tasks/todo.md`），而不是实现。
 
 ### 步骤 2：识别依赖图
 
@@ -145,10 +145,10 @@ Task 4: User can view task list (query + API + UI for list view)
 
 ## 输出文件
 
-- **计划文档：** 把实现计划保存到 `tasks/plan.md`。它始终是一个 markdown 文件——设计决策、风险和未决问题很难工整地拆进单条 tracker issue 中。
+- **计划文档：** 默认把实现计划保存到 `tasks/plan.md`。使用外部 tracker 时，按下文的多 phase 布局写进顶层工作单元，不另建 Markdown 镜像。
 - **任务列表：** 把每个任务记录到 **task list target**（定义见下文）。
 
-如果 `tasks/` 目录不存在则创建。
+默认使用 `tasks/` 时，如果目录不存在则创建。
 
 **绝不覆盖未完成的计划。** 在写 `tasks/plan.md` 或 `tasks/todo.md` 之前，检查它们是否已经存在且仍包含未勾选的任务：
 
@@ -168,7 +168,7 @@ Task list target 是记录任务和检查点的位置。它的定义只出现一
 
   图结构：phase 建成顶层工作单元，标题带版本身份，任务挂在它下，**只允许一层嵌套**；没有 plan 的维护轮次，整轮就是一个工作单元。步骤 5 的检查点建成该 phase 的最后一张子票。完整规则见项目里的 `docs/agents/issue-tracker.md`（`/nk-init` 生成）；项目没有这份文件时，用本插件的 `references/issue-graph.md`。
 
-使用外部 tracker 时，在 `tasks/plan.md` 中注明（例如 “Tasks tracked in Linear project FOO”），让下游步骤和未来的会话知道去哪里查找；并把计划文档的 Task List 章节保留为 tracker item ID 或链接的有序索引，而不是重复的 checklist。
+  由 spec 生成计划时，每个 phase 顶层工作单元都在正文记录 `Source spec: <path>`，供 `/nk-build auto` 复用前校验。完整计划正文与跨 phase 有序 Task List 索引放在第一个 phase 工作单元；其余工作单元只放本 phase 的计划切片与任务索引。不要创建 `tasks/plan.md` 或 `tasks/todo.md` 镜像。
 
 ## 计划文档模板
 
@@ -217,7 +217,7 @@ Source spec: [path to the spec this plan was generated from, e.g. SPEC.md or SPE
 - [Question needing human input]
 ```
 
-当任务存放在外部 tracker 中时，把上面的 Task List 章节保留为 tracker item ID 或链接的有序索引，而不是重复的 checklist。
+当任务存放在外部 tracker 中时，第一个 phase 工作单元的 Task List 保留为 tracker item ID 或链接的跨 phase 有序索引；后续工作单元只保留本 phase 的计划切片与任务索引，不重复 checklist。
 
 ## 并行机会
 
@@ -241,7 +241,7 @@ Source spec: [path to the spec this plan was generated from, e.g. SPEC.md or SPE
 
 - 没有书面任务列表就开始实现
 - 未经询问就覆盖仍包含不同工作未勾选任务的 `tasks/plan.md` 或 `tasks/todo.md`
-- 项目已指定外部 tracker 却仍然去写 `tasks/todo.md`（或把任务同时分散记录在两处）
+- 项目已指定外部 tracker 却仍然去写 `tasks/plan.md` 或 `tasks/todo.md`（或把计划、任务同时分散记录在两处）
 - 任务只写“实现功能”，没有验收标准
 - 计划中没有验证步骤
 - 所有任务都是 XL 大小
